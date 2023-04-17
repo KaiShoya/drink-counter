@@ -1,0 +1,8 @@
+{
+  "html.format.endWithNewline": true,
+  "html.format.wrapAttributes": "force-expand-multiline",
+  "html.validate.scripts": true,
+  "html.validate.styles": true,
+  // "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+}

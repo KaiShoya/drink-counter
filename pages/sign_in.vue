@@ -1,0 +1,77 @@
+<script setup lang="ts">
+const { signInWithEmail, signInWithGoogle } = useSupabase()
+
+const email = useState('email', () => '')
+const password = useState('password', () => '')
+
+const signIn = async () => {
+  const isSignIn = await signInWithEmail(email.value, password.value)
+  if (isSignIn) { navigateTo('/') }
+}
+</script>
+
+<template>
+  <div>
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Email</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control">
+            <input
+              v-model="email"
+              class="input"
+              type="email"
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Password</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control">
+            <input
+              v-model="password"
+              class="input"
+              type="password"
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="button"
+      @click="signIn()"
+    >
+      Sign in
+    </button>
+
+    <button
+      class="button"
+      @click="signInWithGoogle()"
+    >
+      Googleアカウントを利用する
+    </button>
+
+    <button
+      class="button"
+      @click="signIn()"
+    >
+      Sign in
+    </button>
+
+    <button
+      class="button"
+      @click="signInWithGoogle()"
+    >
+      Googleアカウントを利用する
+    </button>
+  </div>
+</template>
