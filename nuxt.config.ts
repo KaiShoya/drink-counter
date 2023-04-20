@@ -1,3 +1,5 @@
+import pkg from './package.json'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -5,7 +7,8 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseKey: process.env.SUPABASE_KEY,
       gtagAppName: process.env.GTAG_APP_NAME,
-      gtagConfig: process.env.GTAG_CONFIG
+      gtagConfig: process.env.GTAG_CONFIG,
+      version: pkg.version
     }
   },
   css: [
