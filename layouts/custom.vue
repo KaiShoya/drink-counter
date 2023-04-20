@@ -80,15 +80,15 @@ signin.value = await isSignin()
           v-if="!signin"
           class="navbar-end"
         >
-            <a
-              class="navbar-item"
-              exact-active-class="is-active"
-              @click="signInWithGoogle()"
-            >
-              Google Sign in
-            </a>
-          </div>
+          <a
+            class="navbar-item"
+            exact-active-class="is-active"
+            @click="signInWithGoogle()"
+          >
+            Google Sign in
+          </a>
         </div>
+      </div>
     </nav>
     <NuxtPage />
   </div>
