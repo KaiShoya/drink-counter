@@ -67,11 +67,19 @@ signin.value = await isSignin()
           </div>
         </div>
 
+        <NuxtLink
+          class="navbar-item"
+          to="/about"
+          exact-active-class="is-active"
+          @click="active = false"
+        >
+          About
+        </NuxtLink>
+
         <div
           v-if="!signin"
           class="navbar-end"
         >
-          <div class="navbar-item">
             <a
               class="navbar-item"
               exact-active-class="is-active"
@@ -81,7 +89,6 @@ signin.value = await isSignin()
             </a>
           </div>
         </div>
-      </div>
     </nav>
     <NuxtPage />
   </div>
