@@ -1,42 +1,29 @@
-# Nuxt 3 Minimal Starter
+# drink-counter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+アルコールを飲んだ杯数を日付別に記録するアプリ。
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# yarn
 yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
 ```
+
+Install Supabase CLI & Log in.  
+https://supabase.com/docs/guides/cli
 
 ## Development Server
 
-Start the development server on http://localhost:3000
-
 ```bash
-npm run dev
+# Rename .env.template to .env
+cp .env.template .env
+
+# Start the Supabase service
+supabase start
+
+# Edit .env SUPABASE_KEY
+
+# Start the development server on http://localhost:3001
+yarn dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
