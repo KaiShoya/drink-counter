@@ -11,6 +11,17 @@ export default defineNuxtConfig({
       version: pkg.version
     }
   },
+  app: {
+    head: {
+      script: [
+        {
+          async: true,
+          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9966413329461393',
+          crossorigin: 'anonymous'
+        }
+      ]
+    }
+  },
   css: [
     '@mdi/font/css/materialdesignicons.css',
     'assets/scss/index.scss'
