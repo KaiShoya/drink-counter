@@ -6,90 +6,122 @@ signin.value = await isSignin()
 </script>
 
 <template>
-  <div>
-    <nav
-      class="navbar"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <span class="navbar-item">飲酒カウンター</span>
-
-        <a
-          role="button"
-          class="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-          @click="active = !active"
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </a>
-      </div>
-
-      <div
-        id="navbarBasicExample"
-        :class="[{ 'is-active': active }, 'navbar-menu']"
+  <div class="flex-content">
+    <header>
+      <nav
+        class="navbar"
+        role="navigation"
+        aria-label="main navigation"
       >
-        <div class="navbar-start">
+        <div class="navbar-brand">
+          <span class="navbar-item">飲酒カウンター</span>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+            @click="active = !active"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </a>
+        </div>
+
+        <div
+          id="navbarBasicExample"
+          :class="[{ 'is-active': active }, 'navbar-menu']"
+        >
+          <div class="navbar-start">
+            <NuxtLink
+              class="navbar-item"
+              to="/"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              Home
+            </NuxtLink>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">Graphs</a>
+
+              <div class="navbar-dropdown">
+                <NuxtLink
+                  class="navbar-item"
+                  to="/graphs/total"
+                  exact-active-class="is-active"
+                  @click="active = false"
+                >
+                  トータル
+                </NuxtLink>
+                <NuxtLink
+                  class="navbar-item"
+                  to="/graphs/per_month"
+                  exact-active-class="is-active"
+                  @click="active = false"
+                >
+                  月別
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+
           <NuxtLink
             class="navbar-item"
-            to="/"
+            to="/about"
             exact-active-class="is-active"
             @click="active = false"
           >
-            Home
+            About
           </NuxtLink>
 
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">Graphs</a>
-
-            <div class="navbar-dropdown">
-              <NuxtLink
-                class="navbar-item"
-                to="/graphs/total"
-                exact-active-class="is-active"
-                @click="active = false"
-              >
-                トータル
-              </NuxtLink>
-              <NuxtLink
-                class="navbar-item"
-                to="/graphs/per_month"
-                exact-active-class="is-active"
-                @click="active = false"
-              >
-                月別
-              </NuxtLink>
-            </div>
+          <div
+            v-if="!signin"
+            class="navbar-end"
+          >
+            <a
+              class="navbar-item"
+              exact-active-class="is-active"
+              @click="signInWithGoogle()"
+            >
+              Google Sign in
+            </a>
           </div>
         </div>
+      </nav>
+    </header>
 
-        <NuxtLink
-          class="navbar-item"
-          to="/about"
-          exact-active-class="is-active"
-          @click="active = false"
-        >
-          About
-        </NuxtLink>
+    <main>
+      <NuxtPage />
+    </main>
 
-        <div
-          v-if="!signin"
-          class="navbar-end"
-        >
-          <a
-            class="navbar-item"
-            exact-active-class="is-active"
-            @click="signInWithGoogle()"
-          >
-            Google Sign in
-          </a>
-        </div>
+    <footer>
+      <div class="content has-text-centered">
+        <p>
+          <span>&copy; 2023 Kai Shoya.</span>
+          <span>The source code is licensed MIT.</span>
+          <span>The website content is licensed CC BY NC SA 4.0.</span>
+        </p>
       </div>
-    </nav>
-    <NuxtPage />
+    </footer>
   </div>
 </template>
+
+<style>
+.flex-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+footer {
+  margin-top: auto;
+  background-color: hsl(0, 0%, 97%);
+}
+
+footer span {
+  display: inline-block;
+}
+</style>
