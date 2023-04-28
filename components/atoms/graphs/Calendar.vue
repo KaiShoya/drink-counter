@@ -1,6 +1,7 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { GChart } from 'vue-google-charts'
-const props = defineProps<{
+defineProps<{
   data: Array<Array<String | Number>>,
   options?: any,
 }>()
@@ -9,8 +10,8 @@ const props = defineProps<{
 <template>
   <GChart
     type="Calendar"
-    :data=data
-  :options=options
-  :settings="{ packages: ['calendar'], }"
-/>
+    :data="data"
+    :options="options"
+    :settings="{ packages: ['calendar'], }"
+  />
 </template>

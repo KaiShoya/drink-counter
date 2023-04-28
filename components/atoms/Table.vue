@@ -1,5 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   titles: Array<String>,
   tableData: Array<Array<String | Number>>,
 }>()
@@ -11,20 +12,24 @@ const props = defineProps<{
       <tr>
         <th
           v-for="(title, i) of titles"
-          :key=i
-        >{{ title }}</th>
+          :key="i"
+        >
+          {{ title }}
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="(data, i) of tableData"
-        :key=i
+        :key="i"
       >
-      <td
-        v-for="(d, j) of data"
-        :key=j
-      >{{ d }}</td>
-    </tr>
-  </tbody>
-</table>
+        <td
+          v-for="(d, j) of data"
+          :key="j"
+        >
+          {{ d }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>

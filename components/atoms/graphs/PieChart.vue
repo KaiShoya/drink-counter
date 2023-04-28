@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GChart } from 'vue-google-charts'
-const props = defineProps<{
+defineProps<{
   data: Array<Array<String | Number>>,
   options?: any,
 }>()
@@ -9,7 +9,7 @@ const props = defineProps<{
 <template>
   <GChart
     type="PieChart"
-    :data=data
-  :options=options
-/>
+    :data="data"
+    :options="options"
+  />
 </template>

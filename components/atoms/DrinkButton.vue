@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   id: Number,
   name: string,
-  drink_id: Number,
+  drinkId: Number,
   count: Number,
   increment: Function,
   decrement: Function,
@@ -13,19 +13,23 @@ const props = defineProps<{
   <div class="columns is-gapless is-multiline is-mobile">
     <button
       class="column is-2 button"
-      @click="decrement(drink_id, id)"
+      @click="decrement(drinkId, id)"
     >
-      <i class="mdi mdi-minus"></i>
+      <i class="mdi mdi-minus" />
     </button>
 
-    <div class="column subtitle ml-5">{{ name }}</div>
+    <div class="column subtitle ml-5">
+      {{ name }}
+    </div>
 
-    <div class="column is-1"><span class="subtitle">{{ count }}</span></div>
+    <div class="column is-1">
+      <span class="subtitle">{{ count }}</span>
+    </div>
     <button
       class="column is-2 button"
-      @click="increment(drink_id, id)"
+      @click="increment(drinkId, id)"
     >
-    <i class="mdi mdi-plus"></i>
-  </button>
-</div>
+      <i class="mdi mdi-plus" />
+    </button>
+  </div>
 </template>
