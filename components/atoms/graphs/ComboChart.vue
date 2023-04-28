@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { GChart } from 'vue-google-charts'
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   data: Array<Array<String | Number>>,
   options?: any,
 }>(), {
   options: {
     seriesType: 'bars',
-    series: { 0: { type: 'line' } },
+    series: { 0: { type: 'line' } }
   }
 })
 </script>
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<{
 <template>
   <GChart
     type="ComboChart"
-    :data=data
-  :options=options
-/>
+    :data="data"
+    :options="options"
+  />
 </template>

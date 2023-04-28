@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import { CalendarOptions } from '@fullcalendar/core'
 
 const props = defineProps<{
   data: Array<{
@@ -23,7 +24,7 @@ const calcEvents = () => {
   return events.length > 0 ? events : undefined
 }
 
-const calendarOptions = {
+const calendarOptions: CalendarOptions = {
   initialDate: new Date(props.yearMonth),
   plugins: [dayGridPlugin],
   initialView: 'dayGridMonth',
