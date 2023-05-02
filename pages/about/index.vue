@@ -5,7 +5,7 @@
       <tr>
         <th colspan="2">
           <NuxtLink
-            to="/"
+            to="https://github.com/KaiShoya/drink-counter"
             class="display is-block"
           >
             ソースコード
