@@ -8,7 +8,7 @@
             to="https://github.com/KaiShoya/drink-counter"
             class="display is-block"
           >
-            ソースコード
+            {{ $t('source') }}
           </NuxtLink>
         </th>
       </tr>
@@ -18,12 +18,12 @@
             to="/"
             class="display is-block"
           >
-            利用規約
+            {{ $t('terms_of_service') }}
           </NuxtLink>
         </th>
       </tr>
       <tr>
-        <th>ライセンス</th>
+        <th>{{ $t('license') }}</th>
         <td>
           <NuxtLink
             to="https://github.com/KaiShoya/drink-counter/blob/main/LICENSE.md"
@@ -35,7 +35,7 @@
       </tr>
 
       <tr>
-        <th>バージョン</th>
+        <th>{{ $t('version') }}</th>
         <td>{{ $config.public.version }}</td>
       </tr>
     </tbody>

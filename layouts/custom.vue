@@ -21,7 +21,7 @@ signin.value = await isSignin()
             exact-active-class="is-active"
             @click="active = false"
           >
-            飲酒カウンター
+            {{ $t('title') }}
           </NuxtLink>
 
           <a
@@ -44,7 +44,7 @@ signin.value = await isSignin()
         >
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">Data</a>
+              <a class="navbar-link">{{ $t('routes.data') }}</a>
 
               <div class="navbar-dropdown">
                 <NuxtLink
@@ -53,7 +53,7 @@ signin.value = await isSignin()
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  トータル
+                  {{ $t('routes.total') }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
@@ -61,7 +61,7 @@ signin.value = await isSignin()
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  月別
+                  {{ $t('routes.monthly') }}
                 </NuxtLink>
               </div>
             </div>
@@ -72,7 +72,7 @@ signin.value = await isSignin()
               exact-active-class="is-active"
               @click="active = false"
             >
-              About
+              {{ $t('routes.about') }}
             </NuxtLink>
           </div>
 
@@ -85,7 +85,7 @@ signin.value = await isSignin()
               exact-active-class="is-active"
               @click="signInWithGoogle()"
             >
-              Google Sign in
+              {{ $t('auth.google') }}
             </a>
           </div>
         </div>

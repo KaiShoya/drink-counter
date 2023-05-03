@@ -1,3 +1,41 @@
 {
-  "title": "drink-counter"
+  "title": "drink-counter",
+  "routes": {
+    "data": "Data",
+    "total": "Total",
+    "monthly": "Monthly",
+    "about": "About"
+  },
+  "auth": {
+    "google": "Google Login"
+  },
+  "calendar": {
+    "month": {
+      "1": "Jan",
+      "2": "Feb",
+      "3": "Mar",
+      "4": "Apr",
+      "5": "May",
+      "6": "Jun",
+      "7": "Jul",
+      "8": "Aug",
+      "9": "Sep",
+      "10": "Oct",
+      "11": "Nov",
+      "12": "Dec"
+    },
+    "day_of_week": {
+      "Sun": "Sun",
+      "Mon": "Mon",
+      "Tue": "Tue",
+      "Wed": "Wed",
+      "Thu": "Thu",
+      "Fri": "Fri",
+      "Sat": "Sat"
+    }
+  },
+  "source": "Source",
+  "terms_of_service": "Terms of service",
+  "license": "License",
+  "version": "Version"
 }
