@@ -44,12 +44,12 @@ signin.value = await isSignin()
         >
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">Graphs</a>
+              <a class="navbar-link">Data</a>
 
               <div class="navbar-dropdown">
                 <NuxtLink
                   class="navbar-item"
-                  :to="localePath('/graphs/total')"
+                  :to="localePath('/data/total')"
                   exact-active-class="is-active"
                   @click="active = false"
                 >
@@ -57,7 +57,7 @@ signin.value = await isSignin()
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
-                  :to="localePath('/graphs/per_month')"
+                  :to="localePath('/data/monthly')"
                   exact-active-class="is-active"
                   @click="active = false"
                 >
