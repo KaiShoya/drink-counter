@@ -1,4 +1,8 @@
 <script setup>
+const { locale, locales } = useI18n()
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
+
 const { isSignin, signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
 const signin = useState(() => false)
@@ -14,7 +18,14 @@ signin.value = await isSignin()
         aria-label="main navigation"
       >
         <div class="navbar-brand">
-          <span class="navbar-item">飲酒カウンター</span>
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/')"
+            exact-active-class="is-active"
+            @click="active = false"
+          >
+            {{ $t('title') }}
+          </NuxtLink>
 
           <a
             role="button"
@@ -35,58 +46,64 @@ signin.value = await isSignin()
           :class="[{ 'is-active': active }, 'navbar-menu']"
         >
           <div class="navbar-start">
-            <NuxtLink
-              class="navbar-item"
-              to="/"
-              exact-active-class="is-active"
-              @click="active = false"
-            >
-              Home
-            </NuxtLink>
-
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">Graphs</a>
+              <a class="navbar-link">{{ $t('routes.data') }}</a>
 
               <div class="navbar-dropdown">
                 <NuxtLink
                   class="navbar-item"
-                  to="/graphs/total"
+                  :to="localePath('/data/total')"
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  トータル
+                  {{ $t('routes.total') }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
-                  to="/graphs/per_month"
+                  :to="localePath('/data/monthly')"
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  月別
+                  {{ $t('routes.monthly') }}
                 </NuxtLink>
               </div>
             </div>
+
+            <NuxtLink
+              class="navbar-item"
+              :to="localePath('/about')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              {{ $t('routes.about') }}
+            </NuxtLink>
           </div>
 
-          <NuxtLink
-            class="navbar-item"
-            to="/about"
-            exact-active-class="is-active"
-            @click="active = false"
-          >
-            About
-          </NuxtLink>
-
-          <div
-            v-if="!signin"
-            class="navbar-end"
-          >
+          <div class="navbar-end">
+            <div class="control has-icons-left">
+              <div class="select">
+                <select @change="$router.push(switchLocalePath($event.target.value))">
+                  <option
+                    v-for="l in locales"
+                    :key="l.code"
+                    :value="l.code"
+                    :selected="locale.code === l.code"
+                  >
+                    {{ l.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="icon is-left">
+                <i class="mdi mdi-web" />
+              </div>
+            </div>
             <a
+              v-if="!signin"
               class="navbar-item"
               exact-active-class="is-active"
               @click="signInWithGoogle()"
             >
-              Google Sign in
+              {{ $t('auth.google') }}
             </a>
           </div>
         </div>

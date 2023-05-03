@@ -11,6 +11,24 @@ export default defineNuxtConfig({
       version: pkg.version
     }
   },
+  modules: [
+    [
+      '@nuxtjs/i18n',
+      {
+        locales: [
+          { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
+          { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' }
+        ],
+        defaultLocale: 'ja',
+        langDir: 'locales/',
+        strategy: 'prefix_except_default', // https://v8.i18n.nuxtjs.org/guide/routing-strategies
+        // vueI18n: {
+        //   fallbackLocale: 'en' // FIXME: 設定方法変わったっぽい
+        // },
+        lazy: true
+      }
+    ]
+  ],
   app: {
     head: {
       script: [
