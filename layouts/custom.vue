@@ -67,16 +67,16 @@ signin.value = await isSignin()
                 </NuxtLink>
               </div>
             </div>
-          </div>
 
-          <NuxtLink
-            class="navbar-item"
-            :to="localePath('/about')"
-            exact-active-class="is-active"
-            @click="active = false"
-          >
-            About
-          </NuxtLink>
+            <NuxtLink
+              class="navbar-item"
+              :to="localePath('/about')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              About
+            </NuxtLink>
+          </div>
 
           <div
             v-if="!signin"
