@@ -1,5 +1,8 @@
 <script setup>
+const { locale, locales } = useI18n()
 const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
+
 const { isSignin, signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
 const signin = useState(() => false)
@@ -76,11 +79,26 @@ signin.value = await isSignin()
             </NuxtLink>
           </div>
 
-          <div
-            v-if="!signin"
-            class="navbar-end"
-          >
+          <div class="navbar-end">
+            <div class="control has-icons-left">
+              <div class="select">
+                <select @change="$router.push(switchLocalePath($event.target.value))">
+                  <option
+                    v-for="l in locales"
+                    :key="l.code"
+                    :value="l.code"
+                    :selected="locale.code === l.code"
+                  >
+                    {{ l.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="icon is-left">
+                <i class="mdi mdi-web" />
+              </div>
+            </div>
             <a
+              v-if="!signin"
               class="navbar-item"
               exact-active-class="is-active"
               @click="signInWithGoogle()"

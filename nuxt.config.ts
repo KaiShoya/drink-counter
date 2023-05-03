@@ -16,8 +16,8 @@ export default defineNuxtConfig({
       '@nuxtjs/i18n',
       {
         locales: [
-          { code: 'ja', name: 'Japanese', iso: 'ja_JP', file: 'ja.json' },
-          { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' }
+          { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
+          { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' }
         ],
         defaultLocale: 'ja',
         langDir: 'locales/',
