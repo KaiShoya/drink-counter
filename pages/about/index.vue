@@ -12,16 +12,16 @@
           </NuxtLink>
         </th>
       </tr>
-      <tr>
+      <!-- <tr>
         <th colspan="2">
           <NuxtLink
-            to="/"
+            to="/about/terms_of_service"
             class="display is-block"
           >
             {{ $t('terms_of_service') }}
           </NuxtLink>
         </th>
-      </tr>
+      </tr> -->
       <tr>
         <th>{{ $t('license') }}</th>
         <td>
