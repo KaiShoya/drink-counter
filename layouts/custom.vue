@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath()
 const { isSignin, signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
 const signin = useState(() => false)
@@ -37,7 +38,7 @@ signin.value = await isSignin()
           <div class="navbar-start">
             <NuxtLink
               class="navbar-item"
-              to="/"
+              :to="localePath('/')"
               exact-active-class="is-active"
               @click="active = false"
             >
@@ -50,7 +51,7 @@ signin.value = await isSignin()
               <div class="navbar-dropdown">
                 <NuxtLink
                   class="navbar-item"
-                  to="/graphs/total"
+                  :to="localePath('/graphs/total')"
                   exact-active-class="is-active"
                   @click="active = false"
                 >
@@ -58,7 +59,7 @@ signin.value = await isSignin()
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
-                  to="/graphs/per_month"
+                  :to="localePath('/graphs/per_month')"
                   exact-active-class="is-active"
                   @click="active = false"
                 >
@@ -70,7 +71,7 @@ signin.value = await isSignin()
 
           <NuxtLink
             class="navbar-item"
-            to="/about"
+            :to="localePath('/about')"
             exact-active-class="is-active"
             @click="active = false"
           >
