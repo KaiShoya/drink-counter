@@ -15,7 +15,14 @@ signin.value = await isSignin()
         aria-label="main navigation"
       >
         <div class="navbar-brand">
-          <span class="navbar-item">飲酒カウンター</span>
+          <NuxtLink
+            class="navbar-item"
+            :to="localePath('/')"
+            exact-active-class="is-active"
+            @click="active = false"
+          >
+            飲酒カウンター
+          </NuxtLink>
 
           <a
             role="button"
@@ -36,15 +43,6 @@ signin.value = await isSignin()
           :class="[{ 'is-active': active }, 'navbar-menu']"
         >
           <div class="navbar-start">
-            <NuxtLink
-              class="navbar-item"
-              :to="localePath('/')"
-              exact-active-class="is-active"
-              @click="active = false"
-            >
-              Home
-            </NuxtLink>
-
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">Graphs</a>
 
