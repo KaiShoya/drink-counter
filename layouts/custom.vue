@@ -19,9 +19,8 @@ signin.value = await isSignin()
       >
         <div class="navbar-brand">
           <NuxtLink
-            class="navbar-item"
+            class="navbar-item no-hover"
             :to="localePath('/')"
-            exact-active-class="is-active"
             @click="active = false"
           >
             {{ $t('title') }}
@@ -127,6 +126,12 @@ signin.value = await isSignin()
 </template>
 
 <style>
+.no-hover {
+  /* pointer-events: none; */
+  background-color: unset !important;
+  color: unset !important;
+}
+
 .flex-content {
   display: flex;
   flex-direction: column;
