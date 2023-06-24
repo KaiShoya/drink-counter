@@ -1,11 +1,15 @@
 <script setup lang="ts">
 const { getDrinks } = useDrinks()
 const { getDate, getDrinkCounters, increment, decrement, create } = useDrinkCounters()
-const { drinkAlertThreshold } = useDrinkAlert()
+const { getUserSettings } = useUserSettings()
 
 // 飲み物リスト
 const drinks: Ref<{ [x: string]: any; }[]> = useState('drinks', () => [])
 drinks.value = await getDrinks()
+
+// アラートの閾値を取得
+const thresholdForDetectingOverdrinking = (await getUserSettings())?.threshold_for_detecting_overdrinking
+console.log(thresholdForDetectingOverdrinking)
 
 // 今日飲んだ杯数
 const drinkCount: Ref<number> = useState('drinkCount', () => 0)
@@ -34,7 +38,7 @@ const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
   thisCounterId.value = counterId
   // 今飲んでる杯数が閾値を超えてたらアラートを出す
-  if (drinkAlertThreshold.value <= drinkCount.value) {
+  if (thresholdForDetectingOverdrinking <= drinkCount.value) {
     modalIsActive.value = true
   } else {
     plus(drinkId, counterId)
