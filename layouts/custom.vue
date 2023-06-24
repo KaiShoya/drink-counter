@@ -76,6 +76,15 @@ signin.value = await isSignin()
             >
               {{ $t('routes.about') }}
             </NuxtLink>
+
+            <NuxtLink
+              class="navbar-item"
+              :to="localePath('/settings')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              {{ $t('routes.settings') }}
+            </NuxtLink>
           </div>
 
           <div class="navbar-end">
