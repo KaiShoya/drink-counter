@@ -5,4 +5,7 @@
   "html.validate.styles": true,
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
+  "markdown.extension.tableFormatter.enabled": true,
+  "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
+  "markdown.extension.tableFormatter.normalizeIndentation": false,
 }
