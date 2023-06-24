@@ -9,7 +9,6 @@ drinks.value = await getDrinks()
 
 // アラートの閾値を取得
 const thresholdForDetectingOverdrinking = (await getUserSettings())?.threshold_for_detecting_overdrinking
-console.log(thresholdForDetectingOverdrinking)
 
 // 今日飲んだ杯数
 const drinkCount: Ref<number> = useState('drinkCount', () => 0)
