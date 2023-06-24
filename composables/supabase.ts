@@ -112,3 +112,19 @@ export const useDrinkAlert = () => {
     drinkAlertThreshold
   }
 }
+
+export const useUserSettings = () => {
+  const { supabase } = useSupabase()
+  const getUserSettings = async () => {
+    const { data } = await supabase.rpc('get_user_settings')
+    return (data || { threshold_for_detecting_overdrinking: 2 })
+  }
+
+  const updateThresholdForDetectingOverdrinking = async (threshold: number) => {
+    await supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold })
+  }
+  return {
+    getUserSettings,
+    updateThresholdForDetectingOverdrinking
+  }
+}

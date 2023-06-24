@@ -4,7 +4,8 @@
     "data": "Data",
     "total": "Total",
     "monthly": "Monthly",
-    "about": "About"
+    "about": "About",
+    "settings": "Settings"
   },
   "auth": {
     "google": "Google Login"
@@ -37,5 +38,10 @@
   "source": "Source",
   "terms_of_service": "Terms of service",
   "license": "License",
-  "version": "Version"
+  "version": "Version",
+  "settings": {
+    "threshold_for_detecting_overdrinking": "Threshold for detecting overdrinking",
+    "cups": "cups",
+    "save": "Save"
+  }
 }
