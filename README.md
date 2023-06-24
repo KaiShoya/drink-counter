@@ -1,5 +1,6 @@
 # drink-counter
 
+[![GitHub release](https://img.shields.io/github/release/KaiShoya/drink-counter.svg?style=flat-square)](https://github.com/KaiShoya/drink-counter/releases/latest)
 [![CI Status](https://github.com/KaiShoya/drink-counter/workflows/CI/badge.svg)](https://github.com/KaiShoya/drink-counter/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/kaishoya/drink-counter/badge)](https://www.codefactor.io/repository/github/kaishoya/drink-counter)
 [![codebeat badge](https://codebeat.co/badges/1f56fa48-87d0-4713-8b2a-0202cf98c41e)](https://codebeat.co/projects/github-com-kaishoya-drink-counter-main)

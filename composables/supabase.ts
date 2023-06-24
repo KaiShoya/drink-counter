@@ -106,13 +106,6 @@ export const useDrinkCounters = () => {
   }
 }
 
-export const useDrinkAlert = () => {
-  const drinkAlertThreshold: Ref<number> = useState(() => 2)
-  return {
-    drinkAlertThreshold
-  }
-}
-
 export const useUserSettings = () => {
   const { supabase } = useSupabase()
   const getUserSettings = async () => {
