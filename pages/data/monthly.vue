@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const { getDrinks } = useDrinks()
 const { getDCPerMonth, quantityByDrinkPerMonth } = useDrinkCounters()
+const { processIntoYearMonth } = useProcessDate()
 
 const date = new Date()
-const yearMonth = useState(() => `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}`)
+const yearMonth = useState(() => processIntoYearMonth(date))
 // カレンダー再描画用
 const updateCalendar = ref(0)
 
@@ -20,8 +21,9 @@ const chartData: Ref<Array<Array<string | number>>> = useState(() => [chartDataT
 
 // 棒グラフ用のデータをセットする
 const graphDataTitle = ['日付', '合計', ...drinksArray]
-let graphDataData: { [key: string]: Array<number> } = {}
 const graphData: Ref<Array<Array<string | number>>> = useState(() => [graphDataTitle])
+
+const calendarData: Ref<Array<any>> = useState(() => [])
 
 const resetPieChartData = async (year: number, month: number) => {
   const drinkCount = await quantityByDrinkPerMonth(year, month)
@@ -34,11 +36,11 @@ const resetPieChartData = async (year: number, month: number) => {
   )
 
   // データ更新
-  chartData.value = [chartDataTitle, ...chartDataData]
+  return [chartDataTitle, ...chartDataData]
 }
 
 const resetGraphData = () => {
-  graphDataData = {}
+  const graphDataData: { [key: string]: Array<number> } = {}
 
   for (const dc of drinkCounters.value) {
     if (!Object.getOwnPropertyDescriptor(graphDataData, dc.date)) {
@@ -49,15 +51,18 @@ const resetGraphData = () => {
     graphDataData[dc.date][drinksIdArray.indexOf(dc.drink_id) + 1] = dc.count
     graphDataData[dc.date][0] += dc.count
   }
-  graphData.value = [
+  return graphDataData
+}
+
+const processGraphData = (graphDataData: { [key: string]: Array<number> }) => {
+  return [
     graphDataTitle,
     ...Object.entries(graphDataData).map(([key, value]) => [key as string | Number].concat(value))
   ]
 }
 
-const calendarData: Ref<Array<any>> = useState(() => [])
-const resetPerWODData = () => {
-  calendarData.value = Object.entries(graphDataData).map(([key, value]) => {
+const resetPerWODData = (graphDataData: { [key: string]: Array<number> }) => {
+  return Object.entries(graphDataData).map(([key, value]) => {
     return {
       date: key,
       count: value[0]
@@ -70,9 +75,11 @@ const setChartData = async () => {
   const [year, month] = yearMonth.value.split('-').map(v => Number(v))
   drinkCounters.value = await getDCPerMonth(year, month)
 
-  await resetPieChartData(year, month)
-  await resetGraphData()
-  resetPerWODData()
+  const graphDataData = resetGraphData()
+
+  chartData.value = await resetPieChartData(year, month)
+  graphData.value = processGraphData(graphDataData)
+  calendarData.value = resetPerWODData(graphDataData)
   // keyを更新してカレンダーを再描画
   updateCalendar.value++
 }

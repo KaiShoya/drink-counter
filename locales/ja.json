@@ -4,7 +4,8 @@
     "data": "データ",
     "total": "トータル",
     "monthly": "月別",
-    "about": "About"
+    "about": "About",
+    "settings": "設定"
   },
   "auth": {
     "google": "Googleログイン"
@@ -37,5 +38,10 @@
   "source": "ソースコード",
   "terms_of_service": "利用規約",
   "license": "ライセンス",
-  "version": "バージョン"
+  "version": "バージョン",
+  "settings": {
+    "threshold_for_detecting_overdrinking": "アラートの閾値(杯数)",
+    "cups": "杯",
+    "save": "保存する"
+  }
 }
