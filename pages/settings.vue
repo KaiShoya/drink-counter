@@ -4,6 +4,7 @@ const { updateThresholdForDetectingOverdrinking } = useSupabase()
 const { userSettings, updateThreshold } = useUserStore()
 
 const thresholdForDetectingOverdrinking: Ref<number> = useState(() => userSettings.thresholdForDetectingOverdrinking)
+thresholdForDetectingOverdrinking.value = userSettings.thresholdForDetectingOverdrinking
 
 const click = () => {
   updateThresholdForDetectingOverdrinking(thresholdForDetectingOverdrinking.value).then(() => {
