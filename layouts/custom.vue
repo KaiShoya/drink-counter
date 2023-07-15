@@ -26,9 +26,21 @@ signin.value = await isSignin()
             {{ $t('title') }}
           </NuxtLink>
 
+          <div
+            v-if="signin"
+            class="navbar-burger navbar-burger-left"
+          >
+            <div class="image">
+              <img
+                class="navbar-item is-rounded"
+                src="https://bulma.io/images/placeholders/64x64.png"
+              >
+            </div>
+          </div>
+
           <a
             role="button"
-            class="navbar-burger"
+            :class="['navbar-burger', { 'navbar-burger-right': signin }]"
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -135,6 +147,14 @@ signin.value = await isSignin()
 </template>
 
 <style>
+.navbar-burger-left {
+  margin-right: 0px;
+}
+
+.navbar-burger-right {
+  margin-left: 0px;
+}
+
 .no-hover {
   /* pointer-events: none; */
   background-color: unset !important;
