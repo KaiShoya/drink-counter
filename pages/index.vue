@@ -27,7 +27,7 @@ const getCount = (id: number) => {
   const dcs = drinkCounters.value.filter(dc => dc.drink_id === id)
   return {
     id: dcs[0]?.id ?? -1,
-    count: Number(dcs[0]?.count ?? 0)
+    count: Number(dcs[0]?.count ?? 0),
   }
 }
 
@@ -74,7 +74,7 @@ onMounted(
       drink.count = count
       drinkCount.value += count
     }
-  }
+  },
 )
 
 watch(date, async () => {

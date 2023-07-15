@@ -22,7 +22,7 @@ export const useSupabase = () => {
 
   const signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'google'
+      provider: 'google',
     })
   }
 
@@ -36,7 +36,7 @@ export const useSupabase = () => {
     signUpWithEmail,
     signInWithEmail,
     signInWithGoogle,
-    signOut
+    signOut,
   }
 }
 
@@ -47,7 +47,7 @@ export const useDrinks = () => {
     return data || []
   }
   return {
-    getDrinks
+    getDrinks,
   }
 }
 
@@ -102,7 +102,7 @@ export const useDrinkCounters = () => {
     create,
     getDate,
     quantityByDrink,
-    quantityByDrinkPerMonth
+    quantityByDrinkPerMonth,
   }
 }
 
@@ -118,6 +118,6 @@ export const useUserSettings = () => {
   }
   return {
     getUserSettings,
-    updateThresholdForDetectingOverdrinking
+    updateThresholdForDetectingOverdrinking,
   }
 }
