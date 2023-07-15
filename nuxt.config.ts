@@ -27,7 +27,8 @@ export default defineNuxtConfig({
         // },
         lazy: true
       }
-    ]
+    ],
+    '@pinia/nuxt'
   ],
   app: {
     head: {
