@@ -1,12 +1,17 @@
-<script setup>
+<script setup lang="ts">
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
+const { getUserSettings } = useUserSettings()
 
 const { isSignin, signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
 const signin = useState(() => false)
 signin.value = await isSignin()
+
+const avatarUrl: Ref<string | null> = useState(() => null)
+const userSettings = await getUserSettings()
+avatarUrl.value = userSettings?.avatar_url
 </script>
 
 <template>
@@ -30,11 +35,21 @@ signin.value = await isSignin()
             v-if="signin"
             class="navbar-burger navbar-burger-left"
           >
-            <div class="image">
+            <div
+              v-if="avatarUrl"
+              class="image"
+            >
               <img
                 class="navbar-item is-rounded"
-                src="https://bulma.io/images/placeholders/64x64.png"
+                :src="avatarUrl"
               >
+            </div>
+            <div
+              v-else
+              class="icon image is-medium"
+              style="margin: auto;"
+            >
+              <i class="mdi mdi-account-circle mdi-36px" />
             </div>
           </div>
 
