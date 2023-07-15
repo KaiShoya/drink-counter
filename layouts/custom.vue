@@ -8,7 +8,6 @@ const switchLocalePath = useSwitchLocalePath()
 
 const { signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
-
 </script>
 
 <template>
@@ -28,40 +27,53 @@ const active = useState('active', () => false)
             {{ $t('title') }}
           </NuxtLink>
 
-          <div
-            v-if="isLogin"
-            class="navbar-burger navbar-burger-left"
-          >
-            <div
-              v-if="userSettings.avatarUrl"
-              class="image"
-            >
-              <img
-                class="navbar-item is-rounded"
-                :src="userSettings.avatarUrl"
+          <template v-if="isLogin">
+            <div class="navbar-burger navbar-burger-left">
+              <div
+                v-if="userSettings.avatarUrl"
+                class="image"
               >
+                <img
+                  class="navbar-item is-rounded"
+                  :src="userSettings.avatarUrl"
+                >
+              </div>
+              <div
+                v-else
+                class="icon image is-medium"
+                style="margin: auto;"
+              >
+                <i class="mdi mdi-account-circle mdi-36px" />
+              </div>
             </div>
-            <div
-              v-else
-              class="icon image is-medium"
-              style="margin: auto;"
-            >
-              <i class="mdi mdi-account-circle mdi-36px" />
-            </div>
-          </div>
 
-          <a
-            role="button"
-            :class="['navbar-burger', { 'navbar-burger-right': isLogin }]"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-            @click="active = !active"
-          >
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-          </a>
+            <a
+              role="button"
+              class="navbar-burger navbar-burger-right"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="navbarBasicExample"
+              @click="active = !active"
+            >
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </a>
+          </template>
+          <template v-else>
+            <a
+              role="button"
+              class="navbar-burger"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="navbarBasicExample"
+              @click="active = !active"
+            >
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </a>
+          </template>
         </div>
 
         <div
