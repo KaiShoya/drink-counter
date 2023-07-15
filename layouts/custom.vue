@@ -1,21 +1,14 @@
 <script setup lang="ts">
+import { useUserStore } from '@/store/userSettings'
+const { userSettings, isLogin } = useUserStore()
+
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
-const { getUserSettings } = useUserSettings()
 
-// FIXME: なんか汚い
-const { isSignin, signInWithGoogle } = useSupabase()
+const { signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
-const signin = useState(() => false)
 
-const avatarUrl: Ref<string | null> = useState(() => null)
-const userSettings = await getUserSettings()
-avatarUrl.value = userSettings?.avatar_url
-
-onMounted(async () => {
-  signin.value = await isSignin()
-})
 </script>
 
 <template>
@@ -36,16 +29,16 @@ onMounted(async () => {
           </NuxtLink>
 
           <div
-            v-if="signin"
+            v-if="isLogin"
             class="navbar-burger navbar-burger-left"
           >
             <div
-              v-if="avatarUrl"
+              v-if="userSettings.avatarUrl"
               class="image"
             >
               <img
                 class="navbar-item is-rounded"
-                :src="avatarUrl"
+                :src="userSettings.avatarUrl"
               >
             </div>
             <div
@@ -59,7 +52,7 @@ onMounted(async () => {
 
           <a
             role="button"
-            :class="['navbar-burger', { 'navbar-burger-right': signin }]"
+            :class="['navbar-burger', { 'navbar-burger-right': isLogin }]"
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -137,7 +130,7 @@ onMounted(async () => {
               </div>
             </div>
             <a
-              v-if="!signin"
+              v-if="!isLogin"
               class="navbar-item"
               exact-active-class="is-active"
               @click="signInWithGoogle()"

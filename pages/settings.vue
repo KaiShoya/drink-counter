@@ -1,12 +1,14 @@
 <script setup lang="ts">
-const { getUserSettings, updateThresholdForDetectingOverdrinking } = useUserSettings()
+import { useUserStore } from '@/store/userSettings'
+const { updateThresholdForDetectingOverdrinking } = useSupabase()
+const { userSettings, updateThreshold } = useUserStore()
 
-const thresholdForDetectingOverdrinking: Ref<number> = useState(() => 2)
-const userSettings = await getUserSettings()
-thresholdForDetectingOverdrinking.value = userSettings?.threshold_for_detecting_overdrinking || thresholdForDetectingOverdrinking.value
+const thresholdForDetectingOverdrinking: Ref<number> = useState(() => userSettings.thresholdForDetectingOverdrinking)
 
 const click = () => {
-  updateThresholdForDetectingOverdrinking(thresholdForDetectingOverdrinking.value)
+  updateThresholdForDetectingOverdrinking(thresholdForDetectingOverdrinking.value).then(() => {
+    updateThreshold(thresholdForDetectingOverdrinking.value)
+  })
 }
 </script>
 

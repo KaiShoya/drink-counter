@@ -45,4 +45,11 @@ export default defineNuxtConfig({
     '@mdi/font/css/materialdesignicons.css',
     'assets/scss/index.scss',
   ],
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
 })
