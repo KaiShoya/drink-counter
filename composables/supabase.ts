@@ -110,7 +110,7 @@ export const useUserSettings = () => {
   const { supabase } = useSupabase()
   const getUserSettings = async () => {
     const { data } = await supabase.rpc('get_user_settings')
-    return (data || { threshold_for_detecting_overdrinking: 2 })
+    return (data || { threshold_for_detecting_overdrinking: 2, name: null, avatar_url: null })
   }
 
   const updateThresholdForDetectingOverdrinking = async (threshold: number) => {

@@ -1,12 +1,21 @@
-<script setup>
+<script setup lang="ts">
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
+const { getUserSettings } = useUserSettings()
 
+// FIXME: なんか汚い
 const { isSignin, signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
 const signin = useState(() => false)
-signin.value = await isSignin()
+
+const avatarUrl: Ref<string | null> = useState(() => null)
+const userSettings = await getUserSettings()
+avatarUrl.value = userSettings?.avatar_url
+
+onMounted(async () => {
+  signin.value = await isSignin()
+})
 </script>
 
 <template>
@@ -26,9 +35,31 @@ signin.value = await isSignin()
             {{ $t('title') }}
           </NuxtLink>
 
+          <div
+            v-if="signin"
+            class="navbar-burger navbar-burger-left"
+          >
+            <div
+              v-if="avatarUrl"
+              class="image"
+            >
+              <img
+                class="navbar-item is-rounded"
+                :src="avatarUrl"
+              >
+            </div>
+            <div
+              v-else
+              class="icon image is-medium"
+              style="margin: auto;"
+            >
+              <i class="mdi mdi-account-circle mdi-36px" />
+            </div>
+          </div>
+
           <a
             role="button"
-            class="navbar-burger"
+            :class="['navbar-burger', { 'navbar-burger-right': signin }]"
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -135,6 +166,14 @@ signin.value = await isSignin()
 </template>
 
 <style>
+.navbar-burger-left {
+  margin-right: 0px;
+}
+
+.navbar-burger-right {
+  margin-left: 0px;
+}
+
 .no-hover {
   /* pointer-events: none; */
   background-color: unset !important;
