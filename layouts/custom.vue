@@ -4,14 +4,18 @@ const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 const { getUserSettings } = useUserSettings()
 
+// FIXME: なんか汚い
 const { isSignin, signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
 const signin = useState(() => false)
-signin.value = await isSignin()
 
 const avatarUrl: Ref<string | null> = useState(() => null)
 const userSettings = await getUserSettings()
 avatarUrl.value = userSettings?.avatar_url
+
+onMounted(async () => {
+  signin.value = await isSignin()
+})
 </script>
 
 <template>
