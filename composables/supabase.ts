@@ -110,7 +110,3 @@ export const useDrinkCounters = () => {
     quantityByDrinkPerMonth,
   }
 }
-
-export const updateThresholdForDetectingOverdrinking = (threshold: number) => {
-  return supabase().rpc('update_threshold_for_detecting_overdrinking', { threshold })
-}
