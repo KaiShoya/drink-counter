@@ -31,8 +31,8 @@ const resetPieChartData = async (year: number, month: number) => {
   chartDataData = drinkCount.map(
     (v: { drink_id: number, count: number }) => [
       drinks.filter(drink => drink.id === v.drink_id)[0].name,
-      v.count
-    ]
+      v.count,
+    ],
   )
 
   // データ更新
@@ -57,7 +57,7 @@ const resetGraphData = () => {
 const processGraphData = (graphDataData: { [key: string]: Array<number> }) => {
   return [
     graphDataTitle,
-    ...Object.entries(graphDataData).map(([key, value]) => [key as string | Number].concat(value))
+    ...Object.entries(graphDataData).map(([key, value]) => [key as string | Number].concat(value)),
   ]
 }
 
@@ -65,7 +65,7 @@ const resetPerWODData = (graphDataData: { [key: string]: Array<number> }) => {
   return Object.entries(graphDataData).map(([key, value]) => {
     return {
       date: key,
-      count: value[0]
+      count: value[0],
     }
   })
 }
