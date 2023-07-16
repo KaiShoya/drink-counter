@@ -8,8 +8,8 @@ const { data: thresholdForDetectingOverdrinking } = await useAsyncData('threshol
 thresholdForDetectingOverdrinking.value = userSettings.thresholdForDetectingOverdrinking
 
 const click = () => {
-  updateThresholdForDetectingOverdrinking(thresholdForDetectingOverdrinking.value).then(() => {
-    updateThreshold(thresholdForDetectingOverdrinking.value)
+  updateThresholdForDetectingOverdrinking(Number(thresholdForDetectingOverdrinking.value)).then(() => {
+    updateThreshold(Number(thresholdForDetectingOverdrinking.value))
   })
 }
 </script>

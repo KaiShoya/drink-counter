@@ -67,6 +67,7 @@ const minus = async (drinkId: number, counterId: number) => {
 
 onMounted(
   () => {
+    drinkCount.value = 0
     for (const drink of drinks.value) {
       const { id, count } = getCount(drink.id)
       drink.counter_id = id
