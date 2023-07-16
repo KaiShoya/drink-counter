@@ -3,7 +3,8 @@ import { useUserStore } from '@/store/userSettings'
 const { updateThresholdForDetectingOverdrinking } = useSupabase()
 const { userSettings, updateThreshold } = useUserStore()
 
-const thresholdForDetectingOverdrinking: Ref<number> = useState('threshold')
+// const thresholdForDetectingOverdrinking: Ref<number> = useState('threshold')
+const { data: thresholdForDetectingOverdrinking } = await useAsyncData('threshold', () => userSettings.thresholdForDetectingOverdrinking)
 thresholdForDetectingOverdrinking.value = userSettings.thresholdForDetectingOverdrinking
 
 const click = () => {
