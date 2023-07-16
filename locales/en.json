@@ -45,6 +45,7 @@
     "save": "Save"
   },
   "error": {
-    "500_API_ERROR": "An internal server error occurred."
+    "500_API_ERROR": "An internal server error occurred.",
+    "GET_USER_INFO": "Failed to retrieve login information"
   }
 }

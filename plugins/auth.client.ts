@@ -1,20 +1,12 @@
 import { useUserStore } from '@/store/userSettings'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const { setUserSettings, setIsLogin } = useUserStore()
+  const { setUserSettings, getUser } = useUserStore()
   const { supabase } = useSupabase()
   const { $i18n } = useNuxtApp()
 
   nuxtApp.hook('app:created', async () => {
-    // ログインチェック
-    const { data: sessionData, error: sessionError } = await useAsyncData(
-      'getSession',
-      () => supabase.auth.getSession(),
-    )
-    if (sessionError.value) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
-    }
-    setIsLogin(sessionData.value?.data.session !== null)
+    await getUser()
 
     // ユーザーデータ取得
     // TODO: rpcの戻り値PostgrestFilterBuilderをuseAsyncDataで使う方法がわからないため、一旦このままで。
