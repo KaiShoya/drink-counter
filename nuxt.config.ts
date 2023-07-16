@@ -44,6 +44,7 @@ export default defineNuxtConfig({
   css: [
     '@mdi/font/css/materialdesignicons.css',
     'assets/scss/index.scss',
+    'animate.css/animate.min.css',
   ],
   pinia: {
     autoImports: [
