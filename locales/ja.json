@@ -43,5 +43,9 @@
     "threshold_for_detecting_overdrinking": "アラートの閾値(杯数)",
     "cups": "杯",
     "save": "保存する"
+  },
+  "error": {
+    "500_API_ERROR": "サーバーエラーが発生しました。",
+    "GET_USER_INFO": "ログイン情報を取得できませんでした。"
   }
 }

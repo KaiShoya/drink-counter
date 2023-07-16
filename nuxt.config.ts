@@ -8,8 +8,8 @@ export default defineNuxtConfig({
       supabaseKey: process.env.SUPABASE_KEY,
       gtagAppName: process.env.GTAG_APP_NAME,
       gtagConfig: process.env.GTAG_CONFIG,
-      version: pkg.version
-    }
+      version: pkg.version,
+    },
   },
   modules: [
     [
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       {
         locales: [
           { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
-          { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' }
+          { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' },
         ],
         defaultLocale: 'ja',
         langDir: 'locales/',
@@ -25,9 +25,10 @@ export default defineNuxtConfig({
         // vueI18n: {
         //   fallbackLocale: 'en' // FIXME: 設定方法変わったっぽい
         // },
-        lazy: true
-      }
-    ]
+        lazy: true,
+      },
+    ],
+    '@pinia/nuxt',
   ],
   app: {
     head: {
@@ -35,13 +36,21 @@ export default defineNuxtConfig({
         {
           async: true,
           src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9966413329461393',
-          crossorigin: 'anonymous'
-        }
-      ]
-    }
+          crossorigin: 'anonymous',
+        },
+      ],
+    },
   },
   css: [
     '@mdi/font/css/materialdesignicons.css',
-    'assets/scss/index.scss'
-  ]
+    'assets/scss/index.scss',
+    'animate.css/animate.min.css',
+  ],
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
 })

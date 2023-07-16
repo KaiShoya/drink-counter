@@ -12,8 +12,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     {
       appName: useRuntimeConfig().public.gtagAppName,
       pageTrackerScreenviewEnabled: true,
-      config: { id: useRuntimeConfig().public.gtagConfig }
+      config: { id: useRuntimeConfig().public.gtagConfig },
     },
-    router
+    router,
   )
 })

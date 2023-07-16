@@ -22,12 +22,16 @@ export const useSupabase = () => {
 
   const signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'google'
+      provider: 'google',
     })
   }
 
   const signOut = async () => {
     await supabase.auth.signOut()
+  }
+
+  const updateThresholdForDetectingOverdrinking = (threshold: number) => {
+    return supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold })
   }
 
   return {
@@ -36,7 +40,8 @@ export const useSupabase = () => {
     signUpWithEmail,
     signInWithEmail,
     signInWithGoogle,
-    signOut
+    signOut,
+    updateThresholdForDetectingOverdrinking,
   }
 }
 
@@ -47,7 +52,7 @@ export const useDrinks = () => {
     return data || []
   }
   return {
-    getDrinks
+    getDrinks,
   }
 }
 
@@ -102,22 +107,6 @@ export const useDrinkCounters = () => {
     create,
     getDate,
     quantityByDrink,
-    quantityByDrinkPerMonth
-  }
-}
-
-export const useUserSettings = () => {
-  const { supabase } = useSupabase()
-  const getUserSettings = async () => {
-    const { data } = await supabase.rpc('get_user_settings')
-    return (data || { threshold_for_detecting_overdrinking: 2, name: null, avatar_url: null })
-  }
-
-  const updateThresholdForDetectingOverdrinking = async (threshold: number) => {
-    await supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold })
-  }
-  return {
-    getUserSettings,
-    updateThresholdForDetectingOverdrinking
+    quantityByDrinkPerMonth,
   }
 }
