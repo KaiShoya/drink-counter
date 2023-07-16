@@ -43,5 +43,8 @@
     "threshold_for_detecting_overdrinking": "Threshold for detecting overdrinking",
     "cups": "cups",
     "save": "Save"
+  },
+  "error": {
+    "500_API_ERROR": "An internal server error occurred."
   }
 }
