@@ -6,8 +6,8 @@ withDefaults(defineProps<{
 }>(), {
   options: {
     seriesType: 'bars',
-    series: { 0: { type: 'line' } }
-  }
+    series: { 0: { type: 'line' } },
+  },
 })
 </script>
 
