@@ -4,10 +4,10 @@ import pkg from './package.json'
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      supabaseUrl: process.env.SUPABASE_URL,
-      supabaseKey: process.env.SUPABASE_KEY,
-      gtagAppName: process.env.GTAG_APP_NAME,
-      gtagConfig: process.env.GTAG_CONFIG,
+      supabaseUrl: 'http://localhost:54321',
+      supabaseKey: '',
+      gtagAppName: '',
+      gtagConfig: '',
       version: pkg.version,
     },
   },
