@@ -9,8 +9,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     await getUser()
 
     // ユーザーデータ取得
-    // TODO: rpcの戻り値PostgrestFilterBuilderをuseAsyncDataで使う方法がわからないため、一旦このままで。
-    const { data: userSettingsData, error: getUserSettingsError } = await supabase.rpc('get_user_settings')
+    const { data: userSettingsData, error: getUserSettingsError } = await useAsyncData(
+      'get_user_settings',
+      async () => {
+        const { data } = await supabase.rpc('get_user_settings')
+        return data
+      },
+    )
     if (getUserSettingsError) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     }
