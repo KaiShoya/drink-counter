@@ -2,6 +2,7 @@ import pkg from './package.json'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   runtimeConfig: {
     public: {
       supabaseUrl: 'http://localhost:54321',
