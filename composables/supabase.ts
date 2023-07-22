@@ -6,10 +6,6 @@ export const supabase = () => {
 
 export const useSupabase = () => {
   const supabase = createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey)
-  const isSignin = async () => {
-    const { data } = await supabase.auth.getSession()
-    return data.session !== null
-  }
 
   const signUpWithEmail = async (email: string, password: string) => {
     const { data } = await supabase.auth.signUp({ email, password })
@@ -36,7 +32,6 @@ export const useSupabase = () => {
 
   return {
     supabase: readonly(supabase),
-    isSignin: readonly(isSignin),
     signUpWithEmail,
     signInWithEmail,
     signInWithGoogle,
