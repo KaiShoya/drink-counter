@@ -1,11 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
-
-export const supabase = () => {
-  return createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey)
-}
+import { useSupabaseStore } from '@/store/supabase'
 
 export const useSupabase = () => {
-  const supabase = createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey)
+  const { supabase } = useSupabaseStore()
 
   const signUpWithEmail = async (email: string, password: string) => {
     const { data } = await supabase.auth.signUp({ email, password })
@@ -31,7 +27,6 @@ export const useSupabase = () => {
   }
 
   return {
-    supabase: readonly(supabase),
     signUpWithEmail,
     signInWithEmail,
     signInWithGoogle,
@@ -41,7 +36,7 @@ export const useSupabase = () => {
 }
 
 export const useDrinks = () => {
-  const { supabase } = useSupabase()
+  const { supabase } = useSupabaseStore()
   const getDrinks = async () => {
     const { data } = await supabase.from('drinks').select('*')
     return data || []
@@ -52,7 +47,7 @@ export const useDrinks = () => {
 }
 
 export const useDrinkCounters = () => {
-  const { supabase } = useSupabase()
+  const { supabase } = useSupabaseStore()
   const getDCAll = async () => {
     const { data } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0)
     return data || []

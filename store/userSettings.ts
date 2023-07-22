@@ -1,3 +1,5 @@
+import { useSupabaseStore } from './supabase'
+
 interface UserSettings {
   thresholdForDetectingOverdrinking: Ref<number>
   name: Ref<string | null>
@@ -6,6 +8,7 @@ interface UserSettings {
 
 export const useUserStore = defineStore('UserSettings', () => {
   const { $i18n } = useNuxtApp()
+  const { supabase } = useSupabaseStore()
   const isLogin: Ref<boolean> = useState(() => false)
   const userSettings: UserSettings = {
     thresholdForDetectingOverdrinking: useState(() => 2),
@@ -16,7 +19,7 @@ export const useUserStore = defineStore('UserSettings', () => {
   const getUser = async () => {
     const { data: sessionData, error: sessionError } = await useAsyncData(
       'getSession',
-      () => supabase().auth.getSession(),
+      () => supabase.auth.getSession(),
     )
     if (sessionError.value) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
@@ -27,7 +30,7 @@ export const useUserStore = defineStore('UserSettings', () => {
 
     const { data: userData, error: userError } = await useAsyncData(
       'getUser',
-      () => supabase().auth.getUser(),
+      () => supabase.auth.getUser(),
     )
     if (userError.value) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })

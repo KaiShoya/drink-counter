@@ -1,8 +1,9 @@
 import { useUserStore } from '@/store/userSettings'
+import { useSupabaseStore } from '@/store/supabase'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { setUserSettings, getUser } = useUserStore()
-  const { supabase } = useSupabase()
+  const { supabase } = useSupabaseStore()
   const { $i18n } = useNuxtApp()
 
   nuxtApp.hook('app:created', async () => {
@@ -12,11 +13,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     const { data: userSettingsData, error: getUserSettingsError } = await useAsyncData(
       'get_user_settings',
       async () => {
-        const { data } = await supabase.rpc('get_user_settings')
-        return data
+        const { data, error } = await supabase.rpc('get_user_settings')
+        return { data, error }
       },
     )
-    if (getUserSettingsError) {
+    if (getUserSettingsError.value) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     }
     setUserSettings(userSettingsData)
