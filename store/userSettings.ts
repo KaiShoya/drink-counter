@@ -16,14 +16,25 @@ export const useUserStore = defineStore('UserSettings', () => {
   const getUser = async () => {
     const { data: sessionData, error: sessionError } = await useAsyncData(
       'getSession',
-      () => supabase().auth.getUser(),
+      () => supabase().auth.getSession(),
     )
     if (sessionError.value) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     }
-    isLogin.value = sessionData.value?.data.user !== null
-    userSettings.name.value = sessionData.value?.data.user?.user_metadata?.name
-    userSettings.avatarUrl.value = sessionData.value?.data.user?.user_metadata?.avatar_url
+    if (sessionData.value?.data.session === null || sessionData.value?.data.session === undefined) {
+      return false
+    }
+
+    const { data: userData, error: userError } = await useAsyncData(
+      'getUser',
+      () => supabase().auth.getUser(),
+    )
+    if (userError.value) {
+      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
+    }
+    isLogin.value = userData.value?.data.user !== null
+    userSettings.name.value = userData.value?.data.user?.user_metadata?.name
+    userSettings.avatarUrl.value = userData.value?.data.user?.user_metadata?.avatar_url
     return isLogin.value
   }
 
