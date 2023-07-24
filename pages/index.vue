@@ -57,8 +57,12 @@ const plus = async (drinkId: number, counterId: number) => {
   drinkCount.value += 1
 }
 const minus = async (drinkId: number, counterId: number) => {
+  const drink = drinks.value.filter(d => d.id === drinkId)[0]
+  if (drink.count === 0) {
+    return
+  }
   const data = await decrement(counterId)
-  drinks.value.filter(d => d.id === drinkId)[0].count = data?.count ?? 0
+  drink.count = data?.count ?? 0
   // 飲んだ杯数を-1する
   if (drinkCount.value > 0) {
     drinkCount.value -= 1
