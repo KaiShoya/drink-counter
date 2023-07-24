@@ -17,7 +17,7 @@ const calcEvents = () => {
     return {
       start: v.date,
       display: 'background',
-      color: `#044A05${Math.floor(255 * (v.count / maxCount)).toString(16)}`
+      color: `#044A05${Math.floor(255 * (v.count / maxCount)).toString(16)}`,
     }
   })
 
@@ -30,7 +30,7 @@ const calendarOptions: CalendarOptions = {
   initialView: 'dayGridMonth',
   height: 500,
   headerToolbar: false,
-  events: calcEvents()
+  events: calcEvents(),
 }
 </script>
 

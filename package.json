@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.3.1",
+  "version": "1.5.1",
   "license": "MIT",
   "author": {
     "name": "Kai Shoya",
@@ -18,22 +18,26 @@
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/i18n": "^8.0.0-beta.11",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",
-    "eslint": "^8.36.0",
+    "eslint": "^8.45.0",
     "eslint-plugin-vue": "^9.9.0",
-    "nuxt": "^3.6.1",
-    "sass": "^1.58.3",
-    "typescript": "^4.9.5"
+    "nuxt": "^3.6.5",
+    "sass": "^1.64.1",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.4",
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/vue3": "^6.1.4",
     "@mdi/font": "^7.1.96",
+    "@pinia/nuxt": "^0.4.11",
     "@supabase/supabase-js": "^2.10.0",
+    "animate.css": "^4.1.1",
     "bulma": "^0.9.4",
+    "bulma-toast": "^2.4.2",
+    "pinia": "^2.1.4",
     "vue-google-charts": "^1.1.0",
     "vue-gtag": "^2.0.1"
   }

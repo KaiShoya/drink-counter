@@ -12,8 +12,8 @@ const chartDataTitle = ['Name', 'Count']
 const chartDataData: Array<Array<number>> = drinkCount.map(
   (v: { drink_id: number, count: number }) => [
     drinks.filter(drink => drink.id === v.drink_id)[0].name,
-    v.count
-  ]
+    v.count,
+  ],
 )
 const chartData: Ref<Array<Array<string | number>>> = useState(() => [chartDataTitle])
 
@@ -38,14 +38,14 @@ calendarData.value = [
   [
     {
       type: 'date',
-      id: 'Date'
+      id: 'Date',
     },
     {
       type: 'number',
-      id: 'Count'
-    }
+      id: 'Count',
+    },
   ],
-  ...Object.entries(graphDataData).map(([key, value]) => [new Date(key), value[0]])
+  ...Object.entries(graphDataData).map(([key, value]) => [new Date(key), value[0]]),
 ]
 </script>
 

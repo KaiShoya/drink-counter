@@ -1,12 +1,13 @@
-<script setup>
+<script setup lang="ts">
+import { useUserStore } from '@/store/userSettings'
+const { userSettings, isLogin } = useUserStore()
+
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
-const { isSignin, signInWithGoogle } = useSupabase()
+const { signInWithGoogle } = useSupabase()
 const active = useState('active', () => false)
-const signin = useState(() => false)
-signin.value = await isSignin()
 </script>
 
 <template>
@@ -26,18 +27,53 @@ signin.value = await isSignin()
             {{ $t('title') }}
           </NuxtLink>
 
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-            @click="active = !active"
-          >
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-          </a>
+          <template v-if="isLogin">
+            <div class="navbar-burger navbar-burger-left">
+              <div
+                v-if="userSettings.avatarUrl"
+                class="image"
+              >
+                <img
+                  class="navbar-item is-rounded"
+                  :src="userSettings.avatarUrl"
+                >
+              </div>
+              <div
+                v-else
+                class="icon image is-medium"
+                style="margin: auto;"
+              >
+                <i class="mdi mdi-account-circle mdi-36px" />
+              </div>
+            </div>
+
+            <a
+              role="button"
+              class="navbar-burger navbar-burger-right"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="navbarBasicExample"
+              @click="active = !active"
+            >
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </a>
+          </template>
+          <template v-else>
+            <a
+              role="button"
+              class="navbar-burger"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="navbarBasicExample"
+              @click="active = !active"
+            >
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </a>
+          </template>
         </div>
 
         <div
@@ -106,7 +142,7 @@ signin.value = await isSignin()
               </div>
             </div>
             <a
-              v-if="!signin"
+              v-if="!isLogin"
               class="navbar-item"
               exact-active-class="is-active"
               @click="signInWithGoogle()"
@@ -135,6 +171,14 @@ signin.value = await isSignin()
 </template>
 
 <style>
+.navbar-burger-left {
+  margin-right: 0px;
+}
+
+.navbar-burger-right {
+  margin-left: 0px;
+}
+
 .no-hover {
   /* pointer-events: none; */
   background-color: unset !important;

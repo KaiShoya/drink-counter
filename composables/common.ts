@@ -6,6 +6,6 @@ export const useProcessDate = () => {
    */
   const processIntoYearMonth = (date: Date) => `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}`
   return {
-    processIntoYearMonth
+    processIntoYearMonth,
   }
 }

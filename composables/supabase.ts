@@ -1,15 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
-
-export const supabase = () => {
-  return createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey)
-}
+import { useSupabaseStore } from '@/store/supabase'
 
 export const useSupabase = () => {
-  const supabase = createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey)
-  const isSignin = async () => {
-    const { data } = await supabase.auth.getSession()
-    return data.session !== null
-  }
+  const { supabase } = useSupabaseStore()
 
   const signUpWithEmail = async (email: string, password: string) => {
     const { data } = await supabase.auth.signUp({ email, password })
@@ -22,7 +14,7 @@ export const useSupabase = () => {
 
   const signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'google'
+      provider: 'google',
     })
   }
 
@@ -30,29 +22,32 @@ export const useSupabase = () => {
     await supabase.auth.signOut()
   }
 
+  const updateThresholdForDetectingOverdrinking = (threshold: number) => {
+    return supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold })
+  }
+
   return {
-    supabase: readonly(supabase),
-    isSignin: readonly(isSignin),
     signUpWithEmail,
     signInWithEmail,
     signInWithGoogle,
-    signOut
+    signOut,
+    updateThresholdForDetectingOverdrinking,
   }
 }
 
 export const useDrinks = () => {
-  const { supabase } = useSupabase()
+  const { supabase } = useSupabaseStore()
   const getDrinks = async () => {
     const { data } = await supabase.from('drinks').select('*')
     return data || []
   }
   return {
-    getDrinks
+    getDrinks,
   }
 }
 
 export const useDrinkCounters = () => {
-  const { supabase } = useSupabase()
+  const { supabase } = useSupabaseStore()
   const getDCAll = async () => {
     const { data } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0)
     return data || []
@@ -102,22 +97,6 @@ export const useDrinkCounters = () => {
     create,
     getDate,
     quantityByDrink,
-    quantityByDrinkPerMonth
-  }
-}
-
-export const useUserSettings = () => {
-  const { supabase } = useSupabase()
-  const getUserSettings = async () => {
-    const { data } = await supabase.rpc('get_user_settings')
-    return (data || { threshold_for_detecting_overdrinking: 2 })
-  }
-
-  const updateThresholdForDetectingOverdrinking = async (threshold: number) => {
-    await supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold })
-  }
-  return {
-    getUserSettings,
-    updateThresholdForDetectingOverdrinking
+    quantityByDrinkPerMonth,
   }
 }
