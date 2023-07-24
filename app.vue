@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div onclick="false">
     <NuxtLayout name="custom">
       <NuxtPage />
     </NuxtLayout>
