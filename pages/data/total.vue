@@ -51,8 +51,8 @@ calendarData.value = [
 
 <template>
   <div class="container">
-    <AtomsGraphsCalendar :data="calendarData" />
-    <AtomsGraphsPieChart :data="chartData" />
+    <DataGraphsCalendar :data="calendarData" />
+    <DataGraphsPieChart :data="chartData" />
     <AtomsTable
       :titles="chartDataTitle"
       :table-data="chartDataData"

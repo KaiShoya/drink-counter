@@ -96,14 +96,14 @@ await setChartData()
       type="month"
       @change="setChartData"
     >
-    <AtomsGraphsFCalendar
+    <DataGraphsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"
       :data="calendarData"
     />
-    <AtomsGraphsComboChart :data="graphData" />
-    <AtomsGraphsPieChart :data="chartData" />
-    <AtomsTable
+    <DataGraphsComboChart :data="graphData" />
+    <DataGraphsPieChart :data="chartData" />
+    <DataTable
       :titles="chartDataTitle"
       :table-data="chartDataData"
     />
