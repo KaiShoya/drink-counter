@@ -57,8 +57,12 @@ const plus = async (drinkId: number, counterId: number) => {
   drinkCount.value += 1
 }
 const minus = async (drinkId: number, counterId: number) => {
+  const drink = drinks.value.filter(d => d.id === drinkId)[0]
+  if (drink.count === 0) {
+    return
+  }
   const data = await decrement(counterId)
-  drinks.value.filter(d => d.id === drinkId)[0].count = data?.count ?? 0
+  drink.count = data?.count ?? 0
   // 飲んだ杯数を-1する
   if (drinkCount.value > 0) {
     drinkCount.value -= 1
@@ -96,7 +100,7 @@ watch(date, async () => {
       class="input is-large mt-4 mb-4"
       type="date"
     >
-    <AtomsDrinkButton
+    <IndexDrinkColumn
       v-for="(drink, id) in drinks"
       :id="drink.counter_id"
       :key="id"
@@ -106,7 +110,7 @@ watch(date, async () => {
       :increment="plusCheck"
       :decrement="minus"
     />
-    <AtomsModal
+    <IndexWarningModal
       title="飲みすぎ注意"
       :content="`今日${drinkCount}杯飲んでるけど、まだそれでもまだ飲みますか？`"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
