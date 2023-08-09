@@ -100,7 +100,7 @@ watch(date, async () => {
       class="input is-large mt-4 mb-4"
       type="date"
     >
-    <AtomsDrinkButton
+    <IndexDrinkColumn
       v-for="(drink, id) in drinks"
       :id="drink.counter_id"
       :key="id"
@@ -110,7 +110,7 @@ watch(date, async () => {
       :increment="plusCheck"
       :decrement="minus"
     />
-    <AtomsModal
+    <IndexWarningModal
       title="飲みすぎ注意"
       :content="`今日${drinkCount}杯飲んでるけど、まだそれでもまだ飲みますか？`"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
