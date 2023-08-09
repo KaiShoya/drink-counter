@@ -13,22 +13,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    [
-      '@nuxtjs/i18n',
-      {
-        locales: [
-          { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
-          { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' },
-        ],
-        defaultLocale: 'ja',
-        langDir: 'locales/',
-        strategy: 'prefix_except_default', // https://v8.i18n.nuxtjs.org/guide/routing-strategies
-        // vueI18n: {
-        //   fallbackLocale: 'en' // FIXME: 設定方法変わったっぽい
-        // },
-        lazy: true,
-      },
-    ],
+    '@nuxtjs/i18n',
     '@pinia/nuxt',
   ],
   app: {
@@ -47,6 +32,17 @@ export default defineNuxtConfig({
     'assets/scss/index.scss',
     'animate.css/animate.min.css',
   ],
+  i18n: {
+    vueI18n: './i18n.config.ts',
+    locales: [
+      { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
+      { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' },
+    ],
+    defaultLocale: 'ja',
+    langDir: 'locales/',
+    strategy: 'prefix_except_default', // https://v8.i18n.nuxtjs.org/guide/routing-strategies
+    lazy: true,
+  },
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
