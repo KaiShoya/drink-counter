@@ -1,5 +1,5 @@
 import * as bulmaToast from 'bulma-toast'
-import { useUserStore } from '@/store/userSettings'
+import { useUserStore } from '@/store/user'
 import { useSupabaseStore } from '@/store/supabase'
 
 export default defineNuxtPlugin((nuxtApp) => {

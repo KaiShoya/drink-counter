@@ -6,7 +6,7 @@ interface UserSettings {
   avatarUrl: Ref<string | null>
 }
 
-export const useUserStore = defineStore('UserSettings', () => {
+export const useUserStore = defineStore('user', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
   const isLogin: Ref<boolean> = useState(() => false)

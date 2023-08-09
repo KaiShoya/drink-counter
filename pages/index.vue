@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/userSettings'
+import { useUserStore } from '@/store/user'
 const { userSettings } = useUserStore()
 
 const { getDrinks } = useDrinks()

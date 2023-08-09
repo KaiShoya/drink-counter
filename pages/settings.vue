@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/userSettings'
+import { useUserStore } from '@/store/user'
 const { updateThresholdForDetectingOverdrinking } = useSupabase()
 const { userSettings, updateThreshold } = useUserStore()
 
