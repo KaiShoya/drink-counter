@@ -38,7 +38,6 @@ export const useUserStore = defineStore('user', () => {
     isLogin.value = userData.value?.data.user !== null
     userSettings.name.value = userData.value?.data.user?.user_metadata?.name
     userSettings.avatarUrl.value = userData.value?.data.user?.user_metadata?.avatar_url
-    return isLogin.value
   }
 
   const setUserSettings = (data: any) => {

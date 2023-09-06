@@ -1,15 +1,17 @@
+import { storeToRefs } from 'pinia'
 import * as bulmaToast from 'bulma-toast'
 import { useUserStore } from '@/store/user'
 import { useSupabaseStore } from '@/store/supabase'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const { setUserSettings, getUser } = useUserStore()
+  const userStore = useUserStore()
+  const { isLogin } = storeToRefs(userStore)
+  const { setUserSettings, getUser } = userStore
   const { supabase } = useSupabaseStore()
   const { $i18n } = useNuxtApp()
-  let isLogin = false
 
   nuxtApp.hook('app:created', async () => {
-    isLogin = await getUser()
+    await getUser()
 
     // ユーザーデータ取得
     const { data: userSettingsData, error: getUserSettingsError } = await useAsyncData(
@@ -27,7 +29,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // ログイン情報を取得できなかったらトーストを表示
   nuxtApp.hook('page:finish', () => {
-    if (!isLogin) {
+    if (!isLogin.value) {
       bulmaToast.toast({
         message: $i18n.t('error.GET_USER_INFO'),
         duration: 30000,

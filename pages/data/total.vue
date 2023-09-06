@@ -11,7 +11,7 @@ const drinkCount = await quantityByDrink()
 const chartDataTitle = ['Name', 'Count']
 const chartDataData: Array<Array<number>> = drinkCount.map(
   (v: { drink_id: number, count: number }) => [
-    drinks.filter(drink => drink.id === v.drink_id)[0].name,
+    drinks.find(drink => drink.id === v.drink_id).name,
     v.count,
   ],
 )
@@ -33,8 +33,7 @@ for (const dc of drinkCounters) {
 }
 
 // カレンダーデータ
-const calendarData: Ref<Array<any>> = useState(() => [])
-calendarData.value = [
+const calendarData: Ref<Array<any>> = useState(() => [
   [
     {
       type: 'date',
@@ -46,7 +45,7 @@ calendarData.value = [
     },
   ],
   ...Object.entries(graphDataData).map(([key, value]) => [new Date(key), value[0]]),
-]
+])
 </script>
 
 <template>

@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/user'
-const { userSettings, isLogin } = useUserStore()
+
+const userStore = useUserStore()
+const { userSettings, isLogin } = storeToRefs(userStore)
 
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
@@ -30,7 +33,7 @@ const active = useState('active', () => false)
           <template v-if="isLogin">
             <div class="navbar-burger navbar-burger-left">
               <div
-                v-if="userSettings.avatarUrl"
+                v-if="userSettings?.avatarUrl"
                 class="image"
               >
                 <img

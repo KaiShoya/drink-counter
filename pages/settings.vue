@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/user'
+
 const { updateThresholdForDetectingOverdrinking } = useSupabase()
-const { userSettings, updateThreshold } = useUserStore()
+
+const userStore = useUserStore()
+const { userSettings } = storeToRefs(userStore)
+const { updateThreshold } = userStore
 
 // const thresholdForDetectingOverdrinking: Ref<number> = useState('threshold')
 const { data: thresholdForDetectingOverdrinking } = await useAsyncData('threshold', () => userSettings.thresholdForDetectingOverdrinking)
