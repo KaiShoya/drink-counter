@@ -39,8 +39,7 @@ export const useNumberOfDrinksStore = defineStore('numberOfDrinksStore', () => {
 
   const fetchDate = async () => {
     const { data } = await supabase.rpc('get_date')
-    const date = data.split(' ')[0]
-    date.value = String(date)
+    date.value = String(data.split(' ')[0])
   }
 
   return {
