@@ -17,6 +17,8 @@ export const useNumberOfDrinksStore = defineStore('numberOfDrinksStore', () => {
   const numberOfDrinks: Ref<NumberOfDrink[]> = useState('numberOfDrinks', () => [])
   const drinkCountForDay: Ref<number> = useState('drinkCountForDay', () => 0)
 
+  const date: Ref<string> = useState('date', () => '')
+
   const fetchDrinksAndCounts = async (date: string) => {
     await fetchDrinks()
     await fetchDrinkCountersForDay(date)
@@ -35,9 +37,17 @@ export const useNumberOfDrinksStore = defineStore('numberOfDrinksStore', () => {
     drinks.value = data ?? []
   }
 
+  const fetchDate = async () => {
+    const { data } = await supabase.rpc('get_date')
+    const date = data.split(' ')[0]
+    date.value = String(date)
+  }
+
   return {
     numberOfDrinks,
     drinkCountForDay,
+    date,
     fetchDrinksAndCounts,
+    fetchDate,
   }
 })

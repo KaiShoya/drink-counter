@@ -1,8 +1,11 @@
+import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from './supabase'
+import { useNumberOfDrinksStore } from './numberOfDrinks'
 import { DrinkCounter } from './types/drinkCounter'
 
 export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const { supabase } = useSupabaseStore()
+  const { drinkCountForDay } = storeToRefs(useNumberOfDrinksStore())
   const drinkCounters: Ref<DrinkCounter[]> = useState('drinkCounters', () => [])
   const drinkCountersPerMonth: Ref<DrinkCounter[]> = useState('drinkCountersPerMonth', () => [])
   const drinkCountersForDay: Ref<DrinkCounter[]> = useState('drinkCountersForDay', () => [])
@@ -25,16 +28,21 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const increment = async (id: number) => {
     const { data } = await supabase.rpc('increment', { row_id: id })
     drinkCountersForDay.value.find(dc => dc.id === id)!.count = data?.count ?? 0
+    drinkCountForDay.value++
   }
   const decrement = async (id: number) => {
     const { data } = await supabase.rpc('decrement', { row_id: id })
     drinkCountersForDay.value.find(dc => dc.id === id)!.count = data?.count ?? 0
+    if (drinkCountForDay.value > 0) {
+      drinkCountForDay.value--
+    }
   }
   const create = async (drinkId: number, date = 'now()') => {
     const { data } = await supabase.from('drink_counters').insert({ date, drink_id: drinkId, count: 1 }).select()
     if (data && data.length > 0) {
       drinkCountersForDay.value.push(data[0])
     }
+    drinkCountForDay.value++
   }
 
   return {
