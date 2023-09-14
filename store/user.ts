@@ -1,22 +1,17 @@
-import { useSupabaseStore } from './supabase'
-
-interface UserSettings {
-  thresholdForDetectingOverdrinking: Ref<number>
-  name: Ref<string | null>
-  avatarUrl: Ref<string | null>
-}
+import { useSupabaseStore } from '~/store/supabase'
 
 export const useUserStore = defineStore('user', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
   const isLogin: Ref<boolean> = useState(() => false)
-  const userSettings: UserSettings = {
-    thresholdForDetectingOverdrinking: useState(() => 2),
-    name: useState(() => null),
-    avatarUrl: useState(() => null),
-  }
+  const userName: Ref<string | null> = useState(() => null)
+  const userAvatarUrl: Ref<string | null> = useState(() => null)
 
-  const getUser = async () => {
+  /**
+   * ログイン済みの場合にユーザ情報とUserSettingsを取得する
+   */
+  const fetchUserData = async () => {
+    // ログインセッションチェック
     const { data: sessionData, error: sessionError } = await useAsyncData(
       'getSession',
       () => supabase.auth.getSession(),
@@ -25,9 +20,11 @@ export const useUserStore = defineStore('user', () => {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     }
     if (sessionData.value?.data.session === null || sessionData.value?.data.session === undefined) {
-      return false
+      isLogin.value = false
+      return
     }
 
+    // ユーザ情報取得
     const { data: userData, error: userError } = await useAsyncData(
       'getUser',
       () => supabase.auth.getUser(),
@@ -35,27 +32,16 @@ export const useUserStore = defineStore('user', () => {
     if (userError.value) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     }
-    isLogin.value = userData.value?.data.user !== null
-    userSettings.name.value = userData.value?.data.user?.user_metadata?.name
-    userSettings.avatarUrl.value = userData.value?.data.user?.user_metadata?.avatar_url
-  }
 
-  const setUserSettings = (data: any) => {
-    // TODO: もっとマシな書き方ありそう（妥協
-    userSettings.thresholdForDetectingOverdrinking.value = data?.threshold_for_detecting_overdrinking || userSettings.thresholdForDetectingOverdrinking.value
-    // userSettings.name.value = data?.name
-    // userSettings.avatarUrl.value = data?.avatar_url
-  }
-
-  const updateThreshold = (threshold: number) => {
-    userSettings.thresholdForDetectingOverdrinking.value = threshold
+    isLogin.value = userData.value?.data?.user !== null
+    userName.value = userData.value?.data?.user?.user_metadata?.name
+    userAvatarUrl.value = userData.value?.data?.user?.user_metadata?.avatar_url
   }
 
   return {
     isLogin,
-    userSettings,
-    getUser,
-    setUserSettings,
-    updateThreshold,
+    userName,
+    userAvatarUrl,
+    fetchUserData,
   }
 })

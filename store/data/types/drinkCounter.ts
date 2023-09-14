@@ -1,7 +1,7 @@
 export interface DrinkCounter {
   id: number
   user_id: string
-  date: Date // Date
+  date: string // Date
   drink_id: number
   count: number
   created_at: Date // Datetime

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { signInWithEmail, signInWithGoogle } = useSupabase()
+import { useSupabaseStore } from '~/store/supabase'
+const { signInWithEmail, signInWithGoogle } = useSupabaseStore()
 
 const email = useState('email', () => '')
 const password = useState('password', () => '')

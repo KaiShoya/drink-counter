@@ -1,9 +1,9 @@
 <script setup lang="ts">
 defineProps<{
-  id: Number,
-  name: string,
   drinkId: Number,
+  name: string,
   count: Number,
+  drinkCounterId: Number,
   increment: Function,
   decrement: Function,
 }>()
@@ -13,7 +13,7 @@ defineProps<{
   <div class="columns is-gapless is-multiline is-mobile">
     <button
       class="column is-2 button"
-      @click="decrement(drinkId, id)"
+      @click="decrement(drinkId, drinkCounterId)"
     >
       <i class="mdi mdi-minus" />
     </button>
@@ -27,7 +27,7 @@ defineProps<{
     </div>
     <button
       class="column is-2 button"
-      @click="increment(drinkId, id)"
+      @click="increment(drinkId, drinkCounterId)"
     >
       <i class="mdi mdi-plus" />
     </button>

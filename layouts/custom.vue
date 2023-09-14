@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/store/user'
+import { useSupabaseStore } from '~/store/supabase'
+import { useUserStore } from '~/store/user'
+import { useUserSettingsStore } from '~/store/data/userSettings'
 
-const userStore = useUserStore()
-const { userSettings, isLogin } = storeToRefs(userStore)
+const { userSettings } = storeToRefs(useUserSettingsStore())
+const { isLogin } = storeToRefs(useUserStore())
 
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
-const { signInWithGoogle } = useSupabase()
+const { signInWithGoogle } = useSupabaseStore()
 const active = useState('active', () => false)
 </script>
 
