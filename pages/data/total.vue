@@ -13,7 +13,7 @@ await fetchDrinkCountersAll()
   <div class="container">
     <DataGraphsCalendar :data="computeCalendarData" />
     <DataGraphsPieChart :data="computedChartData" />
-    <AtomsTable
+    <DataTable
       :titles="chartDataTitle"
       :table-data="computedTableData"
     />
