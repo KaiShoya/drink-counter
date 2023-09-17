@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/userSettings'
-const { updateThresholdForDetectingOverdrinking } = useSupabase()
-const { userSettings, updateThreshold } = useUserStore()
+import { storeToRefs } from 'pinia'
+import { useUserSettingsStore } from '~/store/data/userSettings'
 
-// const thresholdForDetectingOverdrinking: Ref<number> = useState('threshold')
-const { data: thresholdForDetectingOverdrinking } = await useAsyncData('threshold', () => userSettings.thresholdForDetectingOverdrinking)
-thresholdForDetectingOverdrinking.value = userSettings.thresholdForDetectingOverdrinking
+const serSettingsStore = useUserSettingsStore()
+const { userSettings } = storeToRefs(serSettingsStore)
+const { updateThresholdForDetectingOverdrinking } = serSettingsStore
 
 const click = () => {
-  updateThresholdForDetectingOverdrinking(Number(thresholdForDetectingOverdrinking.value)).then(() => {
-    updateThreshold(Number(thresholdForDetectingOverdrinking.value))
-  })
+  updateThresholdForDetectingOverdrinking()
 }
 </script>
 
@@ -21,7 +18,7 @@ const click = () => {
         <th>{{ $t('settings.threshold_for_detecting_overdrinking') }}</th>
         <td>
           <input
-            v-model="thresholdForDetectingOverdrinking"
+            v-model="userSettings.thresholdForDetectingOverdrinking"
             class="input"
             type="number"
           >

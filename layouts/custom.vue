@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/userSettings'
-const { userSettings, isLogin } = useUserStore()
+import { storeToRefs } from 'pinia'
+import { useSupabaseStore } from '~/store/supabase'
+import { useUserStore } from '~/store/user'
+import { useUserSettingsStore } from '~/store/data/userSettings'
+
+const { userSettings } = storeToRefs(useUserSettingsStore())
+const { isLogin } = storeToRefs(useUserStore())
 
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
-const { signInWithGoogle } = useSupabase()
+const { signInWithGoogle } = useSupabaseStore()
 const active = useState('active', () => false)
 </script>
 
@@ -30,7 +35,7 @@ const active = useState('active', () => false)
           <template v-if="isLogin">
             <div class="navbar-burger navbar-burger-left">
               <div
-                v-if="userSettings.avatarUrl"
+                v-if="userSettings?.avatarUrl"
                 class="image"
               >
                 <img

@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { GChart } from 'vue-google-charts'
 defineProps<{
-  data: Array<Array<String | Number>>,
+  data: Array<Array<{ type: string; id: string; }> | Array<Date | Number>>,
   options?: any,
 }>()
 </script>

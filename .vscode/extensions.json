@@ -6,6 +6,7 @@
     "editorconfig.editorconfig",
     "vue.volar",
     "vue.vscode-typescript-vue-plugin",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "nuxtr.nuxtr-vscode"
   ]
 }

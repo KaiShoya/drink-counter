@@ -46,6 +46,7 @@
   },
   "error": {
     "500_API_ERROR": "An internal server error occurred.",
-    "GET_USER_INFO": "Failed to retrieve login information"
+    "GET_USER_INFO": "Failed to retrieve login information",
+    "GET_RECORD": "Failed to retrieve data. Please reload and try again."
   }
 }
