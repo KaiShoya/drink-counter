@@ -2,9 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { useTotalStore } from '~/store/pages/data/total'
 
-const totalStore = useTotalStore
-const { chartDataTitle, computeCalendarData, computedTableData, computedChartData } = storeToRefs(totalStore())
-const { fetchDrinkCountersAll } = totalStore()
+const totalStore = useTotalStore()
+const { chartDataTitle, computeCalendarData, computedTableData, computedChartData } = storeToRefs(totalStore)
+const { fetchDrinkCountersAll } = totalStore
 
 await fetchDrinkCountersAll()
 </script>

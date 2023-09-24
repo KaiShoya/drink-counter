@@ -6,7 +6,7 @@ import { useIndexStore } from '@/store/pages/index'
 const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()
-const { date, numberOfDrinks, drinkCountForDay } = storeToRefs(indexStore)
+const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
 const { fetchNumberOfDrinks, fetchDate, plus, minus } = indexStore
 
 // Modal用フラグ
@@ -44,16 +44,22 @@ watch(date, async () => {
       class="input is-large mt-4 mb-4"
       type="date"
     >
-    <IndexDrinkColumn
-      v-for="(drink, id) in numberOfDrinks"
-      :key="id"
-      :drink-id="drink.id"
-      :name="drink.name"
-      :count="drink.count"
-      :drink-counter-id="drink.drinkCounterId"
-      :increment="plusCheck"
-      :decrement="minus"
-    />
+
+    <o-loading v-model:active="isLoading" />
+
+    <div v-if="!isLoading">
+      <IndexDrinkColumn
+        v-for="(drink, id) in numberOfDrinks"
+        :key="id"
+        :drink-id="drink.id"
+        :name="drink.name"
+        :count="drink.count"
+        :drink-counter-id="drink.drinkCounterId"
+        :increment="plusCheck"
+        :decrement="minus"
+      />
+    </div>
+
     <IndexWarningModal
       title="飲みすぎ注意"
       :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"

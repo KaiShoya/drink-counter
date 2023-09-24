@@ -1,5 +1,4 @@
 import VueGtag from 'vue-gtag'
-import { defineNuxtPlugin } from '#app'
 
 // Nuxtプラグインの登録
 export default defineNuxtPlugin((nuxtApp) => {
