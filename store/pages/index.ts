@@ -6,6 +6,7 @@ import { useDrinksStore } from '~/store/data/drinks'
 import { NumberOfDrink } from '~/store/types/numberOfDrink'
 
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
+  const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
@@ -16,6 +17,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const date: Ref<string> = useState('date', () => '')
   const numberOfDrinks: Ref<NumberOfDrink[]> = useState('numberOfDrinks', () => [])
   const drinkCountForDay: Ref<number> = useState('drinkCountForDay', () => 0)
+  const isLoading: Ref<boolean> = useState(() => false)
 
   /**
    * 日付を取得する
@@ -37,22 +39,29 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
    * @param date 日付 '2023-01-01'
    */
   const fetchNumberOfDrinks = async (date: string) => {
-    await fetchDrinks()
-    await fetchDrinkCountersForDay(date)
+    isLoading.value = true
+    try {
+      await fetchDrinks()
+      await fetchDrinkCountersForDay(date)
 
-    numberOfDrinks.value = []
-    drinkCountForDay.value = 0
+      numberOfDrinks.value = []
+      drinkCountForDay.value = 0
 
-    drinks.value.forEach((drink) => {
-      const drinkCounter = findDrinkCountersByDrinkId(drink.id)
-      numberOfDrinks.value.push({
-        id: drink.id,
-        name: drink.name,
-        count: drinkCounter?.count ?? 0,
-        drinkCounterId: drinkCounter?.id ?? -1,
+      drinks.value.forEach((drink) => {
+        const drinkCounter = findDrinkCountersByDrinkId(drink.id)
+        numberOfDrinks.value.push({
+          id: drink.id,
+          name: drink.name,
+          count: drinkCounter?.count ?? 0,
+          drinkCounterId: drinkCounter?.id ?? -1,
+        })
+        drinkCountForDay.value += drinkCounter?.count ?? 0
       })
-      drinkCountForDay.value += drinkCounter?.count ?? 0
-    })
+    } catch (error) {
+      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
+    } finally {
+      isLoading.value = false
+    }
   }
 
   const plus = async (drinkId: number, drinkCounterId: number) => {
@@ -87,6 +96,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     date,
     numberOfDrinks,
     drinkCountForDay,
+    isLoading,
     fetchDate,
     fetchNumberOfDrinks,
     plus,
