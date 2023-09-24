@@ -2,10 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'
-import { useUserSettingsStore } from '~/store/data/userSettings'
 
-const { userSettings } = storeToRefs(useUserSettingsStore())
-const { isLogin } = storeToRefs(useUserStore())
+const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
@@ -35,12 +33,12 @@ const active = useState('active', () => false)
           <template v-if="isLogin">
             <div class="navbar-burger navbar-burger-left">
               <div
-                v-if="userSettings?.avatarUrl"
+                v-if="userAvatarUrl"
                 class="image"
               >
                 <img
                   class="navbar-item is-rounded"
-                  :src="userSettings.avatarUrl"
+                  :src="userAvatarUrl"
                 >
               </div>
               <div
