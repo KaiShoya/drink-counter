@@ -2,9 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { useMonthlyStore } from '~/store/pages/data/monthly'
 
-const monthlyStore = useMonthlyStore
-const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData } = storeToRefs(monthlyStore())
-const { fetchDrinkCounters } = monthlyStore()
+const monthlyStore = useMonthlyStore()
+const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData } = storeToRefs(monthlyStore)
+const { fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
 const updateCalendar = ref(0)
