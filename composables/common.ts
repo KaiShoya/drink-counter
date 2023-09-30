@@ -2,6 +2,13 @@ import { DrinkCounter } from '~/store/data/types/drinkCounter'
 
 export const useProcessDate = () => {
   /**
+   * DateオブジェクトをYYYY-MM-DD形式に変換する
+   * @param date Date
+   * @returns string YYYY-MM-DD
+   */
+  const processIntoString = (date: Date) => `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getDate()}`
+
+  /**
    * DateオブジェクトをYYYY-MM形式に変換する
    * @param date Date
    * @returns string YYYY-MM
@@ -30,6 +37,7 @@ export const useProcessDate = () => {
   }
 
   return {
+    processIntoString,
     processIntoYearMonth,
     formatDrinkCounters,
   }

@@ -7,7 +7,7 @@ const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()
 const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
-const { fetchNumberOfDrinks, fetchDate, plus, minus } = indexStore
+const { fetchNumberOfDrinks, fetchDate, prevDate, nextDate, plus, minus } = indexStore
 
 // Modal用フラグ
 const modalIsActive = useState(() => false)
@@ -39,11 +39,25 @@ watch(date, async () => {
 
 <template>
   <div>
-    <input
-      v-model="date"
-      class="input is-large mt-4 mb-4"
-      type="date"
-    >
+    <div class="columns is-mobile my-4 mx-0">
+      <button
+        class="column is-2 button is-large"
+        @click="prevDate"
+      >
+        &lt;
+      </button>
+      <input
+        v-model="date"
+        class="column input is-large mx-2"
+        type="date"
+      >
+      <button
+        class="column is-2 button is-large"
+        @click="nextDate"
+      >
+        &gt;
+      </button>
+    </div>
 
     <o-loading v-model:active="isLoading" />
 

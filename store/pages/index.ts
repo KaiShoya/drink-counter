@@ -8,6 +8,7 @@ import { NumberOfDrink } from '~/store/types/numberOfDrink'
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
+  const { processIntoString } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
   const drinksStore = useDrinksStore()
@@ -25,6 +26,18 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const fetchDate = async () => {
     const { data } = await supabase.rpc('get_date')
     date.value = String(data.split(' ')[0])
+  }
+
+  const prevDate = () => {
+    const newDate = new Date(date.value)
+    newDate.setDate(newDate.getDate() - 1)
+    date.value = processIntoString(newDate)
+  }
+
+  const nextDate = () => {
+    const newDate = new Date(date.value)
+    newDate.setDate(newDate.getDate() + 1)
+    date.value = processIntoString(newDate)
   }
 
   const findNumberOfDrinkByDrinkId = (drinkId: number) => {
@@ -98,6 +111,8 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     drinkCountForDay,
     isLoading,
     fetchDate,
+    prevDate,
+    nextDate,
     fetchNumberOfDrinks,
     plus,
     minus,
