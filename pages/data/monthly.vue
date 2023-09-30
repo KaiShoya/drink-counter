@@ -4,7 +4,7 @@ import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const monthlyStore = useMonthlyStore()
 const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData } = storeToRefs(monthlyStore)
-const { fetchDrinkCounters } = monthlyStore
+const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
 const updateCalendar = ref(0)
@@ -20,11 +20,26 @@ watch(yearMonth, async () => {
 
 <template>
   <div class="container">
-    <input
-      v-model="yearMonth"
-      class="input"
-      type="month"
-    >
+    <div class="columns is-mobile my-2 mx-0">
+      <button
+        class="column is-2 button is-large"
+        @click="prevMonth"
+      >
+        &lt;
+      </button>
+      <input
+        v-model="yearMonth"
+        class="column input is-large"
+        type="month"
+      >
+      <button
+        class="column is-2 button is-large"
+        @click="nextMonth"
+      >
+        &gt;
+      </button>
+    </div>
+
     <DataGraphsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"

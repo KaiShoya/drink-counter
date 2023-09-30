@@ -27,6 +27,18 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     return { year, month }
   })
 
+  const prevMonth = () => {
+    const newDate = new Date(yearMonth.value)
+    newDate.setMonth(newDate.getMonth() - 1)
+    yearMonth.value = processIntoYearMonth(newDate)
+  }
+
+  const nextMonth = () => {
+    const newDate = new Date(yearMonth.value)
+    newDate.setMonth(newDate.getMonth() + 1)
+    yearMonth.value = processIntoYearMonth(newDate)
+  }
+
   const fetchDrinkCounters = async () => {
     const { year, month } = computedYearMonth.value
     await fetchDrinks()
@@ -85,6 +97,8 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   return {
     yearMonth,
     chartDataTitle,
+    prevMonth,
+    nextMonth,
     fetchDrinkCounters,
     computeCalendarData,
     computeGraphData,
