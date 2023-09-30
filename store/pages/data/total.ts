@@ -31,20 +31,18 @@ export const useTotalStore = defineStore('totalStore', () => {
   /**
    * カレンダー用データ
    */
+  const calendarTitle = useState(() => [
+    {
+      type: 'date',
+      id: 'Date',
+    },
+    {
+      type: 'number',
+      id: 'Count',
+    },
+  ])
   const computeCalendarData = computed(() => {
-    return [
-      [
-        {
-          type: 'date',
-          id: 'Date',
-        },
-        {
-          type: 'number',
-          id: 'Count',
-        },
-      ],
-      ...Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => [new Date(key), value[0]]),
-    ]
+    return Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => [new Date(key), value[0]])
   })
 
   /**
@@ -68,6 +66,7 @@ export const useTotalStore = defineStore('totalStore', () => {
 
   return {
     chartDataTitle,
+    calendarTitle,
     fetchDrinkCountersAll,
     computeCalendarData,
     computedTableData,
