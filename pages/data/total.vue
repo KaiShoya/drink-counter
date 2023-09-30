@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useTotalStore } from '~/store/pages/data/total'
 
 const totalStore = useTotalStore()
-const { chartDataTitle, computeCalendarData, computedTableData, computedChartData } = storeToRefs(totalStore)
+const { chartDataTitle, calendarTitle, computeCalendarData, computedTableData, computedChartData } = storeToRefs(totalStore)
 const { fetchDrinkCountersAll } = totalStore
 
 await fetchDrinkCountersAll()
@@ -11,7 +11,10 @@ await fetchDrinkCountersAll()
 
 <template>
   <div class="container">
-    <DataGraphsCalendar :data="computeCalendarData" />
+    <DataGraphsCalendar
+      :title="calendarTitle"
+      :data="computeCalendarData"
+    />
     <DataGraphsPieChart :data="computedChartData" />
     <DataTable
       :titles="chartDataTitle"
