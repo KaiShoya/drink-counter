@@ -8,10 +8,24 @@ defineProps<{
 </script>
 
 <template>
-  <GChart
-    type="Calendar"
-    :data="data"
-    :options="options"
-    :settings="{ packages: ['calendar'], }"
-  />
+  <div class="scroll">
+    <GChart
+      class="calendar"
+      type="Calendar"
+      :data="data"
+      :options="options"
+      :settings="{ packages: ['calendar'], }"
+    />
+  </div>
 </template>
+
+<style scoped>
+.scroll {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.calendar {
+  width: 915px;
+}
+</style>
