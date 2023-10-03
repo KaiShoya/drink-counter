@@ -84,12 +84,13 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * 指定した日付のレコードを作成する
    * @param drinkId drink.id
    * @param date 日付 '2023-01-01'
+   * @return number drink_counter_id
    */
   const create = async (drinkId: number, date: string) => {
     const { data } = await supabase.from('drink_counters').insert({ date, drink_id: drinkId, count: 1 }).select()
     if (data && data.length > 0) {
       drinkCounters.value.push(data[0])
-      return data[0]
+      return data[0].id
     }
     return -1
   }
