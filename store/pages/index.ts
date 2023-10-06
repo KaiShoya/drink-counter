@@ -28,18 +28,6 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     date.value = String(data.split(' ')[0])
   }
 
-  const prevDate = () => {
-    const newDate = new Date(date.value)
-    newDate.setDate(newDate.getDate() - 1)
-    date.value = processIntoString(newDate)
-  }
-
-  const nextDate = () => {
-    const newDate = new Date(date.value)
-    newDate.setDate(newDate.getDate() + 1)
-    date.value = processIntoString(newDate)
-  }
-
   const findNumberOfDrinkByDrinkId = (drinkId: number) => {
     return numberOfDrinks.value.find(nod => nod.id === drinkId)
   }
@@ -111,8 +99,6 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     drinkCountForDay,
     isLoading,
     fetchDate,
-    prevDate,
-    nextDate,
     fetchNumberOfDrinks,
     plus,
     minus,
