@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "build": "nuxi generate",
-    "dev": "PORT=3001 nuxt dev",
+    "dev": "nuxt dev",
     "lint": "eslint **/*.{ts,vue}",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
