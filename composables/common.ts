@@ -6,7 +6,7 @@ export const useProcessDate = () => {
    * @param date Date
    * @returns string YYYY-MM-DD
    */
-  const processIntoString = (date: Date) => `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getDate()}`
+  const processIntoString = (date: Date) => `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`
 
   /**
    * DateオブジェクトをYYYY-MM形式に変換する
