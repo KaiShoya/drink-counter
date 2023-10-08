@@ -7,17 +7,13 @@ const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()
 const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
-const { fetchNumberOfDrinks, fetchDate, plus, minus } = indexStore
+const { fetchNumberOfDrinks, fetchDate, prevDate, nextDate, plus, minus } = indexStore
 
 // Modal用フラグ
 const modalIsActive = useState(() => false)
 
 // 日付
 await fetchDate()
-
-// 日付のinput属性（next, prevボタンで使用）
-// WARNING: HTMLInputElementのメソッド呼出以外で利用禁止!
-const inputDate = useState<HTMLInputElement | null>(() => null)
 
 // numberOfDrinksにデータをセット
 await fetchNumberOfDrinks(date.value)
@@ -46,19 +42,18 @@ watch(date, async () => {
     <div class="columns is-mobile my-4 mx-0">
       <button
         class="column is-2 button is-large"
-        @click="inputDate?.stepDown()"
+        @click="prevDate"
       >
         &lt;
       </button>
       <input
-        ref="inputDate"
         v-model="date"
         class="column input is-large mx-2"
         type="date"
       >
       <button
         class="column is-2 button is-large"
-        @click="inputDate?.stepUp()"
+        @click="nextDate"
       >
         &gt;
       </button>

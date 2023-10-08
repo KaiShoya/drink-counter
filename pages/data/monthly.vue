@@ -4,16 +4,12 @@ import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const monthlyStore = useMonthlyStore()
 const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData } = storeToRefs(monthlyStore)
-const { fetchDrinkCounters } = monthlyStore
+const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
 const updateCalendar = ref(0)
 
 await fetchDrinkCounters()
-
-// 年月のinput属性（next, prevボタンで使用）
-// WARNING: HTMLInputElementのメソッド呼出以外で利用禁止!
-const inputMonth = useState<HTMLInputElement | null>(() => null)
 
 watch(yearMonth, async () => {
   await fetchDrinkCounters()
@@ -27,19 +23,18 @@ watch(yearMonth, async () => {
     <div class="columns is-mobile my-2 mx-0">
       <button
         class="column is-2 button is-large"
-        @click="inputMonth?.stepDown()"
+        @click="prevMonth"
       >
         &lt;
       </button>
       <input
-        ref="inputMonth"
         v-model="yearMonth"
         class="column input is-large"
         type="month"
       >
       <button
         class="column is-2 button is-large"
-        @click="inputMonth?.stepUp()"
+        @click="nextMonth"
       >
         &gt;
       </button>
