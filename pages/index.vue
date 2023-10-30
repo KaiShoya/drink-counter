@@ -41,18 +41,24 @@ watch(date, async () => {
   <div>
     <div class="columns is-mobile my-4 mx-0">
       <button
-        class="column is-2 button is-large"
+        class="column is-2 button is-medium"
         @click="prevDate"
       >
         &lt;
       </button>
       <input
         v-model="date"
-        class="column input is-large mx-2"
+        class="column input is-medium mx-0"
         type="date"
       >
       <button
-        class="column is-2 button is-large"
+        class="column is-2 button is-medium"
+        @click="fetchDate"
+      >
+        <i class="mdi mdi-calendar-check" />
+      </button>
+      <button
+        class="column is-2 button is-medium"
         @click="nextDate"
       >
         &gt;
