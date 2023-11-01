@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "license": "MIT",
   "author": {
     "name": "Kai Shoya",
@@ -13,7 +13,8 @@
     "lint": "eslint **/*.{ts,vue}",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "update-version": "npx changelogen@latest --release"
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.8.4",
