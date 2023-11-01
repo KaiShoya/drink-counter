@@ -17,8 +17,8 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
     if (error) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     }
-    if (data) {
-      userSettings.value.thresholdForDetectingOverdrinking = data!.threshold_for_detecting_overdrinking
+    if (data && data[0]) {
+      userSettings.value.thresholdForDetectingOverdrinking = data[0]!.threshold_for_detecting_overdrinking
     }
   }
 

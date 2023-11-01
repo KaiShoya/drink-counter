@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "license": "MIT",
   "author": {
     "name": "Kai Shoya",
@@ -18,7 +18,7 @@
   "devDependencies": {
     "@nuxt/devtools": "^0.8.4",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "@nuxtjs/i18n": "^8.0.0-rc.2",
+    "@nuxtjs/i18n": "^8.0.0-rc.5",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",
@@ -42,5 +42,8 @@
     "pinia": "^2.1.4",
     "vue-google-charts": "^1.1.0",
     "vue-gtag": "^2.0.1"
+  },
+  "resolutions": {
+    "string-width": "4.2.3"
   }
 }
