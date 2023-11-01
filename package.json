@@ -42,5 +42,8 @@
     "pinia": "^2.1.4",
     "vue-google-charts": "^1.1.0",
     "vue-gtag": "^2.0.1"
+  },
+  "resolutions": {
+    "string-width": "4.2.3"
   }
 }
