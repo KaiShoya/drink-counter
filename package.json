@@ -13,8 +13,7 @@
     "lint": "eslint **/*.{ts,vue}",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "update-version": "npx changelogen@latest --release"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.8.4",
