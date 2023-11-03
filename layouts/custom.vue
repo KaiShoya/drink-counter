@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'
@@ -129,12 +130,12 @@ const active = useState('active', () => false)
           <div class="navbar-end">
             <div class="control has-icons-left">
               <div class="select">
-                <select @change="$router.push(switchLocalePath($event.target.value))">
+                <select @change="$router.push(switchLocalePath(($event.target as HTMLInputElement).value))">
                   <option
-                    v-for="l in locales"
+                    v-for="l in (locales as Array<LocaleObject>)"
                     :key="l.code"
                     :value="l.code"
-                    :selected="locale.code === l.code"
+                    :selected="l.code === locale"
                   >
                     {{ l.name }}
                   </option>
