@@ -33,3 +33,17 @@ supabase start
 # Start the development server on http://localhost:3001
 yarn dev
 ```
+
+## Create a migration file from local schema differences
+
+```bash
+supabase db diff -f [file_name]
+```
+
+# Release
+
+```
+yarn version --major
+yarn version --minor
+yarn version --patch
+```
