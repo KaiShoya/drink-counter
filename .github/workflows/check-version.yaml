@@ -1,0 +1,43 @@
+# https://zenn.dev/kshida/articles/auto-generate-release-note-with-calver
+name: Create release tag and release note.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  create-release-tag:
+    runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TZ: 'Asia/Tokyo'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # 前回のリースタグを取得する
+      - name: Get previous tag
+        id: pre_tag
+        run: |
+          echo "pre_tag=$(curl -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)" >> $GITHUB_OUTPUT
+
+      # タグを取得する
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+      - name: Generate release tag
+        id: release_tag
+        run: |
+          echo "release_tag=${{ steps.get-version.outputs.version }}" >> $GITHUB_OUTPUT
+
+      # バージョン番号を比較する
+      - name: Check version
+        id: check-version
+        run: |
+          if [[ "${{ steps.pre_tag.outputs.pre_tag }}" >= "${{ steps.release_tag.outputs.release_tag }}" ]]; then
+            echo "Please update the version number. Current: ${{ steps.pre_tag.outputs.pre_tag }}, This: ${{ steps.release_tag.outputs.release_tag }}"
+            exit 1
+          fi
