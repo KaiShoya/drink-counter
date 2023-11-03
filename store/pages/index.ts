@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { NumberOfDrink } from '~/store/types/numberOfDrink'
+import type { NumberOfDrink } from '~/store/types/numberOfDrink'
 
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { $i18n } = useNuxtApp()

@@ -1,5 +1,5 @@
 import { useSupabaseStore } from '~/store/supabase'
-import { Drink } from '~/store/data/types/drink'
+import type { Drink } from '~/store/data/types/drink'
 
 export const useDrinksStore = defineStore('drinksStore', () => {
   const { supabase } = useSupabaseStore()
