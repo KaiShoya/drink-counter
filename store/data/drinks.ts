@@ -14,6 +14,55 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   }
 
   /**
+   * 指定したIDの飲み物データを取得する
+   * @param drinkId number
+   * @returns Drink | undefined
+   */
+  const findDrink = (drinkId: number) => drinks.value.find((d: Drink) => d.id === Number(drinkId))
+
+  /**
+   * 指定したIDの飲み物を削除する
+   * 削除に成功したらDrinksを再取得する
+   * @param drinkId number
+   * @returns Promise<PostgrestError | null>
+   */
+  const deleteDrinkById = async (drinkId: number) => {
+    const { error } = await supabase.rpc('delete_drink_data', { drinkid: drinkId })
+    // const { error } = await supabase.from('drinks').delete().eq('id', drinkId)
+    if (!error) {
+      await fetchDrinks()
+    }
+    return error
+  }
+
+  /**
+   * 指定したIDの飲み物を更新する
+   * @param drinkId number
+   * @param name string
+   * @param color string | null
+   * @returns Promise<PostgrestError | null>
+   */
+  const updateDrink = async (drinkId: number, name: string, color: string | null) => {
+    const { error } = await supabase.from('drinks').update({ name, color }).eq('id', drinkId)
+    if (!error) {
+      const drink = findDrink(drinkId)
+      if (drink) {
+        drink.name = name
+        drink.color = color
+      }
+    }
+    return error
+  }
+
+  const createDrink = async (name: string, color: string | null) => {
+    const { error } = await supabase.from('drinks').insert({ name, color, user_id: 'testaaa' })
+    if (!error) {
+      await fetchDrinks()
+    }
+    return error
+  }
+
+  /**
    * drink.idの配列を返却する
    */
   const getDrinksIdArray = computed(() => {
@@ -29,7 +78,11 @@ export const useDrinksStore = defineStore('drinksStore', () => {
 
   return {
     drinks,
+    findDrink,
     fetchDrinks,
+    deleteDrinkById,
+    updateDrink,
+    createDrink,
     getDrinksIdArray,
     getDrinksNameArray,
   }

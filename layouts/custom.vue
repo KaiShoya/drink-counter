@@ -119,6 +119,15 @@ const active = useState('active', () => false)
 
             <NuxtLink
               class="navbar-item"
+              :to="localePath('/drinks')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              飲み物
+            </NuxtLink>
+
+            <NuxtLink
+              class="navbar-item"
               :to="localePath('/settings')"
               exact-active-class="is-active"
               @click="active = false"

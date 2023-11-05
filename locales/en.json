@@ -44,6 +44,25 @@
     "cups": "cups",
     "save": "Save"
   },
+  "drinks": {
+    "name": "Name",
+    "color": "Color",
+    "delete_modal_title": "Delete \"{name}\".",
+    "delete_modal_content": "If you delete \"{name}\", all the drink counts you drank will also be deleted. Do you want to delete it?",
+    "add": "Add drink",
+    "update": "Update drink",
+    "cancel": "cancel",
+    "delete_success": "Drink was successfully deleted.",
+    "delete_failure": "Failed to delete drink.",
+    "create_success": "Drink was successfully added.",
+    "create_failure": "Failed to add drink.",
+    "update_success": "Drink was successfully updated.",
+    "update_failure": "Failed to update drink."
+  },
+  "modal": {
+    "yes": "Yes",
+    "no": "No"
+  },
   "error": {
     "500_API_ERROR": "An internal server error occurred.",
     "GET_USER_INFO": "Failed to retrieve login information",
