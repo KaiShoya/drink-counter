@@ -22,8 +22,8 @@ const clickDeleteDrinkButton = (drink: Drink) => {
   modalIsActive.value = true
 }
 
-const deleteDrink = async (drinkId: number | undefined) => {
-  if (drinkId === undefined) {
+const deleteDrink = async (drinkId: number | undefined, drinkName: string | undefined) => {
+  if (drinkId === undefined || drinkName === undefined) {
     showDangerToast($i18n.t('error.GET_RECORD'))
     modalIsActive.value = false
     return
@@ -31,11 +31,11 @@ const deleteDrink = async (drinkId: number | undefined) => {
   const error = await deleteDrinkById(drinkId)
   if (error) {
     console.log(error)
-    showDangerToast($i18n.t('drinks.delete_failure'))
+    showDangerToast($i18n.t('drinks.delete_failure', { name: drinkName }))
     modalIsActive.value = false
     return
   }
-  showSuccessToast($i18n.t('drinks.delete_success'))
+  showSuccessToast($i18n.t('drinks.delete_success', { name: drinkName }))
   modalIsActive.value = false
 }
 </script>
@@ -85,7 +85,7 @@ const deleteDrink = async (drinkId: number | undefined) => {
     <DrinksDangerModal
       :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"
       :content="$t('drinks.delete_modal_content', { name: deleteTarget?.name })"
-      :success="() => { deleteDrink(deleteTarget?.id) }"
+      :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"
       :cancel="() => modalIsActive = false"
       :class="{ 'is-active': modalIsActive }"
     />

@@ -52,12 +52,12 @@
     "add": "追加する",
     "update": "更新する",
     "cancel": "戻る",
-    "delete_success": "削除しました。",
-    "delete_failure": "削除に失敗しました。",
-    "create_success": "追加しました。",
-    "create_failure": "追加に失敗しました。",
-    "update_success": "更新しました。",
-    "update_failure": "更新に失敗しました。"
+    "delete_success": "「{name}」を削除しました。",
+    "delete_failure": "「{name}」の削除に失敗しました。",
+    "create_success": "「{name}」を追加しました。",
+    "create_failure": "「{name}」の追加に失敗しました。",
+    "update_success": "「{name}」を更新しました。",
+    "update_failure": "「{name}」の更新に失敗しました。"
   },
   "modal": {
     "yes": "はい",

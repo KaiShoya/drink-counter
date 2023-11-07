@@ -36,9 +36,9 @@ const create = async () => {
   const error = await createDrink(name.value, color.value)
   if (error) {
     console.log(error)
-    showDangerToast($i18n.t('drinks.create_failure'))
+    showDangerToast($i18n.t('drinks.create_failure', { name: name.value }))
   } else {
-    showSuccessToast($i18n.t('drinks.create_success'))
+    showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
     navigateTo('/drinks')
   }
 }
@@ -47,9 +47,9 @@ const updateDrinkById = async () => {
   const error = await updateDrink(drinkId, name.value, color.value)
   if (error) {
     console.log(error)
-    showDangerToast($i18n.t('drinks.update_failure'))
+    showDangerToast($i18n.t('drinks.update_failure', { name: name.value }))
   } else {
-    showSuccessToast($i18n.t('drinks.update_success'))
+    showSuccessToast($i18n.t('drinks.update_success', { name: name.value }))
     navigateTo('/drinks')
   }
 }
