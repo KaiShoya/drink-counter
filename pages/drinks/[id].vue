@@ -35,7 +35,8 @@ if (route.params.id === 'new') {
 const create = async () => {
   const error = await createDrink(name.value, color.value)
   if (error) {
-    console.log(error)
+    // eslint-disable-next-line no-console
+    console.error(error)
     showDangerToast($i18n.t('drinks.create_failure', { name: name.value }))
   } else {
     showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
@@ -46,7 +47,8 @@ const create = async () => {
 const updateDrinkById = async () => {
   const error = await updateDrink(drinkId, name.value, color.value)
   if (error) {
-    console.log(error)
+    // eslint-disable-next-line no-console
+    console.error(error)
     showDangerToast($i18n.t('drinks.update_failure', { name: name.value }))
   } else {
     showSuccessToast($i18n.t('drinks.update_success', { name: name.value }))
