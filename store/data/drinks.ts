@@ -55,7 +55,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   }
 
   const createDrink = async (name: string, color: string | null) => {
-    const { error } = await supabase.from('drinks').insert({ name, color, user_id: 'testaaa' })
+    const { error } = await supabase.from('drinks').insert({ name, color })
     if (!error) {
       await fetchDrinks()
     }
