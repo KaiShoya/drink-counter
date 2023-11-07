@@ -1,5 +1,5 @@
 import { useSupabaseStore } from '~/store/supabase'
-import { DrinkCounter } from '~/store/data/types/drinkCounter'
+import type { DrinkCounter } from '~/store/data/types/drinkCounter'
 
 export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const { $i18n } = useNuxtApp()

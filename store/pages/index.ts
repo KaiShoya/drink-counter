@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { NumberOfDrink } from '~/store/types/numberOfDrink'
+import type { NumberOfDrink } from '~/store/types/numberOfDrink'
 
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { $i18n } = useNuxtApp()
@@ -13,7 +13,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
   const drinksStore = useDrinksStore()
   const { drinks } = storeToRefs(drinksStore)
-  const { fetchDrinks } = drinksStore
+  const { fetchDrinksVisible } = drinksStore
 
   const date: Ref<string> = useState('date', () => '')
   const numberOfDrinks: Ref<NumberOfDrink[]> = useState('numberOfDrinks', () => [])
@@ -54,7 +54,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const fetchNumberOfDrinks = async (date: string) => {
     isLoading.value = true
     try {
-      await fetchDrinks()
+      await fetchDrinksVisible()
       await fetchDrinkCountersForDay(date)
 
       numberOfDrinks.value = []

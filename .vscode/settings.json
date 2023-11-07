@@ -4,6 +4,9 @@
   "html.validate.scripts": true,
   "html.validate.styles": true,
   "editor.formatOnSave": true,
+  "[sql]": {
+    "editor.formatOnSave": false
+  },
   "editor.tabSize": 2,
   "markdown.extension.tableFormatter.enabled": true,
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,

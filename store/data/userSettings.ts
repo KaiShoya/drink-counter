@@ -1,5 +1,5 @@
 import { useSupabaseStore } from '~/store/supabase'
-import { UserSetting } from '~/store/data/types/userSetting'
+import type { UserSetting } from '~/store/data/types/userSetting'
 
 export const useUserSettingsStore = defineStore('userSettings', () => {
   const { $i18n } = useNuxtApp()

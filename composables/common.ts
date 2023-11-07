@@ -1,4 +1,4 @@
-import { DrinkCounter } from '~/store/data/types/drinkCounter'
+import type { DrinkCounter } from '~/store/data/types/drinkCounter'
 
 export const useProcessDate = () => {
   /**
