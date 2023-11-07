@@ -57,7 +57,10 @@
     "create_success": "「{name}」を追加しました。",
     "create_failure": "「{name}」の追加に失敗しました。",
     "update_success": "「{name}」を更新しました。",
-    "update_failure": "「{name}」の更新に失敗しました。"
+    "update_failure": "「{name}」の更新に失敗しました。",
+    "visible": "表示",
+    "invisible": "非表示",
+    "update_visible_success": "「{name}」を{status}に変更しました。"
   },
   "modal": {
     "yes": "はい",

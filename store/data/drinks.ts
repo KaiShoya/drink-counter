@@ -54,6 +54,17 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     return error
   }
 
+  const updateDrinkVisible = async (drinkId: number, visible: boolean) => {
+    const { error } = await supabase.from('drinks').update({ visible }).eq('id', drinkId)
+    if (!error) {
+      const drink = findDrink(drinkId)
+      if (drink) {
+        drink.visible = visible
+      }
+    }
+    return error
+  }
+
   const createDrink = async (name: string, color: string | null) => {
     const { error } = await supabase.from('drinks').insert({ name, color })
     if (!error) {
@@ -82,6 +93,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     fetchDrinks,
     deleteDrinkById,
     updateDrink,
+    updateDrinkVisible,
     createDrink,
     getDrinksIdArray,
     getDrinksNameArray,

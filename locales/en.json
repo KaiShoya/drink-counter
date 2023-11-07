@@ -57,7 +57,10 @@
     "create_success": "\"{name}\" was successfully added.",
     "create_failure": "Failed to add \"{name}\".",
     "update_success": "\"{name}\" was successfully updated.",
-    "update_failure": "Failed to update \"{name}\"."
+    "update_failure": "Failed to update \"{name}\".",
+    "visible": "visible",
+    "invisible": "invisible",
+    "update_visible_success": "\"{name}\" was successfully updated to be {status}."
   },
   "modal": {
     "yes": "Yes",

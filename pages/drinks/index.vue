@@ -12,9 +12,19 @@ const modalIsActive = useState(() => false)
 
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
-const { fetchDrinks, deleteDrinkById } = drinksStore
+const { fetchDrinks, updateDrinkVisible, deleteDrinkById } = drinksStore
 
 fetchDrinks()
+
+const updateHidden = async (drink: Drink) => {
+  const error = await updateDrinkVisible(drink.id, !drink.visible)
+  if (error) {
+    console.log(error)
+    showDangerToast($i18n.t('drinks.update_failure', { name: drink.name }))
+    return
+  }
+  showSuccessToast($i18n.t('drinks.update_visible_success', { name: drink.name, status: $i18n.t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
+}
 
 const deleteTarget = useState<Drink | null>(() => null)
 const clickDeleteDrinkButton = (drink: Drink) => {
@@ -63,6 +73,20 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
                 <i class="mdi mdi-24px mdi-text-box-edit-outline" />
               </span>
             </NuxtLink>
+
+            <span
+              :class="['icon', drink.visible ? 'has-text-primary' : 'has-text-dark']"
+              @click="updateHidden(drink)"
+            >
+              <i
+                v-if="drink.visible"
+                class="mdi mdi-24px mdi-eye"
+              />
+              <i
+                v-else
+                class="mdi mdi-24px mdi-eye-off"
+              />
+            </span>
 
             <span
               class="icon has-text-danger"
