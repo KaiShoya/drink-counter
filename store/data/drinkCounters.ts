@@ -61,7 +61,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.GET_RECORD') })
     }
     const { data } = await supabase.rpc('increment', { row_id: id })
-    drinkCounter.count = data?.count ?? 0
+    drinkCounter.count = Number(data) ?? 0
   }
 
   /**
@@ -77,7 +77,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
       return
     }
     const { data } = await supabase.rpc('decrement', { row_id: id })
-    drinkCounter.count = data?.count ?? 0
+    drinkCounter.count = Number(data) ?? 0
   }
 
   /**
