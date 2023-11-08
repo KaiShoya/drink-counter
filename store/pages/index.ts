@@ -48,6 +48,12 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   // }
 
   /**
+   * numberOfDrinksのcountの合計値を返却する
+   * @returns number 1日の合計数
+   */
+  const updateDrinkCountForDay = () => numberOfDrinks.value.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0)
+
+  /**
    * 指定した日付の飲んだ杯数を取得する
    * @param date 日付 '2023-01-01'
    */
@@ -68,8 +74,8 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
           count: drinkCounter?.count ?? 0,
           drinkCounterId: drinkCounter?.id ?? -1,
         })
-        drinkCountForDay.value += drinkCounter?.count ?? 0
       })
+      drinkCountForDay.value = updateDrinkCountForDay()
     } catch (error) {
       throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
     } finally {
@@ -87,9 +93,12 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     } else {
       await increment(drinkCounterId)
     }
-    numberOfDrink!.count++
-    drinkCountForDay.value++
+
+    const drinkCounter = findDrinkCountersByDrinkId(drinkId)
+    numberOfDrink!.count = drinkCounter!.count
+    drinkCountForDay.value = updateDrinkCountForDay()
   }
+
   const minus = async (drinkId: number, drinkCounterId: number) => {
     // レコードがなければ何もしない
     if (drinkCounterId === -1) {
@@ -101,8 +110,10 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
       return
     }
     await decrement(drinkCounterId)
-    numberOfDrink.count--
-    drinkCountForDay.value--
+
+    const drinkCounter = findDrinkCountersByDrinkId(drinkId)
+    numberOfDrink!.count = drinkCounter!.count
+    drinkCountForDay.value = updateDrinkCountForDay()
   }
 
   return {
