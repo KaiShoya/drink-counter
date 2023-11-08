@@ -62,6 +62,9 @@
     "invisible": "非表示",
     "update_visible_success": "「{name}」を{status}に変更しました。"
   },
+  "data": {
+    "total": "合計"
+  },
   "modal": {
     "yes": "はい",
     "no": "いいえ"
