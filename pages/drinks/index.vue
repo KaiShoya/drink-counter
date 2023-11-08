@@ -78,7 +78,7 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
             </NuxtLink>
 
             <span
-              :class="['icon', drink.visible ? 'has-text-primary' : 'has-text-dark']"
+              :class="['icon', 'mx-2', drink.visible ? 'has-text-primary' : 'has-text-dark']"
               @click="updateHidden(drink)"
             >
               <i
