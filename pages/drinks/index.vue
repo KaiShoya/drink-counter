@@ -53,53 +53,57 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
 </script>
 
 <template>
-  <div>
-    <table class="table is-hoverable is-fullwidth is-striped">
-      <thead>
-        <tr>
-          <th>{{ $t('drinks.name') }}</th>
-          <th>{{ $t('drinks.color') }}</th>
-          <th class="is-1" />
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="drink of drinks"
-          :key="drink.id"
+  <div class="mx-2">
+    <div class="columns is-mobile title is-6 border-line">
+      <div class="column is-6">
+        {{ $t('drinks.name') }}
+      </div>
+      <div class="column is-3">
+        {{ $t('drinks.color') }}
+      </div>
+      <div class="column is-3" />
+    </div>
+    <div
+      v-for="drink of drinks"
+      :key="drink.id"
+      class="columns is-mobile border-line"
+    >
+      <div class="column is-6">
+        {{ drink.name }}
+      </div>
+      <div class="column is-3">
+        {{ drink.color }}
+      </div>
+      <div class="column is-3">
+        <NuxtLink
+          :to="localePath(`/drinks/${drink.id}`)"
+          class="icon has-text-info"
         >
-          <td>{{ drink.name }}</td>
-          <td>{{ drink.color }}</td>
-          <td>
-            <NuxtLink :to="localePath(`/drinks/${drink.id}`)">
-              <span class="icon has-text-info">
-                <i class="mdi mdi-24px mdi-text-box-edit-outline" />
-              </span>
-            </NuxtLink>
+          <i class="mdi mdi-24px mdi-text-box-edit-outline" />
+        </NuxtLink>
 
-            <span
-              :class="['icon', drink.visible ? 'has-text-primary' : 'has-text-dark']"
-              @click="updateHidden(drink)"
-            >
-              <i
-                v-if="drink.visible"
-                class="mdi mdi-24px mdi-eye"
-              />
-              <i
-                v-else
-                class="mdi mdi-24px mdi-eye-off"
-              />
-            </span>
+        <span
+          :class="['icon', 'mx-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
+          @click="updateHidden(drink)"
+        >
+          <i
+            v-if="drink.visible"
+            class="mdi mdi-24px mdi-eye"
+          />
+          <i
+            v-else
+            class="mdi mdi-24px mdi-eye-off"
+          />
+        </span>
 
-            <span
-              class="icon has-text-danger"
-              @click="clickDeleteDrinkButton(drink)"
-            >
-              <i class="mdi mdi-24px mdi-delete-forever-outline" />
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <span
+          class="icon has-text-danger"
+          @click="clickDeleteDrinkButton(drink)"
+        >
+          <i class="mdi mdi-24px mdi-delete-forever-outline" />
+        </span>
+      </div>
+    </div>
 
     <NuxtLink
       to="/drinks/new"
@@ -117,3 +121,9 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
     />
   </div>
 </template>
+
+<style scoped>
+.border-line {
+  border-bottom: solid 1px #aaaaaa;
+}
+</style>
