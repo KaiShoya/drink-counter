@@ -62,6 +62,9 @@
     "invisible": "invisible",
     "update_visible_success": "\"{name}\" was successfully updated to be {status}."
   },
+  "data": {
+    "total": "Total"
+  },
   "modal": {
     "yes": "Yes",
     "no": "No"

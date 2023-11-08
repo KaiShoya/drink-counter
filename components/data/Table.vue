@@ -1,9 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   titles: Array<String>,
   tableData: Array<Array<String | Number>>,
 }>()
+
+const total = () => props.tableData.reduce((accumulator, currentValue) => accumulator + Number(currentValue[1]), 0)
 </script>
 
 <template>
@@ -31,5 +33,11 @@ defineProps<{
         </td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td>{{ $t('data.total') }}</td>
+        <td>{{ total() }}</td>
+      </tr>
+    </tfoot>
   </table>
 </template>
