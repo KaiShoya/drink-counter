@@ -70,10 +70,11 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
           <td>{{ drink.name }}</td>
           <td>{{ drink.color }}</td>
           <td>
-            <NuxtLink :to="localePath(`/drinks/${drink.id}`)">
-              <span class="icon has-text-info">
-                <i class="mdi mdi-24px mdi-text-box-edit-outline" />
-              </span>
+            <NuxtLink
+              :to="localePath(`/drinks/${drink.id}`)"
+              class="icon has-text-info"
+            >
+              <i class="mdi mdi-24px mdi-text-box-edit-outline" />
             </NuxtLink>
 
             <span
