@@ -111,7 +111,7 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
       {{ $t('drinks.add') }}
     </NuxtLink>
 
-    <PagesDrinksDangerModal
+    <ShareDangerModal
       :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"
       :content="$t('drinks.delete_modal_content', { name: deleteTarget?.name })"
       :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"

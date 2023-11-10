@@ -74,7 +74,7 @@ watch(date, async () => {
       />
     </div>
 
-    <PagesIndexWarningModal
+    <ShareWarningModal
       title="飲みすぎ注意"
       :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
