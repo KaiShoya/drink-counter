@@ -8,6 +8,15 @@
     "editor.formatOnSave": false
   },
   "editor.tabSize": 2,
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    },
+    "editor.snippetSuggestions": "top"
+  },
   "markdown.extension.tableFormatter.enabled": true,
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
   "markdown.extension.tableFormatter.normalizeIndentation": false,
