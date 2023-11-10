@@ -2,8 +2,8 @@
 import { useSupabaseStore } from '~/store/supabase'
 const { signUpWithEmail } = useSupabaseStore()
 
-const email = useState('email', () => '')
-const password = useState('password', () => '')
+const email = ref<string>('')
+const password = ref<string>('')
 </script>
 
 <template>

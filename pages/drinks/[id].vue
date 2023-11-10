@@ -10,11 +10,11 @@ const { fetchDrinks, findDrink, updateDrink, createDrink } = drinksStore
 
 await fetchDrinks()
 
-const name = useState<string>(() => '')
-const color = useState<string | null>(() => null)
+const name = ref<string>('')
+const color = ref<string | null>(null)
 
 const drinkId = Number(route.params.id)
-const newDrink = useState(() => true)
+const newDrink = ref<boolean>(true)
 if (route.params.id === 'new') {
   name.value = ''
   color.value = null

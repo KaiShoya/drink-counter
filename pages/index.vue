@@ -10,7 +10,7 @@ const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexS
 const { fetchNumberOfDrinks, fetchDate, prevDate, nextDate, plus, minus } = indexStore
 
 // Modal用フラグ
-const modalIsActive = useState(() => false)
+const modalIsActive = ref<boolean>(false)
 
 // 日付
 await fetchDate()
@@ -18,8 +18,8 @@ await fetchDate()
 // numberOfDrinksにデータをセット
 await fetchNumberOfDrinks(date.value)
 
-const thisDrinkId = useState(() => 0)
-const thisCounterId = useState(() => 0)
+const thisDrinkId = ref<number>(0)
+const thisCounterId = ref<number>(0)
 // 杯数加算時の閾値チェック
 const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
