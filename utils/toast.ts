@@ -1,9 +1,9 @@
 import * as bulmaToast from 'bulma-toast'
 
-export const showToast = (message: string, type: bulmaToast.ToastType) => {
+export const showToast = (message: string, type: bulmaToast.ToastType, duration: number = 2000) => {
   bulmaToast.toast({
     message,
-    duration: 10000,
+    duration,
     type,
     dismissible: true,
     animate: { in: 'fadeIn', out: 'fadeOut' },
@@ -19,5 +19,5 @@ export const showWarningToast = (message: string) => {
 }
 
 export const showDangerToast = (message: string) => {
-  showToast(message, 'is-danger')
+  showToast(message, 'is-danger', 10000)
 }
