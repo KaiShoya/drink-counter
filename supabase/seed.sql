@@ -89,14 +89,14 @@ VALUES
   );
 
 insert into
-  public.drinks (id, name)
+  public.drinks (id, name, user_id)
 values
-  (1, 'ビール'),
-  (2, 'ハイボール'),
-  (3, 'ウィスキー'),
-  (4, '日本酒'),
-  (5, 'ワイン'),
-  (6, 'コーヒー');
+  (1, 'ビール', '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (2, 'ハイボール', '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (3, 'ウィスキー', '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (4, '日本酒', '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (5, 'ワイン', '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (6, 'コーヒー', '5899f99d-a449-4bfa-8769-19c097aaf1f5');
 
 insert into
   public.drink_counters (date, drink_id, count, user_id)
