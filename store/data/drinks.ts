@@ -14,12 +14,9 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   }
 
   /**
-   * Drinksテーブルから表示状態の飲み物のデータを取得する
+   * 表示状態の飲み物のデータを返却する
    */
-  const fetchDrinksVisible = async () => {
-    const { data } = await supabase.from('drinks').select('*').eq('visible', true)
-    drinks.value = data ?? []
-  }
+  const findDrinksVisible = () => drinks.value.filter((drink: Drink) => drink.visible)
 
   /**
    * 指定したIDの飲み物データを取得する
@@ -98,7 +95,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   return {
     drinks,
     findDrink,
-    fetchDrinksVisible,
+    findDrinksVisible,
     fetchDrinks,
     deleteDrinkById,
     updateDrink,
