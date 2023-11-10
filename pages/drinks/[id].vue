@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { showSuccessToast, showDangerToast } from '~/composables/toast'
 import { useDrinksStore } from '~/store/data/drinks'
 
 const route = useRoute()

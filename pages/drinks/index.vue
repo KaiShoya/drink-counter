@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { useDrinksStore } from '~/store/data/drinks'
 import type { Drink } from '~/store/data/types/drink'
-import { showSuccessToast, showDangerToast } from '~/composables/toast'
 
 const localePath = useLocalePath()
 
