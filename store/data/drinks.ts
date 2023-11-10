@@ -3,7 +3,7 @@ import type { Drink } from '~/store/data/types/drink'
 
 export const useDrinksStore = defineStore('drinksStore', () => {
   const { supabase } = useSupabaseStore()
-  const drinks: Ref<Drink[]> = ref([])
+  const drinks = ref<Drink[]>([])
 
   /**
    * Drinksテーブルから飲み物のデータを取得する

@@ -3,7 +3,7 @@ import type { UserSetting } from '~/store/data/types/userSetting'
 
 export const useUserSettingsStore = defineStore('userSettings', () => {
   const { supabase } = useSupabaseStore()
-  const userSettings: Ref<UserSetting> = ref({
+  const userSettings = ref<UserSetting>({
     thresholdForDetectingOverdrinking: 2,
     name: null,
     avatarUrl: null,

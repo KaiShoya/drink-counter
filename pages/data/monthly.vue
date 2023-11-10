@@ -7,7 +7,7 @@ const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, comput
 const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
-const updateCalendar = ref(0)
+const updateCalendar = ref<number>(0)
 
 await fetchDrinkCounters()
 

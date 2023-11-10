@@ -3,8 +3,8 @@ import type { QuantityByDrink } from './types/quantityByDrink'
 
 export const useDrinksStore = defineStore('drinksStore', () => {
   const { supabase } = useSupabaseStore()
-  const quantityByDrink: Ref<QuantityByDrink[]> = ref([])
-  const quantityByDrinkPerMonth: Ref<QuantityByDrink[]> = ref([])
+  const quantityByDrink = ref<QuantityByDrink[]>([])
+  const quantityByDrinkPerMonth = ref<QuantityByDrink[]>([])
 
   const fetchQuantityByDrink = async () => {
     const { data } = await supabase.rpc('sum_count')
