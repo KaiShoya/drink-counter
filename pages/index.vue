@@ -10,7 +10,7 @@ const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexS
 const { fetchNumberOfDrinks, fetchDate, prevDate, nextDate, plus, minus } = indexStore
 
 // Modal用フラグ
-const modalIsActive = useState(() => false)
+const modalIsActive = ref<boolean>(false)
 
 // 日付
 await fetchDate()
@@ -18,8 +18,8 @@ await fetchDate()
 // numberOfDrinksにデータをセット
 await fetchNumberOfDrinks(date.value)
 
-const thisDrinkId = useState(() => 0)
-const thisCounterId = useState(() => 0)
+const thisDrinkId = ref<number>(0)
+const thisCounterId = ref<number>(0)
 // 杯数加算時の閾値チェック
 const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
@@ -62,7 +62,7 @@ watch(date, async () => {
     <o-loading v-model:active="isLoading" />
 
     <div v-if="!isLoading">
-      <IndexDrinkColumn
+      <PagesIndexDrinkColumn
         v-for="(drink, id) in numberOfDrinks"
         :key="id"
         :drink-id="drink.id"
@@ -74,7 +74,7 @@ watch(date, async () => {
       />
     </div>
 
-    <IndexWarningModal
+    <ShareWarningModal
       title="飲みすぎ注意"
       :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"

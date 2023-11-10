@@ -4,7 +4,7 @@ import type { DrinkCounter } from '~/store/data/types/drinkCounter'
 export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
-  const drinkCounters: Ref<DrinkCounter[]> = useState(() => [])
+  const drinkCounters = ref<DrinkCounter[]>([])
 
   /**
    * drinkCountersから指定したidのレコードを取得する

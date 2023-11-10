@@ -1,7 +1,7 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 export const useSupabaseStore = defineStore('supabase', () => {
-  const supabase = useState<SupabaseClient>('supabase', () => createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey))
+  const supabase = ref<SupabaseClient>(createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey))
 
   const signUpWithEmail = async (email: string, password: string) => {
     const { data } = await supabase.value.auth.signUp({ email, password })

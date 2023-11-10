@@ -11,7 +11,7 @@ const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
 const { signInWithGoogle } = useSupabaseStore()
-const active = useState('active', () => false)
+const active = ref<boolean>(false)
 </script>
 
 <template>

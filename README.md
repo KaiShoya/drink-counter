@@ -47,3 +47,24 @@ yarn version --major
 yarn version --minor
 yarn version --patch
 ```
+
+# 各階層の役割
+```
+├ assets/ # 資産置き場
+│  └ scss/ # グローバルなSCSS置き場 フレームワークを使ってる & コンポーネント単位でCSS当ててるから使うことないかも。
+├ components/ # コンポーネント置き場
+│  ├ share/ # 共通で利用するコンポーネント置き場 ここに機能単位でディレクトリを分けて作成する
+│  └ pages/ # ページ毎にディレクトリを分けて、そのページ内だけで利用するコンポーネントを置く
+├ composables/ # Piniaで管理するほどでもないコード置き場（今の所使ってない）
+├ layouts/ # レイアウト置き場
+├ locales/ # 言語ファイル置き場
+├ pages/ # ページ置き場
+├ plugins/ # プラグイン置き場
+├ public/ # staticページ置き場
+├ store/ # Pinia置き場
+├ supabase/ # supabase関連のファイル置き場
+│  ├ functions/ # Supabase Functionsファイル置き場
+│  ├ migrations/ # マイグレーションファイル置き場 原則supabase db diffコマンドでファイルを作成する
+│  └ seed.sql # シードデータファイル
+└ utils/ # 共通で利用する関数・定数置き場
+```

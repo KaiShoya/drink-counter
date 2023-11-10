@@ -2,29 +2,11 @@ name: CI
 
 on:
   pull_request:
+    paths:
+      - 'supabase/migrations/**'
   workflow_dispatch:
 
 jobs:
-  # FIXME: ローカルとActionsで実行結果が違う。。。一旦コメントアウト
-  # lint:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [ubuntu-latest]
-  #       node: [16]
-  #   steps:
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node }}
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/cache@v3
-  #       with:
-  #         path: |
-  #           node_modules
-  #         key: ${{ matrix.os }}-node-v${{ matrix.node }}-nuxt-${{ github.sha }}
-  #     - run: yarn install
-  #     - run: yarn lint
-
   test:
     runs-on: ${{ matrix.os }}
     strategy:

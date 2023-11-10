@@ -7,7 +7,7 @@ const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, comput
 const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
-const updateCalendar = ref(0)
+const updateCalendar = ref<number>(0)
 
 await fetchDrinkCounters()
 
@@ -40,14 +40,14 @@ watch(yearMonth, async () => {
       </button>
     </div>
 
-    <DataGraphsFCalendar
+    <PagesDataGraphsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"
       :data="computeCalendarData"
     />
-    <DataGraphsComboChart :data="computeGraphData" />
-    <DataGraphsPieChart :data="computedChartData" />
-    <DataTable
+    <PagesDataGraphsComboChart :data="computeGraphData" />
+    <PagesDataGraphsPieChart :data="computedChartData" />
+    <PagesDataTable
       :titles="chartDataTitle"
       :table-data="computedTableData"
     />

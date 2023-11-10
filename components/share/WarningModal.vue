@@ -18,7 +18,6 @@ defineProps<{
         <button
           class="delete"
           aria-label="close"
-          @click="cancel"
         />
       </header>
       <section class="modal-card-body">
@@ -26,14 +25,14 @@ defineProps<{
       </section>
       <footer class="modal-card-foot">
         <button
-          class="button is-danger"
+          class="button is-success"
           @click="success()"
         >
           {{ $t('modal.yes') }}
         </button>
         <button
           class="button"
-          @click="cancel"
+          @click="cancel()"
         >
           {{ $t('modal.no') }}
         </button>

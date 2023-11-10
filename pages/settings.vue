@@ -2,12 +2,21 @@
 import { storeToRefs } from 'pinia'
 import { useUserSettingsStore } from '~/store/data/userSettings'
 
+const { $i18n } = useNuxtApp()
+
 const serSettingsStore = useUserSettingsStore()
 const { userSettings } = storeToRefs(serSettingsStore)
 const { updateThresholdForDetectingOverdrinking } = serSettingsStore
 
-const click = () => {
-  updateThresholdForDetectingOverdrinking()
+const click = async () => {
+  const error = await updateThresholdForDetectingOverdrinking()
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error(error)
+    showDangerToast($i18n.t('error.500_API_ERROR'))
+  } else {
+    showSuccessToast($i18n.t('general.update_success'))
+  }
 }
 </script>
 

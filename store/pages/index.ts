@@ -1,5 +1,3 @@
-import { storeToRefs } from 'pinia'
-
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
@@ -12,13 +10,12 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
   const drinksStore = useDrinksStore()
-  const { drinks } = storeToRefs(drinksStore)
-  const { fetchDrinksVisible } = drinksStore
+  const { fetchDrinks, findDrinksVisible } = drinksStore
 
-  const date: Ref<string> = useState('date', () => '')
-  const numberOfDrinks: Ref<NumberOfDrink[]> = useState('numberOfDrinks', () => [])
-  const drinkCountForDay: Ref<number> = useState('drinkCountForDay', () => 0)
-  const isLoading: Ref<boolean> = useState(() => false)
+  const date = ref<string>('')
+  const numberOfDrinks = ref<NumberOfDrink[]>([])
+  const drinkCountForDay = ref<number>(0)
+  const isLoading = ref<boolean>(false)
 
   /**
    * 日付を取得する
@@ -60,13 +57,13 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const fetchNumberOfDrinks = async (date: string) => {
     isLoading.value = true
     try {
-      await fetchDrinksVisible()
+      await fetchDrinks()
       await fetchDrinkCountersForDay(date)
 
       numberOfDrinks.value = []
       drinkCountForDay.value = 0
 
-      drinks.value.forEach((drink) => {
+      findDrinksVisible().forEach((drink) => {
         const drinkCounter = findDrinkCountersByDrinkId(drink.id)
         numberOfDrinks.value.push({
           id: drink.id,

@@ -2,13 +2,12 @@
 import { storeToRefs } from 'pinia'
 import { useDrinksStore } from '~/store/data/drinks'
 import type { Drink } from '~/store/data/types/drink'
-import { showSuccessToast, showDangerToast } from '~/composables/toast'
 
 const localePath = useLocalePath()
 
 const { $i18n } = useNuxtApp()
 
-const modalIsActive = useState(() => false)
+const modalIsActive = ref<boolean>(false)
 
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
@@ -27,7 +26,7 @@ const updateHidden = async (drink: Drink) => {
   showSuccessToast($i18n.t('drinks.update_visible_success', { name: drink.name, status: $i18n.t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
 }
 
-const deleteTarget = useState<Drink | null>(() => null)
+const deleteTarget = ref<Drink | null>(null)
 const clickDeleteDrinkButton = (drink: Drink) => {
   deleteTarget.value = drink
   modalIsActive.value = true
@@ -112,7 +111,7 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
       {{ $t('drinks.add') }}
     </NuxtLink>
 
-    <DrinksDangerModal
+    <ShareDangerModal
       :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"
       :content="$t('drinks.delete_modal_content', { name: deleteTarget?.name })"
       :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"
