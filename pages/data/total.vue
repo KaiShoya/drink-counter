@@ -11,12 +11,12 @@ await fetchDrinkCountersAll()
 
 <template>
   <div class="container">
-    <DataGraphsCalendar
+    <PagesDataGraphsCalendar
       :title="calendarTitle"
       :data="computeCalendarData"
     />
-    <DataGraphsPieChart :data="computedChartData" />
-    <DataTable
+    <PagesDataGraphsPieChart :data="computedChartData" />
+    <PagesDataTable
       :titles="chartDataTitle"
       :table-data="computedTableData"
     />

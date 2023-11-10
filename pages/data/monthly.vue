@@ -40,14 +40,14 @@ watch(yearMonth, async () => {
       </button>
     </div>
 
-    <DataGraphsFCalendar
+    <PagesDataGraphsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"
       :data="computeCalendarData"
     />
-    <DataGraphsComboChart :data="computeGraphData" />
-    <DataGraphsPieChart :data="computedChartData" />
-    <DataTable
+    <PagesDataGraphsComboChart :data="computeGraphData" />
+    <PagesDataGraphsPieChart :data="computedChartData" />
+    <PagesDataTable
       :titles="chartDataTitle"
       :table-data="computedTableData"
     />

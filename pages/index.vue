@@ -62,7 +62,7 @@ watch(date, async () => {
     <o-loading v-model:active="isLoading" />
 
     <div v-if="!isLoading">
-      <IndexDrinkColumn
+      <PagesIndexDrinkColumn
         v-for="(drink, id) in numberOfDrinks"
         :key="id"
         :drink-id="drink.id"
@@ -74,7 +74,7 @@ watch(date, async () => {
       />
     </div>
 
-    <IndexWarningModal
+    <PagesIndexWarningModal
       title="飲みすぎ注意"
       :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
