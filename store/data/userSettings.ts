@@ -21,7 +21,8 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
   }
 
   const updateThresholdForDetectingOverdrinking = async () => {
-    await supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold: userSettings.value.thresholdForDetectingOverdrinking })
+    const { error } = await supabase.rpc('update_threshold_for_detecting_overdrinking', { threshold: userSettings.value.thresholdForDetectingOverdrinking })
+    return error
   }
 
   return {
