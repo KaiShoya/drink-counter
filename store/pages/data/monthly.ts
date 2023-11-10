@@ -16,11 +16,11 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const { fetchDrinks } = drinksStore
 
   const graphDataTitleBase = ['日付', '合計']
-  const chartDataTitle = useState(() => ['Name', 'Count'])
+  const chartDataTitle = ref(['Name', 'Count'])
 
-  const yearMonth: Ref<string> = useState(() => processIntoYearMonth(new Date()))
-  const graphDataTitle: Ref<Array<string>> = useState(() => graphDataTitleBase)
-  const sumCountPerMonth: Ref<Array<{ drink_id: number, count: number }>> = useState(() => [])
+  const yearMonth: Ref<string> = ref(processIntoYearMonth(new Date()))
+  const graphDataTitle: Ref<Array<string>> = ref(graphDataTitleBase)
+  const sumCountPerMonth: Ref<Array<{ drink_id: number, count: number }>> = ref([])
 
   const computedYearMonth = computed(() => {
     const [year, month] = yearMonth.value.split('-').map(v => Number(v))

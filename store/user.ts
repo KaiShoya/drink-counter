@@ -3,9 +3,9 @@ import { useSupabaseStore } from '~/store/supabase'
 export const useUserStore = defineStore('user', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
-  const isLogin: Ref<boolean> = useState(() => false)
-  const userName: Ref<string | null> = useState(() => null)
-  const userAvatarUrl: Ref<string | null> = useState(() => null)
+  const isLogin: Ref<boolean> = ref(false)
+  const userName: Ref<string | null> = ref(null)
+  const userAvatarUrl: Ref<string | null> = ref(null)
 
   /**
    * ログイン済みの場合にユーザ情報とUserSettingsを取得する

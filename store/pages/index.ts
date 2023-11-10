@@ -15,10 +15,10 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { drinks } = storeToRefs(drinksStore)
   const { fetchDrinksVisible } = drinksStore
 
-  const date: Ref<string> = useState('date', () => '')
-  const numberOfDrinks: Ref<NumberOfDrink[]> = useState('numberOfDrinks', () => [])
-  const drinkCountForDay: Ref<number> = useState('drinkCountForDay', () => 0)
-  const isLoading: Ref<boolean> = useState(() => false)
+  const date: Ref<string> = ref('')
+  const numberOfDrinks: Ref<NumberOfDrink[]> = ref([])
+  const drinkCountForDay: Ref<number> = ref(0)
+  const isLoading: Ref<boolean> = ref(false)
 
   /**
    * 日付を取得する

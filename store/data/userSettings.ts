@@ -3,12 +3,10 @@ import type { UserSetting } from '~/store/data/types/userSetting'
 
 export const useUserSettingsStore = defineStore('userSettings', () => {
   const { supabase } = useSupabaseStore()
-  const userSettings: Ref<UserSetting> = useState(() => {
-    return {
-      thresholdForDetectingOverdrinking: 2,
-      name: null,
-      avatarUrl: null,
-    }
+  const userSettings: Ref<UserSetting> = ref({
+    thresholdForDetectingOverdrinking: 2,
+    name: null,
+    avatarUrl: null,
   })
 
   const fetchUserSettings = async () => {

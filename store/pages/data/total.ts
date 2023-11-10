@@ -14,8 +14,8 @@ export const useTotalStore = defineStore('totalStore', () => {
   const { drinks, getDrinksIdArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
 
-  const chartDataTitle = useState(() => ['Name', 'Count'])
-  const sumCount: Ref<Array<{ drink_id: number, count: number }>> = useState(() => [])
+  const chartDataTitle = ref(['Name', 'Count'])
+  const sumCount: Ref<Array<{ drink_id: number, count: number }>> = ref([])
 
   const fetchDrinkCountersAll = async () => {
     await fetchDrinks()
@@ -31,7 +31,7 @@ export const useTotalStore = defineStore('totalStore', () => {
   /**
    * カレンダー用データ
    */
-  const calendarTitle = useState(() => [
+  const calendarTitle = ref([
     {
       type: 'date',
       id: 'Date',
