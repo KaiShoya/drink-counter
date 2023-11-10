@@ -14,7 +14,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     // ユーザ情報取得
     await fetchUserData()
     // UserSettings取得
-    await fetchUserSettings()
+    const error = await fetchUserSettings()
+    if (error) {
+      showDangerToast($i18n.t('error.500_API_ERROR'))
+    }
   })
 
   // ログイン情報を取得できなかったらトーストを表示

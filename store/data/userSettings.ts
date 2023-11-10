@@ -14,12 +14,10 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
 
   const fetchUserSettings = async () => {
     const { data, error } = await supabase.rpc('get_user_settings')
-    if (error) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
-    }
-    if (data && data[0]) {
+    if (!error && data && data[0]) {
       userSettings.value.thresholdForDetectingOverdrinking = data[0]!.threshold_for_detecting_overdrinking
     }
+    return error
   }
 
   const updateThresholdForDetectingOverdrinking = async () => {
