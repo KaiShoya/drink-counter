@@ -74,7 +74,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
       })
       drinkCountForDay.value = updateDrinkCountForDay()
     } catch (error) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
+      showDangerToast($i18n.t('error.500_API_ERROR'))
     } finally {
       isLoading.value = false
     }
