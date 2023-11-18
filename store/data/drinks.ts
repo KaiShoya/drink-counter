@@ -7,9 +7,13 @@ export const useDrinksStore = defineStore('drinksStore', () => {
 
   /**
    * Drinksテーブルから飲み物のデータを取得する
+   * @returns Promise<error_message_code | undefined>
    */
   const fetchDrinks = async () => {
-    const { data } = await supabase.from('drinks').select('*')
+    const { data, error } = await supabase.from('drinks').select('*')
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     drinks.value = data ?? []
   }
 
@@ -29,15 +33,16 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * 指定したIDの飲み物を削除する
    * 削除に成功したらDrinksを再取得する
    * @param drinkId number
-   * @returns Promise<PostgrestError | null>
+   * @returns Promise<error_message_code | undefined>
    */
   const deleteDrinkById = async (drinkId: number) => {
     const { error } = await supabase.rpc('delete_drink_data', { drinkid: drinkId })
-    // const { error } = await supabase.from('drinks').delete().eq('id', drinkId)
-    if (!error) {
-      await fetchDrinks()
+    if (error) {
+      return 'drinks.delete_failure'
     }
-    return error
+
+    const fetchDrinkError = await fetchDrinks()
+    return fetchDrinkError
   }
 
   /**
@@ -45,37 +50,38 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * @param drinkId number
    * @param name string
    * @param color string | null
-   * @returns Promise<PostgrestError | null>
+   * @returns Promise<error_message_code | undefined>
    */
   const updateDrink = async (drinkId: number, name: string, color: string | null) => {
     const { error } = await supabase.from('drinks').update({ name, color }).eq('id', drinkId)
-    if (!error) {
-      const drink = findDrink(drinkId)
-      if (drink) {
-        drink.name = name
-        drink.color = color
-      }
+    if (error) {
+      return 'error.500_API_ERROR'
     }
-    return error
+    const drink = findDrink(drinkId)
+    if (drink) {
+      drink.name = name
+      drink.color = color
+    }
   }
 
   const updateDrinkVisible = async (drinkId: number, visible: boolean) => {
     const { error } = await supabase.from('drinks').update({ visible }).eq('id', drinkId)
-    if (!error) {
-      const drink = findDrink(drinkId)
-      if (drink) {
-        drink.visible = visible
-      }
+    if (error) {
+      return 'drinks.update_failure'
     }
-    return error
+    const drink = findDrink(drinkId)
+    if (drink) {
+      drink.visible = visible
+    }
   }
 
   const createDrink = async (name: string, color: string | null) => {
     const { error } = await supabase.from('drinks').insert({ name, color })
-    if (!error) {
-      await fetchDrinks()
+    if (error) {
+      return 'drinks.create_failure'
     }
-    return error
+    const fetchDrinkError = await fetchDrinks()
+    return fetchDrinkError
   }
 
   /**

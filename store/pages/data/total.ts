@@ -5,6 +5,7 @@ import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
 
 export const useTotalStore = defineStore('totalStore', () => {
+  const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
   const { formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
@@ -18,13 +19,27 @@ export const useTotalStore = defineStore('totalStore', () => {
   const sumCount = ref<Array<{ drink_id: number, count: number }>>([])
 
   const fetchDrinkCountersAll = async () => {
-    await fetchDrinks()
-    await fetchDrinkCounters()
-    await fetchSumCount()
+    const fetchDrinksError = await fetchDrinks()
+    if (fetchDrinksError) {
+      showDangerToast($i18n.t(fetchDrinksError))
+      return
+    }
+    const fetchDrinkCountersError = await fetchDrinkCounters()
+    if (fetchDrinkCountersError) {
+      showDangerToast($i18n.t(fetchDrinkCountersError))
+      return
+    }
+    const fetchSumCountError = await fetchSumCount()
+    if (fetchSumCountError) {
+      showDangerToast($i18n.t(fetchSumCountError))
+    }
   }
 
   const fetchSumCount = async () => {
-    const { data } = await supabase.rpc('sum_count')
+    const { data, error } = await supabase.rpc('sum_count')
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     sumCount.value = data ?? []
   }
 
