@@ -10,6 +10,12 @@
 
 ## Setup
 
+Set up a git commit template.
+
+```bash
+git config --local commit.template .commit-msg
+```
+
 Make sure to install the dependencies:
 
 ```bash
@@ -58,13 +64,36 @@ yarn version --patch
 ├ composables/ # Piniaで管理するほどでもないコード置き場（今の所使ってない）
 ├ layouts/ # レイアウト置き場
 ├ locales/ # 言語ファイル置き場
-├ pages/ # ページ置き場
+├ pages/ # ページ置き場 pagesの中ではエラーハンドリングしない
 ├ plugins/ # プラグイン置き場
 ├ public/ # staticページ置き場
-├ store/ # Pinia置き場
+├ store/ # Pinia置き場 モデルとそのモデルを更新するためのAPIを提供する
+│  ├ data/ # Supabase側で持っているモデルとほぼ同じモデルを保持する エラーが発生した場合はメッセージコードをreturnする
+│  ├ pages/ # dataのモデルを組み合わせて、各ページで利用するモデルを作成する エラーが発生した場合はメッセージをトースト表示する
+│  ├ supabase.ts # supabase関連 storeが適切かは悩みどころ 
+│  └ user.ts # ログイン情報を保持する
 ├ supabase/ # supabase関連のファイル置き場
 │  ├ functions/ # Supabase Functionsファイル置き場
 │  ├ migrations/ # マイグレーションファイル置き場 原則supabase db diffコマンドでファイルを作成する
 │  └ seed.sql # シードデータファイル
 └ utils/ # 共通で利用する関数・定数置き場
 ```
+
+# ブランチ命名規則とバージョン更新規則
+| ブランチ名           | Issue Label   | 概要                                                                         | 補足                                                                                   |
+| :------------------- | :------------ | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------------- |
+| feature/#999_xxxxxx  | enhancement   | 機能追加用ブランチ                                                           | 原則マイナーバージョンを更新する。                                                     |
+| bugfix/#999_xxxxxx   | bug           | 不具合修正用ブランチ                                                         | 原則パッチバージョンを更新する。                                                       |
+| refactor/xxxxxx      | refactoring   | リファクタリング用ブランチ                                                   | 原則パッチバージョンを更新するが、影響範囲が大きい場合はマイナーバージョンを更新する。 |
+| document/#999_xxxxxx | documentation | ドキュメントの整備用ブランチ                                                 | 原則パッチバージョンを更新する。                                                       |
+| maintain/#999_xxxxxx | maintenance   | アプリとは直接関係のない機能（.vscode/や.github/、ESLint等）の整備用ブランチ | 原則パッチバージョンを更新する。                                                       |
+| release/v0.0.0       |               | リリース用ブランチ                                                           | 複数のチケットをリリースする場合に利用する。                                           |
+
+# コミットメッセージ規約
+[Conventional Commits v1.0.0](https://www.conventionalcommits.org/ja/v1.0.0/) に従います。  
+
+# リリース手順
+1. PR作成
+2. PRにLabel(major/minor/patch)を付与する
+3. Github Actionsチェック
+4. PRマージ
