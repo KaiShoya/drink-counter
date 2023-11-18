@@ -15,7 +15,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     // UserSettings取得
     const error = await fetchUserSettings()
     if (error) {
-      showDangerToast($i18n.t('error.500_API_ERROR'))
+      showDangerToast($i18n.t(error))
     }
   })
 

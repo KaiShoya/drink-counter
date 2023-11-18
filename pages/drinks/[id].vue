@@ -8,7 +8,10 @@ const { $i18n } = useNuxtApp()
 const drinksStore = useDrinksStore()
 const { fetchDrinks, findDrink, updateDrink, createDrink } = drinksStore
 
-await fetchDrinks()
+const error = await fetchDrinks()
+if (error) {
+  showDangerToast($i18n.t(error))
+}
 
 const name = ref<string>('')
 const color = ref<string | null>(null)
@@ -34,9 +37,7 @@ if (route.params.id === 'new') {
 const create = async () => {
   const error = await createDrink(name.value, color.value)
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error(error)
-    showDangerToast($i18n.t('drinks.create_failure', { name: name.value }))
+    showDangerToast($i18n.t(error, { name: name.value }))
   } else {
     showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
     navigateTo('/drinks')

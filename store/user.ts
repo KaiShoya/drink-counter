@@ -17,7 +17,8 @@ export const useUserStore = defineStore('user', () => {
       () => supabase.auth.getSession(),
     )
     if (sessionError.value) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
+      showDangerToast($i18n.t('error.500_API_ERROR'))
+      return
     }
     if (sessionData.value?.data.session === null || sessionData.value?.data.session === undefined) {
       isLogin.value = false
@@ -30,7 +31,8 @@ export const useUserStore = defineStore('user', () => {
       () => supabase.auth.getUser(),
     )
     if (userError.value) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
+      showDangerToast($i18n.t('error.500_API_ERROR'))
+      return
     }
 
     isLogin.value = userData.value?.data?.user !== null
