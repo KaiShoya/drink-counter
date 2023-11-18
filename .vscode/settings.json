@@ -20,4 +20,5 @@
   "markdown.extension.tableFormatter.enabled": true,
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
   "markdown.extension.tableFormatter.normalizeIndentation": false,
+  "todo-tree.filtering.includeHiddenFiles": true,
 }
