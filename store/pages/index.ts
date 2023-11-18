@@ -21,7 +21,11 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
    * 日付を取得する
    */
   const fetchDate = async () => {
-    const { data } = await supabase.rpc('get_date')
+    const { data, error } = await supabase.rpc('get_date')
+    if (error) {
+      showDangerToast($i18n.t('error.500_API_ERROR'))
+      return
+    }
     date.value = String(data.split(' ')[0])
   }
 
@@ -57,8 +61,16 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const fetchNumberOfDrinks = async (date: string) => {
     isLoading.value = true
     try {
-      await fetchDrinks()
-      await fetchDrinkCountersForDay(date)
+      const fetchDrinksError = await fetchDrinks()
+      if (fetchDrinksError) {
+        showDangerToast($i18n.t(fetchDrinksError))
+        return
+      }
+      const fetchDrinkCountersForDayError = await fetchDrinkCountersForDay(date)
+      if (fetchDrinkCountersForDayError) {
+        showDangerToast($i18n.t(fetchDrinkCountersForDayError))
+        return
+      }
 
       numberOfDrinks.value = []
       drinkCountForDay.value = 0
@@ -74,7 +86,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
       })
       drinkCountForDay.value = updateDrinkCountForDay()
     } catch (error) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
+      showDangerToast($i18n.t('error.UNKNOWN'))
     } finally {
       isLoading.value = false
     }
@@ -85,10 +97,17 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     if (drinkCounterId === -1) {
       // レコードがなければ作成する
       const newDrinkCounterId = await create(drinkId, date.value)
+      if (typeof newDrinkCounterId !== 'number') {
+        showDangerToast($i18n.t(newDrinkCounterId))
+        return
+      }
       // DrinkCounterId更新
       numberOfDrink!.drinkCounterId = newDrinkCounterId
     } else {
-      await increment(drinkCounterId)
+      const incrementError = await increment(drinkCounterId)
+      if (incrementError) {
+        showDangerToast($i18n.t(incrementError))
+      }
     }
 
     const drinkCounter = findDrinkCountersByDrinkId(drinkId)
@@ -106,7 +125,10 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     if (numberOfDrink === undefined || numberOfDrink.count === 0) {
       return
     }
-    await decrement(drinkCounterId)
+    const decrementError = await decrement(drinkCounterId)
+    if (decrementError) {
+      showDangerToast($i18n.t(decrementError))
+    }
 
     const drinkCounter = findDrinkCountersByDrinkId(drinkId)
     numberOfDrink!.count = drinkCounter!.count

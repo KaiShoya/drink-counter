@@ -18,9 +18,7 @@ fetchDrinks()
 const updateHidden = async (drink: Drink) => {
   const error = await updateDrinkVisible(drink.id, !drink.visible)
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error(error)
-    showDangerToast($i18n.t('drinks.update_failure', { name: drink.name }))
+    showDangerToast($i18n.t(error, { name: drink.name }))
     return
   }
   showSuccessToast($i18n.t('drinks.update_visible_success', { name: drink.name, status: $i18n.t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
@@ -40,9 +38,7 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
   }
   const error = await deleteDrinkById(drinkId)
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error(error)
-    showDangerToast($i18n.t('drinks.delete_failure', { name: drinkName }))
+    showDangerToast($i18n.t(error, { name: drinkName }))
     modalIsActive.value = false
     return
   }

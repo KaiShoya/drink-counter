@@ -2,7 +2,6 @@ import { useSupabaseStore } from '~/store/supabase'
 import type { DrinkCounter } from '~/store/data/types/drinkCounter'
 
 export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
-  const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
   const drinkCounters = ref<DrinkCounter[]>([])
 
@@ -28,7 +27,10 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * 自分のデータを全件取得する
    */
   const fetchDrinkCounters = async () => {
-    const { data } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0)
+    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0)
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     drinkCounters.value = data ?? []
   }
 
@@ -38,7 +40,10 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @param month 月
    */
   const fetchDrinkCountersPerMonth = async (year: number, month: number) => {
-    const { data } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${year}-${month + 1}-01`)
+    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${year}-${month + 1}-01`)
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     drinkCounters.value = data ?? []
   }
 
@@ -47,36 +52,47 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @param date 日付 '2023-01-01'
    */
   const fetchDrinkCountersForDay = async (date: string) => {
-    const { data } = await supabase.from('drink_counters').select('*').eq('date', date)
+    const { data, error } = await supabase.from('drink_counters').select('*').eq('date', date)
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     drinkCounters.value = data ?? []
   }
 
   /**
    * 指定したレコードを+1する
    * @param id drinkCounter.id
+   * return error_message | undefined
    */
   const increment = async (id: number) => {
     const drinkCounter = findDrinkCountersById(id)
     if (!drinkCounter) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.GET_RECORD') })
+      return 'error.GET_RECORD'
     }
-    const { data } = await supabase.rpc('increment', { row_id: id })
+    const { data, error } = await supabase.rpc('increment', { row_id: id })
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     drinkCounter.count = Number(data) ?? 0
   }
 
   /**
    * 指定したレコードを-1する
    * @param id drinkCounter.id
+   * return error_message | undefined
    */
   const decrement = async (id: number) => {
     const drinkCounter = findDrinkCountersById(id)
     if (!drinkCounter) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.GET_RECORD') })
+      return 'error.GET_RECORD'
     }
     if (drinkCounter.count <= 0) {
       return
     }
-    const { data } = await supabase.rpc('decrement', { row_id: id })
+    const { data, error } = await supabase.rpc('decrement', { row_id: id })
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     drinkCounter.count = Number(data) ?? 0
   }
 
@@ -84,13 +100,16 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * 指定した日付のレコードを作成する
    * @param drinkId drink.id
    * @param date 日付 '2023-01-01'
-   * @return number drink_counter_id
+   * @return drink_counter_id | error_message
    */
   const create = async (drinkId: number, date: string) => {
-    const { data } = await supabase.from('drink_counters').insert({ date, drink_id: drinkId, count: 1 }).select()
+    const { data, error } = await supabase.from('drink_counters').insert({ date, drink_id: drinkId, count: 1 }).select()
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     if (data && data.length > 0) {
       drinkCounters.value.push(data[0])
-      return data[0].id
+      return Number(data[0].id)
     }
     return -1
   }

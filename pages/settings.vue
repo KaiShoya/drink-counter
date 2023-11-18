@@ -11,9 +11,7 @@ const { updateThresholdForDetectingOverdrinking } = serSettingsStore
 const click = async () => {
   const error = await updateThresholdForDetectingOverdrinking()
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error(error)
-    showDangerToast($i18n.t('error.500_API_ERROR'))
+    showDangerToast($i18n.t(error))
   } else {
     showSuccessToast($i18n.t('general.update_success'))
   }

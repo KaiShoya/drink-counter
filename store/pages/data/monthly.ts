@@ -5,7 +5,7 @@ import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
 
 export const useMonthlyStore = defineStore('monthlyStore', () => {
-  // const { $i18n } = useNuxtApp()
+  const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
   const { processIntoYearMonth, formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
@@ -41,15 +41,30 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
 
   const fetchDrinkCounters = async () => {
     const { year, month } = computedYearMonth.value
-    await fetchDrinks()
-    await fetchDrinkCountersPerMonth(year, month)
-    await fetchSumCountPerMonth()
+    const fetchDrinksError = await fetchDrinks()
+    if (fetchDrinksError) {
+      showDangerToast($i18n.t(fetchDrinksError))
+      return
+    }
+    const fetchDrinkCountersPerMonthError = await fetchDrinkCountersPerMonth(year, month)
+    if (fetchDrinkCountersPerMonthError) {
+      showDangerToast($i18n.t(fetchDrinkCountersPerMonthError))
+      return
+    }
+    const fetchSumCountPerMonthError = await fetchSumCountPerMonth()
+    if (fetchSumCountPerMonthError) {
+      showDangerToast($i18n.t(fetchSumCountPerMonthError))
+      return
+    }
     graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
   }
 
   const fetchSumCountPerMonth = async () => {
     const { year, month } = computedYearMonth.value
-    const { data } = await supabase.rpc('sum_count_per_month', { year, month })
+    const { data, error } = await supabase.rpc('sum_count_per_month', { year, month })
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
     sumCountPerMonth.value = data ?? []
   }
 
