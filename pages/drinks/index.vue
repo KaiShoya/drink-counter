@@ -50,10 +50,10 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
 <template>
   <div class="mx-2">
     <div class="columns is-mobile title is-6 border-line">
-      <div class="column is-6">
+      <div class="column is-5">
         {{ $t('drinks.name') }}
       </div>
-      <div class="column is-3">
+      <div class="column is-4">
         {{ $t('drinks.color') }}
       </div>
       <div class="column is-3" />
@@ -63,11 +63,17 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
       :key="drink.id"
       class="columns is-mobile border-line"
     >
-      <div class="column is-6">
+      <div class="column is-5">
         {{ drink.name }}
       </div>
-      <div class="column is-3">
-        {{ drink.color }}
+      <div class="column color-column is-4 columns is-vcentered is-mobile">
+        <div
+          class="tag column"
+          :style="{ background: drink.color ?? '' }"
+        />
+        <div class="column">
+          {{ drink.color }}
+        </div>
       </div>
       <div class="column is-3">
         <NuxtLink
@@ -120,5 +126,10 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
 <style scoped>
 .border-line {
   border-bottom: solid 1px #aaaaaa;
+}
+
+.color-column {
+  flex: 'none';
+  margin-bottom: -0.75rem;
 }
 </style>
