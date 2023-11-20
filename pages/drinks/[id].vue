@@ -61,7 +61,7 @@ const updateDrinkById = async () => {
   <div>
     <div class="field">
       <label class="label">{{ $t('drinks.name') }}</label>
-      <div class="control has-icons-left has-icons-right">
+      <div class="control">
         <input
           v-model="name"
           class="input"
@@ -73,12 +73,21 @@ const updateDrinkById = async () => {
 
     <div class="field">
       <label class="label">{{ $t('drinks.color') }}</label>
-      <div class="control has-icons-left has-icons-right">
+      <div class="control columns is-vcentered is-mobile">
+        <div
+          class="column"
+          style="flex: none; margin-left: 12px;"
+        >
+          <input
+            v-model="color"
+            type="color"
+          >
+        </div>
         <input
           v-model="color"
-          class="input"
+          class="input column"
           type="text"
-          placeholder="ffffff"
+          placeholder="#000000"
         >
       </div>
     </div>
