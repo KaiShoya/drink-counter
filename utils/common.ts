@@ -42,3 +42,14 @@ export const useProcessDate = () => {
     formatDrinkCounters,
   }
 }
+
+/**
+ * ランダムな色を生成する(RGB)
+ * @returns string #000000
+ */
+export const generateRandomColor = () => {
+  return '#' +
+    ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2) +
+    ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2) +
+    ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2)
+}

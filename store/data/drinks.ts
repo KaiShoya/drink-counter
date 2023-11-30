@@ -15,6 +15,13 @@ export const useDrinksStore = defineStore('drinksStore', () => {
       return 'error.500_API_ERROR'
     }
     drinks.value = data ?? []
+
+    // 色がnullだったら、デフォルトカラーをランダムセットする
+    drinks.value.forEach((drink) => {
+      if (!drink.color) {
+        drink.default_color = generateRandomColor()
+      }
+    })
   }
 
   /**

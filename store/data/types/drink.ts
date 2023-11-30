@@ -4,6 +4,7 @@ export interface Drink {
   user_id: string
   sort: number | null
   color: string | null
+  default_color: string | null
   visible: boolean
   created_at: Date // Datetime
 }
