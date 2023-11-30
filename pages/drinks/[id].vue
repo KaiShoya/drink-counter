@@ -89,6 +89,19 @@ const updateDrinkById = async () => {
           type="text"
           placeholder="#000000"
         >
+        <div
+          class="column"
+          style="flex: none; margin-right: 12px;"
+        >
+          <button
+            class="button"
+            @click="color = generateRandomColor()"
+          >
+            <span class="icon is-medium">
+              <i class="mdi mdi-cached mdi-24px" />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
 
