@@ -16,7 +16,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const { fetchDrinks } = drinksStore
 
   const graphDataTitleBase = ['日付', '合計']
-  const chartDataTitle = ref<string[]>(['Name', 'Count'])
+  const chartDataTitle = ['Name', 'Count']
 
   const yearMonth = ref<string>(processIntoYearMonth(new Date()))
   const graphDataTitle = ref<string[]>(graphDataTitleBase)
@@ -106,7 +106,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
    * 円グラフ用データ
    */
   const computedChartData = computed(() => {
-    return [chartDataTitle.value, ...computedTableData.value]
+    return [chartDataTitle, ...computedTableData.value]
   })
 
   const computedChartOptions = computed(() => {
