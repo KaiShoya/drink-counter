@@ -20,7 +20,7 @@ const drinkId = Number(route.params.id)
 const newDrink = ref<boolean>(true)
 if (route.params.id === 'new') {
   name.value = ''
-  color.value = null
+  color.value = generateRandomColor()
   newDrink.value = true
 } else {
   newDrink.value = false
