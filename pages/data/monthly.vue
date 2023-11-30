@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const monthlyStore = useMonthlyStore()
-const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData } = storeToRefs(monthlyStore)
+const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData, computedChartOptions, computedPieChartOptions } = storeToRefs(monthlyStore)
 const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
@@ -45,8 +45,14 @@ watch(yearMonth, async () => {
       :year-month="yearMonth"
       :data="computeCalendarData"
     />
-    <PagesDataGraphsComboChart :data="computeGraphData" />
-    <PagesDataGraphsPieChart :data="computedChartData" />
+    <PagesDataGraphsComboChart
+      :data="computeGraphData"
+      :options="computedChartOptions"
+    />
+    <PagesDataGraphsPieChart
+      :data="computedChartData"
+      :options="computedPieChartOptions"
+    />
     <PagesDataTable
       :titles="chartDataTitle"
       :table-data="computedTableData"

@@ -79,6 +79,12 @@ export const useTotalStore = defineStore('totalStore', () => {
     return [chartDataTitle.value, ...computedTableData.value]
   })
 
+  const computedPieChartOptions = computed(() => {
+    return {
+      colors: drinks.value.map(drink => drink.color ?? drink.default_color),
+    }
+  })
+
   return {
     chartDataTitle,
     calendarTitle,
@@ -86,5 +92,6 @@ export const useTotalStore = defineStore('totalStore', () => {
     computeCalendarData,
     computedTableData,
     computedChartData,
+    computedPieChartOptions,
   }
 })

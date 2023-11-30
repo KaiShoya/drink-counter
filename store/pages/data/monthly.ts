@@ -109,6 +109,25 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     return [chartDataTitle.value, ...computedTableData.value]
   })
 
+  const computedChartOptions = computed(() => {
+    const options: any = {
+      seriesType: 'bars',
+      series: {
+        0: { type: 'line' },
+      },
+    }
+    drinks.value.forEach((drink, i) => {
+      options.series[i + 1] = { color: drink.color ?? drink.default_color }
+    })
+    return options
+  })
+
+  const computedPieChartOptions = computed(() => {
+    return {
+      colors: drinks.value.map(drink => drink.color ?? drink.default_color),
+    }
+  })
+
   return {
     yearMonth,
     chartDataTitle,
@@ -119,5 +138,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     computeGraphData,
     computedTableData,
     computedChartData,
+    computedChartOptions,
+    computedPieChartOptions,
   }
 })
