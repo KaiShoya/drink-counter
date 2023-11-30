@@ -20,7 +20,7 @@ const drinkId = Number(route.params.id)
 const newDrink = ref<boolean>(true)
 if (route.params.id === 'new') {
   name.value = ''
-  color.value = null
+  color.value = generateRandomColor()
   newDrink.value = true
 } else {
   newDrink.value = false
@@ -61,7 +61,7 @@ const updateDrinkById = async () => {
   <div>
     <div class="field">
       <label class="label">{{ $t('drinks.name') }}</label>
-      <div class="control has-icons-left has-icons-right">
+      <div class="control">
         <input
           v-model="name"
           class="input"
@@ -73,13 +73,35 @@ const updateDrinkById = async () => {
 
     <div class="field">
       <label class="label">{{ $t('drinks.color') }}</label>
-      <div class="control has-icons-left has-icons-right">
+      <div class="control columns is-vcentered is-mobile">
+        <div
+          class="column"
+          style="flex: none; margin-left: 12px;"
+        >
+          <input
+            v-model="color"
+            type="color"
+          >
+        </div>
         <input
           v-model="color"
-          class="input"
+          class="input column"
           type="text"
-          placeholder="ffffff"
+          placeholder="#000000"
         >
+        <div
+          class="column"
+          style="flex: none; margin-right: 12px;"
+        >
+          <button
+            class="button"
+            @click="color = generateRandomColor()"
+          >
+            <span class="icon is-medium">
+              <i class="mdi mdi-cached mdi-24px" />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
 

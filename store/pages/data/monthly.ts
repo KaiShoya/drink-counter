@@ -16,7 +16,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const { fetchDrinks } = drinksStore
 
   const graphDataTitleBase = ['日付', '合計']
-  const chartDataTitle = ref<string[]>(['Name', 'Count'])
+  const chartDataTitle = ['Name', 'Count']
 
   const yearMonth = ref<string>(processIntoYearMonth(new Date()))
   const graphDataTitle = ref<string[]>(graphDataTitleBase)
@@ -106,7 +106,26 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
    * 円グラフ用データ
    */
   const computedChartData = computed(() => {
-    return [chartDataTitle.value, ...computedTableData.value]
+    return [chartDataTitle, ...computedTableData.value]
+  })
+
+  const computedChartOptions = computed(() => {
+    const options: any = {
+      seriesType: 'bars',
+      series: {
+        0: { type: 'line' },
+      },
+    }
+    drinks.value.forEach((drink, i) => {
+      options.series[i + 1] = { color: drink.color ?? drink.default_color }
+    })
+    return options
+  })
+
+  const computedPieChartOptions = computed(() => {
+    return {
+      colors: drinks.value.map(drink => drink.color ?? drink.default_color),
+    }
   })
 
   return {
@@ -119,5 +138,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     computeGraphData,
     computedTableData,
     computedChartData,
+    computedChartOptions,
+    computedPieChartOptions,
   }
 })

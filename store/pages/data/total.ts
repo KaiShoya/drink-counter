@@ -15,7 +15,7 @@ export const useTotalStore = defineStore('totalStore', () => {
   const { drinks, getDrinksIdArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
 
-  const chartDataTitle = ref<string[]>(['Name', 'Count'])
+  const chartDataTitle = ['Name', 'Count']
   const sumCount = ref<Array<{ drink_id: number, count: number }>>([])
 
   const fetchDrinkCountersAll = async () => {
@@ -76,7 +76,13 @@ export const useTotalStore = defineStore('totalStore', () => {
    * 円グラフ用データ
    */
   const computedChartData = computed(() => {
-    return [chartDataTitle.value, ...computedTableData.value]
+    return [chartDataTitle, ...computedTableData.value]
+  })
+
+  const computedPieChartOptions = computed(() => {
+    return {
+      colors: drinks.value.map(drink => drink.color ?? drink.default_color),
+    }
   })
 
   return {
@@ -86,5 +92,6 @@ export const useTotalStore = defineStore('totalStore', () => {
     computeCalendarData,
     computedTableData,
     computedChartData,
+    computedPieChartOptions,
   }
 })
