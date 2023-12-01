@@ -68,6 +68,7 @@ watch(date, async () => {
         :drink-id="drink.id"
         :name="drink.name"
         :count="drink.count"
+        :color="drink.color"
         :drink-counter-id="drink.drinkCounterId"
         :increment="plusCheck"
         :decrement="minus"

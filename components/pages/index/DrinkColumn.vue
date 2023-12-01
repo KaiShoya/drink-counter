@@ -3,6 +3,7 @@ defineProps<{
   drinkId: Number,
   name: string,
   count: Number,
+  color: string,
   drinkCounterId: Number,
   increment: Function,
   decrement: Function,
@@ -10,7 +11,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="columns is-gapless is-multiline is-mobile">
+  <div class="columns is-gapless is-multiline is-mobile is-vcentered">
     <button
       class="column is-2 button"
       @click="decrement(drinkId, drinkCounterId)"
@@ -18,7 +19,12 @@ defineProps<{
       <i class="mdi mdi-minus" />
     </button>
 
-    <div class="column subtitle ml-5">
+    <div
+      class="ml-1"
+      :style="{ padding: '5px', height: '38px', backgroundColor: color }"
+    />
+
+    <div class="column subtitle ml-2">
       {{ name }}
     </div>
 
@@ -33,3 +39,5 @@ defineProps<{
     </button>
   </div>
 </template>
+
+<style scoped></style>

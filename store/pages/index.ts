@@ -81,6 +81,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
           id: drink.id,
           name: drink.name,
           count: drinkCounter?.count ?? 0,
+          color: drink.color ?? drink.default_color,
           drinkCounterId: drinkCounter?.id ?? -1,
         })
       })
