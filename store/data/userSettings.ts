@@ -16,8 +16,6 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
     }
     if (data && data[0]) {
       userSettings.value.thresholdForDetectingOverdrinking = data[0]!.threshold_for_detecting_overdrinking
-    } else {
-      return 'error.GET_USER_INFO'
     }
   }
 
