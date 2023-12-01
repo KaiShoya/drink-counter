@@ -15,6 +15,20 @@ const processIntoString = (date: Date) => `${date.getFullYear()}-${('0' + (date.
 const processIntoYearMonth = (date: Date) => `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}`
 
 /**
+ * 引数で渡したyear, monthに1ヶ月追加する
+ * @param year 2023
+ * @param month 12
+ * @returns { year: 2024, month: 1 }
+ */
+const processIntoYearMonthAdd1Month = (year: number, month: number) => {
+  const date = new Date(year, month, 1)
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+  }
+}
+
+/**
  * カレンダー、棒グラフで利用できる形にデータを整形する
  * @param drinkCounters
  * @param getDrinksIdArray
@@ -39,6 +53,7 @@ export const useProcessDate = () => {
   return {
     processIntoString,
     processIntoYearMonth,
+    processIntoYearMonthAdd1Month,
     formatDrinkCounters,
   }
 }
