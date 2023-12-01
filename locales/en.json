@@ -52,6 +52,8 @@
     "add": "Add drink",
     "update": "Update drink",
     "cancel": "cancel",
+    "sort_success": "Update sort.",
+    "save_sort": "Save sort",
     "delete_success": "\"{name}\" was successfully deleted.",
     "delete_failure": "Failed to delete \"{name}\".",
     "create_success": "\"{name}\" was successfully added.",

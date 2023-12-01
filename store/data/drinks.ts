@@ -80,6 +80,20 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     }
   }
 
+  const updateDrinksSort = async () => {
+    const payload = drinks.value.map((drink, i) => {
+      drink.sort = i
+      return {
+        id: drink.id,
+        sort: drink.sort,
+      }
+    })
+    const { error } = await supabase.rpc('bulk_update_drinks_sort', { payload })
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
+  }
+
   const createDrink = async (name: string, color: string | null) => {
     const { error } = await supabase.from('drinks').insert({ name, color })
     if (error) {
@@ -108,6 +122,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     findDrink,
     findDrinksVisible,
     fetchDrinks,
+    updateDrinksSort,
     deleteDrinkById,
     updateDrink,
     updateDrinkVisible,

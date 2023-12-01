@@ -8,11 +8,10 @@ const localePath = useLocalePath()
 const { $i18n } = useNuxtApp()
 
 const modalIsActive = ref<boolean>(false)
-const drag = ref<boolean>(false)
 
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
-const { fetchDrinks, updateDrinkVisible, deleteDrinkById } = drinksStore
+const { fetchDrinks, updateDrinkVisible, updateDrinksSort, deleteDrinkById } = drinksStore
 
 fetchDrinks()
 
@@ -46,6 +45,15 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
   showSuccessToast($i18n.t('drinks.delete_success', { name: drinkName }))
   modalIsActive.value = false
 }
+
+const save = async () => {
+  const error = await updateDrinksSort()
+  if (error) {
+    showDangerToast($i18n.t(error))
+    return
+  }
+  showSuccessToast($i18n.t('drinks.sort_success'))
+}
 </script>
 
 <template>
@@ -55,8 +63,6 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
       handle=".handle"
       group="drinks"
       item-key="id"
-      @start="drag = true"
-      @end="drag = false"
     >
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
@@ -120,6 +126,13 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
       </template>
 
       <template #footer>
+        <button
+          class="button mr-3"
+          @click="save"
+        >
+          {{ $t('drinks.save_sort') }}
+        </button>
+
         <NuxtLink
           to="/drinks/new"
           class="button is-primary"
