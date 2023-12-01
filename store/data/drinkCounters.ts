@@ -40,7 +40,9 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @param month 月
    */
   const fetchDrinkCountersPerMonth = async (year: number, month: number) => {
-    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${year}-${month + 1}-01`)
+    const { processIntoYearMonthAdd1Month } = useProcessDate()
+    const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
+    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
     if (error) {
       return 'error.500_API_ERROR'
     }
