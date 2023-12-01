@@ -52,6 +52,8 @@
     "add": "追加する",
     "update": "更新する",
     "cancel": "戻る",
+    "sort_success": "並び順を保存しました。",
+    "save_sort": "並び順を保存する",
     "delete_success": "「{name}」を削除しました。",
     "delete_failure": "「{name}」の削除に失敗しました。",
     "create_success": "「{name}」を追加しました。",

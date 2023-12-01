@@ -11,7 +11,7 @@ const modalIsActive = ref<boolean>(false)
 
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
-const { fetchDrinks, updateDrinkVisible, deleteDrinkById } = drinksStore
+const { fetchDrinks, updateDrinkVisible, updateDrinksSort, deleteDrinkById } = drinksStore
 
 fetchDrinks()
 
@@ -45,73 +45,102 @@ const deleteDrink = async (drinkId: number | undefined, drinkName: string | unde
   showSuccessToast($i18n.t('drinks.delete_success', { name: drinkName }))
   modalIsActive.value = false
 }
+
+const save = async () => {
+  const error = await updateDrinksSort()
+  if (error) {
+    showDangerToast($i18n.t(error))
+    return
+  }
+  showSuccessToast($i18n.t('drinks.sort_success'))
+}
 </script>
 
 <template>
   <div class="mx-2">
-    <div class="columns is-mobile title is-6 border-line">
-      <div class="column is-5">
-        {{ $t('drinks.name') }}
-      </div>
-      <div class="column is-4">
-        {{ $t('drinks.color') }}
-      </div>
-      <div class="column is-3" />
-    </div>
-    <div
-      v-for="drink of drinks"
-      :key="drink.id"
-      class="columns is-mobile border-line"
+    <draggable
+      v-model="drinks"
+      handle=".handle"
+      group="drinks"
+      item-key="id"
     >
-      <div class="column is-5">
-        {{ drink.name }}
-      </div>
-      <div class="column color-column is-4 columns is-vcentered is-mobile">
-        <div
-          class="tag column"
-          :style="{ background: drink.color ?? '' }"
-        />
-        <div class="column">
-          {{ drink.color }}
+      <template #header>
+        <div class="columns is-mobile title is-6 border-line">
+          <div class="column is-5">
+            {{ $t('drinks.name') }}
+          </div>
+          <div class="column is-4">
+            {{ $t('drinks.color') }}
+          </div>
+          <div class="column is-3" />
         </div>
-      </div>
-      <div class="column is-3">
+      </template>
+
+      <template #item="{ element: drink }">
+        <div class="columns is-mobile border-line is-vcentered">
+          <div class="handle ml-4">
+            <i class="mdi mdi-drag-horizontal-variant" />
+          </div>
+          <div class="column is-4">
+            {{ drink.name }}
+          </div>
+          <div class="column color-column is-4 columns is-vcentered is-mobile">
+            <div
+              class="tag column"
+              :style="{ background: drink.color ?? '' }"
+            />
+            <div class="column">
+              {{ drink.color }}
+            </div>
+          </div>
+          <div class="column is-3">
+            <NuxtLink
+              :to="localePath(`/drinks/${drink.id}`)"
+              class="icon has-text-info"
+            >
+              <i class="mdi mdi-24px mdi-text-box-edit-outline" />
+            </NuxtLink>
+
+            <span
+              :class="['icon', 'mx-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
+              @click="updateHidden(drink)"
+            >
+              <i
+                v-if="drink.visible"
+                class="mdi mdi-24px mdi-eye"
+              />
+              <i
+                v-else
+                class="mdi mdi-24px mdi-eye-off"
+              />
+            </span>
+
+            <span
+              class="icon has-text-danger"
+              @click="clickDeleteDrinkButton(drink)"
+            >
+              <i class="mdi mdi-24px mdi-delete-forever-outline" />
+            </span>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <button
+          class="button mr-3"
+          @click="save"
+        >
+          {{ $t('drinks.save_sort') }}
+        </button>
+
         <NuxtLink
-          :to="localePath(`/drinks/${drink.id}`)"
-          class="icon has-text-info"
+          to="/drinks/new"
+          class="button is-primary"
         >
-          <i class="mdi mdi-24px mdi-text-box-edit-outline" />
+          {{ $t('drinks.add') }}
         </NuxtLink>
-
-        <span
-          :class="['icon', 'mx-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
-          @click="updateHidden(drink)"
-        >
-          <i
-            v-if="drink.visible"
-            class="mdi mdi-24px mdi-eye"
-          />
-          <i
-            v-else
-            class="mdi mdi-24px mdi-eye-off"
-          />
-        </span>
-
-        <span
-          class="icon has-text-danger"
-          @click="clickDeleteDrinkButton(drink)"
-        >
-          <i class="mdi mdi-24px mdi-delete-forever-outline" />
-        </span>
-      </div>
-    </div>
-
-    <NuxtLink
-      to="/drinks/new"
-      class="button is-primary"
-    >
-      {{ $t('drinks.add') }}
-    </NuxtLink>
+      </template>
+    </draggable>
 
     <ShareDangerModal
       :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"

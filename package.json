@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.8.3",
+  "version": "1.9.0",
   "license": "MIT",
   "engines": {
     "node": "18"
@@ -44,7 +44,8 @@
     "bulma-toast": "^2.4.2",
     "pinia": "^2.1.4",
     "vue-google-charts": "^1.1.0",
-    "vue-gtag": "^2.0.1"
+    "vue-gtag": "^2.0.1",
+    "vuedraggable": "^4.1.0"
   },
   "resolutions": {
     "string-width": "4.2.3"
