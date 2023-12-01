@@ -16,7 +16,7 @@ const modalIsActive = ref<boolean>(false)
 await fetchDate()
 
 // numberOfDrinksにデータをセット
-await fetchNumberOfDrinks(date.value)
+fetchNumberOfDrinks(date.value)
 
 const thisDrinkId = ref<number>(0)
 const thisCounterId = ref<number>(0)
