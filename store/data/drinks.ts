@@ -10,7 +10,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * @returns Promise<error_message_code | undefined>
    */
   const fetchDrinks = async () => {
-    const { data, error } = await supabase.from('drinks').select('*')
+    const { data, error } = await supabase.from('drinks').select('*').order('sort,id')
     if (error) {
       return 'error.500_API_ERROR'
     }
