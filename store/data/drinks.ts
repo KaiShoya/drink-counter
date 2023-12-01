@@ -16,11 +16,9 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     }
     drinks.value = data ?? []
 
-    // 色がnullだったら、デフォルトカラーをランダムセットする
+    // デフォルトカラーをランダムセットする
     drinks.value.forEach((drink) => {
-      if (!drink.color) {
-        drink.default_color = generateRandomColor()
-      }
+      drink.default_color = generateRandomColor()
     })
   }
 
