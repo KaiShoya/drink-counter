@@ -6,6 +6,7 @@ withDefaults(defineProps<{
 }>(), {
   options: {
     seriesType: 'bars',
+    legend: { position: 'bottom' },
     series: { 0: { type: 'line' } },
   },
 })

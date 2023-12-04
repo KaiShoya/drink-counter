@@ -112,6 +112,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const computedChartOptions = computed(() => {
     const options: any = {
       seriesType: 'bars',
+      legend: { position: 'bottom' },
       series: {
         0: { type: 'line' },
       },
