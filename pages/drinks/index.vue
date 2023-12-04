@@ -78,22 +78,26 @@ const save = async () => {
 
       <template #item="{ element: drink }">
         <div class="columns is-mobile border-line is-vcentered">
-          <div class="handle ml-4">
-            <i class="mdi mdi-drag-horizontal-variant" />
-          </div>
-          <div class="column is-4">
+          <div
+            class="column is-5"
+            style="display: flex;"
+          >
+            <div class="handle mr-2">
+              <i class="mdi mdi-drag-horizontal-variant" />
+            </div>
             {{ drink.name }}
           </div>
-          <div class="column color-column is-4 columns is-vcentered is-mobile">
+          <div
+            class="column is-4 is-vcentered is-mobile"
+            style="display: flex;"
+          >
             <div
-              class="tag column"
-              :style="{ background: drink.color ?? '' }"
+              class="mx-1 tag"
+              :style="{ padding: '10px', backgroundColor: drink.color }"
             />
-            <div class="column">
-              {{ drink.color }}
-            </div>
+            {{ drink.color }}
           </div>
-          <div class="column is-3">
+          <div class="column columns is-mobile is-3">
             <NuxtLink
               :to="localePath(`/drinks/${drink.id}`)"
               class="icon has-text-info"
