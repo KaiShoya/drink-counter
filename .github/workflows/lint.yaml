@@ -10,15 +10,17 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
+        node: ['18.x']
     steps:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
+        id: node_modules_cache_id
         with:
-          path: |
-            node_modules
+          path: node_modules
           key: ${{ matrix.os }}-node-v${{ matrix.node }}-nuxt-${{ github.sha }}
-      - run: yarn install
+      - if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
+        run: yarn install
       - run: yarn lint
