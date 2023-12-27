@@ -5,6 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kaishoya/drink-counter/badge)](https://www.codefactor.io/repository/github/kaishoya/drink-counter)
 [![codebeat badge](https://codebeat.co/badges/1f56fa48-87d0-4713-8b2a-0202cf98c41e)](https://codebeat.co/projects/github-com-kaishoya-drink-counter-main)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5a3748d4a79343e8aad4f51783bb4dba)](https://app.codacy.com/gh/KaiShoya/drink-counter/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/aae1e79d27e18418a042/maintainability)](https://codeclimate.com/github/KaiShoya/drink-counter/maintainability)
 [![license:MIT](https://img.shields.io/badge/icense-MIT-brightgreen)](https://github.com/KaiShoya/drink-counter/blob/main/LICENSE.md)
 
 アルコールを飲んだ杯数を日付別に記録するアプリ。
