@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.9.7",
+  "version": "1.9.8",
   "license": "MIT",
   "engines": {
     "node": "18"
@@ -27,7 +27,7 @@
     "@vue/eslint-config-typescript": "^11.0.2",
     "eslint": "^8.45.0",
     "eslint-plugin-vue": "^9.9.0",
-    "nuxt": "^3.8.2",
+    "nuxt": "^3.9.0",
     "sass": "^1.64.1",
     "typescript": "^5.1.6"
   },
