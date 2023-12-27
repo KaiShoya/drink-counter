@@ -1,0 +1,38 @@
+name: Codacy Analysis CLI
+
+on: ["push"]
+
+jobs:
+  codacy-analysis-cli:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [latest]
+    name: Codacy Analysis CLI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      - name: Cache node_modules
+        id: node_modules_cache_id
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ matrix.os }}-node_modules-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+
+      - if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - run: yarn postinstall
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          upload: true
+          max-allowed-issues: 2147483647
