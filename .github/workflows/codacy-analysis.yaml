@@ -1,6 +1,11 @@
 name: Codacy Analysis CLI
 
-on: ["push"]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   codacy-analysis-cli:
@@ -16,7 +21,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Checkout code
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
 
       - name: Cache node_modules
         id: node_modules_cache_id
