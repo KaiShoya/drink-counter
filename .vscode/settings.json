@@ -1,5 +1,6 @@
 {
-  "html.format.endWithNewline": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "html.format.wrapAttributes": "force-expand-multiline",
   "html.validate.scripts": true,
   "html.validate.styles": true,

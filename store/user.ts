@@ -12,32 +12,30 @@ export const useUserStore = defineStore('user', () => {
    */
   const fetchUserData = async () => {
     // ログインセッションチェック
-    const { data: sessionData, error: sessionError } = await useAsyncData(
-      'getSession',
-      () => supabase.auth.getSession(),
-    )
-    if (sessionError.value) {
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+    if (sessionError) {
+      // eslint-disable-next-line no-console
+      console.error(sessionError)
       showDangerToast($i18n.t('error.500_API_ERROR'))
       return
     }
-    if (sessionData.value?.data.session === null || sessionData.value?.data.session === undefined) {
+    if (sessionData.session === null) {
       isLogin.value = false
       return
     }
 
     // ユーザ情報取得
-    const { data: userData, error: userError } = await useAsyncData(
-      'getUser',
-      () => supabase.auth.getUser(),
-    )
-    if (userError.value) {
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+    if (userError) {
+      // eslint-disable-next-line no-console
+      console.error(userError)
       showDangerToast($i18n.t('error.500_API_ERROR'))
       return
     }
 
-    isLogin.value = userData.value?.data?.user !== null
-    userName.value = userData.value?.data?.user?.user_metadata?.name
-    userAvatarUrl.value = userData.value?.data?.user?.user_metadata?.avatar_url
+    isLogin.value = userData.user !== null
+    userName.value = userData.user?.user_metadata?.name
+    userAvatarUrl.value = userData.user?.user_metadata?.avatar_url
   }
 
   return {
