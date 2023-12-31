@@ -1,59 +1,17 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { usePageDrinksStore } from '~/store/pages/drinks/index'
 import { useDrinksStore } from '~/store/data/drinks'
-import type { Drink } from '~/store/data/types/drink'
 
 const localePath = useLocalePath()
 
-const { $i18n } = useNuxtApp()
-
-const modalIsActive = ref<boolean>(false)
-
+const pageDrinksStore = usePageDrinksStore()
+const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinksStore)
+const { initPage, updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
-const { fetchDrinks, updateDrinkVisible, updateDrinksSort, deleteDrinkById } = drinksStore
 
-fetchDrinks()
-
-const updateHidden = async (drink: Drink) => {
-  const error = await updateDrinkVisible(drink.id, !drink.visible)
-  if (error) {
-    showDangerToast($i18n.t(error, { name: drink.name }))
-    return
-  }
-  showSuccessToast($i18n.t('drinks.update_visible_success', { name: drink.name, status: $i18n.t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
-}
-
-const deleteTarget = ref<Drink | null>(null)
-const clickDeleteDrinkButton = (drink: Drink) => {
-  deleteTarget.value = drink
-  modalIsActive.value = true
-}
-
-const deleteDrink = async (drinkId: number | undefined, drinkName: string | undefined) => {
-  if (drinkId === undefined || drinkName === undefined) {
-    showDangerToast($i18n.t('error.GET_RECORD'))
-    modalIsActive.value = false
-    return
-  }
-  const error = await deleteDrinkById(drinkId)
-  if (error) {
-    showDangerToast($i18n.t(error, { name: drinkName }))
-    modalIsActive.value = false
-    return
-  }
-  showSuccessToast($i18n.t('drinks.delete_success', { name: drinkName }))
-  modalIsActive.value = false
-}
-
-const save = async () => {
-  const error = await updateDrinksSort()
-  if (error) {
-    showDangerToast($i18n.t(error))
-    return
-  }
-  showSuccessToast($i18n.t('drinks.sort_success'))
-}
+initPage()
 </script>
 
 <template>
@@ -150,8 +108,8 @@ const save = async () => {
       :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"
       :content="$t('drinks.delete_modal_content', { name: deleteTarget?.name })"
       :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"
-      :cancel="() => modalIsActive = false"
-      :class="{ 'is-active': modalIsActive }"
+      :cancel="() => showDeleteModal = false"
+      :class="{ 'is-active': showDeleteModal }"
     />
   </div>
 </template>
