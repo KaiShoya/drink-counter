@@ -3,8 +3,8 @@ import { storeToRefs } from 'pinia'
 import { useUserSettingsStore } from '~/store/data/userSettings'
 import { useSettingsStore } from '~/store/pages/settings'
 
-const serSettingsStore = useUserSettingsStore()
-const { userSettings } = storeToRefs(serSettingsStore)
+const userSettingsStore = useUserSettingsStore()
+const { userSettings } = storeToRefs(userSettingsStore)
 const { click } = useSettingsStore()
 </script>
 
