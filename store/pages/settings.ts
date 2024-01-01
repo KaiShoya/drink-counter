@@ -2,10 +2,10 @@ import { useUserSettingsStore } from '~/store/data/userSettings'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const { $i18n } = useNuxtApp()
-  const serSettingsStore = useUserSettingsStore()
-  const { updateThresholdForDetectingOverdrinking } = serSettingsStore
+  const userSettingsStore = useUserSettingsStore()
+  const { updateThresholdForDetectingOverdrinking } = userSettingsStore
 
-  const click = async () => {
+  const updateOverdrinkingThreshold = async () => {
     const error = await updateThresholdForDetectingOverdrinking()
     if (error) {
       showDangerToast($i18n.t(error))
@@ -15,6 +15,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   }
 
   return {
-    click,
+    updateOverdrinkingThreshold,
   }
 })

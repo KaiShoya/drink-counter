@@ -5,7 +5,7 @@ import { useSettingsStore } from '~/store/pages/settings'
 
 const userSettingsStore = useUserSettingsStore()
 const { userSettings } = storeToRefs(userSettingsStore)
-const { click } = useSettingsStore()
+const { updateOverdrinkingThreshold } = useSettingsStore()
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const { click } = useSettingsStore()
     </table>
     <button
       class="button"
-      @click="click"
+      @click="updateOverdrinkingThreshold"
     >
       {{ $t('settings.save') }}
     </button>
