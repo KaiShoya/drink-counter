@@ -12,7 +12,10 @@ export const usePageDrinksStore = defineStore('pageDrinksStore', () => {
   const showDeleteModal = ref<boolean>(false)
 
   const initPage = async () => {
-    await fetchDrinks()
+    const error = await fetchDrinks()
+    if (error) {
+      showDangerToast($i18n.t(error))
+    }
   }
 
   /**
