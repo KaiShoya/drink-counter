@@ -2,12 +2,8 @@ import { useDrinksStore } from '~/store/data/drinks'
 
 export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
   const { $i18n } = useNuxtApp()
-  const route = useRoute()
   const drinksStore = useDrinksStore()
   const { fetchDrinks, createDrink } = drinksStore
-
-  // 編集対象のドリンクID
-  const drinkId = Number(route.params.id)
 
   // 編集対象のドリンク名
   const name = ref<string>('')
@@ -35,7 +31,6 @@ export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
   }
 
   return {
-    drinkId,
     name,
     color,
     initPage,
