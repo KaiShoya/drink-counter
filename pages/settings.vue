@@ -1,21 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserSettingsStore } from '~/store/data/userSettings'
-
-const { $i18n } = useNuxtApp()
+import { useSettingsStore } from '~/store/pages/settings'
 
 const serSettingsStore = useUserSettingsStore()
 const { userSettings } = storeToRefs(serSettingsStore)
-const { updateThresholdForDetectingOverdrinking } = serSettingsStore
-
-const click = async () => {
-  const error = await updateThresholdForDetectingOverdrinking()
-  if (error) {
-    showDangerToast($i18n.t(error))
-  } else {
-    showSuccessToast($i18n.t('general.update_success'))
-  }
-}
+const { click } = useSettingsStore()
 </script>
 
 <template>
