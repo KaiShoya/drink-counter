@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { usePageDrinkEditStore } from '~/store/pages/drinks/edit'
+import { usePageDrinkNewStore } from '~/store/pages/drinks/new'
 
-const drinkEditStore = usePageDrinkEditStore()
-const { name, color } = storeToRefs(drinkEditStore)
-const { initPage, updateDrinkById } = drinkEditStore
+const drinkNewStore = usePageDrinkNewStore()
+const { name, color } = storeToRefs(drinkNewStore)
+const { initPage, create } = drinkNewStore
 
 initPage()
 </script>
@@ -60,9 +60,9 @@ initPage()
     <div>
       <button
         class="button"
-        @click="updateDrinkById()"
+        @click="create()"
       >
-        {{ $t('drinks.update') }}
+        {{ $t('drinks.add') }}
       </button>
 
       <NuxtLink
