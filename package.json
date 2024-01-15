@@ -3,13 +3,14 @@
   "version": "1.10.0",
   "license": "MIT",
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "author": {
     "name": "Kai Shoya",
     "email": "shonari77@gmail.com"
   },
   "private": true,
+  "packageManager": "yarn@4.0.2",
   "scripts": {
     "build": "nuxi generate",
     "dev": "nuxt dev",
