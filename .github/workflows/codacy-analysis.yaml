@@ -28,12 +28,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ matrix.os }}-node_modules-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+          key: ${{ matrix.os }}-node_modules-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/pnpm-lock.yaml')) }}
 
       - if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
-        run: yarn install
+        run: pnpm install
 
-      - run: yarn postinstall
+      - run: pnpm postinstall
 
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
