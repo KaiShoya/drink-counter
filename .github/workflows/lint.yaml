@@ -10,17 +10,32 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: ['18.x']
+        node: ['20.x']
     steps:
+
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+
       - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+
       - uses: actions/cache@v3
         id: node_modules_cache_id
         with:
           path: node_modules
-          key: ${{ matrix.os }}-node-v${{ matrix.node }}-nuxt-${{ github.sha }}
+          key: ${{ runner.os }}-node-v${{ matrix.node }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
         run: pnpm install
       - run: pnpm lint
