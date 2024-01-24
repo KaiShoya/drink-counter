@@ -21,7 +21,7 @@ git config --local commit.template .commit-msg
 Make sure to install the dependencies:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 Install Supabase CLI & Log in.  
@@ -39,7 +39,7 @@ supabase start
 # Edit .env SUPABASE_KEY
 
 # Start the development server on http://localhost:3001
-yarn dev
+pnpm dev
 ```
 
 ## Create a migration file from local schema differences
@@ -51,9 +51,9 @@ supabase db diff -f [file_name]
 # Release
 
 ```
-yarn version --major
-yarn version --minor
-yarn version --patch
+pnpm version major
+pnpm version minor
+pnpm version patch
 ```
 
 # 各階層の役割
@@ -100,3 +100,15 @@ yarn version --patch
 2. PRにLabel(major/minor/patch)を付与する
 3. Github Actionsチェック
 4. PRマージ
+
+# 各バージョン更新手順
+```sh
+# pnpm update
+corepack use pnpm@8
+
+# パッケージ一括アップデート
+pnpm up --latest
+
+# Nuxt upgrade
+pnpm nuxi upgrade --force
+```
