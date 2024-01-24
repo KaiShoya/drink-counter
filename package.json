@@ -23,13 +23,13 @@
     "@nuxt/devtools": "^1.0.8",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/i18n": "^8.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
     "@vue/eslint-config-typescript": "^12.0.0",
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.20.1",
-    "nuxt": "^3.9.1",
-    "sass": "^1.69.7",
+    "nuxt": "^3.9.3",
+    "sass": "^1.70.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
@@ -45,7 +45,7 @@
     "bulma": "^0.9.4",
     "bulma-toast": "^2.4.3",
     "pinia": "^2.1.7",
-    "string-width": "7.0.0",
+    "string-width": "7.1.0",
     "vue-google-charts": "^1.1.0",
     "vue-gtag": "^2.0.1",
     "vuedraggable": "^4.1.0"
