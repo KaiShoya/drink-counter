@@ -7,12 +7,10 @@ import { useDrinksStore } from '~/store/data/drinks'
 export const useTotalStore = defineStore('totalStore', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
-  const { formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
-  const { drinkCounters } = storeToRefs(drinkCountersStore)
   const { fetchDrinkCounters } = drinkCountersStore
   const drinksStore = useDrinksStore()
-  const { drinks, getDrinksIdArray } = storeToRefs(drinksStore)
+  const { drinks } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
 
   const chartDataTitle = ['Name', 'Count']
@@ -44,23 +42,6 @@ export const useTotalStore = defineStore('totalStore', () => {
   }
 
   /**
-   * カレンダー用データ
-   */
-  const calendarTitle = ref<Array<{ type: string, id: string }>>([
-    {
-      type: 'date',
-      id: 'Date',
-    },
-    {
-      type: 'number',
-      id: 'Count',
-    },
-  ])
-  const computeCalendarData = computed(() => {
-    return Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => [new Date(key), value[0]])
-  })
-
-  /**
    * テーブル用データ（円グラフでも利用）
    */
   const computedTableData = computed(() => {
@@ -87,9 +68,7 @@ export const useTotalStore = defineStore('totalStore', () => {
 
   return {
     chartDataTitle,
-    calendarTitle,
     fetchDrinkCountersAll,
-    computeCalendarData,
     computedTableData,
     computedChartData,
     computedPieChartOptions,

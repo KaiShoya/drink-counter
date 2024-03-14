@@ -3,6 +3,7 @@
   "routes": {
     "data": "データ",
     "total": "トータル",
+    "annual": "年別",
     "monthly": "月別",
     "about": "About",
     "settings": "設定"

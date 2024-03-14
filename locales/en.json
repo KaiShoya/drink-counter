@@ -3,6 +3,7 @@
   "routes": {
     "data": "Data",
     "total": "Total",
+    "annual": "Annual",
     "monthly": "Monthly",
     "about": "About",
     "settings": "Settings"

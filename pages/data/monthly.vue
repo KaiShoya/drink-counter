@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { storeToRefs } from 'pinia'
 import { useMonthlyStore } from '~/store/pages/data/monthly'
 
