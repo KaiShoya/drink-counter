@@ -18,6 +18,8 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
 
       - run: |
           git config user.name "github-actions[bot]"
