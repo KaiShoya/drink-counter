@@ -17,11 +17,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      - uses: actions/checkout@v3
+
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - uses: actions/checkout@v3
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -31,7 +31,7 @@ jobs:
 
       - name: Update patch version
         if: |
-          contains(github.event.pull_request.labels.*.name, 'release:patch')
+          contains(github.event.pull_request.labels.*.name, 'release:patch') &&
           !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
           !contains(github.event.pull_request.labels.*.name, 'release:major')
         run: |
@@ -40,7 +40,7 @@ jobs:
 
       - name: Update minor version
         if: |
-          !contains(github.event.pull_request.labels.*.name, 'release:patch')
+          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
           contains(github.event.pull_request.labels.*.name, 'release:minor') &&
           !contains(github.event.pull_request.labels.*.name, 'release:major')
         run: |
@@ -49,7 +49,7 @@ jobs:
 
       - name: Update major version
         if: |
-          !contains(github.event.pull_request.labels.*.name, 'release:patch')
+          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
           !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
           contains(github.event.pull_request.labels.*.name, 'release:major')
         run: |
