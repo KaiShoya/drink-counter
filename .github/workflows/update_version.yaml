@@ -30,33 +30,43 @@ jobs:
           run_install: false
 
       - name: Update patch version
+        id: patch
         if: |
           contains(github.event.pull_request.labels.*.name, 'release:patch') &&
           !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
           !contains(github.event.pull_request.labels.*.name, 'release:major')
         run: |
           pnpm version patch
-          exit 0
+          git push
+          echo "::set-output name=exists::true"
 
       - name: Update minor version
+        id: minor
         if: |
           !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
           contains(github.event.pull_request.labels.*.name, 'release:minor') &&
           !contains(github.event.pull_request.labels.*.name, 'release:major')
         run: |
           pnpm version minor
-          exit 0
+          git push
+          echo "::set-output name=exists::true"
 
       - name: Update major version
+        id: major
         if: |
           !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
           !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
           contains(github.event.pull_request.labels.*.name, 'release:major')
         run: |
           pnpm version major
-          exit 0
+          git push
+          echo "::set-output name=exists::true"
 
       - name: Show Error
+        if: |
+            ${{ steps.patch.outputs.exists != 'true' }} &&
+            ${{ steps.minor.outputs.exists != 'true' }} &&
+            ${{ steps.major.outputs.exists != 'true' }}
         run: |
           echo "::error::Please add a label: `release:patch`, `release:minor`, `release:major`"
           exit 1
