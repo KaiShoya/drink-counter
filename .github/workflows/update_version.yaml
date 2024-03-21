@@ -40,7 +40,6 @@ jobs:
         run: |
           pnpm version patch
           git push
-          echo "exists=true" >> $GITHUB_OUTPUT
 
       - name: Update minor version
         id: minor
@@ -51,7 +50,6 @@ jobs:
         run: |
           pnpm version minor
           git push
-          echo "exists=true" >> $GITHUB_OUTPUT
 
       - name: Update major version
         id: major
@@ -62,13 +60,3 @@ jobs:
         run: |
           pnpm version major
           git push
-          echo "exists=true" >> $GITHUB_OUTPUT
-
-      - name: Show Error
-        if: |
-            ${{ steps.patch.outputs.exists != 'true' }} &&
-            ${{ steps.minor.outputs.exists != 'true' }} &&
-            ${{ steps.major.outputs.exists != 'true' }}
-        run: |
-          echo "::error::Please add a label: `release:patch`, `release:minor`, `release:major`"
-          exit 1
