@@ -23,5 +23,7 @@ await fetchDrinkCountersAll()
       :titles="chartDataTitle"
       :table-data="computedTableData"
     />
+
+    <PagesDataAggregationTable />
   </div>
 </template>

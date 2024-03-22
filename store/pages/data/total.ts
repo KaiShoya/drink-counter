@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
+import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
 
 export const useTotalStore = defineStore('totalStore', () => {
   const { $i18n } = useNuxtApp()
@@ -12,6 +13,7 @@ export const useTotalStore = defineStore('totalStore', () => {
   const drinksStore = useDrinksStore()
   const { drinks } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
+  const { fetchAggregationByDow } = useAggregationByDowTablesStore()
 
   const chartDataTitle = ['Name', 'Count']
   const sumCount = ref<Array<{ drink_id: number, count: number }>>([])
@@ -30,6 +32,10 @@ export const useTotalStore = defineStore('totalStore', () => {
     const fetchSumCountError = await fetchSumCount()
     if (fetchSumCountError) {
       showDangerToast($i18n.t(fetchSumCountError))
+    }
+    const fetchAggregationByDowError = await fetchAggregationByDow()
+    if (fetchAggregationByDowError) {
+      showDangerToast($i18n.t(fetchAggregationByDowError))
     }
   }
 

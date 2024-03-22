@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
+import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
 
 export const useAnnualStore = defineStore('annualStore', () => {
   const { $i18n } = useNuxtApp()
@@ -14,6 +15,7 @@ export const useAnnualStore = defineStore('annualStore', () => {
   const drinksStore = useDrinksStore()
   const { drinks, getDrinksIdArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
+  const { fetchAggregationByDowPerYear } = useAggregationByDowTablesStore()
 
   const chartDataTitle = ['Name', 'Count']
   const sumCountPerYear = ref<Array<{ drink_id: number, count: number }>>([])
@@ -39,6 +41,10 @@ export const useAnnualStore = defineStore('annualStore', () => {
     const fetchSumCountPerYearError = await fetchSumCountPerYear(year.value)
     if (fetchSumCountPerYearError) {
       showDangerToast($i18n.t(fetchSumCountPerYearError))
+    }
+    const fetchAggregationByDowPerYearError = await fetchAggregationByDowPerYear(year.value)
+    if (fetchAggregationByDowPerYearError) {
+      showDangerToast($i18n.t(fetchAggregationByDowPerYearError))
     }
   }
 
