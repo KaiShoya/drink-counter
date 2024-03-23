@@ -53,7 +53,7 @@ watch(year, async () => {
     />
 
     <PagesDataTable
-      :titles="chartDataTitle"
+      :headers="chartDataTitle"
       :table-data="computedTableData"
     />
 

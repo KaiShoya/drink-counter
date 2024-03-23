@@ -57,7 +57,7 @@ watch(yearMonth, async () => {
       :options="computedPieChartOptions"
     />
     <PagesDataTable
-      :titles="chartDataTitle"
+      :headers="chartDataTitle"
       :table-data="computedTableData"
     />
     <PagesDataAggregationTable />

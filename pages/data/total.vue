@@ -20,7 +20,7 @@ await fetchDrinkCountersAll()
     />
 
     <PagesDataTable
-      :titles="chartDataTitle"
+      :headers="chartDataTitle"
       :table-data="computedTableData"
     />
 
