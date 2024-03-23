@@ -60,6 +60,6 @@ watch(yearMonth, async () => {
       :headers="chartDataTitle"
       :table-data="computedTableData"
     />
-    <PagesDataAggregationTable />
+    <PagesDataAggregationByDowTable />
   </div>
 </template>

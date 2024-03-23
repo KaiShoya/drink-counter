@@ -57,6 +57,6 @@ watch(year, async () => {
       :table-data="computedTableData"
     />
 
-    <PagesDataAggregationTable />
+    <PagesDataAggregationByDowTable />
   </div>
 </template>

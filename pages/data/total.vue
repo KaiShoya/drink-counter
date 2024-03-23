@@ -24,6 +24,6 @@ await fetchDrinkCountersAll()
       :table-data="computedTableData"
     />
 
-    <PagesDataAggregationTable />
+    <PagesDataAggregationByDowTable />
   </div>
 </template>
