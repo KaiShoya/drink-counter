@@ -9,7 +9,7 @@ const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowTable
 </script>
 
 <template>
-  <ShareBaseTable
+  <MoleculesBaseTable
     :headers="[
       $t('aggregation.dow'),
       $t('aggregation.sum_count'),
