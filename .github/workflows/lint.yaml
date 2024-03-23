@@ -38,4 +38,5 @@ jobs:
           key: ${{ runner.os }}-node-v${{ matrix.node }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
         run: pnpm install
+      - run: pnpm nuxt prepare
       - run: pnpm lint

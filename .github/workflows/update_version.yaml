@@ -1,0 +1,62 @@
+name: Update patch version
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - labeled
+  workflow_dispatch:
+
+jobs:
+  check_release_label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+
+      - name: Update patch version
+        id: patch
+        if: |
+          contains(github.event.pull_request.labels.*.name, 'release:patch') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:major')
+        run: |
+          pnpm version patch
+          git push
+
+      - name: Update minor version
+        id: minor
+        if: |
+          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
+          contains(github.event.pull_request.labels.*.name, 'release:minor') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:major')
+        run: |
+          pnpm version minor
+          git push
+
+      - name: Update major version
+        id: major
+        if: |
+          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
+          contains(github.event.pull_request.labels.*.name, 'release:major')
+        run: |
+          pnpm version major
+          git push
