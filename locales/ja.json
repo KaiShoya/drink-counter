@@ -3,6 +3,7 @@
   "routes": {
     "data": "データ",
     "total": "トータル",
+    "annual": "年別",
     "monthly": "月別",
     "about": "About",
     "settings": "設定"
@@ -32,7 +33,14 @@
       "Wed": "水",
       "Thu": "木",
       "Fri": "金",
-      "Sat": "土"
+      "Sat": "土",
+      "0": "日",
+      "1": "月",
+      "2": "火",
+      "3": "水",
+      "4": "木",
+      "5": "金",
+      "6": "土"
     }
   },
   "source": "ソースコード",
@@ -66,6 +74,13 @@
   },
   "data": {
     "total": "合計"
+  },
+  "aggregation": {
+    "dow": "曜日",
+    "sum_count": "合計",
+    "avg_count": "平均",
+    "max_type_of_drinks": "飲んだ種類",
+    "avg_type_of_drinks": "飲んだ種類平均"
   },
   "modal": {
     "yes": "はい",

@@ -69,7 +69,7 @@ values
 
 INSERT INTO
   auth.identities (
-    id,
+    provider_id,
     user_id,
     identity_data,
     provider,
@@ -107,4 +107,3 @@ values
     1,
     '5899f99d-a449-4bfa-8769-19c097aaf1f5' :: uuid
   );
-

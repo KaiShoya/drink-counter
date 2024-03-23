@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import type { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
@@ -96,6 +99,14 @@ const active = ref<boolean>(false)
                   @click="active = false"
                 >
                   {{ $t('routes.total') }}
+                </NuxtLink>
+                <NuxtLink
+                  class="navbar-item"
+                  :to="localePath('/data/annual')"
+                  exact-active-class="is-active"
+                  @click="active = false"
+                >
+                  {{ $t('routes.annual') }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"

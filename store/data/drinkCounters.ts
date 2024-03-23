@@ -35,6 +35,20 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   }
 
   /**
+   * 指定した年の自分のデータを取得する
+   * @param year 年
+   */
+  const fetchDrinkCountersPerYear = async (year: number) => {
+    const minDate = `${year}-01-01`
+    const maxDate = `${year}-12-31`
+    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
+    drinkCounters.value = data ?? []
+  }
+
+  /**
    * 指定した月の自分のデータを取得する
    * @param year 年
    * @param month 月
@@ -121,6 +135,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
     findDrinkCountersById,
     findDrinkCountersByDrinkId,
     fetchDrinkCounters,
+    fetchDrinkCountersPerYear,
     fetchDrinkCountersPerMonth,
     fetchDrinkCountersForDay,
     increment,

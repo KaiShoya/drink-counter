@@ -3,6 +3,7 @@
   "routes": {
     "data": "Data",
     "total": "Total",
+    "annual": "Annual",
     "monthly": "Monthly",
     "about": "About",
     "settings": "Settings"
@@ -32,7 +33,14 @@
       "Wed": "Wed",
       "Thu": "Thu",
       "Fri": "Fri",
-      "Sat": "Sat"
+      "Sat": "Sat",
+      "0": "Sun",
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat"
     }
   },
   "source": "Source",
@@ -66,6 +74,13 @@
   },
   "data": {
     "total": "Total"
+  },
+  "aggregation": {
+    "dow": "DOW",
+    "sum_count": "Count (Sum)",
+    "avg_count": "Count (Avg)",
+    "max_type_of_drinks": "Type of drinks (Sum)",
+    "avg_type_of_drinks": "Type of drinks (Avg)"
   },
   "modal": {
     "yes": "Yes",
