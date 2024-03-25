@@ -145,6 +145,8 @@ const active = ref<boolean>(false)
             >
               {{ $t('routes.settings') }}
             </NuxtLink>
+
+            <OrganismsShowQrModal />
           </div>
 
           <div class="navbar-end">
