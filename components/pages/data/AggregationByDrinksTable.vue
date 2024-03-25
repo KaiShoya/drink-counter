@@ -2,9 +2,9 @@
   setup
   lang="ts"
 >
-import { useAggregationByDrinksTablesStore } from '~/store/pages/data/components/aggregationByDrinksTables'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 const { $i18n } = useNuxtApp()
-const { chartDataTitle, computedTableData } = storeToRefs(useAggregationByDrinksTablesStore())
+const { chartDataTitle, computedTableData } = storeToRefs(useAggregationByDrinksStore())
 
 const footers = [
   $i18n.t('data.total'),

@@ -2,8 +2,8 @@ import { storeToRefs } from 'pinia'
 
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
-import { useAggregationByDrinksTablesStore } from '~/store/pages/data/components/aggregationByDrinksTables'
+import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useMonthlyStore = defineStore('monthlyStore', () => {
   const { $i18n } = useNuxtApp()
@@ -14,8 +14,8 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const drinksStore = useDrinksStore()
   const { drinks, getDrinksIdArray, getDrinksNameArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
-  const { fetchAggregationByDowPerMonth } = useAggregationByDowTablesStore()
-  const { fetchSumCountPerMonth } = useAggregationByDrinksTablesStore()
+  const { fetchAggregationByDowPerMonth } = useAggregationByDowStore()
+  const { fetchSumCountPerMonth } = useAggregationByDrinksStore()
 
   const graphDataTitleBase = ['日付', '合計']
   const chartDataTitle = ['Name', 'Count']

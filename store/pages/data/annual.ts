@@ -2,8 +2,8 @@ import { storeToRefs } from 'pinia'
 
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
-import { useAggregationByDrinksTablesStore } from '~/store/pages/data/components/aggregationByDrinksTables'
+import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useAnnualStore = defineStore('annualStore', () => {
   const { $i18n } = useNuxtApp()
@@ -14,8 +14,8 @@ export const useAnnualStore = defineStore('annualStore', () => {
   const drinksStore = useDrinksStore()
   const { getDrinksIdArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
-  const { fetchAggregationByDowPerYear } = useAggregationByDowTablesStore()
-  const { fetchSumCountPerYear } = useAggregationByDrinksTablesStore()
+  const { fetchAggregationByDowPerYear } = useAggregationByDowStore()
+  const { fetchSumCountPerYear } = useAggregationByDrinksStore()
 
   const year = ref<number>((new Date()).getFullYear())
 

@@ -3,9 +3,9 @@
   lang="ts"
 >
 import { GChart } from 'vue-google-charts'
-import { useAggregationByDrinksTablesStore } from '~/store/pages/data/components/aggregationByDrinksTables'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
-const { computedChartData, computedPieChartOptions } = storeToRefs(useAggregationByDrinksTablesStore())
+const { computedChartData, computedPieChartOptions } = storeToRefs(useAggregationByDrinksStore())
 </script>
 
 <template>

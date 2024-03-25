@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinksStore } from '~/store/data/drinks'
-import type { AggregationByDrink } from '~/store/pages/data/components/types/aggregationByDrinksTable'
+import type { AggregationByDrink } from '~/store/pages/data/components/types/aggregationByDrinks'
 
-export const useAggregationByDrinksTablesStore = defineStore('aggregationByDrinksTablesStore', () => {
+export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore', () => {
   const { supabase } = useSupabaseStore()
   const drinksStore = useDrinksStore()
   const { drinks } = storeToRefs(drinksStore)

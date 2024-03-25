@@ -1,7 +1,7 @@
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
-import { useAggregationByDrinksTablesStore } from '~/store/pages/data/components/aggregationByDrinksTables'
+import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useTotalStore = defineStore('totalStore', () => {
   const { $i18n } = useNuxtApp()
@@ -9,8 +9,8 @@ export const useTotalStore = defineStore('totalStore', () => {
   const { fetchDrinkCounters } = drinkCountersStore
   const drinksStore = useDrinksStore()
   const { fetchDrinks } = drinksStore
-  const { fetchAggregationByDow } = useAggregationByDowTablesStore()
-  const { fetchSumCount } = useAggregationByDrinksTablesStore()
+  const { fetchAggregationByDow } = useAggregationByDowStore()
+  const { fetchSumCount } = useAggregationByDrinksStore()
 
   const chartDataTitle = ['Name', 'Count']
 
