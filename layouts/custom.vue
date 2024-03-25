@@ -2,7 +2,6 @@
   setup
   lang="ts"
 >
-import type { LocaleObject } from 'vue-i18n-routing'
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'
@@ -154,7 +153,7 @@ const active = ref<boolean>(false)
               <div class="select">
                 <select @change="$router.push(switchLocalePath(($event.target as HTMLInputElement).value))">
                   <option
-                    v-for="l in (locales as Array<LocaleObject>)"
+                    v-for="l in locales"
                     :key="l.code"
                     :value="l.code"
                     :selected="l.code === locale"
