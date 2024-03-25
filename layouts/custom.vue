@@ -2,7 +2,7 @@
   setup
   lang="ts"
 >
-import type { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
+import type { LocaleObject } from 'vue-i18n-routing'
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'

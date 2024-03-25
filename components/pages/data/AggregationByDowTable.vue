@@ -3,9 +3,9 @@
   lang="ts"
 >
 import { storeToRefs } from 'pinia'
-import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
+import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
 
-const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowTablesStore())
+const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowStore())
 </script>
 
 <template>

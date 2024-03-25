@@ -7,7 +7,7 @@ import { useAnnualStore } from '~/store/pages/data/annual'
 
 const annualStore = useAnnualStore()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { year, minYear, maxYear, chartDataTitle, calendarTitle, computeCalendarData, computedTableData, computedChartData, computedPieChartOptions } = storeToRefs(annualStore)
+const { year, calendarTitle, computeCalendarData } = storeToRefs(annualStore)
 const { prevYear, nextYear, fetchDrinkCounters } = annualStore
 
 await fetchDrinkCounters()
@@ -47,15 +47,9 @@ watch(year, async () => {
       :data="computeCalendarData"
     /> -->
 
-    <PagesDataGraphsPieChart
-      :data="computedChartData"
-      :options="computedPieChartOptions"
-    />
+    <PagesDataGraphsPieChart />
 
-    <PagesDataTable
-      :headers="chartDataTitle"
-      :table-data="computedTableData"
-    />
+    <PagesDataAggregationByDrinksTable />
 
     <PagesDataAggregationByDowTable />
   </div>
