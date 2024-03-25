@@ -1,15 +1,17 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { GChart } from 'vue-google-charts'
-defineProps<{
-  data: Array<Array<String | Number>>,
-  options?: any,
-}>()
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
+
+const { computedChartData, computedPieChartOptions } = storeToRefs(useAggregationByDrinksStore())
 </script>
 
 <template>
   <GChart
     type="PieChart"
-    :data="data"
-    :options="options"
+    :data="computedChartData"
+    :options="computedPieChartOptions"
   />
 </template>
