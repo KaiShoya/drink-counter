@@ -1,13 +1,12 @@
 import { storeToRefs } from 'pinia'
 
-import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowTablesStore } from '~/store/pages/data/components/aggregationByDowTables'
+import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useMonthlyStore = defineStore('monthlyStore', () => {
   const { $i18n } = useNuxtApp()
-  const { supabase } = useSupabaseStore()
   const { processIntoYearMonth, formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { drinkCounters } = storeToRefs(drinkCountersStore)
@@ -15,14 +14,14 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const drinksStore = useDrinksStore()
   const { drinks, getDrinksIdArray, getDrinksNameArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
-  const { fetchAggregationByDowPerMonth } = useAggregationByDowTablesStore()
+  const { fetchAggregationByDowPerMonth } = useAggregationByDowStore()
+  const { fetchSumCountPerMonth } = useAggregationByDrinksStore()
 
   const graphDataTitleBase = ['日付', '合計']
   const chartDataTitle = ['Name', 'Count']
 
   const yearMonth = ref<string>(processIntoYearMonth(new Date()))
   const graphDataTitle = ref<string[]>(graphDataTitleBase)
-  const sumCountPerMonth = ref<Array<{ drink_id: number, count: number }>>([])
 
   const computedYearMonth = computed(() => {
     const [year, month] = yearMonth.value.split('-').map(v => Number(v))
@@ -53,7 +52,7 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
       showDangerToast($i18n.t(fetchDrinkCountersPerMonthError))
       return
     }
-    const fetchSumCountPerMonthError = await fetchSumCountPerMonth()
+    const fetchSumCountPerMonthError = await fetchSumCountPerMonth(year, month)
     if (fetchSumCountPerMonthError) {
       showDangerToast($i18n.t(fetchSumCountPerMonthError))
       return
@@ -63,15 +62,6 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
       showDangerToast($i18n.t(fetchAggregationByDowPerMonthError))
     }
     graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
-  }
-
-  const fetchSumCountPerMonth = async () => {
-    const { year, month } = computedYearMonth.value
-    const { data, error } = await supabase.rpc('sum_count_per_month', { year, month })
-    if (error) {
-      return 'error.500_API_ERROR'
-    }
-    sumCountPerMonth.value = data ?? []
   }
 
   /**
@@ -96,25 +86,6 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     ]
   })
 
-  /**
-   * テーブル用データ（円グラフでも利用）
-   */
-  const computedTableData = computed(() => {
-    return sumCountPerMonth.value.map(
-      (v: { drink_id: number, count: number }) => [
-        drinks.value.find(drink => drink.id === v.drink_id)!.name,
-        v.count,
-      ],
-    )
-  })
-
-  /**
-   * 円グラフ用データ
-   */
-  const computedChartData = computed(() => {
-    return [chartDataTitle, ...computedTableData.value]
-  })
-
   const computedChartOptions = computed(() => {
     const options: any = {
       seriesType: 'bars',
@@ -129,12 +100,6 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     return options
   })
 
-  const computedPieChartOptions = computed(() => {
-    return {
-      colors: drinks.value.map(drink => drink.color ?? drink.default_color),
-    }
-  })
-
   return {
     yearMonth,
     chartDataTitle,
@@ -143,9 +108,6 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     fetchDrinkCounters,
     computeCalendarData,
     computeGraphData,
-    computedTableData,
-    computedChartData,
     computedChartOptions,
-    computedPieChartOptions,
   }
 })

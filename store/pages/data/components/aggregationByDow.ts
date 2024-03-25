@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 
 import { useSupabaseStore } from '~/store/supabase'
-import type { AggregationByDow } from '~/store/pages/data/components/types/aggregationByDowTables'
+import type { AggregationByDow } from '~/store/pages/data/components/types/aggregationByDow'
 
-export const useAggregationByDowTablesStore = defineStore('aggregationByDowTablesStore', () => {
+export const useAggregationByDowStore = defineStore('aggregationByDowStore', () => {
   const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
 
