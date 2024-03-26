@@ -6,7 +6,7 @@ import { useOruga } from '@oruga-ui/oruga-next'
 import QrModal from '~/components/molecules/QrModal.vue'
 
 const oruga = useOruga()
-function cardModal() {
+const cardModal = () => {
   oruga.modal.open({
     component: QrModal,
     trapFocus: true,
