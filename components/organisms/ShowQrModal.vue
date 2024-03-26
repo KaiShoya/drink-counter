@@ -2,20 +2,25 @@
   setup
   lang="ts"
 >
-import { storeToRefs } from 'pinia'
-import { useLayoutStore } from '~/store/layout'
+import { useOruga } from '@oruga-ui/oruga-next'
+import QrModal from '~/components/molecules/QrModal.vue'
 
-const { showQrModal } = storeToRefs(useLayoutStore())
+const oruga = useOruga()
+function cardModal() {
+  oruga.modal.open({
+    component: QrModal,
+    trapFocus: true,
+    destroyOnHide: false,
+  })
+}
 </script>
 
 <template>
   <a
     class="navbar-item"
     exact-active-class="is-active"
-    @click="showQrModal = true"
+    @click="cardModal()"
   >
     {{ $t('show_qr') }}
   </a>
-
-  <MoleculesQrModal />
 </template>
