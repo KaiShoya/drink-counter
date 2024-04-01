@@ -49,6 +49,13 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
   })
 
   /**
+   * 合計値計算ロジック
+   */
+  const computedSumCount = computed(() => {
+    return computedTableData.value.reduce((accumulator, currentValue) => accumulator + Number(currentValue[1]), 0)
+  })
+
+  /**
    * 円グラフ用データ
    */
   const computedChartData = computed(() => {
@@ -71,6 +78,7 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
     fetchSumCountPerYear,
     fetchSumCountPerMonth,
     computedTableData,
+    computedSumCount,
     computedChartData,
     computedPieChartOptions,
   }
