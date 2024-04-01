@@ -16,11 +16,10 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <template v-if="data.length > 1">
-    <GChart
-      type="ComboChart"
-      :data="data"
-      :options="options"
-    />
-  </template>
+  <GChart
+    v-if="data.length > 1"
+    type="ComboChart"
+    :data="data"
+    :options="options"
+  />
 </template>
