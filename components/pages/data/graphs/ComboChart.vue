@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { GChart } from 'vue-google-charts'
 withDefaults(defineProps<{
   data: Array<Array<String | Number>>,
@@ -14,6 +17,7 @@ withDefaults(defineProps<{
 
 <template>
   <GChart
+    v-if="data.length > 1"
     type="ComboChart"
     :data="data"
     :options="options"

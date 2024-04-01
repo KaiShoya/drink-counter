@@ -12,8 +12,6 @@ export const useTotalStore = defineStore('totalStore', () => {
   const { fetchAggregationByDow } = useAggregationByDowStore()
   const { fetchSumCount } = useAggregationByDrinksStore()
 
-  const chartDataTitle = ['Name', 'Count']
-
   const fetchDrinkCountersAll = async () => {
     const fetchDrinksError = await fetchDrinks()
     if (fetchDrinksError) {
@@ -36,7 +34,6 @@ export const useTotalStore = defineStore('totalStore', () => {
   }
 
   return {
-    chartDataTitle,
     fetchDrinkCountersAll,
   }
 })

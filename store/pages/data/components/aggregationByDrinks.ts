@@ -9,7 +9,7 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
   const drinksStore = useDrinksStore()
   const { drinks } = storeToRefs(drinksStore)
 
-  const chartDataTitle = ['Name', 'Count']
+  const chartDataTitle = ref<Array<string>>(['Name', 'Count'])
   const aggregationByDrinks = ref<Array<AggregationByDrink>>([])
 
   const fetchSumCount = async () => {
@@ -49,10 +49,17 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
   })
 
   /**
+   * 合計値計算ロジック
+   */
+  const computedSumCount = computed(() => {
+    return computedTableData.value.reduce((accumulator, currentValue) => accumulator + Number(currentValue[1]), 0)
+  })
+
+  /**
    * 円グラフ用データ
    */
   const computedChartData = computed(() => {
-    return [chartDataTitle, ...computedTableData.value]
+    return [chartDataTitle.value, ...computedTableData.value]
   })
 
   /**
@@ -71,6 +78,7 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
     fetchSumCountPerYear,
     fetchSumCountPerMonth,
     computedTableData,
+    computedSumCount,
     computedChartData,
     computedPieChartOptions,
   }

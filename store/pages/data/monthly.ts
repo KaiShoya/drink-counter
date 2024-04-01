@@ -18,7 +18,6 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const { fetchSumCountPerMonth } = useAggregationByDrinksStore()
 
   const graphDataTitleBase = ['日付', '合計']
-  const chartDataTitle = ['Name', 'Count']
 
   const yearMonth = ref<string>(processIntoYearMonth(new Date()))
   const graphDataTitle = ref<string[]>(graphDataTitleBase)
@@ -102,7 +101,6 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
 
   return {
     yearMonth,
-    chartDataTitle,
     prevMonth,
     nextMonth,
     fetchDrinkCounters,
