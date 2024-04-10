@@ -51,6 +51,9 @@
   "settings": {
     "threshold_for_detecting_overdrinking": "アラートの閾値(杯数)",
     "cups": "杯",
+    "timezone": "タイムゾーン",
+    "switching_timing": "日付切り替え時刻",
+    "oclock": "時",
     "save": "保存する"
   },
   "drinks": {
