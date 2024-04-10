@@ -15,7 +15,8 @@ const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowStore
       $t('aggregation.sum_count'),
       $t('aggregation.avg_count'),
       $t('aggregation.max_type_of_drinks'),
-      $t('aggregation.avg_type_of_drinks')
+      $t('aggregation.avg_type_of_drinks'),
+      $t('aggregation.record_count'),
     ]"
     :table-data="computedAggregationByDowToArray"
   />

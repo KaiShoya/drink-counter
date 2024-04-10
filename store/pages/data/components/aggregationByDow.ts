@@ -46,6 +46,7 @@ export const useAggregationByDowStore = defineStore('aggregationByDowStore', () 
       data.avg_count,
       data.max_type_of_drinks,
       data.avg_type_of_drinks,
+      data.record_count,
     ])
   })
 

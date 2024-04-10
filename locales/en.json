@@ -81,7 +81,8 @@
     "sum_count": "Count (Sum)",
     "avg_count": "Count (Avg)",
     "max_type_of_drinks": "Type of drinks (Sum)",
-    "avg_type_of_drinks": "Type of drinks (Avg)"
+    "avg_type_of_drinks": "Type of drinks (Avg)",
+    "record_count": "Number of drinking days"
   },
   "modal": {
     "yes": "Yes",

@@ -81,7 +81,8 @@
     "sum_count": "合計",
     "avg_count": "平均",
     "max_type_of_drinks": "飲んだ種類",
-    "avg_type_of_drinks": "飲んだ種類平均"
+    "avg_type_of_drinks": "飲んだ種類平均",
+    "record_count": "飲みに出た回数"
   },
   "modal": {
     "yes": "はい",
