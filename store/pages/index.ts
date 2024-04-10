@@ -1,16 +1,20 @@
-import { useSupabaseStore } from '~/store/supabase'
+import { storeToRefs } from 'pinia'
+import { findTimeZone, getZonedTime } from 'timezone-support'
+import { formatZonedTime } from 'timezone-support/parse-format'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
+import { useUserSettingsStore } from '~/store/data/userSettings'
 import type { NumberOfDrink } from '~/store/types/numberOfDrink'
 
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { $i18n } = useNuxtApp()
-  const { supabase } = useSupabaseStore()
   const { processIntoString } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
   const drinksStore = useDrinksStore()
   const { fetchDrinks, findDrinksVisible } = drinksStore
+  const userSettingsStore = useUserSettingsStore()
+  const { userSettings } = storeToRefs(userSettingsStore)
 
   const date = ref<string>('')
   const numberOfDrinks = ref<NumberOfDrink[]>([])
@@ -20,13 +24,18 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   /**
    * 日付を取得する
    */
-  const fetchDate = async () => {
-    const { data, error } = await supabase.rpc('get_date')
-    if (error) {
-      showDangerToast($i18n.t('error.500_API_ERROR'))
-      return
+  const fetchDate = () => {
+    // TODO: 日付計算はuserSettingsStoreの方が良い？
+    const tz = findTimeZone(userSettings.value.timezone)
+    const nativeDate = new Date()
+    const tzTime = getZonedTime(nativeDate, tz)
+
+    // 現在時刻が設定時刻を超えない場合、日付を-1する（0時過ぎても前日の日付でカウントするため）
+    if (tzTime.hours < userSettings.value.switchingTiming) {
+      tzTime.day = tzTime.day - 1
     }
-    date.value = String(data.split(' ')[0])
+    const displayTime = formatZonedTime(tzTime, 'YYYY-MM-DD')
+    date.value = displayTime
   }
 
   const prevDate = () => {
