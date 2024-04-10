@@ -51,6 +51,9 @@
   "settings": {
     "threshold_for_detecting_overdrinking": "Threshold for detecting overdrinking",
     "cups": "cups",
+    "timezone": "Timezone",
+    "switching_timing": "Date switching timing",
+    "oclock": "o'clock",
     "save": "Save"
   },
   "drinks": {
@@ -81,7 +84,8 @@
     "sum_count": "Count (Sum)",
     "avg_count": "Count (Avg)",
     "max_type_of_drinks": "Type of drinks (Sum)",
-    "avg_type_of_drinks": "Type of drinks (Avg)"
+    "avg_type_of_drinks": "Type of drinks (Avg)",
+    "record_count": "Number of drinking days"
   },
   "modal": {
     "yes": "Yes",

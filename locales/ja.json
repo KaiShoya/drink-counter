@@ -51,6 +51,9 @@
   "settings": {
     "threshold_for_detecting_overdrinking": "アラートの閾値(杯数)",
     "cups": "杯",
+    "timezone": "タイムゾーン",
+    "switching_timing": "日付切り替え時刻",
+    "oclock": "時",
     "save": "保存する"
   },
   "drinks": {
@@ -81,7 +84,8 @@
     "sum_count": "合計",
     "avg_count": "平均",
     "max_type_of_drinks": "飲んだ種類",
-    "avg_type_of_drinks": "飲んだ種類平均"
+    "avg_type_of_drinks": "飲んだ種類平均",
+    "record_count": "飲みに出た回数"
   },
   "modal": {
     "yes": "はい",
