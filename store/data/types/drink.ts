@@ -8,5 +8,5 @@ export interface Drink {
   visible: boolean
   created_at: Date // Datetime
   drink_label_id: number | null
-  amount: number | null
+  amount: number
 }

@@ -1,7 +1,11 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { storeToRefs } from 'pinia'
 import { usePageDrinksStore } from '~/store/pages/drinks/index'
 import { useDrinksStore } from '~/store/data/drinks'
+import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
 const localePath = useLocalePath()
 
@@ -10,6 +14,8 @@ const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinksStore)
 const { initPage, updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
+const drinkLabelsStore = useDrinkLabelsStore()
+const { findById } = drinkLabelsStore
 
 initPage()
 </script>
@@ -24,11 +30,17 @@ initPage()
     >
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
-          <div class="column is-5">
+          <div class="column is-4">
             {{ $t('drinks.name') }}
           </div>
-          <div class="column is-4">
+          <div class="column is-1">
             {{ $t('drinks.color') }}
+          </div>
+          <div class="column is-1">
+            {{ $t('drinks.amount') }}
+          </div>
+          <div class="column is-3">
+            ラベル
           </div>
           <div class="column is-3" />
         </div>
@@ -37,7 +49,7 @@ initPage()
       <template #item="{ element: drink }">
         <div class="columns is-mobile border-line is-vcentered">
           <div
-            class="column is-5"
+            class="column is-4"
             style="display: flex;"
           >
             <div class="handle mr-2">
@@ -45,16 +57,31 @@ initPage()
             </div>
             {{ drink.name }}
           </div>
+
           <div
-            class="column is-4 is-vcentered is-mobile"
+            class="column is-1 is-vcentered is-mobile"
             style="display: flex;"
           >
             <div
               class="mx-1 tag"
               :style="{ padding: '10px', backgroundColor: drink.color }"
             />
-            {{ drink.color }}
           </div>
+
+          <div
+            class="column is-1"
+            style="display: flex;"
+          >
+            {{ drink.amount }}
+          </div>
+
+          <div
+            class="column is-3"
+            style="display: flex;"
+          >
+            {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
+          </div>
+
           <div class="column columns is-mobile is-3">
             <NuxtLink
               :to="localePath(`/drinks/${drink.id}`)"

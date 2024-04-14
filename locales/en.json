@@ -61,6 +61,8 @@
   "drinks": {
     "name": "Name",
     "color": "Color",
+    "amount": "Amount(ml, %, etc)",
+    "drink_label": "Drink label",
     "delete_modal_title": "Delete \"{name}\".",
     "delete_modal_content": "If you delete \"{name}\", all the drink counts you drank will also be deleted. Do you want to delete it?",
     "add": "Add drink",
