@@ -133,7 +133,16 @@ const active = ref<boolean>(false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              飲み物
+              {{ $t('routes.drinks') }}
+            </NuxtLink>
+
+            <NuxtLink
+              class="navbar-item"
+              :to="localePath('/labels')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              {{ $t('routes.labels') }}
             </NuxtLink>
 
             <NuxtLink

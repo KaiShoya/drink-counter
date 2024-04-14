@@ -6,6 +6,8 @@
     "annual": "年別",
     "monthly": "月別",
     "about": "About",
+    "drinks": "飲み物",
+    "labels": "飲み物ラベル",
     "settings": "設定"
   },
   "auth": {
@@ -75,6 +77,9 @@
     "visible": "表示",
     "invisible": "非表示",
     "update_visible_success": "「{name}」を{status}に変更しました。"
+  },
+  "labels": {
+    "standard_amount": "基準量(ml,合など)"
   },
   "data": {
     "total": "合計"
