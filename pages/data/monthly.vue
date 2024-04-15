@@ -7,7 +7,7 @@ import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const monthlyStore = useMonthlyStore()
 const { yearMonth, computeCalendarData, computeGraphData, computedChartOptions } = storeToRefs(monthlyStore)
-const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
+const { fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
 const updateCalendar = ref<number>(0)
@@ -23,25 +23,7 @@ watch(yearMonth, async () => {
 
 <template>
   <div class="container">
-    <div class="columns is-mobile my-2 mx-0">
-      <button
-        class="column is-2 button is-large"
-        @click="prevMonth"
-      >
-        &lt;
-      </button>
-      <input
-        v-model="yearMonth"
-        class="column input is-large"
-        type="month"
-      >
-      <button
-        class="column is-2 button is-large"
-        @click="nextMonth"
-      >
-        &gt;
-      </button>
-    </div>
+    <OrganismsPickerMonthPicker />
 
     <PagesDataGraphsFCalendar
       :key="updateCalendar"
