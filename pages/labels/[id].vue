@@ -3,14 +3,11 @@
   lang="ts"
 >
 import { storeToRefs } from 'pinia'
-import { usePageDrinkEditStore } from '~/store/pages/drinks/edit'
-import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
+import { usePageDrinkLabelEditStore } from '~/store/pages/labels/edit'
 
-const drinkEditStore = usePageDrinkEditStore()
-const { name, color, amount, drinkLabelId } = storeToRefs(drinkEditStore)
-const { initPage, updateDrinkById } = drinkEditStore
-const drinkLabelsStore = useDrinkLabelsStore()
-const { drinkLabels } = storeToRefs(drinkLabelsStore)
+const drinkLabelEditStore = usePageDrinkLabelEditStore()
+const { name, color, standardAmount } = storeToRefs(drinkLabelEditStore)
+const { initPage, update } = drinkLabelEditStore
 
 initPage()
 </script>
@@ -64,10 +61,10 @@ initPage()
     </div>
 
     <div class="field">
-      <label class="label">{{ $t('drinks.amount') }}</label>
+      <label class="label">{{ $t('labels.standard_amount') }}</label>
       <div class="control">
         <input
-          v-model="amount"
+          v-model="standardAmount"
           class="input"
           type="number"
           placeholder="1"
@@ -75,39 +72,16 @@ initPage()
       </div>
     </div>
 
-    <div class="field">
-      <label class="label">{{ $t('drinks.drink_label') }}</label>
-      <div class="control">
-        <div class="select">
-          <select @change="drinkLabelId = Number(($event.target as HTMLInputElement).value)">
-            <option
-              key=""
-              value=""
-              label="なし"
-              :selected="drinkLabelId === null"
-            />
-            <option
-              v-for="label in drinkLabels"
-              :key="label.id"
-              :value="label.id"
-              :label="label.name"
-              :selected="drinkLabelId === label.id"
-            />
-          </select>
-        </div>
-      </div>
-    </div>
-
     <div>
       <button
         class="button"
-        @click="updateDrinkById()"
+        @click="update()"
       >
         {{ $t('drinks.update') }}
       </button>
 
       <NuxtLink
-        to="/drinks"
+        to="/labels"
         class="button"
       >
         {{ $t('drinks.cancel') }}

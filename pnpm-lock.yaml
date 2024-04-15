@@ -54,8 +54,8 @@ dependencies:
     specifier: ^2.0.1
     version: 2.0.1(vue@3.4.21)
   vuedraggable:
-    specifier: ^4.1.0
-    version: 4.1.0(vue@3.4.21)
+    specifier: git@github.com:KaiShoya/vue.draggable.next.git
+    version: github.com/KaiShoya/vue.draggable.next/f2964e84edfa7ae2a638d5240a28babbb8a94083(vue@3.4.21)
 
 devDependencies:
   '@nuxt/devtools':
@@ -7731,10 +7731,6 @@ packages:
       smart-buffer: 4.2.0
     dev: true
 
-  /sortablejs@1.14.0:
-    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
-    dev: false
-
   /source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -8856,15 +8852,6 @@ packages:
       '@vue/shared': 3.4.21
       typescript: 5.4.3
 
-  /vuedraggable@4.1.0(vue@3.4.21):
-    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
-    peerDependencies:
-      vue: ^3.0.1
-    dependencies:
-      sortablejs: 1.14.0
-      vue: 3.4.21(typescript@5.4.3)
-    dev: false
-
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
@@ -9031,3 +9018,21 @@ packages:
       compress-commons: 6.0.2
       readable-stream: 4.5.2
     dev: true
+
+  github.com/KaiShoya/Sortable/4a43a19640a7645c6eac6e944b1b363301b4eee1:
+    resolution: {tarball: https://codeload.github.com/KaiShoya/Sortable/tar.gz/4a43a19640a7645c6eac6e944b1b363301b4eee1}
+    name: sortablejs
+    version: 1.15.2
+    dev: false
+
+  github.com/KaiShoya/vue.draggable.next/f2964e84edfa7ae2a638d5240a28babbb8a94083(vue@3.4.21):
+    resolution: {tarball: https://codeload.github.com/KaiShoya/vue.draggable.next/tar.gz/f2964e84edfa7ae2a638d5240a28babbb8a94083}
+    id: github.com/KaiShoya/vue.draggable.next/f2964e84edfa7ae2a638d5240a28babbb8a94083
+    name: vuedraggable
+    version: 4.1.0
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      sortablejs: github.com/KaiShoya/Sortable/4a43a19640a7645c6eac6e944b1b363301b4eee1
+      vue: 3.4.21(typescript@5.4.3)
+    dev: false

@@ -1,29 +1,19 @@
-import { useDrinksStore } from '~/store/data/drinks'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
-export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
+export const usePageDrinkLabelNewStore = defineStore('pageDrinkLabelNewStore', () => {
   const { $i18n } = useNuxtApp()
-  const drinksStore = useDrinksStore()
-  const { fetchDrinks, createDrink } = drinksStore
   const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels } = drinkLabelsStore
+  const { fetchDrinkLabels, createDrinkLabel } = drinkLabelsStore
 
   // 編集対象のドリンク名
   const name = ref<string>('')
   // 編集対象の色
   const color = ref<string | null>(null)
-  // 編集対象の量
-  const amount = ref<number>(1)
-  // 編集対象の量
-  const drinkLabelId = ref<number | null>(null)
+  // 標準の量
+  const standardAmount = ref<number>(1)
 
   const initPage = async () => {
-    let error = await fetchDrinks()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
-    error = await fetchDrinkLabels()
+    const error = await fetchDrinkLabels()
     if (error) {
       showDangerToast($i18n.t(error))
       return
@@ -33,20 +23,19 @@ export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
   }
 
   const create = async () => {
-    const error = await createDrink(name.value, color.value, amount.value, drinkLabelId.value)
+    const error = await createDrinkLabel(name.value, color.value, standardAmount.value)
     if (error) {
       showDangerToast($i18n.t(error, { name: name.value }))
     } else {
       showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
-      navigateTo('/drinks')
+      navigateTo('/labels')
     }
   }
 
   return {
     name,
     color,
-    amount,
-    drinkLabelId,
+    standardAmount,
     initPage,
     create,
   }
