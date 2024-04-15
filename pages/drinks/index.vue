@@ -36,11 +36,11 @@ initPage()
           <div class="column is-1">
             {{ $t('drinks.color') }}
           </div>
-          <div class="column is-1">
+          <div class="column is-2">
             {{ $t('drinks.amount') }}
           </div>
-          <div class="column is-3">
-            ラベル
+          <div class="column is-2">
+            {{ $t('drinks.drink_label') }}
           </div>
           <div class="column is-3" />
         </div>
@@ -69,14 +69,14 @@ initPage()
           </div>
 
           <div
-            class="column is-1"
+            class="column is-2"
             style="display: flex;"
           >
             {{ drink.amount }}
           </div>
 
           <div
-            class="column is-3"
+            class="column is-2"
             style="display: flex;"
           >
             {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
