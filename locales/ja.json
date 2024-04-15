@@ -6,6 +6,8 @@
     "annual": "年別",
     "monthly": "月別",
     "about": "About",
+    "drinks": "飲み物",
+    "labels": "飲み物ラベル",
     "settings": "設定"
   },
   "auth": {
@@ -59,6 +61,8 @@
   "drinks": {
     "name": "名前",
     "color": "色",
+    "amount": "量(ml,合など)",
+    "drink_label": "ラベル",
     "delete_modal_title": "「{name}」を削除します。",
     "delete_modal_content": "「{name}」を削除すると、飲んだ杯数もすべて削除されます。それでも削除しますか？",
     "add": "追加する",
@@ -75,6 +79,9 @@
     "visible": "表示",
     "invisible": "非表示",
     "update_visible_success": "「{name}」を{status}に変更しました。"
+  },
+  "labels": {
+    "standard_amount": "基準量(ml,合など)"
   },
   "data": {
     "total": "合計"

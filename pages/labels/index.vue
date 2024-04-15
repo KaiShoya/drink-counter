@@ -3,19 +3,16 @@
   lang="ts"
 >
 import { storeToRefs } from 'pinia'
-import { usePageDrinksStore } from '~/store/pages/drinks/index'
-import { useDrinksStore } from '~/store/data/drinks'
+import { usePageDrinkLabelsStore } from '~/store/pages/labels/index'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
 const localePath = useLocalePath()
 
-const pageDrinksStore = usePageDrinksStore()
-const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinksStore)
-const { initPage, updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
-const drinksStore = useDrinksStore()
-const { drinks } = storeToRefs(drinksStore)
+const pageDrinkLabelsStore = usePageDrinkLabelsStore()
+const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinkLabelsStore)
+const { initPage, updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort } = pageDrinkLabelsStore
 const drinkLabelsStore = useDrinkLabelsStore()
-const { findById } = drinkLabelsStore
+const { drinkLabels } = storeToRefs(drinkLabelsStore)
 
 initPage()
 </script>
@@ -23,12 +20,12 @@ initPage()
 <template>
   <div class="mx-2">
     <draggable
-      v-model="drinks"
+      v-model="drinkLabels"
       :delay="100"
       :delay-on-touch-only="true"
       :touch-start-threshold="35"
       handle=".handle"
-      group="drinks"
+      group="drinkLabels"
       item-key="id"
     >
       <template #header>
@@ -39,17 +36,14 @@ initPage()
           <div class="column is-1">
             {{ $t('drinks.color') }}
           </div>
-          <div class="column is-2">
-            {{ $t('drinks.amount') }}
-          </div>
-          <div class="column is-2">
-            {{ $t('drinks.drink_label') }}
+          <div class="column is-4">
+            {{ $t('labels.standard_amount') }}
           </div>
           <div class="column is-3" />
         </div>
       </template>
 
-      <template #item="{ element: drink }">
+      <template #item="{ element: drinkLabel }">
         <div class="columns is-mobile border-line is-vcentered">
           <div
             class="column is-4"
@@ -58,7 +52,7 @@ initPage()
             <div class="handle mr-2">
               <i class="mdi mdi-drag-horizontal-variant" />
             </div>
-            {{ drink.name }}
+            {{ drinkLabel.name }}
           </div>
 
           <div
@@ -67,38 +61,32 @@ initPage()
           >
             <div
               class="mx-1 tag"
-              :style="{ padding: '10px', backgroundColor: drink.color }"
+              :style="{ padding: '10px', backgroundColor: drinkLabel.color }"
             />
+            <!-- {{ drink.color }} -->
           </div>
 
           <div
-            class="column is-2"
+            class="column is-4 is-vcentered is-mobile"
             style="display: flex;"
           >
-            {{ drink.amount }}
-          </div>
-
-          <div
-            class="column is-2"
-            style="display: flex;"
-          >
-            {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
+            {{ drinkLabel.standard_amount }}
           </div>
 
           <div class="column columns is-mobile is-3">
             <NuxtLink
-              :to="localePath(`/drinks/${drink.id}`)"
+              :to="localePath(`/labels/${drinkLabel.id}`)"
               class="icon has-text-info"
             >
               <i class="mdi mdi-24px mdi-text-box-edit-outline" />
             </NuxtLink>
 
             <span
-              :class="['icon', 'mx-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
-              @click="updateHidden(drink)"
+              :class="['icon', 'mx-1', drinkLabel.visible ? 'has-text-primary' : 'has-text-dark']"
+              @click="updateHidden(drinkLabel)"
             >
               <i
-                v-if="drink.visible"
+                v-if="drinkLabel.visible"
                 class="mdi mdi-24px mdi-eye"
               />
               <i
@@ -109,7 +97,7 @@ initPage()
 
             <span
               class="icon has-text-danger"
-              @click="clickDeleteDrinkButton(drink)"
+              @click="clickDeleteDrinkButton(drinkLabel)"
             >
               <i class="mdi mdi-24px mdi-delete-forever-outline" />
             </span>
@@ -120,13 +108,13 @@ initPage()
       <template #footer>
         <button
           class="button mr-3"
-          @click="save"
+          @click="saveSort"
         >
           {{ $t('drinks.save_sort') }}
         </button>
 
         <NuxtLink
-          to="/drinks/new"
+          :to="localePath('/labels/new')"
           class="button is-primary"
         >
           {{ $t('drinks.add') }}
@@ -137,7 +125,7 @@ initPage()
     <ShareDangerModal
       :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"
       :content="$t('drinks.delete_modal_content', { name: deleteTarget?.name })"
-      :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"
+      :success="() => { deleteDrinkLabel(deleteTarget?.id, deleteTarget?.name) }"
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"
     />

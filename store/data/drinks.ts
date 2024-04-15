@@ -55,10 +55,12 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * @param drinkId number
    * @param name string
    * @param color string | null
+   * @param amount number
+   * @param driknLabelId number | null
    * @returns Promise<error_message_code | undefined>
    */
-  const updateDrink = async (drinkId: number, name: string, color: string | null) => {
-    const { error } = await supabase.from('drinks').update({ name, color }).eq('id', drinkId)
+  const updateDrink = async (drinkId: number, name: string, color: string | null, amount: number, driknLabelId: number | null) => {
+    const { error } = await supabase.from('drinks').update({ name, color, amount, drink_label_id: driknLabelId }).eq('id', drinkId)
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -94,8 +96,8 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     }
   }
 
-  const createDrink = async (name: string, color: string | null) => {
-    const { error } = await supabase.from('drinks').insert({ name, color })
+  const createDrink = async (name: string, color: string | null, amount: number, driknLabelId: number | null) => {
+    const { error } = await supabase.from('drinks').insert({ name, color, amount, drink_label_id: driknLabelId })
     if (error) {
       return 'drinks.create_failure'
     }
