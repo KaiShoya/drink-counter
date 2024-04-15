@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { storeToRefs } from 'pinia'
 import { useUserSettingsStore } from '@/store/data/userSettings'
 import { useIndexStore } from '@/store/pages/index'
@@ -7,7 +10,7 @@ const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()
 const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
-const { fetchNumberOfDrinks, fetchDate, prevDate, nextDate, plus, minus } = indexStore
+const { fetchNumberOfDrinks, fetchDate, plus, minus } = indexStore
 
 // Modal用フラグ
 const modalIsActive = ref<boolean>(false)
@@ -39,25 +42,7 @@ watch(date, async () => {
 
 <template>
   <div>
-    <div class="columns is-mobile my-4 mx-0">
-      <button
-        class="column is-2 button is-large"
-        @click="prevDate"
-      >
-        &lt;
-      </button>
-      <input
-        v-model="date"
-        class="column input is-large mx-2"
-        type="date"
-      >
-      <button
-        class="column is-2 button is-large"
-        @click="nextDate"
-      >
-        &gt;
-      </button>
-    </div>
+    <OrganismsPickerDatePicker />
 
     <o-loading v-model:active="isLoading" />
 
