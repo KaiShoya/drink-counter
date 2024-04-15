@@ -24,6 +24,9 @@ initPage()
   <div class="mx-2">
     <draggable
       v-model="drinks"
+      :delay="100"
+      :delay-on-touch-only="true"
+      :touch-start-threshold="35"
       handle=".handle"
       group="drinks"
       item-key="id"
