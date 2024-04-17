@@ -14,9 +14,9 @@ jobs:
       TZ: 'Asia/Tokyo'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # 前回のリースタグを取得する
+      # 前回のリリースタグを取得する
       - name: Get previous tag
         id: pre_tag
         run: |

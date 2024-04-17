@@ -1,10 +1,8 @@
-name: CI
+name: Check Supabase migrations
 
 on:
-  pull_request:
-    paths:
-      - 'supabase/migrations/**'
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   test:
@@ -13,7 +11,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: supabase/setup-cli@v1
       - name: Start Supabase local development setup
         run: supabase start
