@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "license": "MIT",
   "engines": {
     "node": "20"
@@ -10,7 +10,7 @@
     "email": "shonari77@gmail.com"
   },
   "private": true,
-  "packageManager": "pnpm@8.14.1+sha256.2df78e65d433d7693b9d3fbdaf431b2d96bb4f96a2ffecd51a50efe16e50a6a8",
+  "packageManager": "pnpm@9.0.1+sha256.46d50ee2afecb42b185ebbd662dc7bdd52ef5be56bf035bb615cab81a75345df",
   "scripts": {
     "build": "nuxi generate",
     "dev": "nuxt dev",
