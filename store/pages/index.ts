@@ -101,6 +101,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
       }
 
       numberOfDrinks.value = []
+      labelsWithDrinks.value = []
       drinkCountForDay.value = 0
 
       findDrinksVisible().forEach((drink) => {
