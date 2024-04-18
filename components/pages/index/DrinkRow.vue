@@ -26,6 +26,7 @@ defineProps<{
         <MoleculesDrinkColumn
           class="column mb-0"
           :label-id="label.id"
+          :label-name="label.name"
           :drinks="label.drinks"
           :count="label.currentDrink.count ?? 0"
           :color="label.color || label.default_color"

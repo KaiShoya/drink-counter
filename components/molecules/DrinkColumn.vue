@@ -6,6 +6,7 @@ import type { NumberOfDrink } from '~/store/types/numberOfDrink'
 
 defineProps<{
   labelId: number,
+  labelName: string,
   currentDrink: NumberOfDrink | null,
   drinks: Array<NumberOfDrink>,
   count: number,
@@ -28,7 +29,7 @@ defineProps<{
             v-for="drink in drinks"
             :key="drink.id"
             :value="drink.id"
-            :label="drink.name"
+            :label="labelName + ' : ' + drink.name"
             :selected="drink.id === currentDrink?.id"
           />
         </select>
