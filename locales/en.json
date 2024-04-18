@@ -78,7 +78,8 @@
     "update_failure": "Failed to update \"{name}\".",
     "visible": "visible",
     "invisible": "invisible",
-    "update_visible_success": "\"{name}\" was successfully updated to be {status}."
+    "update_visible_success": "\"{name}\" was successfully updated to be {status}.",
+    "copy_label_color": "Copy label color"
   },
   "labels": {
     "standard_amount": "Standard amount(ml, %, etc)"

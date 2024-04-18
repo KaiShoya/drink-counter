@@ -78,7 +78,8 @@
     "update_failure": "「{name}」の更新に失敗しました。",
     "visible": "表示",
     "invisible": "非表示",
-    "update_visible_success": "「{name}」を{status}に変更しました。"
+    "update_visible_success": "「{name}」を{status}に変更しました。",
+    "copy_label_color": "ラベルの色をコピーする"
   },
   "labels": {
     "standard_amount": "基準量(ml,合など)"

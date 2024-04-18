@@ -11,12 +11,49 @@ const { name, color, amount, drinkLabelId } = storeToRefs(drinkNewStore)
 const { initPage, create } = drinkNewStore
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
+const { findById } = drinkLabelsStore
 
 initPage()
 </script>
 
 <template>
   <div>
+    <div class="field">
+      <label class="label">{{ $t('drinks.drink_label') }}</label>
+      <div
+        class="control columns is-vcentered is-mobile"
+        style="margin-left: 12px;"
+      >
+        <div
+          v-if="drinkLabelId"
+          class="column tag"
+          :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid', backgroundColor: findById(drinkLabelId)!.color ?? findById(drinkLabelId)!.default_color }"
+        />
+        <div
+          v-else
+          class="column tag"
+          :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid' }"
+        />
+        <div class="column select is-fullwidth">
+          <select @change="drinkLabelId = Number(($event.target as HTMLInputElement).value)">
+            <option
+              key=""
+              value=""
+              label="選択してください"
+              :selected="drinkLabelId === null"
+            />
+            <option
+              v-for="label in drinkLabels"
+              :key="label.id"
+              :value="label.id"
+              :label="label.name"
+              :selected="drinkLabelId === label.id"
+            />
+          </select>
+        </div>
+      </div>
+    </div>
+
     <div class="field">
       <label class="label">{{ $t('drinks.name') }}</label>
       <div class="control">
@@ -47,6 +84,27 @@ initPage()
           type="text"
           placeholder="#000000"
         >
+
+        <div
+          class="column"
+          style="flex: none; margin-right: -12px;"
+        >
+          <button
+            v-if="drinkLabelId"
+            class="button"
+            @click="color = findById(drinkLabelId)!.color"
+          >
+            {{ $t('drinks.copy_label_color') }}
+          </button>
+          <button
+            v-else
+            class="button"
+            disabled
+          >
+            {{ $t('drinks.copy_label_color') }}
+          </button>
+        </div>
+
         <div
           class="column"
           style="flex: none; margin-right: 12px;"
@@ -72,29 +130,6 @@ initPage()
           type="number"
           placeholder="1"
         >
-      </div>
-    </div>
-
-    <div class="field">
-      <label class="label">{{ $t('drinks.drink_label') }}</label>
-      <div class="control">
-        <div class="select">
-          <select @change="drinkLabelId = Number(($event.target as HTMLInputElement).value)">
-            <option
-              key=""
-              value=""
-              label="なし"
-              :selected="drinkLabelId === null"
-            />
-            <option
-              v-for="label in drinkLabels"
-              :key="label.id"
-              :value="label.id"
-              :label="label.name"
-              :selected="drinkLabelId === label.id"
-            />
-          </select>
-        </div>
       </div>
     </div>
 
