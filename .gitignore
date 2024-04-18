@@ -7,3 +7,13 @@ node_modules
 .env
 dist
 .DS_Store
+
+**/test.vue
+**/terms_of_service.vue
+supabase/functions/README.md
+_i18n.config.ts
+.prettierignore
+# store/
+docs/
+store/user_
+components/SignInAdmin.vue

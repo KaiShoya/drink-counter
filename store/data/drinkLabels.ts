@@ -101,6 +101,13 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
     }
   }
 
+  const updateDefaultDrinkId = async (drinkLabelId: number, defaultDrinkId: number) => {
+    const { error } = await supabase.from('drink_labels').update({ default_drink_id: defaultDrinkId }).eq('id', drinkLabelId)
+    if (error) {
+      return 'error.500_API_ERROR'
+    }
+  }
+
   const createDrinkLabel = async (name: string, color: string | null, standardAmount: number) => {
     const { error } = await supabase.from('drink_labels').insert({ name, color, standard_amount: standardAmount })
     if (error) {
@@ -134,6 +141,7 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
     updateDrinkLabel,
     updateDrinkLabelVisible,
     updateDrinkLabelsSort,
+    updateDefaultDrinkId,
     createDrinkLabel,
     // getDrinkLabelsIdArray,
     // getDrinkLabelsNameArray,
