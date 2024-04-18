@@ -8,4 +8,5 @@ export interface DrinkLabel {
   standard_amount: number | null
   visible: boolean
   created_at: Date // Datetime
+  default_drink_id: number | null
 }
