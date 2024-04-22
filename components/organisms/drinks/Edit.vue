@@ -6,6 +6,8 @@ import { storeToRefs } from 'pinia'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 import type { DrinkLabel } from '~/store/data/types/drinkLabel'
 
+const localePath = useLocalePath()
+
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
 const { findById } = drinkLabelsStore
@@ -162,7 +164,7 @@ const changeDrinkLabelId = (id: number | null) => {
       </button>
 
       <NuxtLink
-        to="/drinks"
+        :to="localePath('/drinks')"
         class="button"
       >
         {{ $t('drinks.cancel') }}

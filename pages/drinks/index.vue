@@ -131,7 +131,7 @@ initPage()
         </button>
 
         <NuxtLink
-          to="/drinks/new"
+          :to="localePath('/drinks/new')"
           class="button is-primary"
         >
           {{ $t('drinks.add') }}

@@ -3,6 +3,7 @@ import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
 export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
   const { $i18n } = useNuxtApp()
+  const localePath = useLocalePath()
   const drinksStore = useDrinksStore()
   const { fetchDrinks, findDrink, updateDrink } = drinksStore
   const drinkLabelsStore = useDrinkLabelsStore()
@@ -37,7 +38,7 @@ export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {
       showDangerToast($i18n.t('error.GET_RECORD'))
-      navigateTo('/drinks')
+      navigateTo(localePath('/drinks'))
     } else {
       name.value = drink.name
       color.value = drink.color
@@ -54,7 +55,7 @@ export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
       showDangerToast($i18n.t('drinks.update_failure', { name: name.value }))
     } else {
       showSuccessToast($i18n.t('drinks.update_success', { name: name.value }))
-      navigateTo('/drinks')
+      navigateTo(localePath('/drinks'))
     }
   }
 

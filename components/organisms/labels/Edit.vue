@@ -2,6 +2,8 @@
   setup
   lang="ts"
 >
+const localePath = useLocalePath()
+
 defineProps<{
   saveFunction: Function,
   save: 'drinks.update' | 'drinks.add',
@@ -80,7 +82,7 @@ const standardAmount = defineModel<number>('standardAmount')
       </button>
 
       <NuxtLink
-        to="/labels"
+        :to="localePath('/labels')"
         class="button"
       >
         {{ $t('drinks.cancel') }}
