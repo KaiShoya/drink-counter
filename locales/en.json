@@ -62,6 +62,7 @@
     "name": "Name",
     "color": "Color",
     "amount": "Amount(ml, %, etc)",
+    "standard_amount": "Standard amount :",
     "drink_label": "Drink label",
     "delete_modal_title": "Delete \"{name}\".",
     "delete_modal_content": "If you delete \"{name}\", all the drink counts you drank will also be deleted. Do you want to delete it?",

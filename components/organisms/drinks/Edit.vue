@@ -4,6 +4,7 @@
 >
 import { storeToRefs } from 'pinia'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
+import type { DrinkLabel } from '~/store/data/types/drinkLabel'
 
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
@@ -17,6 +18,18 @@ const drinkLabelId = defineModel<number | null>('drinkLabelId')
 const name = defineModel<string | null>('name')
 const color = defineModel<string | null>('color')
 const amount = defineModel<number | null>('amount')
+
+const selectedLabel = ref<DrinkLabel | null | undefined>(drinkLabelId.value ? findById(drinkLabelId.value) : undefined)
+
+const changeDrinkLabelId = (id: number | null) => {
+  drinkLabelId.value = id
+  if (id) {
+    selectedLabel.value = findById(id)
+    amount.value = selectedLabel.value?.standard_amount
+  } else {
+    selectedLabel.value = null
+  }
+}
 </script>
 
 <template>
@@ -28,9 +41,9 @@ const amount = defineModel<number | null>('amount')
         style="margin-left: 12px;"
       >
         <div
-          v-if="drinkLabelId"
+          v-if="selectedLabel"
           class="column tag"
-          :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid', backgroundColor: findById(drinkLabelId)!.color ?? findById(drinkLabelId)!.default_color }"
+          :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid', backgroundColor: selectedLabel!.color ?? selectedLabel!.default_color }"
         />
         <div
           v-else
@@ -38,10 +51,10 @@ const amount = defineModel<number | null>('amount')
           :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid' }"
         />
         <div class="column select is-fullwidth">
-          <select @change="drinkLabelId = Number(($event.target as HTMLInputElement).value)">
+          <select @change="changeDrinkLabelId(Number(($event.target as HTMLInputElement).value))">
             <option
               key=""
-              value=""
+              :value="null"
               label="選択してください"
               :selected="drinkLabelId === null"
             />
@@ -93,9 +106,9 @@ const amount = defineModel<number | null>('amount')
           style="flex: none; margin-right: -12px;"
         >
           <button
-            v-if="drinkLabelId"
+            v-if="selectedLabel"
             class="button"
-            @click="color = findById(drinkLabelId)!.color"
+            @click="color = selectedLabel!.color"
           >
             {{ $t('drinks.copy_label_color') }}
           </button>
@@ -125,7 +138,11 @@ const amount = defineModel<number | null>('amount')
     </div>
 
     <div class="field">
-      <label class="label">{{ $t('drinks.amount') }}</label>
+      <label class="label">
+        {{ $t('drinks.amount') }}
+        {{ $t('drinks.standard_amount') }}
+        {{ selectedLabel?.standard_amount }}
+      </label>
       <div class="control">
         <input
           v-model="amount"
