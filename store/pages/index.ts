@@ -1,5 +1,7 @@
 import { storeToRefs } from 'pinia'
+// @ts-ignore
 import { findTimeZone, getZonedTime } from 'timezone-support'
+// @ts-ignore
 import { formatZonedTime } from 'timezone-support/parse-format'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'

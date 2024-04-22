@@ -24,13 +24,14 @@ export const usePageDrinkLabelEditStore = defineStore('pageDrinkLabelEditStore',
       return
     }
 
-    const drink = findById(drinkLabelId.value)
-    if (drink === undefined) {
+    const drinkLabel = findById(drinkLabelId.value)
+    if (drinkLabel === undefined) {
       showDangerToast($i18n.t('error.GET_RECORD'))
       navigateTo('/labels')
     } else {
-      name.value = drink.name
-      color.value = drink.color
+      name.value = drinkLabel.name
+      color.value = drinkLabel.color
+      standardAmount.value = drinkLabel.standard_amount
     }
   }
 

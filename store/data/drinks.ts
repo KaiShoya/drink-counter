@@ -1,6 +1,8 @@
 import { useSupabaseStore } from '~/store/supabase'
 import type { Drink } from '~/store/data/types/drink'
 
+const TABLE_NAME = 'drinks'
+
 export const useDrinksStore = defineStore('drinksStore', () => {
   const { supabase } = useSupabaseStore()
   const drinks = ref<Drink[]>([])
@@ -10,7 +12,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * @returns Promise<error_message_code | undefined>
    */
   const fetchDrinks = async () => {
-    const { data, error } = await supabase.from('drinks').select('*').order('sort,id')
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('sort,id')
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -60,7 +62,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * @returns Promise<error_message_code | undefined>
    */
   const updateDrink = async (drinkId: number, name: string, color: string | null, amount: number, driknLabelId: number | null) => {
-    const { error } = await supabase.from('drinks').update({ name, color, amount, drink_label_id: driknLabelId }).eq('id', drinkId)
+    const { error } = await supabase.from(TABLE_NAME).update({ name, color, amount, drink_label_id: driknLabelId }).eq('id', drinkId)
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -72,7 +74,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   }
 
   const updateDrinkVisible = async (drinkId: number, visible: boolean) => {
-    const { error } = await supabase.from('drinks').update({ visible }).eq('id', drinkId)
+    const { error } = await supabase.from(TABLE_NAME).update({ visible }).eq('id', drinkId)
     if (error) {
       return 'drinks.update_failure'
     }
@@ -97,7 +99,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   }
 
   const createDrink = async (name: string, color: string | null, amount: number, driknLabelId: number | null) => {
-    const { error } = await supabase.from('drinks').insert({ name, color, amount, drink_label_id: driknLabelId })
+    const { error } = await supabase.from(TABLE_NAME).insert({ name, color, amount, drink_label_id: driknLabelId })
     if (error) {
       return 'drinks.create_failure'
     }

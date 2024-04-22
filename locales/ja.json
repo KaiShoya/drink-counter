@@ -62,6 +62,7 @@
     "name": "名前",
     "color": "色",
     "amount": "量(ml,合など)",
+    "standard_amount": "基準量 :",
     "drink_label": "ラベル",
     "delete_modal_title": "「{name}」を削除します。",
     "delete_modal_content": "「{name}」を削除すると、飲んだ杯数もすべて削除されます。それでも削除しますか？",
