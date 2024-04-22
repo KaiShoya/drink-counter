@@ -19,7 +19,9 @@ export const usePageDrinkLabelNewStore = defineStore('pageDrinkLabelNewStore', (
       return
     }
 
+    name.value = ''
     color.value = generateRandomColor()
+    standardAmount.value = 1
   }
 
   const create = async () => {

@@ -28,8 +28,10 @@ export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
       showDangerToast($i18n.t(error))
       return
     }
-
+    name.value = ''
     color.value = generateRandomColor()
+    amount.value = 1
+    drinkLabelId.value = null
   }
 
   const create = async () => {
