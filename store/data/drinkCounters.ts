@@ -1,6 +1,8 @@
 import { useSupabaseStore } from '~/store/supabase'
 import type { DrinkCounter } from '~/store/data/types/drinkCounter'
 
+const TABLE_NAME = 'drink_counters'
+
 export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const { supabase } = useSupabaseStore()
   const drinkCounters = ref<DrinkCounter[]>([])
@@ -27,7 +29,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * 自分のデータを全件取得する
    */
   const fetchDrinkCounters = async () => {
-    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0)
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -41,7 +43,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const fetchDrinkCountersPerYear = async (year: number) => {
     const minDate = `${year}-01-01`
     const maxDate = `${year}-12-31`
-    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -56,7 +58,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const fetchDrinkCountersPerMonth = async (year: number, month: number) => {
     const { processIntoYearMonthAdd1Month } = useProcessDate()
     const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
-    const { data, error } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -68,7 +70,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @param date 日付 '2023-01-01'
    */
   const fetchDrinkCountersForDay = async (date: string) => {
-    const { data, error } = await supabase.from('drink_counters').select('*').eq('date', date)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').eq('date', date)
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -119,7 +121,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @return drink_counter_id | error_message
    */
   const create = async (drinkId: number, date: string) => {
-    const { data, error } = await supabase.from('drink_counters').insert({ date, drink_id: drinkId, count: 1 }).select()
+    const { data, error } = await supabase.from(TABLE_NAME).insert({ date, drink_id: drinkId, count: 1 }).select()
     if (error) {
       return 'error.500_API_ERROR'
     }

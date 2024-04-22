@@ -1,6 +1,9 @@
 import { useSupabaseStore } from '~/store/supabase'
 import type { UserSetting } from '~/store/data/types/userSetting'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const TABLE_NAME = 'user_settings'
+
 export const useUserSettingsStore = defineStore('userSettings', () => {
   const { supabase } = useSupabaseStore()
   const userSettings = ref<UserSetting>({
