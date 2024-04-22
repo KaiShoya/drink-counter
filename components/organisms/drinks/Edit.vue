@@ -57,7 +57,7 @@ const changeDrinkLabelId = (id: number | null) => {
             <option
               key=""
               :value="null"
-              label="選択してください"
+              :label="$t('drinks.select')"
               :selected="drinkLabelId === null"
             />
             <option
@@ -79,7 +79,7 @@ const changeDrinkLabelId = (id: number | null) => {
           v-model="name"
           class="input"
           type="text"
-          placeholder="ビール"
+          :placeholder="$t('drinks.name_placeholder')"
         >
       </div>
     </div>

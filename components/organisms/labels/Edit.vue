@@ -22,7 +22,7 @@ const standardAmount = defineModel<number>('standardAmount')
           v-model="name"
           class="input"
           type="text"
-          placeholder="ビール"
+          :placeholder="$t('labels.name_placeholder')"
         >
       </div>
     </div>

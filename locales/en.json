@@ -45,6 +45,10 @@
       "6": "Sat"
     }
   },
+  "index": {
+    "warning_title": "Be careful not to drink too much.",
+    "warning_content": "You've had {drinkCountForDay} cups today, but do you still want to drink it?"
+  },
   "source": "Source",
   "terms_of_service": "Terms of service",
   "license": "License",
@@ -59,6 +63,8 @@
     "save": "Save"
   },
   "drinks": {
+    "select": "Please select",
+    "name_placeholder": "350ml",
     "name": "Name",
     "color": "Color",
     "amount": "Amount(ml, %, etc)",
@@ -83,6 +89,7 @@
     "copy_label_color": "Copy label color"
   },
   "labels": {
+    "name_placeholder": "Beer",
     "standard_amount": "Standard amount(ml, %, etc)"
   },
   "data": {
