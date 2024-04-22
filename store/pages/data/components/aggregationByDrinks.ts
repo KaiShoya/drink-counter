@@ -1,19 +1,24 @@
 import { defineStore } from 'pinia'
 
 import { useSupabaseStore } from '~/store/supabase'
-import { useDrinksStore } from '~/store/data/drinks'
-import type { AggregationByDrink } from '~/store/pages/data/components/types/aggregationByDrinks'
+import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
+import type { AggregationByDrinkLabel } from '~/store/pages/data/components/types/aggregationByDrinkLabel'
 
 export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore', () => {
   const { supabase } = useSupabaseStore()
-  const drinksStore = useDrinksStore()
-  const { drinks } = storeToRefs(drinksStore)
+  const drinkLabelsStore = useDrinkLabelsStore()
+  const { drinkLabels } = storeToRefs(drinkLabelsStore)
+  const { fetchDrinkLabels } = drinkLabelsStore
 
   const chartDataTitle = ref<Array<string>>(['Name', 'Count'])
-  const aggregationByDrinks = ref<Array<AggregationByDrink>>([])
+  const aggregationByDrinks = ref<Array<AggregationByDrinkLabel>>([])
 
   const fetchSumCount = async () => {
-    const { data, error } = await supabase.rpc('sum_count')
+    const fetchDrinkLabelsError = await fetchDrinkLabels()
+    if (fetchDrinkLabelsError) {
+      return fetchDrinkLabelsError
+    }
+    const { data, error } = await supabase.rpc('aggregation_by_drink_labels')
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -21,7 +26,11 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
   }
 
   const fetchSumCountPerYear = async (year: number) => {
-    const { data, error } = await supabase.rpc('sum_count_per_year', { year })
+    const fetchDrinkLabelsError = await fetchDrinkLabels()
+    if (fetchDrinkLabelsError) {
+      return fetchDrinkLabelsError
+    }
+    const { data, error } = await supabase.rpc('aggregation_by_drink_labels', { year })
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -29,7 +38,11 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
   }
 
   const fetchSumCountPerMonth = async (year: number, month: number) => {
-    const { data, error } = await supabase.rpc('sum_count_per_month', { year, month })
+    const fetchDrinkLabelsError = await fetchDrinkLabels()
+    if (fetchDrinkLabelsError) {
+      return fetchDrinkLabelsError
+    }
+    const { data, error } = await supabase.rpc('aggregation_by_drink_labels', { year, month })
     if (error) {
       return 'error.500_API_ERROR'
     }
@@ -41,8 +54,8 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
    */
   const computedTableData = computed(() => {
     return aggregationByDrinks.value.map(
-      (v: { drink_id: number, count: number }) => [
-        drinks.value.find(drink => drink.id === v.drink_id)!.name,
+      (v: { drink_label_id: number, count: number }) => [
+        drinkLabels.value.find(label => label.id === v.drink_label_id)!.name,
         v.count,
       ],
     )
@@ -67,7 +80,7 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
    */
   const computedPieChartOptions = computed(() => {
     return {
-      colors: drinks.value.map(drink => drink.color ?? drink.default_color),
+      colors: drinkLabels.value.map(label => label.color ?? label.default_color),
     }
   })
 
