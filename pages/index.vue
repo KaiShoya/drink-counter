@@ -61,8 +61,8 @@ watch(date, async () => {
     </div>
 
     <ShareWarningModal
-      title="飲みすぎ注意"
-      :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"
+      :title="$t('index.warning_title')"
+      :content="$t('index.warning_content', { drinkCountForDay })"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
       :cancel="() => modalIsActive = false"
       :class="modalIsActive ? 'is-active' : ''"

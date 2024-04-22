@@ -3,6 +3,7 @@ import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
 export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
   const { $i18n } = useNuxtApp()
+  const localePath = useLocalePath()
   const drinksStore = useDrinksStore()
   const { fetchDrinks, createDrink } = drinksStore
   const drinkLabelsStore = useDrinkLabelsStore()
@@ -40,7 +41,7 @@ export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
       showDangerToast($i18n.t(error, { name: name.value }))
     } else {
       showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
-      navigateTo('/drinks')
+      navigateTo(localePath('/drinks'))
     }
   }
 

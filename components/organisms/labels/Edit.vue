@@ -2,6 +2,8 @@
   setup
   lang="ts"
 >
+const localePath = useLocalePath()
+
 defineProps<{
   saveFunction: Function,
   save: 'drinks.update' | 'drinks.add',
@@ -20,7 +22,7 @@ const standardAmount = defineModel<number>('standardAmount')
           v-model="name"
           class="input"
           type="text"
-          placeholder="ビール"
+          :placeholder="$t('labels.name_placeholder')"
         >
       </div>
     </div>
@@ -80,7 +82,7 @@ const standardAmount = defineModel<number>('standardAmount')
       </button>
 
       <NuxtLink
-        to="/labels"
+        :to="localePath('/labels')"
         class="button"
       >
         {{ $t('drinks.cancel') }}

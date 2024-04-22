@@ -45,6 +45,10 @@
       "6": "土"
     }
   },
+  "index": {
+    "warning_title": "飲みすぎ注意",
+    "warning_content": "今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？"
+  },
   "source": "ソースコード",
   "terms_of_service": "利用規約",
   "license": "ライセンス",
@@ -59,6 +63,8 @@
     "save": "保存する"
   },
   "drinks": {
+    "select": "選択してください",
+    "name_placeholder": "350ml",
     "name": "名前",
     "color": "色",
     "amount": "量(ml,合など)",
@@ -83,6 +89,7 @@
     "copy_label_color": "ラベルの色をコピーする"
   },
   "labels": {
+    "name_placeholder": "ビール",
     "standard_amount": "基準量(ml,合など)"
   },
   "data": {
