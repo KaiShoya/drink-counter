@@ -10,7 +10,7 @@ on:
 
 jobs:
   create-release-tag:
-    uses: ./.github/workflows.create-release-note.yaml
+    uses: ./.github/workflows/create-release-note.yaml
 
   codacy:
     uses: ./.github/workflows/codacy-analysis.yml
