@@ -183,6 +183,8 @@ const active = ref<boolean>(false)
             >
               {{ $t('auth.google') }}
             </a>
+
+            <SignInAdmin :is-login="isLogin" />
           </div>
         </div>
       </nav>

@@ -13,4 +13,4 @@ jobs:
     uses: ./.github/workflows/create-release-note.yaml
 
   codacy:
-    uses: ./.github/workflows/codacy-analysis.yml
+    uses: ./.github/workflows/codacy-analysis.yaml
