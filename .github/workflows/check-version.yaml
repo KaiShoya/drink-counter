@@ -61,11 +61,11 @@ jobs:
 
       # バージョンが更新されてなければエラーにする（update_versionの逆）
       - name: Check if it is the first execution
+        if: |
+          contains(steps.pre_tag.outputs.major, steps.release_tag.outputs.major) &&
+          contains(steps.pre_tag.outputs.minor, steps.release_tag.outputs.minor) &&
+          contains(steps.pre_tag.outputs.patch, steps.release_tag.outputs.patch) &&
+          contains(steps.pre_tag.outputs.preview, steps.release_tag.outputs.preview)
         run: |
-          if [ "${{ steps.pre_tag.outputs.major }}" = "${{ steps.release_tag.outputs.major }}" ] \
-            && [ "${{ steps.pre_tag.outputs.minor }}" = "${{ steps.release_tag.outputs.minor }}" ] \
-            && [ "${{ steps.pre_tag.outputs.patch }}" = "${{ steps.release_tag.outputs.patch }}" ] \
-            && [ "${{ steps.pre_tag.outputs.preview }}" = "${{ steps.release_tag.outputs.preview }}" ]; then
-            echo "Error: No version changes detected. Exiting."
-            exit 1
-          fi
+          echo "Error: No version changes detected. Exiting."
+          exit 1

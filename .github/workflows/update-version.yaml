@@ -66,15 +66,14 @@ jobs:
 
       # 最新のバージョンとブランチ内のバージョンに差異があったら処理を止める
       - name: Check if it is the first execution
+        if: |
+          !contains(steps.pre_tag.outputs.major, steps.release_tag.outputs.major) ||
+          !contains(steps.pre_tag.outputs.minor, steps.release_tag.outputs.minor) ||
+          !contains(steps.pre_tag.outputs.patch, steps.release_tag.outputs.patch) ||
+          !contains(steps.pre_tag.outputs.preview, steps.release_tag.outputs.preview)
         run: |
-          if [ "${{ steps.pre_tag.outputs.major }}" = "${{ steps.release_tag.outputs.major }}" ] \
-            && [ "${{ steps.pre_tag.outputs.minor }}" = "${{ steps.release_tag.outputs.minor }}" ] \
-            && [ "${{ steps.pre_tag.outputs.patch }}" = "${{ steps.release_tag.outputs.patch }}" ] \
-            && [ "${{ steps.pre_tag.outputs.preview }}" = "${{ steps.release_tag.outputs.preview }}" ]; then
-          else
-            echo "Error: Version changes detected. Exiting."
-            exit 1
-          fi
+          echo "Error: Version changes detected. Exiting."
+          exit 1
 
       - name: Update patch version
         id: patch
