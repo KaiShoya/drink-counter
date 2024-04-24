@@ -14,7 +14,7 @@ const { findById } = drinkLabelsStore
 
 defineProps<{
   saveFunction: Function,
-  save: 'drinks.update' | 'drinks.add',
+  save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD,
 }>()
 const drinkLabelId = defineModel<number | null>('drinkLabelId')
 const name = defineModel<string | null>('name')
@@ -37,7 +37,7 @@ const changeDrinkLabelId = (id: number | null) => {
 <template>
   <div>
     <div class="field">
-      <label class="label">{{ $t('drinks.drink_label') }}</label>
+      <label class="label">{{ $t(LOCALE_DRINKS_DRINK_LABEL) }}</label>
       <div
         class="control columns is-vcentered is-mobile"
         style="margin-left: 12px;"
@@ -57,7 +57,7 @@ const changeDrinkLabelId = (id: number | null) => {
             <option
               key=""
               :value="null"
-              :label="$t('drinks.select')"
+              :label="$t(LOCALE_DRINKS_SELECT)"
               :selected="drinkLabelId === null"
             />
             <option
@@ -73,19 +73,19 @@ const changeDrinkLabelId = (id: number | null) => {
     </div>
 
     <div class="field">
-      <label class="label">{{ $t('drinks.name') }}</label>
+      <label class="label">{{ $t(LOCALE_DRINKS_NAME) }}</label>
       <div class="control">
         <input
           v-model="name"
           class="input"
           type="text"
-          :placeholder="$t('drinks.name_placeholder')"
+          :placeholder="$t(LOCALE_DRINKS_NAME_PLACEHOLDER)"
         >
       </div>
     </div>
 
     <div class="field">
-      <label class="label">{{ $t('drinks.color') }}</label>
+      <label class="label">{{ $t(LOCALE_DRINKS_COLOR) }}</label>
       <div class="control columns is-vcentered is-mobile">
         <div
           class="column"
@@ -112,14 +112,14 @@ const changeDrinkLabelId = (id: number | null) => {
             class="button"
             @click="color = selectedLabel!.color"
           >
-            {{ $t('drinks.copy_label_color') }}
+            {{ $t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
           </button>
           <button
             v-else
             class="button"
             disabled
           >
-            {{ $t('drinks.copy_label_color') }}
+            {{ $t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
           </button>
         </div>
 
@@ -141,8 +141,8 @@ const changeDrinkLabelId = (id: number | null) => {
 
     <div class="field">
       <label class="label">
-        {{ $t('drinks.amount') }}
-        {{ $t('drinks.standard_amount') }}
+        {{ $t(LOCALE_DRINKS_AMOUNT) }}
+        {{ $t(LOCALE_DRINKS_STANDARD_AMOUNT) }}
         {{ selectedLabel?.standard_amount }}
       </label>
       <div class="control">
@@ -167,7 +167,7 @@ const changeDrinkLabelId = (id: number | null) => {
         :to="localePath('/drinks')"
         class="button"
       >
-        {{ $t('drinks.cancel') }}
+        {{ $t(LOCALE_DRINKS_CANCEL) }}
       </NuxtLink>
     </div>
   </div>

@@ -10,7 +10,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     if (error) {
       showDangerToast($i18n.t(error))
     } else {
-      showSuccessToast($i18n.t('general.update_success'))
+      showSuccessToast($i18n.t(LOCALE_GENERAL_UPDATE_SUCCESS))
     }
   }
 

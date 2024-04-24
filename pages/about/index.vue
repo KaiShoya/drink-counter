@@ -7,7 +7,7 @@
             to="https://github.com/KaiShoya/drink-counter"
             class="display is-block"
           >
-            {{ $t('source') }}
+            {{ $t(LOCALE_SOURCE) }}
           </NuxtLink>
         </th>
       </tr>
@@ -17,12 +17,12 @@
             to="/about/terms_of_service"
             class="display is-block"
           >
-            {{ $t('terms_of_service') }}
+            {{ $t(LOCALE_TERMS_OF_SERVICE) }}
           </NuxtLink>
         </th>
       </tr> -->
       <tr>
-        <th>{{ $t('license') }}</th>
+        <th>{{ $t(LOCALE_LICENSE) }}</th>
         <td>
           <NuxtLink
             to="https://github.com/KaiShoya/drink-counter/blob/main/LICENSE.md"
@@ -34,7 +34,7 @@
       </tr>
 
       <tr>
-        <th>{{ $t('version') }}</th>
+        <th>{{ $t(LOCALE_VERSION) }}</th>
         <td>{{ $config.public.version }}</td>
       </tr>
     </tbody>

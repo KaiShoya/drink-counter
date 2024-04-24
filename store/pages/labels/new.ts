@@ -30,7 +30,7 @@ export const usePageDrinkLabelNewStore = defineStore('pageDrinkLabelNewStore', (
     if (error) {
       showDangerToast($i18n.t(error, { name: name.value }))
     } else {
-      showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
+      showSuccessToast($i18n.t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
       navigateTo(localePath('/labels'))
     }
   }

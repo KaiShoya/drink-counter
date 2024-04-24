@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 defineProps<{
   title: string,
   content: string,
@@ -29,13 +32,13 @@ defineProps<{
           class="button is-danger"
           @click="success()"
         >
-          {{ $t('modal.yes') }}
+          {{ $t(LOCALE_MODAL_YES) }}
         </button>
         <button
           class="button"
           @click="cancel()"
         >
-          {{ $t('modal.no') }}
+          {{ $t(LOCALE_MODAL_NO) }}
         </button>
       </footer>
     </div>

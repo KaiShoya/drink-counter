@@ -11,12 +11,12 @@ const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowStore
 <template>
   <MoleculesBaseTable
     :headers="[
-      $t('aggregation.dow'),
-      $t('aggregation.sum_count'),
-      $t('aggregation.avg_count'),
-      $t('aggregation.max_type_of_drinks'),
-      $t('aggregation.avg_type_of_drinks'),
-      $t('aggregation.record_count'),
+      $t(LOCALE_AGGREGATION_DOW),
+      $t(LOCALE_AGGREGATION_SUM_COUNT),
+      $t(LOCALE_AGGREGATION_AVG_COUNT),
+      $t(LOCALE_AGGREGATION_MAX_TYPE_OF_DRINKS),
+      $t(LOCALE_AGGREGATION_AVG_TYPE_OF_DRINKS),
+      $t(LOCALE_AGGREGATION_RECORD_COUNT),
     ]"
     :table-data="computedAggregationByDowToArray"
   />
