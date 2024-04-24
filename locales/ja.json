@@ -45,6 +45,10 @@
       "6": "土"
     }
   },
+  "index": {
+    "warning_title": "飲みすぎ注意",
+    "warning_content": "今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？"
+  },
   "source": "ソースコード",
   "terms_of_service": "利用規約",
   "license": "ライセンス",
@@ -59,9 +63,12 @@
     "save": "保存する"
   },
   "drinks": {
+    "select": "選択してください",
+    "name_placeholder": "350ml",
     "name": "名前",
     "color": "色",
     "amount": "量(ml,合など)",
+    "standard_amount": "基準量 :",
     "drink_label": "ラベル",
     "delete_modal_title": "「{name}」を削除します。",
     "delete_modal_content": "「{name}」を削除すると、飲んだ杯数もすべて削除されます。それでも削除しますか？",
@@ -78,9 +85,11 @@
     "update_failure": "「{name}」の更新に失敗しました。",
     "visible": "表示",
     "invisible": "非表示",
-    "update_visible_success": "「{name}」を{status}に変更しました。"
+    "update_visible_success": "「{name}」を{status}に変更しました。",
+    "copy_label_color": "ラベルの色をコピーする"
   },
   "labels": {
+    "name_placeholder": "ビール",
     "standard_amount": "基準量(ml,合など)"
   },
   "data": {

@@ -2,6 +2,7 @@ import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
 export const usePageDrinkLabelEditStore = defineStore('pageDrinkLabelEditStore', () => {
   const { $i18n } = useNuxtApp()
+  const localePath = useLocalePath()
   const drinkLabelsStore = useDrinkLabelsStore()
   const { fetchDrinkLabels, findById, updateDrinkLabel } = drinkLabelsStore
 
@@ -24,13 +25,14 @@ export const usePageDrinkLabelEditStore = defineStore('pageDrinkLabelEditStore',
       return
     }
 
-    const drink = findById(drinkLabelId.value)
-    if (drink === undefined) {
+    const drinkLabel = findById(drinkLabelId.value)
+    if (drinkLabel === undefined) {
       showDangerToast($i18n.t('error.GET_RECORD'))
-      navigateTo('/labels')
+      navigateTo(localePath('/labels'))
     } else {
-      name.value = drink.name
-      color.value = drink.color
+      name.value = drinkLabel.name
+      color.value = drinkLabel.color
+      standardAmount.value = drinkLabel.standard_amount
     }
   }
 
@@ -42,7 +44,7 @@ export const usePageDrinkLabelEditStore = defineStore('pageDrinkLabelEditStore',
       showDangerToast($i18n.t('drinks.update_failure', { name: name.value }))
     } else {
       showSuccessToast($i18n.t('drinks.update_success', { name: name.value }))
-      navigateTo('/labels')
+      navigateTo(localePath('/labels'))
     }
   }
 

@@ -2,6 +2,7 @@ import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
 export const usePageDrinkLabelNewStore = defineStore('pageDrinkLabelNewStore', () => {
   const { $i18n } = useNuxtApp()
+  const localePath = useLocalePath()
   const drinkLabelsStore = useDrinkLabelsStore()
   const { fetchDrinkLabels, createDrinkLabel } = drinkLabelsStore
 
@@ -19,7 +20,9 @@ export const usePageDrinkLabelNewStore = defineStore('pageDrinkLabelNewStore', (
       return
     }
 
+    name.value = ''
     color.value = generateRandomColor()
+    standardAmount.value = 1
   }
 
   const create = async () => {
@@ -28,7 +31,7 @@ export const usePageDrinkLabelNewStore = defineStore('pageDrinkLabelNewStore', (
       showDangerToast($i18n.t(error, { name: name.value }))
     } else {
       showSuccessToast($i18n.t('drinks.create_success', { name: name.value }))
-      navigateTo('/labels')
+      navigateTo(localePath('/labels'))
     }
   }
 

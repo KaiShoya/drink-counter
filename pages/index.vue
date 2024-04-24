@@ -9,8 +9,8 @@ import { useIndexStore } from '@/store/pages/index'
 const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()
-const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
-const { fetchNumberOfDrinks, fetchDate, plus, minus } = indexStore
+const { date, labelsWithDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
+const { fetchNumberOfDrinks, fetchDate, plus, minus, updateDefaultDrink } = indexStore
 
 // Modal用フラグ
 const modalIsActive = ref<boolean>(false)
@@ -47,22 +47,22 @@ watch(date, async () => {
     <o-loading v-model:active="isLoading" />
 
     <div v-if="!isLoading">
-      <PagesIndexDrinkColumn
-        v-for="(drink, id) in numberOfDrinks"
-        :key="id"
-        :drink-id="drink.id"
-        :name="drink.name"
-        :count="drink.count"
-        :color="drink.color"
-        :drink-counter-id="drink.drinkCounterId"
-        :increment="plusCheck"
-        :decrement="minus"
-      />
+      <template
+        v-for="(label, i) in labelsWithDrinks"
+        :key="i"
+      >
+        <PagesIndexDrinkRow
+          :label="label"
+          :update-default-drink
+          :increment="plusCheck"
+          :decrement="minus"
+        />
+      </template>
     </div>
 
     <ShareWarningModal
-      title="飲みすぎ注意"
-      :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"
+      :title="$t('index.warning_title')"
+      :content="$t('index.warning_content', { drinkCountForDay })"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
       :cancel="() => modalIsActive = false"
       :class="modalIsActive ? 'is-active' : ''"

@@ -5,7 +5,8 @@ export interface DrinkLabel {
   sort: number | null
   color: string | null
   default_color: string
-  standard_amount: number | null
+  standard_amount: number
   visible: boolean
   created_at: Date // Datetime
+  default_drink_id: number | null
 }

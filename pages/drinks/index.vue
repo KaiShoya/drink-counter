@@ -33,31 +33,43 @@ initPage()
     >
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
-          <div class="column is-4">
+          <div class="column is-1" />
+          <div class="column is-2">
+            {{ $t('drinks.drink_label') }}
+          </div>
+          <div class="column is-3">
             {{ $t('drinks.name') }}
           </div>
           <div class="column is-1">
             {{ $t('drinks.color') }}
           </div>
-          <div class="column is-2">
+          <div class="column">
             {{ $t('drinks.amount') }}
           </div>
-          <div class="column is-2">
-            {{ $t('drinks.drink_label') }}
-          </div>
-          <div class="column is-3" />
         </div>
       </template>
 
       <template #item="{ element: drink }">
         <div class="columns is-mobile border-line is-vcentered">
           <div
-            class="column is-4"
+            class="column is-1"
             style="display: flex;"
           >
             <div class="handle mr-2">
               <i class="mdi mdi-drag-horizontal-variant" />
             </div>
+          </div>
+          <div
+            class="column is-2"
+            style="display: flex;"
+          >
+            {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
+          </div>
+
+          <div
+            class="column is-3"
+            style="display: flex;"
+          >
             {{ drink.name }}
           </div>
 
@@ -76,13 +88,6 @@ initPage()
             style="display: flex;"
           >
             {{ drink.amount }}
-          </div>
-
-          <div
-            class="column is-2"
-            style="display: flex;"
-          >
-            {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
           </div>
 
           <div class="column columns is-mobile is-3">
@@ -126,7 +131,7 @@ initPage()
         </button>
 
         <NuxtLink
-          to="/drinks/new"
+          :to="localePath('/drinks/new')"
           class="button is-primary"
         >
           {{ $t('drinks.add') }}

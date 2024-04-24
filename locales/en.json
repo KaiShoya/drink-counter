@@ -45,6 +45,10 @@
       "6": "Sat"
     }
   },
+  "index": {
+    "warning_title": "Be careful not to drink too much.",
+    "warning_content": "You've had {drinkCountForDay} cups today, but do you still want to drink it?"
+  },
   "source": "Source",
   "terms_of_service": "Terms of service",
   "license": "License",
@@ -59,9 +63,12 @@
     "save": "Save"
   },
   "drinks": {
+    "select": "Please select",
+    "name_placeholder": "350ml",
     "name": "Name",
     "color": "Color",
     "amount": "Amount(ml, %, etc)",
+    "standard_amount": "Standard amount :",
     "drink_label": "Drink label",
     "delete_modal_title": "Delete \"{name}\".",
     "delete_modal_content": "If you delete \"{name}\", all the drink counts you drank will also be deleted. Do you want to delete it?",
@@ -78,9 +85,11 @@
     "update_failure": "Failed to update \"{name}\".",
     "visible": "visible",
     "invisible": "invisible",
-    "update_visible_success": "\"{name}\" was successfully updated to be {status}."
+    "update_visible_success": "\"{name}\" was successfully updated to be {status}.",
+    "copy_label_color": "Copy label color"
   },
   "labels": {
+    "name_placeholder": "Beer",
     "standard_amount": "Standard amount(ml, %, etc)"
   },
   "data": {
