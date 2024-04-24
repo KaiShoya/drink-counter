@@ -6,7 +6,7 @@ const localePath = useLocalePath()
 
 defineProps<{
   saveFunction: Function,
-  save: 'drinks.update' | 'drinks.add',
+  save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD,
 }>()
 const name = defineModel<string | null>('name')
 const color = defineModel<string | null>('color')
@@ -16,19 +16,19 @@ const standardAmount = defineModel<number>('standardAmount')
 <template>
   <div>
     <div class="field">
-      <label class="label">{{ $t('drinks.name') }}</label>
+      <label class="label">{{ $t(LOCALE_DRINKS_NAME) }}</label>
       <div class="control">
         <input
           v-model="name"
           class="input"
           type="text"
-          :placeholder="$t('labels.name_placeholder')"
+          :placeholder="$t(LOCALE_LABELS_NAME_PLACEHOLDER)"
         >
       </div>
     </div>
 
     <div class="field">
-      <label class="label">{{ $t('drinks.color') }}</label>
+      <label class="label">{{ $t(LOCALE_DRINKS_COLOR) }}</label>
       <div class="control columns is-vcentered is-mobile">
         <div
           class="column"
@@ -62,7 +62,7 @@ const standardAmount = defineModel<number>('standardAmount')
     </div>
 
     <div class="field">
-      <label class="label">{{ $t('labels.standard_amount') }}</label>
+      <label class="label">{{ $t(LOCALE_LABELS_STANDARD_AMOUNT) }}</label>
       <div class="control">
         <input
           v-model="standardAmount"
@@ -85,7 +85,7 @@ const standardAmount = defineModel<number>('standardAmount')
         :to="localePath('/labels')"
         class="button"
       >
-        {{ $t('drinks.cancel') }}
+        {{ $t(LOCALE_DRINKS_CANCEL) }}
       </NuxtLink>
     </div>
   </div>

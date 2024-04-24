@@ -22,7 +22,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // ログイン情報を取得できなかったらトーストを表示
   nuxtApp.hook('page:finish', () => {
     if (!isLogin.value) {
-      showWarningToast($i18n.t('error.GET_USER_INFO'))
+      showWarningToast($i18n.t(LOCALE_ERROR_GET_USER_INFO))
     }
   })
 })

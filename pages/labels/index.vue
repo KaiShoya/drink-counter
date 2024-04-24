@@ -31,13 +31,13 @@ initPage()
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
           <div class="column is-4">
-            {{ $t('drinks.name') }}
+            {{ $t(LOCALE_DRINKS_NAME) }}
           </div>
           <div class="column is-1">
-            {{ $t('drinks.color') }}
+            {{ $t(LOCALE_DRINKS_COLOR) }}
           </div>
           <div class="column is-4">
-            {{ $t('labels.standard_amount') }}
+            {{ $t(LOCALE_LABELS_STANDARD_AMOUNT) }}
           </div>
           <div class="column is-3" />
         </div>
@@ -110,21 +110,21 @@ initPage()
           class="button mr-3"
           @click="saveSort"
         >
-          {{ $t('drinks.save_sort') }}
+          {{ $t(LOCALE_DRINKS_SAVE_SORT) }}
         </button>
 
         <NuxtLink
           :to="localePath('/labels/new')"
           class="button is-primary"
         >
-          {{ $t('drinks.add') }}
+          {{ $t(LOCALE_DRINKS_ADD) }}
         </NuxtLink>
       </template>
     </draggable>
 
     <ShareDangerModal
-      :title="$t('drinks.delete_modal_title', { name: deleteTarget?.name })"
-      :content="$t('drinks.delete_modal_content', { name: deleteTarget?.name })"
+      :title="$t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
+      :content="$t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
       :success="() => { deleteDrinkLabel(deleteTarget?.id, deleteTarget?.name) }"
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"

@@ -16,7 +16,7 @@ export const useUserStore = defineStore('user', () => {
     if (sessionError) {
       // eslint-disable-next-line no-console
       console.error(sessionError)
-      showDangerToast($i18n.t('error.500_API_ERROR'))
+      showDangerToast($i18n.t(LOCALE_ERROR_500_API_ERROR))
       return
     }
     if (sessionData.session === null) {
@@ -29,7 +29,7 @@ export const useUserStore = defineStore('user', () => {
     if (userError) {
       // eslint-disable-next-line no-console
       console.error(userError)
-      showDangerToast($i18n.t('error.500_API_ERROR'))
+      showDangerToast($i18n.t(LOCALE_ERROR_500_API_ERROR))
       return
     }
 
