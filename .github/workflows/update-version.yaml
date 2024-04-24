@@ -72,6 +72,7 @@ jobs:
             && [ "${{ steps.pre_tag.outputs.patch }}" = "${{ steps.release_tag.outputs.patch }}" ] \
             && [ "${{ steps.pre_tag.outputs.preview }}" = "${{ steps.release_tag.outputs.preview }}" ]; then
           else
+            echo "Error: Version changes detected. Exiting."
             exit 1
           fi
 
