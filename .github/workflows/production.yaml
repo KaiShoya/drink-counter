@@ -1,15 +1,13 @@
-name: Deploy Migrations to Production
+name: Create release note & check Codacy
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'supabase/migrations/**'
   workflow_dispatch:
 
 jobs:
-  create-release-tag:
+  create-release-note:
     uses: ./.github/workflows/create-release-note.yaml
 
   codacy:
