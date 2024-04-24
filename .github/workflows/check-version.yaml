@@ -50,7 +50,7 @@ jobs:
       - name: Generate release tag
         id: release_tag
         run: |
-          version=${steps.get-version.outputs.version#v}
+          version=${steps.get-version.outputs.version}
           versions=(${version//-/ }) # 
           version_pre=${versions[1]}
           versions=(${versions[0]//./ })
