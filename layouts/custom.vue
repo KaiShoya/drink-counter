@@ -183,8 +183,6 @@ const active = ref<boolean>(false)
             >
               {{ $t(LOCALE_AUTH_GOOGLE) }}
             </a>
-
-            <SignInAdmin :is-login="isLogin" />
           </div>
         </div>
       </nav>
