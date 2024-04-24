@@ -1,0 +1,7 @@
+services:
+  dev:
+    image: ubuntu
+    volumes:
+      - .:/app
+      - ./dummy/data/path:/dummy/data/path
+    tty: true

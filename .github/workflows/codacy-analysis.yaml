@@ -1,11 +1,8 @@
 name: Codacy Analysis CLI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   codacy-analysis-cli:
@@ -16,17 +13,19 @@ jobs:
     name: Codacy Analysis CLI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         name: Install pnpm
         with:
-          version: 9
+          version: 9.0.5
           run_install: false
 
       - name: Get pnpm store directory
@@ -36,16 +35,12 @@ jobs:
 
       - name: Cache node_modules
         id: node_modules_cache_id
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: node_modules
+          path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-node-v${{ matrix.node }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
 
-      - if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
-        run: pnpm install
-
-      - run: pnpm postinstall
-
+      - run: pnpm install
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
         with:

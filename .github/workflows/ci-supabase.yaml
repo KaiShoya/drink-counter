@@ -1,4 +1,4 @@
-name: CI
+name: Run CI before merging into main
 
 on:
   pull_request:
@@ -7,13 +7,16 @@ on:
   workflow_dispatch:
 
 jobs:
+  check-version:
+    uses: ./.github/workflows/check-version.yaml
+
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: supabase/setup-cli@v1
       - name: Start Supabase local development setup
         run: supabase start
