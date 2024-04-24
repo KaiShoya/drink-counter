@@ -1,0 +1,70 @@
+name: Check version
+
+on:
+  workflow_call:
+
+jobs:
+  check_release_label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      # 前回のリリースタグを取得する
+      - name: Get previous tag
+        id: pre_tag
+        run: |
+          pre_tag=$(curl -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          version=${pre_tag#v}
+          versions=(${version//-/ })
+          version_pre=${versions[1]}
+          versions=(${versions[0]//./ })
+          echo major=${versions[0]} >> $GITHUB_OUTPUT
+          echo minor=${versions[1]} >> $GITHUB_OUTPUT
+          echo patch=${versions[2]} >> $GITHUB_OUTPUT
+          echo preview=$version_pre >> $GITHUB_OUTPUT
+
+      # タグを取得する
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
+      - name: Generate release tag
+        id: release_tag
+        run: |
+          version=${steps.get-version.outputs.version#v}
+          versions=(${version//-/ }) # 
+          version_pre=${versions[1]}
+          versions=(${versions[0]//./ })
+          echo major=${versions[0]} >> $GITHUB_OUTPUT
+          echo minor=${versions[1]} >> $GITHUB_OUTPUT
+          echo patch=${versions[2]} >> $GITHUB_OUTPUT
+          echo preview=$version_pre >> $GITHUB_OUTPUT
+
+      # バージョンが更新されてなければエラーにする（update_versionの逆）
+      - name: Check if it is the first execution
+        run: |
+          if [ "${{ steps.pre_tag.outputs.major }}" = "${{ steps.release_tag.outputs.major }}" ] \
+            && [ "${{ steps.pre_tag.outputs.minor }}" = "${{ steps.release_tag.outputs.minor }}" ] \
+            && [ "${{ steps.pre_tag.outputs.patch }}" = "${{ steps.release_tag.outputs.patch }}" ] \
+            && [ "${{ steps.pre_tag.outputs.preview }}" = "${{ steps.release_tag.outputs.preview }}" ]; then
+            exit 1
+          fi
