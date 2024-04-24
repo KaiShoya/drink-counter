@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.16.5",
+  "version": "1.16.6",
   "license": "MIT",
   "engines": {
     "node": "20"
