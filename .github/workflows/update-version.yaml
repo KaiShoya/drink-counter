@@ -55,8 +55,7 @@ jobs:
       - name: Generate release tag
         id: release_tag
         run: |
-          version=${steps.get-version.outputs.version}
-          versions=(${version//-/ }) # 
+          versions=(${steps.get-version.outputs.version//-/ })
           version_pre=${versions[1]}
           versions=(${versions[0]//./ })
           echo major=${versions[0]} >> $GITHUB_OUTPUT
