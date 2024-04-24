@@ -144,7 +144,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
 
       drinkCountForDay.value = updateDrinkCountForDay()
     } catch (error) {
-      showDangerToast($i18n.t('error.UNKNOWN'))
+      showDangerToast($i18n.t(LOCALE_ERROR_UNKNOWN))
     } finally {
       isLoading.value = false
     }
@@ -197,12 +197,12 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const updateDefaultDrink = async (labelId: number, drinkId: number) => {
     const labelWithDrinks = findLabelsWithDrinks(labelId)
     if (!labelWithDrinks) {
-      showDangerToast($i18n.t('error.GET_RECORD'))
+      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
       return
     }
     const drink = labelWithDrinks.drinks.find(lwd => lwd.id === drinkId)
     if (!drink) {
-      showDangerToast($i18n.t('error.GET_RECORD'))
+      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
       return
     }
     const error = await updateDefaultDrinkId(labelWithDrinks.id, drink.id)

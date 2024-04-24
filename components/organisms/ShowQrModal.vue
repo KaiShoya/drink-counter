@@ -21,6 +21,6 @@ const cardModal = () => {
     exact-active-class="is-active"
     @click="cardModal()"
   >
-    {{ $t('show_qr') }}
+    {{ $t(LOCALE_SHOW_QR) }}
   </a>
 </template>

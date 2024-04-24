@@ -16,7 +16,7 @@ const { updateSettings } = useSettingsStore()
   <div>
     <table class="table is-hoverable is-fullwidth is-striped">
       <tr>
-        <th>{{ $t('settings.threshold_for_detecting_overdrinking') }}</th>
+        <th>{{ $t(LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING) }}</th>
         <td>
           <input
             v-model="userSettings.thresholdForDetectingOverdrinking"
@@ -25,12 +25,12 @@ const { updateSettings } = useSettingsStore()
           >
         </td>
         <td>
-          {{ $t('settings.cups') }}
+          {{ $t(LOCALE_SETTINGS_CUPS) }}
         </td>
       </tr>
 
       <tr>
-        <th>{{ $t('settings.timezone') }}</th>
+        <th>{{ $t(LOCALE_SETTINGS_TIMEZONE) }}</th>
         <td>
           <div class="select">
             <select @change="userSettings.timezone = ($event.target as HTMLInputElement).value">
@@ -48,7 +48,7 @@ const { updateSettings } = useSettingsStore()
       </tr>
 
       <tr>
-        <th>{{ $t('settings.switching_timing') }}</th>
+        <th>{{ $t(LOCALE_SETTINGS_SWITCHING_TIMING) }}</th>
         <td>
           <input
             v-model="userSettings.switchingTiming"
@@ -56,14 +56,14 @@ const { updateSettings } = useSettingsStore()
             type="number"
           >
         </td>
-        <td>{{ $t('settings.oclock') }}</td>
+        <td>{{ $t(LOCALE_SETTINGS_OCLOCK) }}</td>
       </tr>
     </table>
     <button
       class="button"
       @click="updateSettings"
     >
-      {{ $t('settings.save') }}
+      {{ $t(LOCALE_SETTINGS_SAVE) }}
     </button>
   </div>
 </template>

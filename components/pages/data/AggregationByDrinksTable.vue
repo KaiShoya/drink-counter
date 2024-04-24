@@ -11,7 +11,7 @@ const { chartDataTitle, computedTableData, computedSumCount } = storeToRefs(useA
     :headers="chartDataTitle"
     :table-data="computedTableData"
     :footers="[
-      $t('data.total'),
+      $t(LOCALE_DATA_TOTAL),
       computedSumCount,
     ]"
   />

@@ -30,7 +30,7 @@ const active = ref<boolean>(false)
             :to="localePath('/')"
             @click="active = false"
           >
-            {{ $t('title') }}
+            {{ $t(LOCALE_TITLE) }}
           </NuxtLink>
 
           <template v-if="isLogin">
@@ -88,7 +88,7 @@ const active = ref<boolean>(false)
         >
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">{{ $t('routes.data') }}</a>
+              <a class="navbar-link">{{ $t(LOCALE_ROUTES_DATA) }}</a>
 
               <div class="navbar-dropdown">
                 <NuxtLink
@@ -97,7 +97,7 @@ const active = ref<boolean>(false)
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t('routes.total') }}
+                  {{ $t(LOCALE_ROUTES_TOTAL) }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
@@ -105,7 +105,7 @@ const active = ref<boolean>(false)
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t('routes.annual') }}
+                  {{ $t(LOCALE_ROUTES_ANNUAL) }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
@@ -113,7 +113,7 @@ const active = ref<boolean>(false)
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t('routes.monthly') }}
+                  {{ $t(LOCALE_ROUTES_MONTHLY) }}
                 </NuxtLink>
               </div>
             </div>
@@ -124,7 +124,7 @@ const active = ref<boolean>(false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t('routes.about') }}
+              {{ $t(LOCALE_ROUTES_ABOUT) }}
             </NuxtLink>
 
             <NuxtLink
@@ -133,7 +133,7 @@ const active = ref<boolean>(false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t('routes.drinks') }}
+              {{ $t(LOCALE_ROUTES_DRINKS) }}
             </NuxtLink>
 
             <NuxtLink
@@ -142,7 +142,7 @@ const active = ref<boolean>(false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t('routes.labels') }}
+              {{ $t(LOCALE_ROUTES_LABELS) }}
             </NuxtLink>
 
             <NuxtLink
@@ -151,7 +151,7 @@ const active = ref<boolean>(false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t('routes.settings') }}
+              {{ $t(LOCALE_ROUTES_SETTINGS) }}
             </NuxtLink>
 
             <OrganismsShowQrModal />
@@ -181,7 +181,7 @@ const active = ref<boolean>(false)
               exact-active-class="is-active"
               @click="signInWithGoogle()"
             >
-              {{ $t('auth.google') }}
+              {{ $t(LOCALE_AUTH_GOOGLE) }}
             </a>
           </div>
         </div>

@@ -37,7 +37,7 @@ export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
 
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {
-      showDangerToast($i18n.t('error.GET_RECORD'))
+      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
       navigateTo(localePath('/drinks'))
     } else {
       name.value = drink.name
@@ -52,9 +52,9 @@ export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
     if (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      showDangerToast($i18n.t('drinks.update_failure', { name: name.value }))
+      showDangerToast($i18n.t(LOCALE_DRINKS_UPDATE_FAILURE, { name: name.value }))
     } else {
-      showSuccessToast($i18n.t('drinks.update_success', { name: name.value }))
+      showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
       navigateTo(localePath('/drinks'))
     }
   }
