@@ -12,3 +12,4 @@ jobs:
 
   codacy:
     uses: ./.github/workflows/codacy-analysis.yaml
+    secrets: inherit
