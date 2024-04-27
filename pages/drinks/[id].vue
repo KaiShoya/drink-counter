@@ -15,10 +15,10 @@ initPage()
 <template>
   <div>
     <OrganismsDrinksEdit
-      :name
-      :color
-      :amount
-      :drink-label-id
+      v-model:name="name"
+      v-model:color="color"
+      v-model:amount="amount"
+      v-model:drink-label-id="drinkLabelId"
       :save-function="updateDrinkById"
       save="drinks.update"
     />
