@@ -15,9 +15,9 @@ initPage()
 <template>
   <div>
     <OrganismsLabelsEdit
-      :name
-      :color
-      :standard-amount
+      v-model:name="name"
+      v-model:color="color"
+      v-model:standard-amount="standardAmount"
       :save-function="create"
       save="drinks.add"
     />
