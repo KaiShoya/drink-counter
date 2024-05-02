@@ -14,7 +14,7 @@ export const useAggregationByDowStore = defineStore('aggregationByDowStore', () 
     if (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     aggregationByDow.value = data ?? []
   }
@@ -24,7 +24,7 @@ export const useAggregationByDowStore = defineStore('aggregationByDowStore', () 
     if (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     aggregationByDow.value = data ?? []
   }
@@ -34,7 +34,7 @@ export const useAggregationByDowStore = defineStore('aggregationByDowStore', () 
     if (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     aggregationByDow.value = data ?? []
   }

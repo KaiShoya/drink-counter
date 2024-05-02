@@ -30,6 +30,7 @@ const active = ref<boolean>(false)
             :to="localePath('/')"
             @click="active = false"
           >
+            <img src="/icon.svg">
             {{ $t(LOCALE_TITLE) }}
           </NuxtLink>
 

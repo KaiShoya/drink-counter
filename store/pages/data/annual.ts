@@ -6,7 +6,6 @@ import { useAggregationByDowStore } from '~/store/pages/data/components/aggregat
 import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useAnnualStore = defineStore('annualStore', () => {
-  const { $i18n } = useNuxtApp()
   const { formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { drinkCounters } = storeToRefs(drinkCountersStore)
@@ -23,24 +22,10 @@ export const useAnnualStore = defineStore('annualStore', () => {
   const nextYear = () => year.value++
 
   const fetchDrinkCounters = async () => {
-    const fetchDrinksError = await fetchDrinks()
-    if (fetchDrinksError) {
-      showDangerToast($i18n.t(fetchDrinksError))
-      return
-    }
-    const fetchDrinkCountersPerYearError = await fetchDrinkCountersPerYear(year.value)
-    if (fetchDrinkCountersPerYearError) {
-      showDangerToast($i18n.t(fetchDrinkCountersPerYearError))
-      return
-    }
-    const fetchSumCountPerYearError = await fetchSumCountPerYear(year.value)
-    if (fetchSumCountPerYearError) {
-      showDangerToast($i18n.t(fetchSumCountPerYearError))
-    }
-    const fetchAggregationByDowPerYearError = await fetchAggregationByDowPerYear(year.value)
-    if (fetchAggregationByDowPerYearError) {
-      showDangerToast($i18n.t(fetchAggregationByDowPerYearError))
-    }
+    await fetchDrinks()
+    await fetchDrinkCountersPerYear(year.value)
+    await fetchSumCountPerYear(year.value)
+    await fetchAggregationByDowPerYear(year.value)
   }
 
   /**

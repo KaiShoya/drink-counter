@@ -6,7 +6,7 @@ import { useTotalStore } from '~/store/pages/data/total'
 
 const { fetchDrinkCountersAll } = useTotalStore()
 
-await fetchDrinkCountersAll()
+fetchDrinkCountersAll()
 </script>
 
 <template>

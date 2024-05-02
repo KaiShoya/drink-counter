@@ -14,37 +14,31 @@ export const useAggregationByDrinksStore = defineStore('aggregationByDrinksStore
   const aggregationByDrinks = ref<Array<AggregationByDrinkLabel>>([])
 
   const fetchSumCount = async () => {
-    const fetchDrinkLabelsError = await fetchDrinkLabels()
-    if (fetchDrinkLabelsError) {
-      return fetchDrinkLabelsError
-    }
+    await fetchDrinkLabels()
+
     const { data, error } = await supabase.rpc('aggregation_by_drink_labels')
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     aggregationByDrinks.value = data ?? []
   }
 
   const fetchSumCountPerYear = async (year: number) => {
-    const fetchDrinkLabelsError = await fetchDrinkLabels()
-    if (fetchDrinkLabelsError) {
-      return fetchDrinkLabelsError
-    }
+    await fetchDrinkLabels()
+
     const { data, error } = await supabase.rpc('aggregation_by_drink_labels', { year })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     aggregationByDrinks.value = data ?? []
   }
 
   const fetchSumCountPerMonth = async (year: number, month: number) => {
-    const fetchDrinkLabelsError = await fetchDrinkLabels()
-    if (fetchDrinkLabelsError) {
-      return fetchDrinkLabelsError
-    }
+    await fetchDrinkLabels()
+
     const { data, error } = await supabase.rpc('aggregation_by_drink_labels', { year, month })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     aggregationByDrinks.value = data ?? []
   }

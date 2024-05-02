@@ -6,12 +6,8 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const { updateUserSettings } = userSettingsStore
 
   const updateSettings = async () => {
-    const error = await updateUserSettings()
-    if (error) {
-      showDangerToast($i18n.t(error))
-    } else {
-      showSuccessToast($i18n.t(LOCALE_GENERAL_UPDATE_SUCCESS))
-    }
+    await updateUserSettings()
+    showSuccessToast($i18n.t(LOCALE_GENERAL_UPDATE_SUCCESS))
   }
 
   return {

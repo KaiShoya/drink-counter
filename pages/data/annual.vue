@@ -10,7 +10,7 @@ const annualStore = useAnnualStore()
 const { year, calendarTitle, computeCalendarData } = storeToRefs(annualStore)
 const { fetchDrinkCounters } = annualStore
 
-await fetchDrinkCounters()
+fetchDrinkCounters()
 
 watch(year, async () => {
   await fetchDrinkCounters()

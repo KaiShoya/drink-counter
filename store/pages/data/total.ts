@@ -4,7 +4,6 @@ import { useAggregationByDowStore } from '~/store/pages/data/components/aggregat
 import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useTotalStore = defineStore('totalStore', () => {
-  const { $i18n } = useNuxtApp()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCounters } = drinkCountersStore
   const drinksStore = useDrinksStore()
@@ -13,24 +12,10 @@ export const useTotalStore = defineStore('totalStore', () => {
   const { fetchSumCount } = useAggregationByDrinksStore()
 
   const fetchDrinkCountersAll = async () => {
-    const fetchDrinksError = await fetchDrinks()
-    if (fetchDrinksError) {
-      showDangerToast($i18n.t(fetchDrinksError))
-      return
-    }
-    const fetchDrinkCountersError = await fetchDrinkCounters()
-    if (fetchDrinkCountersError) {
-      showDangerToast($i18n.t(fetchDrinkCountersError))
-      return
-    }
-    const fetchSumCountError = await fetchSumCount()
-    if (fetchSumCountError) {
-      showDangerToast($i18n.t(fetchSumCountError))
-    }
-    const fetchAggregationByDowError = await fetchAggregationByDow()
-    if (fetchAggregationByDowError) {
-      showDangerToast($i18n.t(fetchAggregationByDowError))
-    }
+    await fetchDrinks()
+    await fetchDrinkCounters()
+    await fetchSumCount()
+    await fetchAggregationByDow()
   }
 
   return {
