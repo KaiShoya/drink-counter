@@ -17,12 +17,14 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
   const fetchUserSettings = async () => {
     const { data, error } = await supabase.rpc('get_user_settings')
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     if (data && data[0]) {
       userSettings.value.thresholdForDetectingOverdrinking = data[0]!.threshold_for_detecting_overdrinking
       userSettings.value.timezone = data[0]!.timezone
       userSettings.value.switchingTiming = data[0]!.switching_timing
+    } else {
+      throw new Response500Error()
     }
   }
 
@@ -33,7 +35,7 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
       timing: userSettings.value.switchingTiming,
     })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
   }
 

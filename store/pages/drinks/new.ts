@@ -19,16 +19,9 @@ export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
   const drinkLabelId = ref<number | null>(null)
 
   const initPage = async () => {
-    let error = await fetchDrinks()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
-    error = await fetchDrinkLabels()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
+    await fetchDrinks()
+    await fetchDrinkLabels()
+
     name.value = ''
     color.value = generateRandomColor()
     amount.value = 1
@@ -36,13 +29,9 @@ export const usePageDrinkNewStore = defineStore('pageDrinkNewStore', () => {
   }
 
   const create = async () => {
-    const error = await createDrink(name.value, color.value, amount.value, drinkLabelId.value)
-    if (error) {
-      showDangerToast($i18n.t(error, { name: name.value }))
-    } else {
-      showSuccessToast($i18n.t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/drinks'))
-    }
+    await createDrink(name.value, color.value, amount.value, drinkLabelId.value)
+    showSuccessToast($i18n.t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
+    navigateTo(localePath('/drinks'))
   }
 
   return {
