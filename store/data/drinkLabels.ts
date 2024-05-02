@@ -14,7 +14,7 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
   const fetchDrinkLabels = async () => {
     const { data, error } = await supabase.from(TABLE_NAME).select('*').order('sort,id')
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkLabels.value = data ?? []
 
@@ -47,16 +47,16 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
    * 指定したIDのラベルを削除する
    * 削除に成功したらDrinkLabelsを再取得する
    * @param drinkLabelId number
+   * @param name string drinkLabel.name
    * @returns Promise<error_message_code | undefined>
    */
-  const deleteById = async (drinkLabelId: number) => {
+  const deleteById = async (drinkLabelId: number, name: string) => {
     const { error } = await supabase.from(TABLE_NAME).delete().eq('id', drinkLabelId)
     if (error) {
-      return 'drinks.delete_failure'
+      throw new SupabaseResponseError(LOCALE_DRINKS_DELETE_FAILURE, { name })
     }
 
-    const fetchDrinkError = await fetchDrinkLabels()
-    return fetchDrinkError
+    await fetchDrinkLabels()
   }
 
   /**
@@ -69,7 +69,9 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
   const updateDrinkLabel = async (drinkLabelId: number, name: string, color: string | null, standardAmount: number) => {
     const { error } = await supabase.from(TABLE_NAME).update({ name, color, standard_amount: standardAmount }).eq('id', drinkLabelId)
     if (error) {
-      return 'error.500_API_ERROR'
+      // eslint-disable-next-line no-console
+      console.error(error)
+      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
     const drinkLabel = findById(drinkLabelId)
     if (drinkLabel) {
@@ -78,10 +80,10 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
     }
   }
 
-  const updateDrinkLabelVisible = async (drinkLabelId: number, visible: boolean) => {
+  const updateDrinkLabelVisible = async (drinkLabelId: number, name: string, visible: boolean) => {
     const { error } = await supabase.from(TABLE_NAME).update({ visible }).eq('id', drinkLabelId)
     if (error) {
-      return 'drinks.update_failure'
+      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
     const drinkLabel = findById(drinkLabelId)
     if (drinkLabel) {
@@ -99,24 +101,25 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
     })
     const { error } = await supabase.rpc('bulk_update_drink_labels_sort', { payload })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
   }
 
-  const updateDefaultDrinkId = async (drinkLabelId: number, defaultDrinkId: number) => {
+  const updateDefaultDrinkId = async (drinkLabelId: number, defaultDrinkId: number, drinkLabelName: string) => {
     const { error } = await supabase.from(TABLE_NAME).update({ default_drink_id: defaultDrinkId }).eq('id', drinkLabelId)
     if (error) {
-      return 'error.500_API_ERROR'
+      const instance = new Response500Error()
+      instance.setAppendString(`: ${drinkLabelName}`)
+      throw instance
     }
   }
 
   const createDrinkLabel = async (name: string, color: string | null, standardAmount: number) => {
     const { error } = await supabase.from(TABLE_NAME).insert({ name, color, standard_amount: standardAmount })
     if (error) {
-      return 'drinks.create_failure'
+      throw new SupabaseResponseError(LOCALE_DRINKS_CREATE_FAILURE, { name })
     }
-    const fetchDrinkError = await fetchDrinkLabels()
-    return fetchDrinkError
+    await fetchDrinkLabels()
   }
 
   // /**

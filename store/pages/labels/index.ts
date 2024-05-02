@@ -12,10 +12,7 @@ export const usePageDrinkLabelsStore = defineStore('pageDrinkLabelsStore', () =>
   const showDeleteModal = ref<boolean>(false)
 
   const initPage = async () => {
-    const error = await fetchDrinkLabels()
-    if (error) {
-      showDangerToast($i18n.t(error))
-    }
+    await fetchDrinkLabels()
   }
 
   /**
@@ -24,11 +21,7 @@ export const usePageDrinkLabelsStore = defineStore('pageDrinkLabelsStore', () =>
    * @returns
    */
   const updateHidden = async (label: DrinkLabel) => {
-    const error = await updateDrinkLabelVisible(label.id, !label.visible)
-    if (error) {
-      showDangerToast($i18n.t(error, { name: label.name }))
-      return
-    }
+    await updateDrinkLabelVisible(label.id, label.name, !label.visible)
     showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: label.name, status: $i18n.t(`drinks.${label.visible ? 'visible' : 'invisible'}`) }))
   }
 
@@ -38,12 +31,11 @@ export const usePageDrinkLabelsStore = defineStore('pageDrinkLabelsStore', () =>
       showDeleteModal.value = false
       return
     }
-    const error = await deleteById(drinkLabelId)
-    if (error) {
-      showDangerToast($i18n.t(error, { name: drinkLabelName }))
-      showDeleteModal.value = false
-      return
-    }
+    await deleteById(drinkLabelId, drinkLabelName)
+      .catch((error) => {
+        showDeleteModal.value = false
+        throw error
+      })
     showSuccessToast($i18n.t(LOCALE_DRINKS_DELETE_SUCCESS, { name: drinkLabelName }))
     showDeleteModal.value = false
   }
@@ -54,11 +46,7 @@ export const usePageDrinkLabelsStore = defineStore('pageDrinkLabelsStore', () =>
   }
 
   const saveSort = async () => {
-    const error = await updateDrinkLabelsSort()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
+    await updateDrinkLabelsSort()
     showSuccessToast($i18n.t(LOCALE_DRINKS_SORT_SUCCESS))
   }
 

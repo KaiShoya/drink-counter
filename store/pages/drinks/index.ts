@@ -15,14 +15,8 @@ export const usePageDrinksStore = defineStore('pageDrinksStore', () => {
   const showDeleteModal = ref<boolean>(false)
 
   const initPage = async () => {
-    let error = await fetchDrinks()
-    if (error) {
-      showDangerToast($i18n.t(error))
-    }
-    error = await fetchDrinkLabels()
-    if (error) {
-      showDangerToast($i18n.t(error))
-    }
+    await fetchDrinks()
+    await fetchDrinkLabels()
   }
 
   /**
@@ -31,26 +25,20 @@ export const usePageDrinksStore = defineStore('pageDrinksStore', () => {
    * @returns
    */
   const updateHidden = async (drink: Drink) => {
-    const error = await updateDrinkVisible(drink.id, !drink.visible)
-    if (error) {
-      showDangerToast($i18n.t(error, { name: drink.name }))
-      return
-    }
+    await updateDrinkVisible(drink.id, !drink.visible)
     showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: drink.name, status: $i18n.t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
   }
 
   const deleteDrink = async (drinkId: number | undefined, drinkName: string | undefined) => {
     if (drinkId === undefined || drinkName === undefined) {
-      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
       showDeleteModal.value = false
-      return
+      throw new GetRecordError()
     }
-    const error = await deleteDrinkById(drinkId)
-    if (error) {
-      showDangerToast($i18n.t(error, { name: drinkName }))
-      showDeleteModal.value = false
-      return
-    }
+    await deleteDrinkById(drinkId, drinkName)
+      .catch((error) => {
+        showDeleteModal.value = false
+        throw error
+      })
     showSuccessToast($i18n.t(LOCALE_DRINKS_DELETE_SUCCESS, { name: drinkName }))
     showDeleteModal.value = false
   }
@@ -61,11 +49,7 @@ export const usePageDrinksStore = defineStore('pageDrinksStore', () => {
   }
 
   const save = async () => {
-    const error = await updateDrinksSort()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
+    await updateDrinksSort()
     showSuccessToast($i18n.t(LOCALE_DRINKS_SORT_SUCCESS))
   }
 

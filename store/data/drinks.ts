@@ -14,7 +14,7 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   const fetchDrinks = async () => {
     const { data, error } = await supabase.from(TABLE_NAME).select('*').order('sort,id')
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinks.value = data ?? []
 
@@ -40,16 +40,15 @@ export const useDrinksStore = defineStore('drinksStore', () => {
    * 指定したIDの飲み物を削除する
    * 削除に成功したらDrinksを再取得する
    * @param drinkId number
+   * @param name string
    * @returns Promise<error_message_code | undefined>
    */
-  const deleteDrinkById = async (drinkId: number) => {
+  const deleteDrinkById = async (drinkId: number, name: string) => {
     const { error } = await supabase.rpc('delete_drink_data', { drinkid: drinkId })
     if (error) {
-      return 'drinks.delete_failure'
+      throw new SupabaseResponseError(LOCALE_DRINKS_DELETE_FAILURE, { name })
     }
-
-    const fetchDrinkError = await fetchDrinks()
-    return fetchDrinkError
+    await fetchDrinks()
   }
 
   /**
@@ -64,24 +63,26 @@ export const useDrinksStore = defineStore('drinksStore', () => {
   const updateDrink = async (drinkId: number, name: string, color: string | null, amount: number, driknLabelId: number | null) => {
     const { error } = await supabase.from(TABLE_NAME).update({ name, color, amount, drink_label_id: driknLabelId }).eq('id', drinkId)
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
     const drink = findDrink(drinkId)
-    if (drink) {
-      drink.name = name
-      drink.color = color
+    if (!drink) {
+      throw new GetRecordError()
     }
+    drink.name = name
+    drink.color = color
   }
 
   const updateDrinkVisible = async (drinkId: number, visible: boolean) => {
+    const drink = findDrink(drinkId)
+    if (!drink) {
+      throw new GetRecordError()
+    }
     const { error } = await supabase.from(TABLE_NAME).update({ visible }).eq('id', drinkId)
     if (error) {
-      return 'drinks.update_failure'
+      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name: drink.name })
     }
-    const drink = findDrink(drinkId)
-    if (drink) {
-      drink.visible = visible
-    }
+    drink.visible = visible
   }
 
   const updateDrinksSort = async () => {
@@ -94,17 +95,16 @@ export const useDrinksStore = defineStore('drinksStore', () => {
     })
     const { error } = await supabase.rpc('bulk_update_drinks_sort', { payload })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
   }
 
   const createDrink = async (name: string, color: string | null, amount: number, driknLabelId: number | null) => {
     const { error } = await supabase.from(TABLE_NAME).insert({ name, color, amount, drink_label_id: driknLabelId })
     if (error) {
-      return 'drinks.create_failure'
+      throw new SupabaseResponseError(LOCALE_DRINKS_CREATE_FAILURE, { name })
     }
-    const fetchDrinkError = await fetchDrinks()
-    return fetchDrinkError
+    await fetchDrinks()
   }
 
   /**

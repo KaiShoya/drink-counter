@@ -6,7 +6,6 @@ import { useAggregationByDowStore } from '~/store/pages/data/components/aggregat
 import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useMonthlyStore = defineStore('monthlyStore', () => {
-  const { $i18n } = useNuxtApp()
   const { processIntoYearMonth, formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { drinkCounters } = storeToRefs(drinkCountersStore)
@@ -41,25 +40,10 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
 
   const fetchDrinkCounters = async () => {
     const { year, month } = computedYearMonth.value
-    const fetchDrinksError = await fetchDrinks()
-    if (fetchDrinksError) {
-      showDangerToast($i18n.t(fetchDrinksError))
-      return
-    }
-    const fetchDrinkCountersPerMonthError = await fetchDrinkCountersPerMonth(year, month)
-    if (fetchDrinkCountersPerMonthError) {
-      showDangerToast($i18n.t(fetchDrinkCountersPerMonthError))
-      return
-    }
-    const fetchSumCountPerMonthError = await fetchSumCountPerMonth(year, month)
-    if (fetchSumCountPerMonthError) {
-      showDangerToast($i18n.t(fetchSumCountPerMonthError))
-      return
-    }
-    const fetchAggregationByDowPerMonthError = await fetchAggregationByDowPerMonth(year, month)
-    if (fetchAggregationByDowPerMonthError) {
-      showDangerToast($i18n.t(fetchAggregationByDowPerMonthError))
-    }
+    await fetchDrinks()
+    await fetchDrinkCountersPerMonth(year, month)
+    await fetchSumCountPerMonth(year, month)
+    await fetchAggregationByDowPerMonth(year, month)
     graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
   }
 

@@ -24,16 +24,8 @@ export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
   const initPage = async () => {
     const route = useRoute()
     drinkId.value = Number(route.params.id)
-    let error = await fetchDrinks()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
-    error = await fetchDrinkLabels()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
+    await fetchDrinks()
+    await fetchDrinkLabels()
 
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {
@@ -48,15 +40,9 @@ export const usePageDrinkEditStore = defineStore('pageDrinkEditStore', () => {
   }
 
   const updateDrinkById = async () => {
-    const error = await updateDrink(drinkId.value, name.value, color.value, amount.value, drinkLabelId.value)
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-      showDangerToast($i18n.t(LOCALE_DRINKS_UPDATE_FAILURE, { name: name.value }))
-    } else {
-      showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/drinks'))
-    }
+    await updateDrink(drinkId.value, name.value, color.value, amount.value, drinkLabelId.value)
+    showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
+    navigateTo(localePath('/drinks'))
   }
 
   return {

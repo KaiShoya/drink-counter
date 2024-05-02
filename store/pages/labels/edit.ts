@@ -19,11 +19,7 @@ export const usePageDrinkLabelEditStore = defineStore('pageDrinkLabelEditStore',
   const initPage = async () => {
     const route = useRoute()
     drinkLabelId.value = Number(route.params.id)
-    const error = await fetchDrinkLabels()
-    if (error) {
-      showDangerToast($i18n.t(error))
-      return
-    }
+    await fetchDrinkLabels()
 
     const drinkLabel = findById(drinkLabelId.value)
     if (drinkLabel === undefined) {
@@ -37,15 +33,9 @@ export const usePageDrinkLabelEditStore = defineStore('pageDrinkLabelEditStore',
   }
 
   const update = async () => {
-    const error = await updateDrinkLabel(drinkLabelId.value, name.value, color.value, standardAmount.value)
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-      showDangerToast($i18n.t(LOCALE_DRINKS_UPDATE_FAILURE, { name: name.value }))
-    } else {
-      showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/labels'))
-    }
+    await updateDrinkLabel(drinkLabelId.value, name.value, color.value, standardAmount.value)
+    showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
+    navigateTo(localePath('/labels'))
   }
 
   return {

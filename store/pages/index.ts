@@ -10,7 +10,6 @@ import { useUserSettingsStore } from '~/store/data/userSettings'
 import type { NumberOfDrink, DrinkLabelWithDrinks } from '~/store/types/numberOfDrink'
 
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
-  const { $i18n } = useNuxtApp()
   const { processIntoString } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
@@ -83,29 +82,15 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
    */
   const fetchNumberOfDrinks = async (date: string) => {
     isLoading.value = true
+    await fetchDrinkLabels()
+    await fetchDrinks()
+    await fetchDrinkCountersForDay(date)
+
+    numberOfDrinks.value = []
+    labelsWithDrinks.value = []
+    drinkCountForDay.value = 0
+
     try {
-      const fetchDrinkLabelsError = await fetchDrinkLabels()
-      if (fetchDrinkLabelsError) {
-        showDangerToast($i18n.t(fetchDrinkLabelsError))
-        return
-      }
-
-      const fetchDrinksError = await fetchDrinks()
-      if (fetchDrinksError) {
-        showDangerToast($i18n.t(fetchDrinksError))
-        return
-      }
-
-      const fetchDrinkCountersForDayError = await fetchDrinkCountersForDay(date)
-      if (fetchDrinkCountersForDayError) {
-        showDangerToast($i18n.t(fetchDrinkCountersForDayError))
-        return
-      }
-
-      numberOfDrinks.value = []
-      labelsWithDrinks.value = []
-      drinkCountForDay.value = 0
-
       findDrinksVisible().forEach((drink) => {
         const drinkCounter = findDrinkCountersByDrinkId(drink.id)
         numberOfDrinks.value.push({
@@ -117,37 +102,34 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
           drinkLabelId: drink.drink_label_id,
         })
       })
+    } catch (error) {
+      throw new CustomError(LOCALE_ERROR_UNKNOWN)
+    }
 
-      for (const label of findByVisible()) {
-        const drinks = findNumberOfDrinkByLabels(label.id)
-        const labelWithDrinks = {
-          ...label,
-          drinks,
-          currentDrink: (label.default_drink_id ? findNumberOfDrinkByDrinkId(label.default_drink_id) : null) || drinks[0] || null,
-        }
-
-        // default_drink_idがnullだったら登録する
-        if (!labelWithDrinks.default_drink_id) {
-          const drink = drinks[0]
-          if (drink) {
-            const error = await updateDefaultDrinkId(labelWithDrinks.id, drink.id)
-            if (error) {
-              showWarningToast($i18n.t(error) + `: ${labelWithDrinks.name}`)
-            }
-            labelWithDrinks.default_drink_id = drink.id
-            labelWithDrinks.currentDrink = drink
-          }
-        }
-
-        labelsWithDrinks.value.push(labelWithDrinks)
+    for (const label of findByVisible()) {
+      const drinks = findNumberOfDrinkByLabels(label.id)
+      const labelWithDrinks = {
+        ...label,
+        drinks,
+        currentDrink: (label.default_drink_id ? findNumberOfDrinkByDrinkId(label.default_drink_id) : null) || drinks[0] || null,
       }
 
-      drinkCountForDay.value = updateDrinkCountForDay()
-    } catch (error) {
-      showDangerToast($i18n.t(LOCALE_ERROR_UNKNOWN))
-    } finally {
-      isLoading.value = false
+      // default_drink_idがnullだったら登録する
+      if (!labelWithDrinks.default_drink_id) {
+        const drink = drinks[0]
+        if (drink) {
+          await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+          labelWithDrinks.default_drink_id = drink.id
+          labelWithDrinks.currentDrink = drink
+        }
+      }
+
+      labelsWithDrinks.value.push(labelWithDrinks)
     }
+
+    drinkCountForDay.value = updateDrinkCountForDay()
+
+    isLoading.value = false
   }
 
   const plus = async (drinkId: number, drinkCounterId: number) => {
@@ -155,17 +137,10 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     if (drinkCounterId === -1) {
       // レコードがなければ作成する
       const newDrinkCounterId = await create(drinkId, date.value)
-      if (typeof newDrinkCounterId !== 'number') {
-        showDangerToast($i18n.t(newDrinkCounterId))
-        return
-      }
       // DrinkCounterId更新
       numberOfDrink!.drinkCounterId = newDrinkCounterId
     } else {
-      const incrementError = await increment(drinkCounterId)
-      if (incrementError) {
-        showDangerToast($i18n.t(incrementError))
-      }
+      await increment(drinkCounterId)
     }
 
     const drinkCounter = findDrinkCountersByDrinkId(drinkId)
@@ -183,10 +158,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     if (numberOfDrink === undefined || numberOfDrink.count === 0) {
       return
     }
-    const decrementError = await decrement(drinkCounterId)
-    if (decrementError) {
-      showDangerToast($i18n.t(decrementError))
-    }
+    await decrement(drinkCounterId)
 
     const drinkCounter = findDrinkCountersByDrinkId(drinkId)
     numberOfDrink!.count = drinkCounter!.count
@@ -197,19 +169,13 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const updateDefaultDrink = async (labelId: number, drinkId: number) => {
     const labelWithDrinks = findLabelsWithDrinks(labelId)
     if (!labelWithDrinks) {
-      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
-      return
+      throw new GetRecordError()
     }
     const drink = labelWithDrinks.drinks.find(lwd => lwd.id === drinkId)
     if (!drink) {
-      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
-      return
+      throw new GetRecordError()
     }
-    const error = await updateDefaultDrinkId(labelWithDrinks.id, drink.id)
-    if (error) {
-      showDangerToast($i18n.t(error) + `: ${labelWithDrinks.name}`)
-      return
-    }
+    await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
     labelWithDrinks.currentDrink = drink
   }
 

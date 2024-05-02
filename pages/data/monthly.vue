@@ -12,7 +12,7 @@ const { fetchDrinkCounters } = monthlyStore
 // カレンダー再描画用
 const updateCalendar = ref<number>(0)
 
-await fetchDrinkCounters()
+fetchDrinkCounters()
 
 watch(yearMonth, async () => {
   await fetchDrinkCounters()

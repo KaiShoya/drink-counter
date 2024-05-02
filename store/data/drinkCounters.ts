@@ -31,7 +31,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const fetchDrinkCounters = async () => {
     const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0)
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkCounters.value = data ?? []
   }
@@ -45,7 +45,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
     const maxDate = `${year}-12-31`
     const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkCounters.value = data ?? []
   }
@@ -60,7 +60,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
     const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
     const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkCounters.value = data ?? []
   }
@@ -72,7 +72,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const fetchDrinkCountersForDay = async (date: string) => {
     const { data, error } = await supabase.from(TABLE_NAME).select('*').eq('date', date)
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkCounters.value = data ?? []
   }
@@ -85,11 +85,11 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const increment = async (id: number) => {
     const drinkCounter = findDrinkCountersById(id)
     if (!drinkCounter) {
-      return 'error.GET_RECORD'
+      throw new GetRecordError()
     }
     const { data, error } = await supabase.rpc('increment', { row_id: id })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkCounter.count = Number(data) ?? 0
   }
@@ -102,14 +102,14 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const decrement = async (id: number) => {
     const drinkCounter = findDrinkCountersById(id)
     if (!drinkCounter) {
-      return 'error.GET_RECORD'
+      throw new GetRecordError()
     }
     if (drinkCounter.count <= 0) {
       return
     }
     const { data, error } = await supabase.rpc('decrement', { row_id: id })
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     drinkCounter.count = Number(data) ?? 0
   }
@@ -123,7 +123,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
   const create = async (drinkId: number, date: string) => {
     const { data, error } = await supabase.from(TABLE_NAME).insert({ date, drink_id: drinkId, count: 1 }).select()
     if (error) {
-      return 'error.500_API_ERROR'
+      throw new Response500Error()
     }
     if (data && data.length > 0) {
       drinkCounters.value.push(data[0])
