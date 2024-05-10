@@ -8,6 +8,9 @@
   "[sql]": {
     "editor.formatOnSave": false
   },
+  "[svg]": {
+    "editor.formatOnSave": false
+  },
   "editor.tabSize": 2,
   "[markdown]": {
     "editor.wordWrap": "on",
@@ -22,4 +25,8 @@
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
   "markdown.extension.tableFormatter.normalizeIndentation": false,
   "todo-tree.filtering.includeHiddenFiles": true,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "typescript.format.insertSpaceAfterConstructor": true,
 }
