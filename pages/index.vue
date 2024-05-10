@@ -16,7 +16,9 @@ const { fetchNumberOfDrinks, fetchDate, plus, minus, updateDefaultDrink } = inde
 const modalIsActive = ref<boolean>(false)
 
 // 日付
-await fetchDate()
+if (date.value === '') {
+  await fetchDate()
+}
 
 // numberOfDrinksにデータをセット
 fetchNumberOfDrinks(date.value)
