@@ -23,8 +23,6 @@ export const useUserSettingsStore = defineStore('userSettings', () => {
       userSettings.value.thresholdForDetectingOverdrinking = data[0]!.threshold_for_detecting_overdrinking
       userSettings.value.timezone = data[0]!.timezone
       userSettings.value.switchingTiming = data[0]!.switching_timing
-    } else {
-      throw new Response500Error()
     }
   }
 
