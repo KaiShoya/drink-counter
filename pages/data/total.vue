@@ -1,24 +1,20 @@
-<script setup lang="ts">
-import { storeToRefs } from 'pinia'
+<script
+  setup
+  lang="ts"
+>
 import { useTotalStore } from '~/store/pages/data/total'
 
-const totalStore = useTotalStore()
-const { chartDataTitle, calendarTitle, computeCalendarData, computedTableData, computedChartData } = storeToRefs(totalStore)
-const { fetchDrinkCountersAll } = totalStore
+const { fetchDrinkCountersAll } = useTotalStore()
 
-await fetchDrinkCountersAll()
+fetchDrinkCountersAll()
 </script>
 
 <template>
   <div class="container">
-    <DataGraphsCalendar
-      :title="calendarTitle"
-      :data="computeCalendarData"
-    />
-    <DataGraphsPieChart :data="computedChartData" />
-    <DataTable
-      :titles="chartDataTitle"
-      :table-data="computedTableData"
-    />
+    <PagesDataGraphsPieChart />
+
+    <PagesDataAggregationByDrinksTable />
+
+    <PagesDataAggregationByDowTable />
   </div>
 </template>

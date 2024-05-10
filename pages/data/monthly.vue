@@ -1,15 +1,18 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { storeToRefs } from 'pinia'
 import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const monthlyStore = useMonthlyStore()
-const { yearMonth, chartDataTitle, computeCalendarData, computeGraphData, computedTableData, computedChartData } = storeToRefs(monthlyStore)
-const { prevMonth, nextMonth, fetchDrinkCounters } = monthlyStore
+const { yearMonth, computeCalendarData, computeGraphData, computedChartOptions } = storeToRefs(monthlyStore)
+const { fetchDrinkCounters } = monthlyStore
 
 // カレンダー再描画用
-const updateCalendar = ref(0)
+const updateCalendar = ref<number>(0)
 
-await fetchDrinkCounters()
+fetchDrinkCounters()
 
 watch(yearMonth, async () => {
   await fetchDrinkCounters()
@@ -20,36 +23,22 @@ watch(yearMonth, async () => {
 
 <template>
   <div class="container">
-    <div class="columns is-mobile my-2 mx-0">
-      <button
-        class="column is-2 button is-large"
-        @click="prevMonth"
-      >
-        &lt;
-      </button>
-      <input
-        v-model="yearMonth"
-        class="column input is-large"
-        type="month"
-      >
-      <button
-        class="column is-2 button is-large"
-        @click="nextMonth"
-      >
-        &gt;
-      </button>
-    </div>
+    <OrganismsPickerMonthPicker />
 
-    <DataGraphsFCalendar
+    <PagesDataGraphsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"
       :data="computeCalendarData"
     />
-    <DataGraphsComboChart :data="computeGraphData" />
-    <DataGraphsPieChart :data="computedChartData" />
-    <DataTable
-      :titles="chartDataTitle"
-      :table-data="computedTableData"
+    <PagesDataGraphsComboChart
+      :data="computeGraphData"
+      :options="computedChartOptions"
     />
+
+    <PagesDataGraphsPieChart />
+
+    <PagesDataAggregationByDrinksTable />
+
+    <PagesDataAggregationByDowTable />
   </div>
 </template>

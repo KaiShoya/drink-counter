@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'
@@ -10,7 +13,7 @@ const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
 const { signInWithGoogle } = useSupabaseStore()
-const active = useState('active', () => false)
+const active = ref<boolean>(false)
 </script>
 
 <template>
@@ -27,7 +30,8 @@ const active = useState('active', () => false)
             :to="localePath('/')"
             @click="active = false"
           >
-            {{ $t('title') }}
+            <img src="/icon.svg">
+            {{ $t(LOCALE_TITLE) }}
           </NuxtLink>
 
           <template v-if="isLogin">
@@ -85,7 +89,7 @@ const active = useState('active', () => false)
         >
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">{{ $t('routes.data') }}</a>
+              <a class="navbar-link">{{ $t(LOCALE_ROUTES_DATA) }}</a>
 
               <div class="navbar-dropdown">
                 <NuxtLink
@@ -94,7 +98,15 @@ const active = useState('active', () => false)
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t('routes.total') }}
+                  {{ $t(LOCALE_ROUTES_TOTAL) }}
+                </NuxtLink>
+                <NuxtLink
+                  class="navbar-item"
+                  :to="localePath('/data/annual')"
+                  exact-active-class="is-active"
+                  @click="active = false"
+                >
+                  {{ $t(LOCALE_ROUTES_ANNUAL) }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
@@ -102,7 +114,7 @@ const active = useState('active', () => false)
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t('routes.monthly') }}
+                  {{ $t(LOCALE_ROUTES_MONTHLY) }}
                 </NuxtLink>
               </div>
             </div>
@@ -113,7 +125,25 @@ const active = useState('active', () => false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t('routes.about') }}
+              {{ $t(LOCALE_ROUTES_ABOUT) }}
+            </NuxtLink>
+
+            <NuxtLink
+              class="navbar-item"
+              :to="localePath('/drinks')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              {{ $t(LOCALE_ROUTES_DRINKS) }}
+            </NuxtLink>
+
+            <NuxtLink
+              class="navbar-item"
+              :to="localePath('/labels')"
+              exact-active-class="is-active"
+              @click="active = false"
+            >
+              {{ $t(LOCALE_ROUTES_LABELS) }}
             </NuxtLink>
 
             <NuxtLink
@@ -122,19 +152,21 @@ const active = useState('active', () => false)
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t('routes.settings') }}
+              {{ $t(LOCALE_ROUTES_SETTINGS) }}
             </NuxtLink>
+
+            <OrganismsShowQrModal />
           </div>
 
           <div class="navbar-end">
             <div class="control has-icons-left">
               <div class="select">
-                <select @change="$router.push(switchLocalePath($event.target.value))">
+                <select @change="$router.push(switchLocalePath(($event.target as HTMLInputElement).value))">
                   <option
                     v-for="l in locales"
                     :key="l.code"
                     :value="l.code"
-                    :selected="locale.code === l.code"
+                    :selected="l.code === locale"
                   >
                     {{ l.name }}
                   </option>
@@ -150,7 +182,7 @@ const active = useState('active', () => false)
               exact-active-class="is-active"
               @click="signInWithGoogle()"
             >
-              {{ $t('auth.google') }}
+              {{ $t(LOCALE_AUTH_GOOGLE) }}
             </a>
           </div>
         </div>

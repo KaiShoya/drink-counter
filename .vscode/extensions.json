@@ -7,6 +7,7 @@
     "vue.volar",
     "vue.vscode-typescript-vue-plugin",
     "yzhang.markdown-all-in-one",
-    "nuxtr.nuxtr-vscode"
+    "nuxtr.nuxtr-vscode",
+    "gruntfuggly.todo-tree"
   ]
 }

@@ -1,0 +1,116 @@
+title: 飲酒カウンター
+
+routes:
+    data: データ
+    total: トータル
+    annual: 年別
+    monthly: 月別
+    about: About
+    drinks: 飲み物
+    labels: 飲み物ラベル
+    settings: 設定
+
+auth:
+    google: Googleログイン
+
+calendar:
+    month:
+        1: 1月
+        2: 2月
+        3: 3月
+        4: 4月
+        5: 5月
+        6: 6月
+        7: 7月
+        8: 8月
+        9: 9月
+        10: 10月
+        11: 11月
+        12: 12月
+    day_of_week:
+        Sun: 日
+        Mon: 月
+        Tue: 火
+        Wed: 水
+        Thu: 木
+        Fri: 金
+        Sat: 土
+        0: 日
+        1: 月
+        2: 火
+        3: 水
+        4: 木
+        5: 金
+        6: 土
+
+index:
+    warning_title: 飲みすぎ注意
+    warning_content: 今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？
+
+source: ソースコード
+terms_of_service: 利用規約
+license: ライセンス
+version: バージョン
+show_qr: QRコードを表示する
+
+settings:
+    threshold_for_detecting_overdrinking: アラートの閾値(杯数)
+    cups: 杯
+    timezone: タイムゾーン
+    switching_timing: 日付切り替え時刻
+    oclock: 時
+    save: 保存する
+
+drinks:
+    select: 選択してください
+    name_placeholder: 350ml
+    name: 名前
+    color: 色
+    amount: 量(ml,合など)
+    standard_amount: '基準量 :'
+    drink_label: ラベル
+    delete_modal_title: 「{name}」を削除します。
+    delete_modal_content: 「{name}」を削除すると、飲んだ杯数もすべて削除されます。それでも削除しますか？
+    add: 追加する
+    update: 更新する
+    cancel: 戻る
+    sort_success: 並び順を保存しました。
+    save_sort: 並び順を保存する
+    delete_success: 「{name}」を削除しました。
+    delete_failure: 「{name}」の削除に失敗しました。
+    create_success: 「{name}」を追加しました。
+    create_failure: 「{name}」の追加に失敗しました。
+    update_success: 「{name}」を更新しました。
+    update_failure: 「{name}」の更新に失敗しました。
+    visible: 表示
+    invisible: 非表示
+    update_visible_success: 「{name}」を{status}に変更しました。
+    copy_label_color: ラベルの色をコピーする
+
+labels:
+    name_placeholder: ビール
+    standard_amount: 基準量(ml,合など)
+
+data:
+    total: 合計
+
+aggregation:
+    dow: 曜日
+    sum_count: 合計
+    avg_count: 平均
+    max_type_of_drinks: 飲んだ種類
+    avg_type_of_drinks: 飲んだ種類平均
+    record_count: 飲みに出た回数
+
+modal:
+    yes: はい
+    no: いいえ
+
+general:
+    update_success: 更新しました。
+
+error:
+    500_API_ERROR: サーバーエラーが発生しました。
+    GET_USER_INFO: ログイン情報を取得できませんでした。
+    GET_RECORD: データを取得できませんでした。画面をリロードして再度お試しください。
+    UNKNOWN: 処理中にエラーが発生しました。画面をリロードして再度お試しください。

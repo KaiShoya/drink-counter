@@ -1,31 +1,46 @@
 import { storeToRefs } from 'pinia'
-
-import { useSupabaseStore } from '~/store/supabase'
+// @ts-ignore
+import { findTimeZone, getZonedTime } from 'timezone-support'
+// @ts-ignore
+import { formatZonedTime } from 'timezone-support/parse-format'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
-import { NumberOfDrink } from '~/store/types/numberOfDrink'
+import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
+import { useUserSettingsStore } from '~/store/data/userSettings'
+import type { NumberOfDrink, DrinkLabelWithDrinks } from '~/store/types/numberOfDrink'
 
 export const useIndexStore = defineStore('numberOfDrinksStore', () => {
-  const { $i18n } = useNuxtApp()
-  const { supabase } = useSupabaseStore()
   const { processIntoString } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
   const drinksStore = useDrinksStore()
-  const { drinks } = storeToRefs(drinksStore)
-  const { fetchDrinks } = drinksStore
+  const { fetchDrinks, findDrinksVisible } = drinksStore
+  const drinkLabelsStore = useDrinkLabelsStore()
+  const { fetchDrinkLabels, findByVisible, updateDefaultDrinkId } = drinkLabelsStore
+  const userSettingsStore = useUserSettingsStore()
+  const { userSettings } = storeToRefs(userSettingsStore)
 
-  const date: Ref<string> = useState('date', () => '')
-  const numberOfDrinks: Ref<NumberOfDrink[]> = useState('numberOfDrinks', () => [])
-  const drinkCountForDay: Ref<number> = useState('drinkCountForDay', () => 0)
-  const isLoading: Ref<boolean> = useState(() => false)
+  const date = ref<string>('')
+  const numberOfDrinks = ref<NumberOfDrink[]>([])
+  const labelsWithDrinks = ref<DrinkLabelWithDrinks[]>([])
+  const drinkCountForDay = ref<number>(0)
+  const isLoading = ref<boolean>(false)
 
   /**
    * 日付を取得する
    */
-  const fetchDate = async () => {
-    const { data } = await supabase.rpc('get_date')
-    date.value = String(data.split(' ')[0])
+  const fetchDate = () => {
+    // TODO: 日付計算はuserSettingsStoreの方が良い？
+    const tz = findTimeZone(userSettings.value.timezone)
+    const nativeDate = new Date()
+    const tzTime = getZonedTime(nativeDate, tz)
+
+    // 現在時刻が設定時刻を超えない場合、日付を-1する（0時過ぎても前日の日付でカウントするため）
+    if (tzTime.hours < userSettings.value.switchingTiming) {
+      tzTime.day = tzTime.day - 1
+    }
+    const displayTime = formatZonedTime(tzTime, 'YYYY-MM-DD')
+    date.value = displayTime
   }
 
   const prevDate = () => {
@@ -47,34 +62,74 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   //   return numberOfDrinks.value.find(nod => nod.drinkCounterId === drinkCounterId)
   // }
 
+  const findNumberOfDrinkByLabels = (labelId: number) => {
+    return numberOfDrinks.value.filter(nod => nod.drinkLabelId === labelId)
+  }
+
+  const findLabelsWithDrinks = (labelId: number) => {
+    return labelsWithDrinks.value.find(lwd => lwd.id === labelId)
+  }
+
+  /**
+   * numberOfDrinksのcountの合計値を返却する
+   * @returns number 1日の合計数
+   */
+  const updateDrinkCountForDay = () => numberOfDrinks.value.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0)
+
   /**
    * 指定した日付の飲んだ杯数を取得する
    * @param date 日付 '2023-01-01'
    */
   const fetchNumberOfDrinks = async (date: string) => {
     isLoading.value = true
+    await fetchDrinkLabels()
+    await fetchDrinks()
+    await fetchDrinkCountersForDay(date)
+
+    numberOfDrinks.value = []
+    labelsWithDrinks.value = []
+    drinkCountForDay.value = 0
+
     try {
-      await fetchDrinks()
-      await fetchDrinkCountersForDay(date)
-
-      numberOfDrinks.value = []
-      drinkCountForDay.value = 0
-
-      drinks.value.forEach((drink) => {
+      findDrinksVisible().forEach((drink) => {
         const drinkCounter = findDrinkCountersByDrinkId(drink.id)
         numberOfDrinks.value.push({
           id: drink.id,
           name: drink.name,
           count: drinkCounter?.count ?? 0,
+          color: drink.color ?? drink.default_color,
           drinkCounterId: drinkCounter?.id ?? -1,
+          drinkLabelId: drink.drink_label_id,
         })
-        drinkCountForDay.value += drinkCounter?.count ?? 0
       })
     } catch (error) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.500_API_ERROR') })
-    } finally {
-      isLoading.value = false
+      throw new CustomError(LOCALE_ERROR_UNKNOWN)
     }
+
+    for (const label of findByVisible()) {
+      const drinks = findNumberOfDrinkByLabels(label.id)
+      const labelWithDrinks = {
+        ...label,
+        drinks,
+        currentDrink: (label.default_drink_id ? findNumberOfDrinkByDrinkId(label.default_drink_id) : null) || drinks[0] || null,
+      }
+
+      // default_drink_idがnullだったら登録する
+      if (!labelWithDrinks.default_drink_id) {
+        const drink = drinks[0]
+        if (drink) {
+          await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+          labelWithDrinks.default_drink_id = drink.id
+          labelWithDrinks.currentDrink = drink
+        }
+      }
+
+      labelsWithDrinks.value.push(labelWithDrinks)
+    }
+
+    drinkCountForDay.value = updateDrinkCountForDay()
+
+    isLoading.value = false
   }
 
   const plus = async (drinkId: number, drinkCounterId: number) => {
@@ -87,9 +142,12 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     } else {
       await increment(drinkCounterId)
     }
-    numberOfDrink!.count++
-    drinkCountForDay.value++
+
+    const drinkCounter = findDrinkCountersByDrinkId(drinkId)
+    numberOfDrink!.count = drinkCounter!.count
+    drinkCountForDay.value = updateDrinkCountForDay()
   }
+
   const minus = async (drinkId: number, drinkCounterId: number) => {
     // レコードがなければ何もしない
     if (drinkCounterId === -1) {
@@ -101,20 +159,39 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
       return
     }
     await decrement(drinkCounterId)
-    numberOfDrink.count--
-    drinkCountForDay.value--
+
+    const drinkCounter = findDrinkCountersByDrinkId(drinkId)
+    numberOfDrink!.count = drinkCounter!.count
+    drinkCountForDay.value = updateDrinkCountForDay()
+  }
+
+  // const updateCurrentDrink = (labelId: number, drink: NumberOfDrink) => {
+  const updateDefaultDrink = async (labelId: number, drinkId: number) => {
+    const labelWithDrinks = findLabelsWithDrinks(labelId)
+    if (!labelWithDrinks) {
+      throw new GetRecordError()
+    }
+    const drink = labelWithDrinks.drinks.find(lwd => lwd.id === drinkId)
+    if (!drink) {
+      throw new GetRecordError()
+    }
+    await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+    labelWithDrinks.currentDrink = drink
   }
 
   return {
     date,
     numberOfDrinks,
+    labelsWithDrinks,
     drinkCountForDay,
     isLoading,
     fetchDate,
     prevDate,
     nextDate,
     fetchNumberOfDrinks,
+    findNumberOfDrinkByLabels,
     plus,
     minus,
+    updateDefaultDrink,
   }
 })

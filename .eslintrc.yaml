@@ -10,6 +10,8 @@ rules:
   comma-dangle:
     - error
     - always-multiline
+  vue/multi-word-component-names: # シンプルなファイル名を無効化する
+    - off
 # parser: vue-eslint-parser
 # parserOptions:
 #   parser: "@typescript-eslint/parser"

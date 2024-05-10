@@ -1,10 +1,11 @@
 import { useSupabaseStore } from '~/store/supabase'
-import { DrinkCounter } from '~/store/data/types/drinkCounter'
+import type { DrinkCounter } from '~/store/data/types/drinkCounter'
+
+const TABLE_NAME = 'drink_counters'
 
 export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
-  const { $i18n } = useNuxtApp()
   const { supabase } = useSupabaseStore()
-  const drinkCounters: Ref<DrinkCounter[]> = useState(() => [])
+  const drinkCounters = ref<DrinkCounter[]>([])
 
   /**
    * drinkCountersから指定したidのレコードを取得する
@@ -28,7 +29,24 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * 自分のデータを全件取得する
    */
   const fetchDrinkCounters = async () => {
-    const { data } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0)
+    if (error) {
+      throw new Response500Error()
+    }
+    drinkCounters.value = data ?? []
+  }
+
+  /**
+   * 指定した年の自分のデータを取得する
+   * @param year 年
+   */
+  const fetchDrinkCountersPerYear = async (year: number) => {
+    const minDate = `${year}-01-01`
+    const maxDate = `${year}-12-31`
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
+    if (error) {
+      throw new Response500Error()
+    }
     drinkCounters.value = data ?? []
   }
 
@@ -38,7 +56,12 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @param month 月
    */
   const fetchDrinkCountersPerMonth = async (year: number, month: number) => {
-    const { data } = await supabase.from('drink_counters').select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${year}-${month + 1}-01`)
+    const { processIntoYearMonthAdd1Month } = useProcessDate()
+    const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
+    if (error) {
+      throw new Response500Error()
+    }
     drinkCounters.value = data ?? []
   }
 
@@ -47,50 +70,64 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
    * @param date 日付 '2023-01-01'
    */
   const fetchDrinkCountersForDay = async (date: string) => {
-    const { data } = await supabase.from('drink_counters').select('*').eq('date', date)
+    const { data, error } = await supabase.from(TABLE_NAME).select('*').eq('date', date)
+    if (error) {
+      throw new Response500Error()
+    }
     drinkCounters.value = data ?? []
   }
 
   /**
    * 指定したレコードを+1する
    * @param id drinkCounter.id
+   * return error_message | undefined
    */
   const increment = async (id: number) => {
     const drinkCounter = findDrinkCountersById(id)
     if (!drinkCounter) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.GET_RECORD') })
+      throw new GetRecordError()
     }
-    const { data } = await supabase.rpc('increment', { row_id: id })
-    drinkCounter.count = data?.count ?? 0
+    const { data, error } = await supabase.rpc('increment', { row_id: id })
+    if (error) {
+      throw new Response500Error()
+    }
+    drinkCounter.count = Number(data) ?? 0
   }
 
   /**
    * 指定したレコードを-1する
    * @param id drinkCounter.id
+   * return error_message | undefined
    */
   const decrement = async (id: number) => {
     const drinkCounter = findDrinkCountersById(id)
     if (!drinkCounter) {
-      throw createError({ statusCode: 500, statusMessage: $i18n.t('error.GET_RECORD') })
+      throw new GetRecordError()
     }
     if (drinkCounter.count <= 0) {
       return
     }
-    const { data } = await supabase.rpc('decrement', { row_id: id })
-    drinkCounter.count = data?.count ?? 0
+    const { data, error } = await supabase.rpc('decrement', { row_id: id })
+    if (error) {
+      throw new Response500Error()
+    }
+    drinkCounter.count = Number(data) ?? 0
   }
 
   /**
    * 指定した日付のレコードを作成する
    * @param drinkId drink.id
    * @param date 日付 '2023-01-01'
-   * @return number drink_counter_id
+   * @return drink_counter_id | error_message
    */
   const create = async (drinkId: number, date: string) => {
-    const { data } = await supabase.from('drink_counters').insert({ date, drink_id: drinkId, count: 1 }).select()
+    const { data, error } = await supabase.from(TABLE_NAME).insert({ date, drink_id: drinkId, count: 1 }).select()
+    if (error) {
+      throw new Response500Error()
+    }
     if (data && data.length > 0) {
       drinkCounters.value.push(data[0])
-      return data[0].id
+      return Number(data[0].id)
     }
     return -1
   }
@@ -100,6 +137,7 @@ export const useDrinkCountersStore = defineStore('drinkCountersStore', () => {
     findDrinkCountersById,
     findDrinkCountersByDrinkId,
     fetchDrinkCounters,
+    fetchDrinkCountersPerYear,
     fetchDrinkCountersPerMonth,
     fetchDrinkCountersForDay,
     increment,

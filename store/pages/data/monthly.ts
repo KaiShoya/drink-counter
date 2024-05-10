@@ -1,12 +1,11 @@
 import { storeToRefs } from 'pinia'
 
-import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
+import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
+import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
 
 export const useMonthlyStore = defineStore('monthlyStore', () => {
-  // const { $i18n } = useNuxtApp()
-  const { supabase } = useSupabaseStore()
   const { processIntoYearMonth, formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { drinkCounters } = storeToRefs(drinkCountersStore)
@@ -14,13 +13,13 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   const drinksStore = useDrinksStore()
   const { drinks, getDrinksIdArray, getDrinksNameArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
+  const { fetchAggregationByDowPerMonth } = useAggregationByDowStore()
+  const { fetchSumCountPerMonth } = useAggregationByDrinksStore()
 
   const graphDataTitleBase = ['日付', '合計']
-  const chartDataTitle = useState(() => ['Name', 'Count'])
 
-  const yearMonth: Ref<string> = useState(() => processIntoYearMonth(new Date()))
-  const graphDataTitle: Ref<Array<string>> = useState(() => graphDataTitleBase)
-  const sumCountPerMonth: Ref<Array<{ drink_id: number, count: number }>> = useState(() => [])
+  const yearMonth = ref<string>(processIntoYearMonth(new Date()))
+  const graphDataTitle = ref<string[]>(graphDataTitleBase)
 
   const computedYearMonth = computed(() => {
     const [year, month] = yearMonth.value.split('-').map(v => Number(v))
@@ -43,14 +42,9 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     const { year, month } = computedYearMonth.value
     await fetchDrinks()
     await fetchDrinkCountersPerMonth(year, month)
-    await fetchSumCountPerMonth()
+    await fetchSumCountPerMonth(year, month)
+    await fetchAggregationByDowPerMonth(year, month)
     graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
-  }
-
-  const fetchSumCountPerMonth = async () => {
-    const { year, month } = computedYearMonth.value
-    const { data } = await supabase.rpc('sum_count_per_month', { year, month })
-    sumCountPerMonth.value = data ?? []
   }
 
   /**
@@ -75,34 +69,27 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
     ]
   })
 
-  /**
-   * テーブル用データ（円グラフでも利用）
-   */
-  const computedTableData = computed(() => {
-    return sumCountPerMonth.value.map(
-      (v: { drink_id: number, count: number }) => [
-        drinks.value.find(drink => drink.id === v.drink_id)!.name,
-        v.count,
-      ],
-    )
-  })
-
-  /**
-   * 円グラフ用データ
-   */
-  const computedChartData = computed(() => {
-    return [chartDataTitle.value, ...computedTableData.value]
+  const computedChartOptions = computed(() => {
+    const options: any = {
+      seriesType: 'bars',
+      legend: { position: 'bottom' },
+      series: {
+        0: { type: 'line' },
+      },
+    }
+    drinks.value.forEach((drink, i) => {
+      options.series[i + 1] = { color: drink.color ?? drink.default_color }
+    })
+    return options
   })
 
   return {
     yearMonth,
-    chartDataTitle,
     prevMonth,
     nextMonth,
     fetchDrinkCounters,
     computeCalendarData,
     computeGraphData,
-    computedTableData,
-    computedChartData,
+    computedChartOptions,
   }
 })

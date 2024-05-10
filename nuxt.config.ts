@@ -3,6 +3,7 @@ import pkg from './package.json'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
+  spaLoadingTemplate: true,
   runtimeConfig: {
     public: {
       supabaseUrl: 'http://localhost:54321',
@@ -25,6 +26,9 @@ export default defineNuxtConfig({
           crossorigin: 'anonymous',
         },
       ],
+      link: [
+        { rel: 'apple-touch-icon', type: 'image/png', href: '/icon.png' },
+      ],
     },
   },
   css: [
@@ -35,8 +39,8 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: './i18n.config.ts',
     locales: [
-      { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.json' },
-      { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.json' },
+      { code: 'ja', name: '日本語', iso: 'ja_JP', file: 'ja.yaml' },
+      { code: 'en', name: 'English(US)', iso: 'en-US', file: 'en.yaml' },
     ],
     defaultLocale: 'ja',
     langDir: 'locales/',

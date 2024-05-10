@@ -1,0 +1,16 @@
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+# type
+#   fix: バグ修正
+#   feat: 機能追加
+#   build: ビルドシステムまたは外部依存関係に影響を与える変更 (スコープの例: npm, yarn)
+#   ci: CI構成ファイルとスクリプトへの変更 (範囲の例: Actions, ESLint)
+#   docs: ドキュメントのみの変更
+#   style: コードの意味に影響を与えない変更 (空白, 書式設定, セミコロンの欠落など)
+#   refactor: バグの修正も機能の追加も行わないコード変更
+#   perf: パフォーマンスを向上させるコード変更
+#   test: 不足しているテストを追加するか、既存のテストを修正します
+#   upgrade: フレームワークやライブラリのバージョン更新

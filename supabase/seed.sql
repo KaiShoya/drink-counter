@@ -69,7 +69,7 @@ values
 
 INSERT INTO
   auth.identities (
-    id,
+    provider_id,
     user_id,
     identity_data,
     provider,
@@ -89,14 +89,27 @@ VALUES
   );
 
 insert into
-  public.drinks (id, name)
+  public.drink_labels (id, name, sort, user_id)
 values
-  (1, 'ビール'),
-  (2, 'ハイボール'),
-  (3, 'ウィスキー'),
-  (4, '日本酒'),
-  (5, 'ワイン'),
-  (6, 'コーヒー');
+  (1, 'ビール', 1, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (2, 'ハイボール', 2, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (3, 'ウィスキー', 3, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (4, '日本酒', 4, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (5, 'ワイン', 5, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (6, 'コーヒー', 6, '5899f99d-a449-4bfa-8769-19c097aaf1f5');
+
+insert into
+  public.drinks (id, name, sort, drink_label_id, user_id)
+values
+  (1, '缶ビール 350ml', 8, 1, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (2, '缶ビール 500ml', 7, 1, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (3, 'ビール 中ジョッキ', 1, 1, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (4, 'ハイボール', 2, 2, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (5, 'ウィスキー', 3, 3, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (6, '日本酒 1合', 4, 4, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (7, '日本酒 おちょこ1杯', 9, 4, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (8, 'ワイン', 5, 5, '5899f99d-a449-4bfa-8769-19c097aaf1f5'),
+  (9,'コーヒー', 6, 6, '5899f99d-a449-4bfa-8769-19c097aaf1f5');
 
 insert into
   public.drink_counters (date, drink_id, count, user_id)
@@ -107,4 +120,3 @@ values
     1,
     '5899f99d-a449-4bfa-8769-19c097aaf1f5' :: uuid
   );
-

@@ -1,5 +1,4 @@
 import { storeToRefs } from 'pinia'
-import * as bulmaToast from 'bulma-toast'
 import { useUserStore } from '~/store/user'
 import { useUserSettingsStore } from '~/store/data/userSettings'
 
@@ -20,13 +19,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // ログイン情報を取得できなかったらトーストを表示
   nuxtApp.hook('page:finish', () => {
     if (!isLogin.value) {
-      bulmaToast.toast({
-        message: $i18n.t('error.GET_USER_INFO'),
-        duration: 30000,
-        type: 'is-warning',
-        dismissible: true,
-        animate: { in: 'fadeIn', out: 'fadeOut' },
-      })
+      showWarningToast($i18n.t(LOCALE_ERROR_GET_USER_INFO))
     }
   })
 })

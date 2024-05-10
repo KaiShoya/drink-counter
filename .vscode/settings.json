@@ -1,11 +1,32 @@
 {
-  "html.format.endWithNewline": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "html.format.wrapAttributes": "force-expand-multiline",
   "html.validate.scripts": true,
   "html.validate.styles": true,
   "editor.formatOnSave": true,
+  "[sql]": {
+    "editor.formatOnSave": false
+  },
+  "[svg]": {
+    "editor.formatOnSave": false
+  },
   "editor.tabSize": 2,
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    },
+    "editor.snippetSuggestions": "top"
+  },
   "markdown.extension.tableFormatter.enabled": true,
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
   "markdown.extension.tableFormatter.normalizeIndentation": false,
+  "todo-tree.filtering.includeHiddenFiles": true,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "typescript.format.insertSpaceAfterConstructor": true,
 }

@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+  setup
+  lang="ts"
+>
 import { storeToRefs } from 'pinia'
 import { useUserSettingsStore } from '@/store/data/userSettings'
 import { useIndexStore } from '@/store/pages/index'
@@ -6,20 +9,20 @@ import { useIndexStore } from '@/store/pages/index'
 const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()
-const { date, numberOfDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
-const { fetchNumberOfDrinks, fetchDate, prevDate, nextDate, plus, minus } = indexStore
+const { date, labelsWithDrinks, drinkCountForDay, isLoading } = storeToRefs(indexStore)
+const { fetchNumberOfDrinks, fetchDate, plus, minus, updateDefaultDrink } = indexStore
 
 // Modal用フラグ
-const modalIsActive = useState(() => false)
+const modalIsActive = ref<boolean>(false)
 
 // 日付
 await fetchDate()
 
 // numberOfDrinksにデータをセット
-await fetchNumberOfDrinks(date.value)
+fetchNumberOfDrinks(date.value)
 
-const thisDrinkId = useState(() => 0)
-const thisCounterId = useState(() => 0)
+const thisDrinkId = ref<number>(0)
+const thisCounterId = ref<number>(0)
 // 杯数加算時の閾値チェック
 const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
@@ -39,50 +42,27 @@ watch(date, async () => {
 
 <template>
   <div>
-    <div class="columns is-mobile my-4 mx-0">
-      <button
-        class="column is-2 button is-medium"
-        @click="prevDate"
-      >
-        &lt;
-      </button>
-      <input
-        v-model="date"
-        class="column input is-medium mx-0"
-        type="date"
-      >
-      <button
-        class="column is-2 button is-medium"
-        @click="fetchDate"
-      >
-        <i class="mdi mdi-calendar-check" />
-      </button>
-      <button
-        class="column is-2 button is-medium"
-        @click="nextDate"
-      >
-        &gt;
-      </button>
-    </div>
+    <OrganismsPickerDatePicker />
 
     <o-loading v-model:active="isLoading" />
 
     <div v-if="!isLoading">
-      <IndexDrinkColumn
-        v-for="(drink, id) in numberOfDrinks"
-        :key="id"
-        :drink-id="drink.id"
-        :name="drink.name"
-        :count="drink.count"
-        :drink-counter-id="drink.drinkCounterId"
-        :increment="plusCheck"
-        :decrement="minus"
-      />
+      <template
+        v-for="(label, i) in labelsWithDrinks"
+        :key="i"
+      >
+        <PagesIndexDrinkRow
+          :label="label"
+          :update-default-drink
+          :increment="plusCheck"
+          :decrement="minus"
+        />
+      </template>
     </div>
 
-    <IndexWarningModal
-      title="飲みすぎ注意"
-      :content="`今日${drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？`"
+    <ShareWarningModal
+      :title="$t(LOCALE_INDEX_WARNING_TITLE)"
+      :content="$t(LOCALE_INDEX_WARNING_CONTENT, { drinkCountForDay })"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
       :cancel="() => modalIsActive = false"
       :class="modalIsActive ? 'is-active' : ''"

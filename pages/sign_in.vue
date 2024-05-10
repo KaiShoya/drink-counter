@@ -2,8 +2,8 @@
 import { useSupabaseStore } from '~/store/supabase'
 const { signInWithEmail, signInWithGoogle } = useSupabaseStore()
 
-const email = useState('email', () => '')
-const password = useState('password', () => '')
+const email = ref<string>('')
+const password = ref<string>('')
 
 const signIn = async () => {
   const isSignIn = await signInWithEmail(email.value, password.value)

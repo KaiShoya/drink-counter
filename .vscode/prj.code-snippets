@@ -1,0 +1,32 @@
+{
+  "vertical": {
+    "prefix": "l",
+    "body": "│",
+    "description": "たて"
+  },
+  // "vertical-bold": {
+  //   "prefix": "l",
+  //   "body": "┃",
+  //   "description": "たて"
+  // },
+  "vertical-right": {
+    "prefix": "l",
+    "body": "├",
+    "description": "たてみぎ"
+  },
+  // "vertical-right-bold": {
+  //   "prefix": "l",
+  //   "body": "┣",
+  //   "description": "たてみぎ"
+  // },
+  "lower-left": {
+    "prefix": "l",
+    "body": "└",
+    "description": "ひだりした"
+  }
+  // "lower-left-bold": {
+  //   "prefix": "l",
+  //   "body": "┗",
+  //   "description": "ひだりした"
+  // }
+}
