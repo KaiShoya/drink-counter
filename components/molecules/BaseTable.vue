@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 withDefaults(defineProps<{
   headers?: Array<String>,
   tableData: Array<Array<String | Number>>,

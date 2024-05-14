@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { useOruga } from '@oruga-ui/oruga-next'
 import QrModal from '~/components/molecules/QrModal.vue'
 

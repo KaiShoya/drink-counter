@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import type { NumberOfDrink } from '~/store/types/numberOfDrink'
 
 defineProps<{

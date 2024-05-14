@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { usePageDrinkLabelEditStore } from '~/store/pages/labels/edit'
 

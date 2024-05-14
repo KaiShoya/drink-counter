@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { useTotalStore } from '~/store/pages/data/total'
 
 const { fetchDrinkCountersAll } = useTotalStore()

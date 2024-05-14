@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 const localePath = useLocalePath()
 
 defineProps<{
