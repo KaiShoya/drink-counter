@@ -85,12 +85,13 @@ useHead({
 
             <a
               role="button"
-              class="navbar-burger navbar-burger-right"
+              :class="[{ 'is-active': active }, 'navbar-burger', 'navbar-burger-right']"
               aria-label="menu"
               aria-expanded="false"
               data-target="navbarBasicExample"
               @click="active = !active"
             >
+              <span aria-hidden="true" />
               <span aria-hidden="true" />
               <span aria-hidden="true" />
               <span aria-hidden="true" />
