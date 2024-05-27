@@ -6,7 +6,7 @@ defineProps<{
 <template>
   <button
     class="column is-2 button is-large"
-    @click="() => { clickFunction() }"
+    @click="clickFunction()"
   >
     &lt;
   </button>

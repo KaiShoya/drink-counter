@@ -6,7 +6,7 @@ defineProps<{
 <template>
   <button
     class="column is-50px button is-large ml-2"
-    @click="clickFunction"
+    @click="clickFunction()"
   >
     <span class="icon is-medium">
       <i class="mdi mdi-calendar-today" />
