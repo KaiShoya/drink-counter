@@ -11,6 +11,13 @@ const switchLocalePath = useSwitchLocalePath()
 
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
+const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
+
+useHead({
+  htmlAttrs: {
+    class: [theme],
+  },
+})
 </script>
 
 <template>
@@ -44,10 +51,35 @@ const active = ref<boolean>(false)
               </div>
               <div
                 v-else
-                class="icon image is-medium"
+                class="icon is-medium"
                 style="margin: auto;"
               >
                 <i class="mdi mdi-account-circle mdi-36px" />
+              </div>
+            </div>
+
+            <div class="navbar-burger navbar-burger-right navbar-burger-left">
+              <div
+                v-if="theme === 'theme-light'"
+                class="icon is-medium"
+                style="margin: auto;"
+                @click="theme = 'theme-dark'"
+              >
+                <i
+                  class="mdi mdi-white-balance-sunny mdi-36px"
+                  style="color: rgb(244, 186, 67);"
+                />
+              </div>
+              <div
+                v-else
+                class="icon is-medium"
+                style="margin: auto;"
+                @click="theme = 'theme-light'"
+              >
+                <i
+                  class="mdi mdi-moon-waning-crescent mdi-36px"
+                  style="color: rgb(122, 88, 237);"
+                />
               </div>
             </div>
 
