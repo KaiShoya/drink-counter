@@ -20,12 +20,6 @@ importers:
       '@mdi/font':
         specifier: ^7.4.47
         version: 7.4.47
-      '@oruga-ui/oruga-next':
-        specifier: ^0.8.6
-        version: 0.8.6(vue@3.4.21(typescript@5.4.3))
-      '@oruga-ui/theme-bulma':
-        specifier: ^0.2.11
-        version: 0.2.11
       '@pinia/nuxt':
         specifier: ^0.5.1
         version: 0.5.1(rollup@4.13.0)(typescript@5.4.3)(vue@3.4.21(typescript@5.4.3))
@@ -701,14 +695,6 @@ packages:
   '@nuxtjs/i18n@8.2.0':
     resolution: {integrity: sha512-t37aF/WOD1g8CA/iCyCJrURXocjPy7diZG+kJcHLkLmJh1v4/2Zhe0AeUsjXubGgvQKLSL3b5w8rZuPkG4yhUw==}
     engines: {node: ^14.16.0 || >=16.11.0}
-
-  '@oruga-ui/oruga-next@0.8.6':
-    resolution: {integrity: sha512-wpGvA8upsitsolnVPYsKIbvN4iBo3SDEkx8kWc2IN2G42YwTnh48jsySw2iKQggKla7YBzJ2zMZwFstolFrFug==}
-    peerDependencies:
-      vue: ^3.0.0
-
-  '@oruga-ui/theme-bulma@0.2.11':
-    resolution: {integrity: sha512-yMYNTWDNZQ0qyzAlWVyvEO/ZDRjRIyPDTf58IL+OVJuVCsq1Nn/4nFltemuQA1foL6KpsqXMFT9pBTf4wQHMPw==}
 
   '@parcel/watcher-android-arm64@2.4.1':
     resolution: {integrity: sha512-LOi/WTbbh3aTn2RYddrO8pnapixAziFl6SMxHM69r3tvdSm94JtCenaKgk1GRg5FJ5wpMCpHeW+7yqPlvZv7kg==}
@@ -5574,14 +5560,6 @@ snapshots:
       - supports-color
       - vue
       - vue-i18n-bridge
-
-  '@oruga-ui/oruga-next@0.8.6(vue@3.4.21(typescript@5.4.3))':
-    dependencies:
-      vue: 3.4.21(typescript@5.4.3)
-
-  '@oruga-ui/theme-bulma@0.2.11':
-    dependencies:
-      bulma: 0.9.4
 
   '@parcel/watcher-android-arm64@2.4.1':
     optional: true

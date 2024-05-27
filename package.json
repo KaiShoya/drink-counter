@@ -37,8 +37,6 @@
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/vue3": "^6.1.11",
     "@mdi/font": "^7.4.47",
-    "@oruga-ui/oruga-next": "^0.8.6",
-    "@oruga-ui/theme-bulma": "^0.2.11",
     "@pinia/nuxt": "^0.5.1",
     "@supabase/supabase-js": "^2.40.0",
     "animate.css": "^4.1.1",
