@@ -65,10 +65,7 @@ useHead({
                 style="margin: auto;"
                 @click="theme = 'theme-dark'"
               >
-                <i
-                  class="mdi mdi-white-balance-sunny mdi-36px"
-                  style="color: rgb(244, 186, 67);"
-                />
+                <i class="mdi mdi-white-balance-sunny mdi-36px" />
               </div>
               <div
                 v-else
@@ -76,10 +73,7 @@ useHead({
                 style="margin: auto;"
                 @click="theme = 'theme-light'"
               >
-                <i
-                  class="mdi mdi-moon-waning-crescent mdi-36px"
-                  style="color: rgb(122, 88, 237);"
-                />
+                <i class="mdi mdi-moon-waning-crescent mdi-36px" />
               </div>
             </div>
 
@@ -263,5 +257,13 @@ footer {
 
 footer span {
   display: inline-block;
+}
+
+.mdi-white-balance-sunny {
+  color: rgb(244, 186, 67);
+}
+
+.mdi-moon-waning-crescent {
+  color: rgb(122, 88, 237);
 }
 </style>
