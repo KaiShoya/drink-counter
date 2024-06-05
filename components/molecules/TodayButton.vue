@@ -5,7 +5,7 @@ defineProps<{
 </script>
 <template>
   <button
-    class="column is-50px button is-large ml-2"
+    class="column is-50px button is-large radius-unset"
     @click="clickFunction()"
   >
     <span class="icon is-medium">
@@ -15,6 +15,10 @@ defineProps<{
 </template>
 
 <style scoped>
+.button {
+  border-right: none;
+}
+
 .is-50px {
   flex: none;
   width: 50px;

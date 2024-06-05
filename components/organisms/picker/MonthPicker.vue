@@ -12,7 +12,7 @@ const { prevMonth, nextMonth } = monthlyStore
     <MoleculesMinusButton :click-function="prevMonth" />
     <input
       v-model="yearMonth"
-      class="column input is-large"
+      class="column input is-large radius-unset"
       type="month"
     >
     <MoleculesPlusButton :click-function="nextMonth" />

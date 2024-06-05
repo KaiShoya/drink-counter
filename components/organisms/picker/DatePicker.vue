@@ -13,7 +13,7 @@ const { fetchDate, prevDate, nextDate } = indexStore
     <MoleculesTodayButton :click-function="fetchDate" />
     <input
       v-model="date"
-      class="column input is-large mx-2"
+      class="column input is-large radius-unset"
       type="date"
     >
     <MoleculesPlusButton :click-function="nextDate" />

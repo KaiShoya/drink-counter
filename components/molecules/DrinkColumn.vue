@@ -33,7 +33,7 @@ defineProps<{
       </div>
     </div>
 
-    <div class="column is-1">
+    <div class="column has-text-right is-25px mr-1">
       <span class="subtitle">{{ count }}</span>
     </div>
   </div>

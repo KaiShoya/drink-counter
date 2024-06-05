@@ -219,7 +219,7 @@ useHead({
       </nav>
     </header>
 
-    <main>
+    <main class="mx-1">
       <NuxtPage />
     </main>
 
