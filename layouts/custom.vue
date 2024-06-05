@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'
@@ -14,6 +11,13 @@ const switchLocalePath = useSwitchLocalePath()
 
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
+const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
+
+useHead({
+  htmlAttrs: {
+    class: [theme],
+  },
+})
 </script>
 
 <template>
@@ -47,21 +51,41 @@ const active = ref<boolean>(false)
               </div>
               <div
                 v-else
-                class="icon image is-medium"
+                class="icon is-medium"
                 style="margin: auto;"
               >
                 <i class="mdi mdi-account-circle mdi-36px" />
               </div>
             </div>
 
+            <div class="navbar-burger navbar-burger-right navbar-burger-left">
+              <div
+                v-if="theme === 'theme-light'"
+                class="icon is-medium"
+                style="margin: auto;"
+                @click="theme = 'theme-dark'"
+              >
+                <i class="mdi mdi-white-balance-sunny mdi-36px" />
+              </div>
+              <div
+                v-else
+                class="icon is-medium"
+                style="margin: auto;"
+                @click="theme = 'theme-light'"
+              >
+                <i class="mdi mdi-moon-waning-crescent mdi-36px" />
+              </div>
+            </div>
+
             <a
               role="button"
-              class="navbar-burger navbar-burger-right"
+              :class="[{ 'is-active': active }, 'navbar-burger', 'navbar-burger-right']"
               aria-label="menu"
               aria-expanded="false"
               data-target="navbarBasicExample"
               @click="active = !active"
             >
+              <span aria-hidden="true" />
               <span aria-hidden="true" />
               <span aria-hidden="true" />
               <span aria-hidden="true" />
@@ -189,7 +213,7 @@ const active = ref<boolean>(false)
       </nav>
     </header>
 
-    <main>
+    <main class="mx-1">
       <NuxtPage />
     </main>
 
@@ -233,5 +257,13 @@ footer {
 
 footer span {
   display: inline-block;
+}
+
+.mdi-white-balance-sunny {
+  color: rgb(244, 186, 67);
+}
+
+.mdi-moon-waning-crescent {
+  color: rgb(122, 88, 237);
 }
 </style>

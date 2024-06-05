@@ -1,6 +1,6 @@
 {
   "name": "drink-counter",
-  "version": "1.17.3",
+  "version": "1.18.0",
   "license": "MIT",
   "engines": {
     "node": "20"
@@ -37,12 +37,10 @@
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/vue3": "^6.1.11",
     "@mdi/font": "^7.4.47",
-    "@oruga-ui/oruga-next": "^0.8.6",
-    "@oruga-ui/theme-bulma": "^0.2.11",
     "@pinia/nuxt": "^0.5.1",
     "@supabase/supabase-js": "^2.40.0",
     "animate.css": "^4.1.1",
-    "bulma": "^0.9.4",
+    "bulma": "^1.0.1",
     "bulma-toast": "^2.4.4",
     "pinia": "^2.1.7",
     "string-width": "7.1.0",

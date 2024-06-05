@@ -3,3 +3,52 @@
 * {
   touch-action: manipulation;
 }
+
+.is-25px {
+  flex: none;
+  width: 25px;
+}
+
+/* Bulmaのスタイルをカスタマイズする */
+@mixin component-style() {
+  border-radius: 4px;
+  box-shadow: none;
+
+  &.radius-unset {
+    border-radius: unset;
+  }
+  &.radius-tl-unset {
+    border-top-left-radius: unset;
+  }
+  &.radius-tr-unset {
+    border-top-right-radius: unset;
+  }
+  &.radius-bl-unset {
+    border-bottom-left-radius: unset;
+  }
+  &.radius-br-unset {
+    border-bottom-right-radius: unset;
+  }
+  &.radius-left-unset {
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+  }
+  &.radius-right-unset {
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+.button {
+  @include component-style;
+}
+.input {
+  @include component-style;
+}
+.select select {
+  @include component-style;
+}
+
+.input.is-large.radius-unset {
+  height: 62px;
+}

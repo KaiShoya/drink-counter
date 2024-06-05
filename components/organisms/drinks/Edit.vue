@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 import type { DrinkLabel } from '~/store/data/types/drinkLabel'
@@ -52,22 +49,24 @@ const changeDrinkLabelId = (id: number | null) => {
           class="column tag"
           :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid' }"
         />
-        <div class="column select is-fullwidth">
-          <select @change="changeDrinkLabelId(Number(($event.target as HTMLInputElement).value))">
-            <option
-              key=""
-              :value="null"
-              :label="$t(LOCALE_DRINKS_SELECT)"
-              :selected="drinkLabelId === null"
-            />
-            <option
-              v-for="label in drinkLabels"
-              :key="label.id"
-              :value="label.id"
-              :label="label.name"
-              :selected="drinkLabelId === label.id"
-            />
-          </select>
+        <div class="column">
+          <div class="select is-fullwidth">
+            <select @change="changeDrinkLabelId(Number(($event.target as HTMLInputElement).value))">
+              <option
+                key=""
+                :value="null"
+                :label="$t(LOCALE_DRINKS_SELECT)"
+                :selected="drinkLabelId === null"
+              />
+              <option
+                v-for="label in drinkLabels"
+                :key="label.id"
+                :value="label.id"
+                :label="label.name"
+                :selected="drinkLabelId === label.id"
+              />
+            </select>
+          </div>
         </div>
       </div>
     </div>

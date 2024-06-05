@@ -1,7 +1,4 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import type { DrinkLabelWithDrinks } from '~/store/types/numberOfDrink'
 
 defineProps<{
@@ -17,7 +14,7 @@ defineProps<{
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
         <button
-          class="column is-2 button"
+          class="column is-2 button is-large"
           @click="decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
         >
           <i class="mdi mdi-minus" />
@@ -35,7 +32,7 @@ defineProps<{
         />
 
         <button
-          class="column is-2 button"
+          class="column is-2 button is-large"
           @click="increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
         >
           <i class="mdi mdi-plus" />
@@ -61,7 +58,7 @@ defineProps<{
     <template v-else>
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-24">
         <button
-          class="column is-2 button"
+          class="column is-2 button is-large"
           :disabled="!label.currentDrink"
         >
           <i class="mdi mdi-minus" />
@@ -75,7 +72,7 @@ defineProps<{
         />
 
         <button
-          class="column is-2 button"
+          class="column is-2 button is-large"
           :disabled="!label.currentDrink"
         >
           <i class="mdi mdi-plus" />

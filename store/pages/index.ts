@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { findTimeZone, getZonedTime } from 'timezone-support'
 // @ts-ignore
 import { formatZonedTime } from 'timezone-support/parse-format'
+import { useAppStore } from '~/store/app'
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
@@ -19,12 +20,12 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
   const { fetchDrinkLabels, findByVisible, updateDefaultDrinkId } = drinkLabelsStore
   const userSettingsStore = useUserSettingsStore()
   const { userSettings } = storeToRefs(userSettingsStore)
+  const { showLoading, hideLoading } = useAppStore()
 
   const date = ref<string>('')
   const numberOfDrinks = ref<NumberOfDrink[]>([])
   const labelsWithDrinks = ref<DrinkLabelWithDrinks[]>([])
   const drinkCountForDay = ref<number>(0)
-  const isLoading = ref<boolean>(false)
 
   /**
    * 日付を取得する
@@ -81,7 +82,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
    * @param date 日付 '2023-01-01'
    */
   const fetchNumberOfDrinks = async (date: string) => {
-    isLoading.value = true
+    showLoading()
     await fetchDrinkLabels()
     await fetchDrinks()
     await fetchDrinkCountersForDay(date)
@@ -91,7 +92,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     drinkCountForDay.value = 0
 
     try {
-      findDrinksVisible().forEach((drink) => {
+      for (const drink of findDrinksVisible()) {
         const drinkCounter = findDrinkCountersByDrinkId(drink.id)
         numberOfDrinks.value.push({
           id: drink.id,
@@ -101,7 +102,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
           drinkCounterId: drinkCounter?.id ?? -1,
           drinkLabelId: drink.drink_label_id,
         })
-      })
+      }
     } catch (error) {
       throw new CustomError(LOCALE_ERROR_UNKNOWN)
     }
@@ -129,7 +130,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
 
     drinkCountForDay.value = updateDrinkCountForDay()
 
-    isLoading.value = false
+    hideLoading()
   }
 
   const plus = async (drinkId: number, drinkCounterId: number) => {
@@ -184,7 +185,6 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     numberOfDrinks,
     labelsWithDrinks,
     drinkCountForDay,
-    isLoading,
     fetchDate,
     prevDate,
     nextDate,
