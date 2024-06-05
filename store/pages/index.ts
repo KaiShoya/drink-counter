@@ -92,7 +92,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
     drinkCountForDay.value = 0
 
     try {
-      findDrinksVisible().forEach((drink) => {
+      for (const drink of findDrinksVisible()) {
         const drinkCounter = findDrinkCountersByDrinkId(drink.id)
         numberOfDrinks.value.push({
           id: drink.id,
@@ -102,7 +102,7 @@ export const useIndexStore = defineStore('numberOfDrinksStore', () => {
           drinkCounterId: drinkCounter?.id ?? -1,
           drinkLabelId: drink.drink_label_id,
         })
-      })
+      }
     } catch (error) {
       throw new CustomError(LOCALE_ERROR_UNKNOWN)
     }
