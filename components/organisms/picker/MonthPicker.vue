@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const monthlyStore = useMonthlyStore()
@@ -12,6 +11,7 @@ const { prevMonth, nextMonth } = monthlyStore
     <MoleculesMinusButton :click-function="prevMonth" />
     <input
       v-model="yearMonth"
+      aria-label="year month picker"
       class="column input is-large radius-unset"
       type="month"
     >

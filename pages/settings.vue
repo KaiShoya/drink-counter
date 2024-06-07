@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useUserSettingsStore } from '~/store/data/userSettings'
 import { useSettingsStore } from '~/store/pages/settings'
 import { TIMEZONE } from '~/utils/constant.ts'

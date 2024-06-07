@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useAnnualStore } from '~/store/pages/data/annual'
 
 const annualStore = useAnnualStore()
@@ -12,6 +11,7 @@ const { prevYear, nextYear } = annualStore
     <MoleculesMinusButton :click-function="prevYear" />
     <input
       v-model="year"
+      aria-label="year picker"
       class="column input is-large radius-unset"
       type="number"
     >

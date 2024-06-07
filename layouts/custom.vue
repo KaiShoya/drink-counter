@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useSupabaseStore } from '~/store/supabase'
 import { useUserStore } from '~/store/user'
 
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
+const { $i18n } = useNuxtApp()
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -14,6 +14,7 @@ const active = ref<boolean>(false)
 const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
 
 useHead({
+  title: $i18n.t(LOCALE_TITLE),
   htmlAttrs: {
     class: [theme],
   },
@@ -34,77 +35,66 @@ useHead({
             :to="localePath('/')"
             @click="active = false"
           >
-            <img src="/icon.svg">
+            <img
+              src="/icon.svg"
+              alt="title"
+            >
             {{ $t(LOCALE_TITLE) }}
           </NuxtLink>
 
-          <template v-if="isLogin">
-            <div class="navbar-burger navbar-burger-left">
-              <div
-                v-if="userAvatarUrl"
-                class="image"
-              >
-                <img
-                  class="navbar-item is-rounded"
-                  :src="userAvatarUrl"
-                >
-              </div>
-              <div
-                v-else
-                class="icon is-medium"
-                style="margin: auto;"
-              >
-                <i class="mdi mdi-account-circle mdi-36px" />
-              </div>
-            </div>
-
-            <div class="navbar-burger navbar-burger-right navbar-burger-left">
-              <div
-                v-if="theme === 'theme-light'"
-                class="icon is-medium"
-                style="margin: auto;"
-                @click="theme = 'theme-dark'"
-              >
-                <i class="mdi mdi-white-balance-sunny mdi-36px" />
-              </div>
-              <div
-                v-else
-                class="icon is-medium"
-                style="margin: auto;"
-                @click="theme = 'theme-light'"
-              >
-                <i class="mdi mdi-moon-waning-crescent mdi-36px" />
-              </div>
-            </div>
-
-            <a
-              role="button"
-              :class="[{ 'is-active': active }, 'navbar-burger', 'navbar-burger-right']"
-              aria-label="menu"
-              aria-expanded="false"
-              data-target="navbarBasicExample"
-              @click="active = !active"
+          <div
+            v-if="isLogin"
+            class="navbar-burger navbar-burger-left"
+          >
+            <div
+              v-if="userAvatarUrl"
+              class="image"
             >
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-            </a>
-          </template>
-          <template v-else>
-            <a
-              role="button"
-              class="navbar-burger"
-              aria-label="menu"
-              aria-expanded="false"
-              data-target="navbarBasicExample"
-              @click="active = !active"
+              <img
+                class="navbar-item p-0"
+                :src="userAvatarUrl"
+              >
+            </div>
+            <div
+              v-else
+              class="icon"
             >
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-            </a>
-          </template>
+              <i class="mdi mdi-account-circle mdi-36px" />
+            </div>
+          </div>
+
+          <div :class="['navbar-burger', { 'navbar-burger-right': isLogin }, 'navbar-burger-left']">
+            <div
+              v-if="theme === 'theme-light'"
+              class="icon is-medium"
+              style="margin: auto;"
+              @click="theme = 'theme-dark'"
+            >
+              <i class="mdi mdi-white-balance-sunny mdi-36px" />
+            </div>
+            <div
+              v-else
+              class="icon is-medium"
+              style="margin: auto;"
+              @click="theme = 'theme-light'"
+            >
+              <i class="mdi mdi-moon-waning-crescent mdi-36px" />
+            </div>
+          </div>
+
+          <a
+            role="button"
+            :class="[{ 'is-active': active }, 'navbar-burger', 'navbar-burger-right']"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+            @click="active = !active"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </a>
         </div>
 
         <div

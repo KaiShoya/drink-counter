@@ -17,22 +17,28 @@
   &.radius-unset {
     border-radius: unset;
   }
+
   &.radius-tl-unset {
     border-top-left-radius: unset;
   }
+
   &.radius-tr-unset {
     border-top-right-radius: unset;
   }
+
   &.radius-bl-unset {
     border-bottom-left-radius: unset;
   }
+
   &.radius-br-unset {
     border-bottom-right-radius: unset;
   }
+
   &.radius-left-unset {
     border-top-left-radius: unset;
     border-bottom-left-radius: unset;
   }
+
   &.radius-right-unset {
     border-top-right-radius: unset;
     border-bottom-right-radius: unset;
@@ -42,9 +48,11 @@
 .button {
   @include component-style;
 }
+
 .input {
   @include component-style;
 }
+
 .select select {
   @include component-style;
 }

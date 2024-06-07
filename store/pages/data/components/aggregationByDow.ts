@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 import { useSupabaseStore } from '~/store/supabase'
 import type { AggregationByDow } from '~/store/pages/data/components/types/aggregationByDow'
 
