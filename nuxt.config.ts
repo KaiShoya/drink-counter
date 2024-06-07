@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/i18n',
     '@pinia/nuxt',
+    '@nuxt/test-utils/module',
   ],
   app: {
     head: {
