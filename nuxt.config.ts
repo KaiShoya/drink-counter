@@ -21,11 +21,12 @@ export default defineNuxtConfig({
   app: {
     head: {
       script: [
-        {
-          async: true,
-          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9966413329461393',
-          crossorigin: 'anonymous',
-        },
+        // FIXME: パフォーマンスが悪いため後で直す
+        // {
+        //   async: true,
+        //   src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9966413329461393',
+        //   crossorigin: 'anonymous',
+        // },
       ],
       link: [
         { rel: 'apple-touch-icon', type: 'image/png', href: '/icon.png' },
