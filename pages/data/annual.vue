@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useAnnualStore } from '~/store/pages/data/annual'
 
 const annualStore = useAnnualStore()

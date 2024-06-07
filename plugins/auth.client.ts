@@ -1,4 +1,3 @@
-import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/store/user'
 import { useUserSettingsStore } from '~/store/data/userSettings'
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { usePageDrinkLabelsStore } from '~/store/pages/labels/index'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 

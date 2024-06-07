@@ -1,4 +1,3 @@
-import { storeToRefs } from 'pinia'
 // @ts-ignore
 import { findTimeZone, getZonedTime } from 'timezone-support'
 // @ts-ignore

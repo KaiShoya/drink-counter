@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { usePageDrinkLabelNewStore } from '~/store/pages/labels/new'
 
 const drinkLabelNewStore = usePageDrinkLabelNewStore()

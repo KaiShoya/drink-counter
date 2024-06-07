@@ -1,5 +1,3 @@
-import { storeToRefs } from 'pinia'
-
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
 import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
