@@ -46,14 +46,13 @@ useHead({
               class="image"
             >
               <img
-                class="navbar-item is-rounded"
+                class="navbar-item p-0"
                 :src="userAvatarUrl"
               >
             </div>
             <div
               v-else
-              class="icon is-medium"
-              style="margin: auto;"
+              class="icon"
             >
               <i class="mdi mdi-account-circle mdi-36px" />
             </div>
