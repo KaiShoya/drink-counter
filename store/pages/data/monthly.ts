@@ -75,9 +75,9 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
         0: { type: 'line' },
       },
     }
-    drinks.value.forEach((drink, i) => {
+    for (const [i, drink] of Object.entries(drinks.value)) {
       options.series[i + 1] = { color: drink.color ?? drink.default_color }
-    })
+    }
     return options
   })
 

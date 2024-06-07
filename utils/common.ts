@@ -37,7 +37,7 @@ const processIntoYearMonthAdd1Month = (year: number, month: number) => {
 const formatDrinkCounters = (drinkCounters: Array<DrinkCounter>, getDrinksIdArray: Array<number>) => {
   const data: { [key: string]: Array<number> } = {}
 
-  drinkCounters.forEach((drinkCounter) => {
+  for (const drinkCounter of drinkCounters) {
     if (!Object.getOwnPropertyDescriptor(data, drinkCounter.date)) {
       // 配列初期化
       data[drinkCounter.date] = new Array(getDrinksIdArray.length + 1)
@@ -45,7 +45,7 @@ const formatDrinkCounters = (drinkCounters: Array<DrinkCounter>, getDrinksIdArra
     }
     data[drinkCounter.date][getDrinksIdArray.indexOf(drinkCounter.drink_id) + 1] = drinkCounter.count
     data[drinkCounter.date][0] += drinkCounter.count
-  })
+  }
   return data
 }
 
