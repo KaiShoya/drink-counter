@@ -5,6 +5,7 @@ defineProps<{
 </script>
 <template>
   <button
+    aria-label="today"
     class="column is-50px button is-large radius-unset"
     @click="clickFunction()"
   >
