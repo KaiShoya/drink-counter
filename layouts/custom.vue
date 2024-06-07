@@ -4,6 +4,7 @@ import { useUserStore } from '~/store/user'
 
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
+const { $i18n } = useNuxtApp()
 const { locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -13,6 +14,7 @@ const active = ref<boolean>(false)
 const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
 
 useHead({
+  title: $i18n.t(LOCALE_TITLE),
   htmlAttrs: {
     class: [theme],
   },
@@ -33,7 +35,10 @@ useHead({
             :to="localePath('/')"
             @click="active = false"
           >
-            <img src="/icon.svg">
+            <img
+              src="/icon.svg"
+              alt="title"
+            >
             {{ $t(LOCALE_TITLE) }}
           </NuxtLink>
 

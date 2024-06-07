@@ -11,6 +11,7 @@ const { prevYear, nextYear } = annualStore
     <MoleculesMinusButton :click-function="prevYear" />
     <input
       v-model="year"
+      aria-label="year picker"
       class="column input is-large radius-unset"
       type="number"
     >

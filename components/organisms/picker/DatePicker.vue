@@ -12,6 +12,7 @@ const { fetchDate, prevDate, nextDate } = indexStore
     <MoleculesTodayButton :click-function="fetchDate" />
     <input
       v-model="date"
+      aria-label="date picker"
       class="column input is-large radius-unset"
       type="date"
     >
