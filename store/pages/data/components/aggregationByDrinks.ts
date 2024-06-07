@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 import { useSupabaseStore } from '~/store/supabase'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 import type { AggregationByDrinkLabel } from '~/store/pages/data/components/types/aggregationByDrinkLabel'

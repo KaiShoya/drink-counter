@@ -19,9 +19,9 @@ export const useDrinkLabelsStore = defineStore('DrinkLabelsStore', () => {
     drinkLabels.value = data ?? []
 
     // デフォルトカラーをランダムセットする
-    drinkLabels.value.forEach((label) => {
+    for (const label of drinkLabels.value) {
       label.default_color = generateRandomColor()
-    })
+    }
   }
 
   /**

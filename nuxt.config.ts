@@ -16,15 +16,17 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/i18n',
     '@pinia/nuxt',
+    '@nuxt/test-utils/module',
   ],
   app: {
     head: {
       script: [
-        {
-          async: true,
-          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9966413329461393',
-          crossorigin: 'anonymous',
-        },
+        // FIXME: パフォーマンスが悪いため後で直す
+        // {
+        //   async: true,
+        //   src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9966413329461393',
+        //   crossorigin: 'anonymous',
+        // },
       ],
       link: [
         { rel: 'apple-touch-icon', type: 'image/png', href: '/icon.png' },
@@ -49,10 +51,6 @@ export default defineNuxtConfig({
     lazy: true,
   },
   pinia: {
-    autoImports: [
-      // automatically imports `defineStore`
-      'defineStore', // import { defineStore } from 'pinia'
-      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
-    ],
+    storesDirs: ['./store/**'],
   },
 })

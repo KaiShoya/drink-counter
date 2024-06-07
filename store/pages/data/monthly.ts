@@ -1,5 +1,3 @@
-import { storeToRefs } from 'pinia'
-
 import { useDrinkCountersStore } from '~/store/data/drinkCounters'
 import { useDrinksStore } from '~/store/data/drinks'
 import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
@@ -77,9 +75,9 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
         0: { type: 'line' },
       },
     }
-    drinks.value.forEach((drink, i) => {
+    for (const [i, drink] of Object.entries(drinks.value)) {
       options.series[i + 1] = { color: drink.color ?? drink.default_color }
-    })
+    }
     return options
   })
 
