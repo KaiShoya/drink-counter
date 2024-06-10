@@ -3,6 +3,11 @@ import { usePageDrinksStore } from '~/store/pages/drinks/index'
 import { useDrinksStore } from '~/store/data/drinks'
 import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
 
+const { $i18n } = useNuxtApp()
+useSeoMeta({
+  title: $i18n.t(LOCALE_ROUTES_DRINKS),
+})
+
 const localePath = useLocalePath()
 
 const pageDrinksStore = usePageDrinksStore()

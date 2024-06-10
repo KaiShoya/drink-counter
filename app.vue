@@ -3,6 +3,13 @@ import { useAppStore } from '~/store/app'
 
 const { isLoading } = storeToRefs(useAppStore())
 
+const { $i18n } = useNuxtApp()
+const router = useRouter()
+const currentPath = computed(() => `https://drink-counter-theta.vercel.app${router.currentRoute.value.path}`)
+useSeoMeta({
+  title: $i18n.t(LOCALE_TITLE),
+  ogUrl: currentPath,
+})
 </script>
 
 <template>

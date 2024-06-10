@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useAnnualStore } from '~/store/pages/data/annual'
 
+const { $i18n } = useNuxtApp()
+useSeoMeta({
+  title: $i18n.t(LOCALE_ROUTES_ANNUAL),
+})
+
 const annualStore = useAnnualStore()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { year, calendarTitle, computeCalendarData } = storeToRefs(annualStore)
