@@ -38,6 +38,8 @@ export default defineNuxtConfig({
       ],
       meta: [
         { name: 'description', content: pkg.description },
+        { name: 'application-name', content: pkg.title },
+        { name: 'apple-mobile-web-app-title', content: pkg.title },
         { property: 'og:url', content: pkg.url },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: pkg.title },
