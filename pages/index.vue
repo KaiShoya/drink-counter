@@ -2,6 +2,11 @@
 import { useUserSettingsStore } from '@/store/data/userSettings'
 import { useIndexStore } from '@/store/pages/index'
 
+const { $i18n } = useNuxtApp()
+useSeoMeta({
+  title: $i18n.t(LOCALE_ROUTES_TOP),
+})
+
 const { userSettings } = storeToRefs(useUserSettingsStore())
 
 const indexStore = useIndexStore()

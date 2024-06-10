@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useMonthlyStore } from '~/store/pages/data/monthly'
 
+const { $i18n } = useNuxtApp()
+useSeoMeta({
+  title: $i18n.t(LOCALE_ROUTES_MONTHLY),
+})
+
 const monthlyStore = useMonthlyStore()
 const { yearMonth, computeCalendarData, computeGraphData, computedChartOptions } = storeToRefs(monthlyStore)
 const { fetchDrinkCounters } = monthlyStore

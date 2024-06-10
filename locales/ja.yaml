@@ -1,6 +1,7 @@
 title: 飲酒カウンター
 
 routes:
+    top: 飲酒カウンター
     data: データ
     total: トータル
     annual: 年別

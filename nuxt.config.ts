@@ -20,6 +20,11 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
+      title: pkg.title,
+      htmlAttrs: {
+        lang: 'ja',
+        prefix: 'og: http://ogp.me/ns#',
+      },
       script: [
         // FIXME: パフォーマンスが悪いため後で直す
         // {
@@ -30,6 +35,17 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'apple-touch-icon', type: 'image/png', href: '/icon.png' },
+      ],
+      meta: [
+        { name: 'description', content: pkg.description },
+        { name: 'application-name', content: pkg.title },
+        { name: 'apple-mobile-web-app-title', content: pkg.title },
+        { property: 'og:url', content: pkg.url },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: pkg.title },
+        { property: 'og:image', content: `${pkg.url}/icon.png` },
+        { property: 'og:title', content: pkg.title },
+        { property: 'og:description', content: pkg.description },
       ],
     },
   },

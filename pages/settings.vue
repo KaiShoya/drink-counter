@@ -3,6 +3,11 @@ import { useUserSettingsStore } from '~/store/data/userSettings'
 import { useSettingsStore } from '~/store/pages/settings'
 import { TIMEZONE } from '~/utils/constant.ts'
 
+const { $i18n } = useNuxtApp()
+useSeoMeta({
+  title: $i18n.t(LOCALE_ROUTES_SETTINGS),
+})
+
 const userSettingsStore = useUserSettingsStore()
 const { userSettings } = storeToRefs(userSettingsStore)
 const { updateSettings } = useSettingsStore()

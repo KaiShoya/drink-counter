@@ -1,6 +1,7 @@
 title: drink-counter
 
 routes:
+    top: drink-counter
     data: Data
     total: Total
     annual: Annual

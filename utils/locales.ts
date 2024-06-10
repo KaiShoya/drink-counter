@@ -1,6 +1,7 @@
 export const LOCALE_TITLE = 'title' as const
 
 const LOCALE_ROUTES = 'routes' as const
+export const LOCALE_ROUTES_TOP = `${LOCALE_ROUTES}.top` as const
 export const LOCALE_ROUTES_DATA = `${LOCALE_ROUTES}.data` as const
 export const LOCALE_ROUTES_TOTAL = `${LOCALE_ROUTES}.total` as const
 export const LOCALE_ROUTES_ANNUAL = `${LOCALE_ROUTES}.annual` as const
