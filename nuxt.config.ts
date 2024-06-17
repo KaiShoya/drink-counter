@@ -51,7 +51,6 @@ export default defineNuxtConfig({
     },
   },
   css: [
-    'bulma/css/bulma.min.css',
     'assets/scss/index.scss',
     'animate.css/animate.min.css',
   ],
