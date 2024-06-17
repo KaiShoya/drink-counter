@@ -13,12 +13,7 @@ defineProps<{
   <div>
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
-        <button
-          class="column is-2 button is-large"
-          @click="decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
-        >
-          <i class="mdi mdi-minus" />
-        </button>
+        <AtomsMinusButton :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
 
         <MoleculesDrinkColumn
           class="column mb-0"
@@ -31,12 +26,7 @@ defineProps<{
           :update-default-drink
         />
 
-        <button
-          class="column is-2 button is-large"
-          @click="increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
-        >
-          <i class="mdi mdi-plus" />
-        </button>
+        <AtomsPlusButton :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
       </div>
 
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">
@@ -57,12 +47,10 @@ defineProps<{
 
     <template v-else>
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-24">
-        <button
-          class="column is-2 button is-large"
+        <AtomsMinusButton
+          :click-function="() => { }"
           :disabled="!label.currentDrink"
-        >
-          <i class="mdi mdi-minus" />
-        </button>
+        />
 
         <MoleculesDrinkColumnDisabled
           class="column"
@@ -71,12 +59,10 @@ defineProps<{
           :color="label.color || label.default_color"
         />
 
-        <button
-          class="column is-2 button is-large"
+        <AtomsPlusButton
+          :click-function="() => { }"
           :disabled="!label.currentDrink"
-        >
-          <i class="mdi mdi-plus" />
-        </button>
+        />
       </div>
     </template>
   </div>

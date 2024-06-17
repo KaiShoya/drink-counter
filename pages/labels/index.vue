@@ -51,7 +51,10 @@ initPage()
             style="display: flex;"
           >
             <div class="handle mr-2">
-              <i class="mdi mdi-drag-horizontal-variant" />
+              <Icon
+                name="mdi:drag-horizontal-variant"
+                class="is-small"
+              />
             </div>
             {{ drinkLabel.name }}
           </div>
@@ -79,20 +82,20 @@ initPage()
               :to="localePath(`/labels/${drinkLabel.id}`)"
               class="icon has-text-info"
             >
-              <i class="mdi mdi-24px mdi-text-box-edit-outline" />
+              <Icon name="mdi:text-box-edit-outline" />
             </NuxtLink>
 
             <span
               :class="['icon', 'mx-1', drinkLabel.visible ? 'has-text-primary' : 'has-text-dark']"
               @click="updateHidden(drinkLabel)"
             >
-              <i
+              <Icon
                 v-if="drinkLabel.visible"
-                class="mdi mdi-24px mdi-eye"
+                name="mdi:eye"
               />
-              <i
+              <Icon
                 v-else
-                class="mdi mdi-24px mdi-eye-off"
+                name="mdi:eye-off"
               />
             </span>
 
@@ -100,7 +103,7 @@ initPage()
               class="icon has-text-danger"
               @click="clickDeleteDrinkButton(drinkLabel)"
             >
-              <i class="mdi mdi-24px mdi-delete-forever-outline" />
+              <Icon name="mdi:delete-forever-outline" />
             </span>
           </div>
         </div>

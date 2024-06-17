@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     '@nuxt/test-utils/module',
+    'nuxt-icon',
   ],
   app: {
     head: {
@@ -51,7 +52,6 @@ export default defineNuxtConfig({
   },
   css: [
     'bulma/css/bulma.min.css',
-    '@mdi/font/css/materialdesignicons.css',
     'assets/scss/index.scss',
     'animate.css/animate.min.css',
   ],
