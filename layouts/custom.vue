@@ -11,6 +11,7 @@ const switchLocalePath = useSwitchLocalePath()
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
 const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
+const isLight = computed(() => theme.value === 'theme-light')
 
 useHead({
   htmlAttrs: {
@@ -67,7 +68,7 @@ useHead({
 
           <div :class="['navbar-burger', { 'navbar-burger-right': isLogin }, 'navbar-burger-left']">
             <Icon
-              v-if="theme === 'theme-light'"
+              v-if="isLight"
               name="mdi:white-balance-sunny"
               class="is-medium mdi-white-balance-sunny"
               style="margin: auto;"
@@ -211,7 +212,7 @@ useHead({
 
     <footer>
       <div class="content has-text-centered">
-        <p>
+        <p :class="[{ 'has-text-text-10-invert has-background-text-00': !isLight }]">
           <span>&copy; 2023 Kai Shoya.</span>
           <span>The source code is licensed MIT.</span>
           <span>The website content is licensed CC BY NC SA 4.0.</span>
