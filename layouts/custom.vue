@@ -35,9 +35,13 @@ useHead({
           >
             <img
               src="/icon.svg"
+              width="28px"
+              height="28px"
               alt="title"
             >
-            {{ $t(LOCALE_TITLE) }}
+            <span class="ml-1">
+              {{ $t(LOCALE_TITLE) }}
+            </span>
           </NuxtLink>
 
           <div
