@@ -7,6 +7,7 @@ defineProps<{
 <template>
   <button
     class="column is-2 button is-button-large"
+    aria-label="plus"
     @click="clickFunction()"
   >
     <Icon name="mdi:plus" />
