@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-  mode: 'app' | 'page',
-  zIndex: number | null,
+  mode?: 'app' | 'page',
+  zIndex?: number | null,
 }>(), {
   mode: 'app',
   zIndex: null,

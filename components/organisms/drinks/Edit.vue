@@ -129,9 +129,7 @@ const changeDrinkLabelId = (id: number | null) => {
             class="button"
             @click="color = generateRandomColor()"
           >
-            <span class="icon is-medium">
-              <i class="mdi mdi-cached mdi-24px" />
-            </span>
+            <Icon name="mdi:cached" />
           </button>
         </div>
       </div>

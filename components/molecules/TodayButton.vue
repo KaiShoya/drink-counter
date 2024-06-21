@@ -6,12 +6,10 @@ defineProps<{
 <template>
   <button
     aria-label="today"
-    class="column is-50px button is-large radius-unset"
+    class="column is-50px button radius-unset"
     @click="clickFunction()"
   >
-    <span class="icon is-medium">
-      <i class="mdi mdi-calendar-today" />
-    </span>
+    <Icon name="mdi:calendar-today" />
   </button>
 </template>
 

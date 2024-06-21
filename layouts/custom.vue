@@ -11,6 +11,7 @@ const switchLocalePath = useSwitchLocalePath()
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
 const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
+const isLight = computed(() => theme.value === 'theme-light')
 
 useHead({
   htmlAttrs: {
@@ -35,9 +36,13 @@ useHead({
           >
             <img
               src="/icon.svg"
+              width="28px"
+              height="28px"
               alt="title"
             >
-            {{ $t(LOCALE_TITLE) }}
+            <span class="ml-1">
+              {{ $t(LOCALE_TITLE) }}
+            </span>
           </NuxtLink>
 
           <div
@@ -53,31 +58,35 @@ useHead({
                 :src="userAvatarUrl"
               >
             </div>
-            <div
-              v-else
-              class="icon"
-            >
-              <i class="mdi mdi-account-circle mdi-36px" />
+            <div v-else>
+              <Icon
+                name="mdi:account-circle"
+                class="is-medium"
+              />
             </div>
           </div>
+          <div
+            v-else
+            class="navbar-burger navbar-burger-left"
+          >
+            <!-- navbar-burger-rightの切り替えが効かないため、ダミーのdivを追加した -->
+          </div>
 
-          <div :class="['navbar-burger', { 'navbar-burger-right': isLogin }, 'navbar-burger-left']">
-            <div
-              v-if="theme === 'theme-light'"
-              class="icon is-medium"
+          <div :class="['navbar-burger', 'navbar-burger-right', 'navbar-burger-left']">
+            <Icon
+              v-if="isLight"
+              name="mdi:white-balance-sunny"
+              class="is-medium mdi-white-balance-sunny"
               style="margin: auto;"
               @click="theme = 'theme-dark'"
-            >
-              <i class="mdi mdi-white-balance-sunny mdi-36px" />
-            </div>
-            <div
+            />
+            <Icon
               v-else
-              class="icon is-medium"
+              name="mdi:moon-waning-crescent"
+              class="is-medium mdi-moon-waning-crescent"
               style="margin: auto;"
               @click="theme = 'theme-light'"
-            >
-              <i class="mdi mdi-moon-waning-crescent mdi-36px" />
-            </div>
+            />
           </div>
 
           <a
@@ -171,7 +180,7 @@ useHead({
           </div>
 
           <div class="navbar-end">
-            <div class="control has-icons-left">
+            <div class="control has-icons-left ml-3">
               <div class="select">
                 <select @change="$router.push(switchLocalePath(($event.target as HTMLInputElement).value))">
                   <option
@@ -184,9 +193,11 @@ useHead({
                   </option>
                 </select>
               </div>
-              <div class="icon is-left">
-                <i class="mdi mdi-web" />
-              </div>
+              <Icon
+                name="mdi:web"
+                class="is-left ml-1"
+                style="width: 30px;"
+              />
             </div>
             <a
               v-if="!isLogin"
@@ -207,7 +218,7 @@ useHead({
 
     <footer>
       <div class="content has-text-centered">
-        <p>
+        <p :class="[{ 'has-text-text-10-invert has-background-text-00': !isLight }]">
           <span>&copy; 2023 Kai Shoya.</span>
           <span>The source code is licensed MIT.</span>
           <span>The website content is licensed CC BY NC SA 4.0.</span>
@@ -218,14 +229,6 @@ useHead({
 </template>
 
 <style>
-.navbar-burger-left {
-  margin-right: 0px;
-}
-
-.navbar-burger-right {
-  margin-left: 0px;
-}
-
 .no-hover {
   /* pointer-events: none; */
   background-color: unset !important;
