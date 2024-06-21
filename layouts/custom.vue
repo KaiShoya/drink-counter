@@ -65,8 +65,14 @@ useHead({
               />
             </div>
           </div>
+          <div
+            v-else
+            class="navbar-burger navbar-burger-left"
+          >
+            <!-- navbar-burger-rightの切り替えが効かないため、ダミーのdivを追加した -->
+          </div>
 
-          <div :class="['navbar-burger', { 'navbar-burger-right': isLogin }, 'navbar-burger-left']">
+          <div :class="['navbar-burger', 'navbar-burger-right', 'navbar-burger-left']">
             <Icon
               v-if="isLight"
               name="mdi:white-balance-sunny"
@@ -223,14 +229,6 @@ useHead({
 </template>
 
 <style>
-.navbar-burger-left {
-  margin-right: 0px;
-}
-
-.navbar-burger-right {
-  margin-left: 0px;
-}
-
 .no-hover {
   /* pointer-events: none; */
   background-color: unset !important;
