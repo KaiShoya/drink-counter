@@ -10,7 +10,10 @@ defineProps<{
       class="delete is-large"
       @click="close()"
     />
-    <img src="/qrcode.svg">
+    <img
+      src="/qrcode.svg"
+      loading="lazy"
+    >
   </div>
 </template>
 

@@ -39,6 +39,7 @@ useHead({
               width="28px"
               height="28px"
               alt="title"
+              loading="lazy"
             >
             <span class="ml-1">
               {{ $t(LOCALE_TITLE) }}
