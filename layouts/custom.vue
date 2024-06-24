@@ -39,6 +39,7 @@ useHead({
               width="28px"
               height="28px"
               alt="title"
+              loading="lazy"
             >
             <span class="ml-1">
               {{ $t(LOCALE_TITLE) }}
@@ -49,21 +50,7 @@ useHead({
             v-if="isLogin"
             class="navbar-burger navbar-burger-left"
           >
-            <div
-              v-if="userAvatarUrl"
-              class="image"
-            >
-              <img
-                class="navbar-item p-0"
-                :src="userAvatarUrl"
-              >
-            </div>
-            <div v-else>
-              <Icon
-                name="mdi:account-circle"
-                class="is-medium"
-              />
-            </div>
+            <MoleculesHeaderUserIcon :user-avatar-url />
           </div>
           <div
             v-else
@@ -72,20 +59,10 @@ useHead({
             <!-- navbar-burger-rightの切り替えが効かないため、ダミーのdivを追加した -->
           </div>
 
-          <div :class="['navbar-burger', 'navbar-burger-right', 'navbar-burger-left']">
-            <Icon
-              v-if="isLight"
-              name="mdi:white-balance-sunny"
-              class="is-medium mdi-white-balance-sunny"
-              style="margin: auto;"
-              @click="theme = 'theme-dark'"
-            />
-            <Icon
-              v-else
-              name="mdi:moon-waning-crescent"
-              class="is-medium mdi-moon-waning-crescent"
-              style="margin: auto;"
-              @click="theme = 'theme-light'"
+          <div class="navbar-burger navbar-burger-right navbar-burger-left">
+            <MoleculesHeaderThemeButton
+              :is-light
+              :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
             />
           </div>
 
@@ -180,7 +157,15 @@ useHead({
           </div>
 
           <div class="navbar-end">
-            <div class="control has-icons-left ml-3">
+            <template v-if="!active">
+              <MoleculesHeaderUserIcon :user-avatar-url />
+              <MoleculesHeaderThemeButton
+                :is-light
+                :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
+              />
+            </template>
+
+            <div class="control has-icons-left ml-3 is-vcentered">
               <div class="select">
                 <select @change="$router.push(switchLocalePath(($event.target as HTMLInputElement).value))">
                   <option
@@ -250,11 +235,7 @@ footer span {
   display: inline-block;
 }
 
-.mdi-white-balance-sunny {
-  color: rgb(244, 186, 67);
-}
-
-.mdi-moon-waning-crescent {
-  color: rgb(122, 88, 237);
+.control.has-icons-left .icon {
+  top: auto !important;
 }
 </style>
