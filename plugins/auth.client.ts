@@ -8,17 +8,17 @@ export default defineNuxtPlugin((nuxtApp) => {
   const { fetchUserSettings } = useUserSettingsStore()
   const { $i18n } = useNuxtApp()
 
-  nuxtApp.hook('app:created', async () => {
+  nuxtApp.hook('app:created', () => {
     // ユーザ情報取得
-    await fetchUserData()
-    // UserSettings取得
-    await fetchUserSettings()
-  })
-
-  // ログイン情報を取得できなかったらトーストを表示
-  nuxtApp.hook('page:finish', () => {
-    if (!isLogin.value) {
-      showWarningToast($i18n.t(LOCALE_ERROR_GET_USER_INFO))
-    }
+    fetchUserData()
+      .then(() => {
+        if (isLogin.value) {
+          // UserSettings取得
+          fetchUserSettings()
+        } else {
+          // ログイン情報を取得できなかったらトーストを表示
+          showWarningToast($i18n.t(LOCALE_ERROR_GET_USER_INFO))
+        }
+      })
   })
 })
