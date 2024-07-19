@@ -10,11 +10,12 @@ withDefaults(defineProps<{
     series: { 0: { type: 'line' } },
   },
 })
+const { isLoading } = storeToRefs(useAppStore())
 </script>
 
 <template>
   <GChart
-    v-if="data.length > 1"
+    v-if="data.length > 1 && !isLoading"
     type="ComboChart"
     :data="data"
     :options="options"

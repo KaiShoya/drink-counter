@@ -1,9 +1,5 @@
-import { useDrinkCountersStore } from '~/store/data/drinkCounters'
-import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
-import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
-
 export const useAnnualStore = defineStore('annualStore', () => {
+  const { showLoading, hideLoading } = useAppStore()
   const { formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { drinkCounters } = storeToRefs(drinkCountersStore)
@@ -20,10 +16,12 @@ export const useAnnualStore = defineStore('annualStore', () => {
   const nextYear = () => year.value++
 
   const fetchDrinkCounters = async () => {
+    showLoading()
     await fetchDrinks()
     await fetchDrinkCountersPerYear(year.value)
     await fetchSumCountPerYear(year.value)
     await fetchAggregationByDowPerYear(year.value)
+    hideLoading()
   }
 
   /**

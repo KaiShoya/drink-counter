@@ -1,9 +1,5 @@
-import { useDrinkCountersStore } from '~/store/data/drinkCounters'
-import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
-import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
-
 export const useTotalStore = defineStore('totalStore', () => {
+  const { showLoading, hideLoading } = useAppStore()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCounters } = drinkCountersStore
   const drinksStore = useDrinksStore()
@@ -12,10 +8,12 @@ export const useTotalStore = defineStore('totalStore', () => {
   const { fetchSumCount } = useAggregationByDrinksStore()
 
   const fetchDrinkCountersAll = async () => {
+    showLoading()
     await fetchDrinks()
     await fetchDrinkCounters()
     await fetchSumCount()
     await fetchAggregationByDow()
+    hideLoading()
   }
 
   return {
