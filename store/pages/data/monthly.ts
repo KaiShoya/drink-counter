@@ -1,9 +1,5 @@
-import { useDrinkCountersStore } from '~/store/data/drinkCounters'
-import { useDrinksStore } from '~/store/data/drinks'
-import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
-import { useAggregationByDrinksStore } from '~/store/pages/data/components/aggregationByDrinks'
-
 export const useMonthlyStore = defineStore('monthlyStore', () => {
+  const { showLoading, hideLoading } = useAppStore()
   const { processIntoYearMonth, formatDrinkCounters } = useProcessDate()
   const drinkCountersStore = useDrinkCountersStore()
   const { drinkCounters } = storeToRefs(drinkCountersStore)
@@ -37,12 +33,14 @@ export const useMonthlyStore = defineStore('monthlyStore', () => {
   }
 
   const fetchDrinkCounters = async () => {
+    showLoading()
     const { year, month } = computedYearMonth.value
     await fetchDrinks()
     await fetchDrinkCountersPerMonth(year, month)
     await fetchSumCountPerMonth(year, month)
     await fetchAggregationByDowPerMonth(year, month)
     graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
+    hideLoading()
   }
 
   /**
