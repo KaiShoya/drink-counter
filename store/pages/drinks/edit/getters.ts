@@ -1,0 +1,3 @@
+export function usePageDrinkEditGetters () {
+  return {}
+}
