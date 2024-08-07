@@ -14,11 +14,14 @@ export function useDrinksActions () {
     if (error) {
       throw new Response500Error()
     }
-    drinks.value = data ?? []
+    drinks.value = []
 
     // デフォルトカラーをランダムセットする
-    for (const drink of drinks.value) {
-      drink.default_color = generateRandomColor()
+    for (const drink of data) {
+      drinks.value.push({
+        ...drink,
+        default_color: generateRandomColor(),
+      })
     }
   }
 

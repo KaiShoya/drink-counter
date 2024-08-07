@@ -1,7 +1,7 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from '~/database.types'
 
 export function useSupabaseState () {
-  const supabase: SupabaseClient = createClient(useRuntimeConfig().public.supabaseUrl, useRuntimeConfig().public.supabaseKey)
+  const supabase = useSupabaseClient<Database>()
 
   return {
     supabase,

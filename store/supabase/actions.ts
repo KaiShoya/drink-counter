@@ -2,22 +2,39 @@ export function useSupabaseActions () {
   const { supabase } = useSupabaseState()
 
   const signUpWithEmail = async (email: string, password: string) => {
-    const { data } = await supabase.auth.signUp({ email, password })
+    const { data, error } = await supabase.auth.signUp({ email, password })
+    if (error) {
+      throw new SupabaseAuthError(error)
+    }
     return data
   }
+
   const signInWithEmail = async (email: string, password: string) => {
-    const { data } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) {
+      throw new SupabaseAuthError(error)
+    }
     return data.session
   }
 
   const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
+      options: {
+        redirectTo: '/confirm',
+      },
     })
+
+    if (error) {
+      throw new SupabaseAuthError(error)
+    }
   }
 
   const signOut = async () => {
-    await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      throw new SupabaseAuthError(error)
+    }
   }
 
   return {

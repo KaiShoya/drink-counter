@@ -14,11 +14,14 @@ export function useDrinkLabelsActions () {
     if (error) {
       throw new Response500Error()
     }
-    drinkLabels.value = data ?? []
+    drinkLabels.value = []
 
     // デフォルトカラーをランダムセットする
-    for (const label of drinkLabels.value) {
-      label.default_color = generateRandomColor()
+    for (const label of data) {
+      drinkLabels.value.push({
+        ...label,
+        default_color: generateRandomColor(),
+      })
     }
   }
 
