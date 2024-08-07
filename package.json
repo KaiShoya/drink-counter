@@ -49,7 +49,7 @@
     "@fullcalendar/daygrid": "^6.1.14",
     "@fullcalendar/vue3": "^6.1.14",
     "@pinia/nuxt": "^0.5.1",
-    "@supabase/supabase-js": "^2.43.5",
+    "@supabase/supabase-js": "^2.45.0",
     "animate.css": "^4.1.1",
     "bulma": "^1.0.1",
     "bulma-toast": "^2.4.4",
