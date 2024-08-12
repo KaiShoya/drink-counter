@@ -12,12 +12,13 @@ export function useDrinkLabelsGetters () {
    */
   const findById = (drinkLabelId: number) => drinkLabels.value.find((label: DrinkLabel) => label.id === Number(drinkLabelId))
 
-  /**
-   * 指定した飲み物IDのラベルデータを取得する
-   * @param drinkId number
-   * @returns Drink | undefined
-   */
-  const findByDrinkId = (drinkId: number) => drinkLabels.value.filter((label: DrinkLabel) => label.id === Number(drinkId))
+  // FIXME: 飲み物IDとの比較ができてないためコメントアウト
+  // /**
+  //  * 指定した飲み物IDのラベルデータを取得する
+  //  * @param drinkId number
+  //  * @returns Drink | undefined
+  //  */
+  // const findByDrinkId = (drinkId: number) => drinkLabels.value.filter((label: DrinkLabel) => label.id === Number(drinkId))
 
   // /**
   //  * drinkLabel.idの配列を返却する
@@ -36,6 +37,5 @@ export function useDrinkLabelsGetters () {
   return {
     findByVisible,
     findById,
-    findByDrinkId,
   }
 }

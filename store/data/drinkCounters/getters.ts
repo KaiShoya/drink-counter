@@ -17,7 +17,7 @@ export function useDrinkCountersGetters () {
    * @returns DrinkCounter | undefined
    */
   const findDrinkCountersByDrinkId = (id: number) => {
-    return drinkCounters.value.find((dc: any) => dc.drink_id === id)
+    return drinkCounters.value.find(dc => dc.drink_id === id)
   }
 
   return {

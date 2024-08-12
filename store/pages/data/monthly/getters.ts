@@ -31,7 +31,7 @@ export const useMonthlyGetters = () => {
   const computeGraphData = computed(() => {
     return [
       graphDataTitle.value,
-      ...Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => [key as string | Number].concat(value)),
+      ...Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => [key as string | number].concat(value)),
     ]
   })
 
