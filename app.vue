@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAppStore } from '~/store/app'
+
 const { isLoading } = storeToRefs(useAppStore())
 
 const { $i18n } = useNuxtApp()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+import { useMonthlyStore } from '~/store/pages/data/monthly'
 
 const { $i18n } = useNuxtApp()
 useSeoMeta({

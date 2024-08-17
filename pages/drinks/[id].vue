@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+import { usePageDrinkEditStore } from '~/store/pages/drinks/edit'
 
 const drinkEditStore = usePageDrinkEditStore()
 const { name, color, amount, drinkLabelId } = storeToRefs(drinkEditStore)
