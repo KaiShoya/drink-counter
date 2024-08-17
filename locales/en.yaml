@@ -111,11 +111,7 @@ general:
   update_success: Successfully updated.
 
 error:
-    500_API_ERROR: An internal server error occurred.
-    GET_USER_INFO: Failed to retrieve login information
-    GET_RECORD: Failed to retrieve data. Please reload and try again.
-    LOGIN: Login failed. Please try again.
-    UNKNOWN: An error occurred during processing. Please reload and try again.
-    SUPABASE:
-        AUTH: Invalid credentials. Please reload and try again.
-        PROVIDER_DISABLED: This provider is disabled for use. Please use a different login.
+  500_API_ERROR: An internal server error occurred.
+  GET_USER_INFO: Failed to retrieve login information
+  GET_RECORD: Failed to retrieve data. Please reload and try again.
+  UNKNOWN: An error occurred during processing. Please reload and try again.

@@ -18,7 +18,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-icon',
-    '@nuxtjs/supabase',
   ],
   app: {
     head: {
@@ -68,10 +67,5 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./store/**'],
-  },
-  supabase: {
-    // redirectOptions: {
-    //   cookieRedirect: true,
-    // },
   },
 })

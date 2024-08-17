@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+import { usePageDrinkLabelNewStore } from '~/store/pages/labels/new'
 
 const drinkLabelNewStore = usePageDrinkLabelNewStore()
 const { name, color, standardAmount } = storeToRefs(drinkLabelNewStore)
