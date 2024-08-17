@@ -2,7 +2,7 @@ import * as bulmaToast from 'bulma-toast'
 
 export const showToast = (message: string, type: bulmaToast.ToastType, duration: number = 2000) => {
   bulmaToast.toast({
-    message,
+    message: useProcessString.replaceLooseLineBreaks(message),
     duration,
     type,
     dismissible: true,
