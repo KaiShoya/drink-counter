@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useUserSettingsStore } from '@/store/data/userSettings'
-import { useIndexStore } from '@/store/pages/index'
+definePageMeta({ middleware: 'auth' })
 
 const { $i18n } = useNuxtApp()
 useSeoMeta({

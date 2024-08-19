@@ -1,5 +1,3 @@
-import type { DrinkCounter } from '~/store/data/types/drinkCounter'
-
 /**
  * DateオブジェクトをYYYY-MM-DD形式に変換する
  * @param date Date
@@ -67,4 +65,41 @@ export const generateRandomColor = () => {
     ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2) +
     ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2) +
     ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2)
+}
+
+/**
+ * 改行コード「\n」を<br>に変換する
+ * @param message string
+ * @returns string
+ */
+const replaceStrictLineBreaks = (message: string) => {
+  const messages = message.split('\\n')
+  return messages.join('<br>')
+}
+
+/**
+ * 改行コード「\n」を<span>に変換する
+ * @param message string
+ * @returns string
+ */
+const replaceLooseLineBreaks = (message: string) => {
+  const spanStart = '<span style="display: inline-block;">'
+  const spanEnd = '</span>'
+  const messages = message.split('\\n')
+  return spanStart + spanStart + messages.join(spanEnd + spanStart) + spanEnd + spanEnd
+}
+
+/**
+ * 配列を<br>で結合する
+ * @param messages Array<string>
+ * @returns string
+ */
+const joinStrictLineBreaks = (messages: Array<string>) => {
+  return messages.join('<br>')
+}
+
+export const useProcessString = {
+  replaceStrictLineBreaks,
+  replaceLooseLineBreaks,
+  joinStrictLineBreaks,
 }
