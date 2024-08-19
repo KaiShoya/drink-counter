@@ -1,6 +1,4 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
-
 const drinkEditStore = usePageDrinkEditStore()
 const { name, color, amount, drinkLabelId } = storeToRefs(drinkEditStore)
 const { initPage, updateDrinkById } = drinkEditStore
