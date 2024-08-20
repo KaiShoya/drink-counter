@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   spaLoadingTemplate: true,
   runtimeConfig: {
     public: {
+      baseUrl: process.env.VERCEL_URL ?? 'http://localhost:3001',
       supabaseUrl: 'http://localhost:54321',
       supabaseKey: '',
       gtagAppName: '',

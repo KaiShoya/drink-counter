@@ -8,6 +8,9 @@ useSeoMeta({
   title: $i18n.t(LOCALE_TITLE),
   ogUrl: currentPath,
 })
+
+const { fetchUserData } = useUserStore()
+fetchUserData()
 </script>
 
 <template>

@@ -21,7 +21,7 @@ export function useSupabaseActions () {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: '/confirm',
+        redirectTo: useRuntimeConfig().public.baseUrl + '/confirm',
       },
     })
 

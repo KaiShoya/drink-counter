@@ -6,10 +6,6 @@ export function useUserActions () {
 
     isLogin.value = !!(user.value)
 
-    if (!user.value) {
-      throw new LoginError()
-    }
-
     userName.value = user.value?.user_metadata?.name
     userAvatarUrl.value = user.value?.user_metadata?.avatar_url
   }
