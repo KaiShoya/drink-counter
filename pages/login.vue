@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const route = useRoute()
 const { signInWithGoogle } = useSupabaseStore()
 
 const localePath = useLocalePath()
@@ -7,7 +8,8 @@ watch(
   user,
   () => {
     if (user.value) {
-      return navigateTo(localePath('/'))
+      const fullpath = route.query.fullpath?.toString() ?? localePath('/')
+      return navigateTo(fullpath)
     }
   },
   {

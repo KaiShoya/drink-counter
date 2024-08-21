@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((_to, _from) => {
+export default defineNuxtRouteMiddleware((_to, from) => {
   const localePath = useLocalePath()
 
   const { fetchUserData } = useUserStore()
@@ -7,6 +7,6 @@ export default defineNuxtRouteMiddleware((_to, _from) => {
   fetchUserData()
 
   if (!isLogin.value) {
-    return navigateTo(localePath('/login'))
+    return navigateTo(localePath('/login?fullpath=' + from.fullPath))
   }
 })
