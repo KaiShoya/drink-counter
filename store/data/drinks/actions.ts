@@ -26,12 +26,12 @@ export function useDrinksActions () {
   }
 
   /**
- * 指定したIDの飲み物を削除する
- * 削除に成功したらDrinksを再取得する
- * @param drinkId number
- * @param name string
- * @returns Promise<error_message_code | undefined>
- */
+   * 指定したIDの飲み物を削除する
+   * 削除に成功したらDrinksを再取得する
+   * @param drinkId number
+   * @param name string
+   * @returns Promise<error_message_code | undefined>
+   */
   const deleteDrinkById = async (drinkId: number, name: string) => {
     const { error } = await supabase.rpc('delete_drink_data', { drinkid: drinkId })
     if (error) {
