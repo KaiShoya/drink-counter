@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useUserSettingsStore } from '~/store/data/userSettings'
-import { useSettingsStore } from '~/store/pages/settings'
-import { TIMEZONE } from '~/utils/constant.ts'
+definePageMeta({
+  middleware: 'auth',
+})
 
 const { $i18n } = useNuxtApp()
 useSeoMeta({

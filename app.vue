@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useAppStore } from '~/store/app'
-
 const { isLoading } = storeToRefs(useAppStore())
 
 const { $i18n } = useNuxtApp()
@@ -10,6 +8,9 @@ useSeoMeta({
   title: $i18n.t(LOCALE_TITLE),
   ogUrl: currentPath,
 })
+
+const { fetchUserData } = useUserStore()
+fetchUserData()
 </script>
 
 <template>

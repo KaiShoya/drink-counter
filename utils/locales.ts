@@ -13,6 +13,7 @@ export const LOCALE_ROUTES_SETTINGS = `${LOCALE_ROUTES}.settings` as const
 
 const LOCALE_AUTH = 'auth' as const
 export const LOCALE_AUTH_GOOGLE = `${LOCALE_AUTH}.google` as const
+export const LOCALE_AUTH_LOGOUT = `${LOCALE_AUTH}.logout` as const
 
 const LOCALE_CALENDAR = 'calendar' as const
 const LOCALE_CALENDAR_MONTH = `${LOCALE_CALENDAR}.month` as const
@@ -120,4 +121,9 @@ const LOCALE_ERROR = 'error' as const
 export const LOCALE_ERROR_500_API_ERROR = `${LOCALE_ERROR}.500_API_ERROR` as const
 export const LOCALE_ERROR_GET_USER_INFO = `${LOCALE_ERROR}.GET_USER_INFO` as const
 export const LOCALE_ERROR_GET_RECORD = `${LOCALE_ERROR}.GET_RECORD` as const
+export const LOCALE_ERROR_LOGIN = `${LOCALE_ERROR}.LOGIN` as const
 export const LOCALE_ERROR_UNKNOWN = `${LOCALE_ERROR}.UNKNOWN` as const
+
+const LOCALE_ERROR_SUPABASE = `${LOCALE_ERROR}.SUPABASE` as const
+export const LOCALE_ERROR_SUPABASE_AUTH = `${LOCALE_ERROR_SUPABASE}.AUTH` as const
+export const LOCALE_ERROR_SUPABASE_PROVIDER_DISABLED = `${LOCALE_ERROR_SUPABASE}.PROVIDER_DISABLED` as const

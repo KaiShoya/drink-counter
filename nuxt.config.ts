@@ -3,9 +3,13 @@ import pkg from './package.json'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
+  routeRules: {
+    '/confirm': { ssr: false },
+  },
   spaLoadingTemplate: true,
   runtimeConfig: {
     public: {
+      baseUrl: 'http://localhost:3000',
       supabaseUrl: 'http://localhost:54321',
       supabaseKey: '',
       gtagAppName: '',
@@ -18,6 +22,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-icon',
+    '@nuxtjs/supabase',
   ],
   app: {
     head: {
@@ -67,5 +72,8 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./store/**'],
+  },
+  supabase: {
+    redirect: false,
   },
 })

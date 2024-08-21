@@ -1,3 +1,5 @@
+import { AuthError } from '@supabase/supabase-js'
+
 export default defineNuxtPlugin((nuxtApp) => {
   // nuxtApp.vueApp.config.errorHandler = (error, instance, info) => {
   //   console.log('errorHandler', error, instance, info)
@@ -15,19 +17,18 @@ export default defineNuxtPlugin((nuxtApp) => {
   })
 })
 
-export const handler = (error: unknown) => {
-  const { $i18n } = useNuxtApp()
-  if (error instanceof Response500Error) {
-    showDangerToast($i18n.t(error.getMessage()))
-  } else if (error instanceof GetRecordError) {
-    showDangerToast($i18n.t(error.getMessage()))
-  } else if (error instanceof GetUserInfoError) {
-    showDangerToast($i18n.t(error.getMessage()))
-  } else if (error instanceof SupabaseResponseError) {
-    showDangerToast($i18n.t(error.getMessage()))
-  } else if (error instanceof CustomError) {
-    showDangerToast($i18n.t(error.getMessage()))
+const handler = (error: unknown) => {
+  if (error instanceof CustomError) {
+    showDangerToast(error.getMessage())
+  } else if (error instanceof AuthError) {
+    showDangerToast(error.code + ' : ' + error.message)
   } else if (error instanceof Error) {
-    showDangerToast($i18n.t(error.message))
+    // eslint-disable-next-line no-console
+    console.log(error)
+    showDangerToast(error.name + ' : ' + error.message)
+  } else {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    showDangerToast(LOCALE_ERROR_UNKNOWN + '\n' + error?.toString())
   }
 }

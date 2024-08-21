@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { useTotalStore } from '~/store/pages/data/total'
+definePageMeta({
+  middleware: 'auth',
+})
 
 const { $i18n } = useNuxtApp()
 useSeoMeta({

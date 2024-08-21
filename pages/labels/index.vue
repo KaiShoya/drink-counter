@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { usePageDrinkLabelsStore } from '~/store/pages/labels/index'
-import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
+definePageMeta({
+  middleware: 'auth',
+})
 
 const { $i18n } = useNuxtApp()
 useSeoMeta({
