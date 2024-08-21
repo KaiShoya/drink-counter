@@ -13,6 +13,7 @@ export const LOCALE_ROUTES_SETTINGS = `${LOCALE_ROUTES}.settings` as const
 
 const LOCALE_AUTH = 'auth' as const
 export const LOCALE_AUTH_GOOGLE = `${LOCALE_AUTH}.google` as const
+export const LOCALE_AUTH_LOGOUT = `${LOCALE_AUTH}.logout` as const
 
 const LOCALE_CALENDAR = 'calendar' as const
 const LOCALE_CALENDAR_MONTH = `${LOCALE_CALENDAR}.month` as const

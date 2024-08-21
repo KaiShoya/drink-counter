@@ -13,6 +13,7 @@ routes:
 
 auth:
       google: Google Login
+      logout: Log out
 
 calendar:
     month:

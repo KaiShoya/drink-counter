@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 const user = useSupabaseUser()
 
 watch(
@@ -6,7 +7,7 @@ watch(
   () => {
     if (user.value) {
       // Redirect to protected page
-      return navigateTo('/')
+      return navigateTo(localePath('/'))
     }
   },
   {

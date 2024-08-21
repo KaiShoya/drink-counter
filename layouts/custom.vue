@@ -192,6 +192,8 @@ useHead({
             >
               {{ $t(LOCALE_AUTH_GOOGLE) }}
             </a>
+
+            <MoleculesLogOut :is-login />
           </div>
         </div>
       </nav>

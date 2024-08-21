@@ -3,10 +3,13 @@ import pkg from './package.json'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
+  routeRules: {
+    '/confirm': { ssr: false },
+  },
   spaLoadingTemplate: true,
   runtimeConfig: {
     public: {
-      baseUrl: process.env.VERCEL_URL ?? 'http://localhost:3001',
+      baseUrl: 'http://localhost:3000',
       supabaseUrl: 'http://localhost:54321',
       supabaseKey: '',
       gtagAppName: '',
@@ -71,8 +74,6 @@ export default defineNuxtConfig({
     storesDirs: ['./store/**'],
   },
   supabase: {
-    // redirectOptions: {
-    //   cookieRedirect: true,
-    // },
+    redirect: false,
   },
 })
