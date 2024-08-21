@@ -206,7 +206,7 @@ useHead({
         <p :class="[{ 'has-text-text-10-invert has-background-text-00': !isLight }]">
           <span>&copy; 2023 Kai Shoya.</span>
           <span>The source code is licensed MIT.</span>
-          <span>The website content is licensed CC BY NC SA 4.0.</span>
+          <span>The website content is licensed CC BY SA 4.0.</span>
         </p>
       </div>
     </footer>
