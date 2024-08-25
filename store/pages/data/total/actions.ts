@@ -1,4 +1,5 @@
 export const useTotalActions = () => {
+  const { showLoading, hideLoading } = useAppStore()
   const drinkCountersStore = useDrinkCountersStore()
   const { fetchDrinkCounters } = drinkCountersStore
   const drinksStore = useDrinksStore()
@@ -7,10 +8,12 @@ export const useTotalActions = () => {
   const { fetchSumCount } = useAggregationByDrinksStore()
 
   const fetchDrinkCountersAll = async () => {
+    showLoading()
     await fetchDrinks()
     await fetchDrinkCounters()
     await fetchSumCount()
     await fetchAggregationByDow()
+    hideLoading()
   }
 
   return {
