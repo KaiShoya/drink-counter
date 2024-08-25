@@ -9,8 +9,10 @@ useSeoMeta({
 })
 
 const userSettingsStore = useUserSettingsStore()
+const { fetchUserSettings } = userSettingsStore
 const { userSettings } = storeToRefs(userSettingsStore)
 const { updateSettings } = useSettingsStore()
+fetchUserSettings()
 </script>
 
 <template>
