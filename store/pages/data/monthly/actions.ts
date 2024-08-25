@@ -4,6 +4,7 @@ export const useMonthlyActions = () => {
 
   const { processIntoYearMonth } = useProcessDate()
 
+  const { showLoading, hideLoading } = useAppStore()
   const drinksStore = useDrinksStore()
   const { getDrinksNameArray } = storeToRefs(drinksStore)
   const { fetchDrinks } = drinksStore
@@ -25,12 +26,14 @@ export const useMonthlyActions = () => {
   }
 
   const fetchDrinkCounters = async () => {
+    showLoading()
     const { year, month } = computedYearMonth.value
     await fetchDrinks()
     await fetchDrinkCountersPerMonth(year, month)
     await fetchSumCountPerMonth(year, month)
     await fetchAggregationByDowPerMonth(year, month)
     graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
+    hideLoading()
   }
 
   return {
