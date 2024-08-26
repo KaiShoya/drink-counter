@@ -7,6 +7,8 @@ export default defineNuxtRouteMiddleware((_to, from) => {
   fetchUserData()
 
   if (!isLogin.value) {
+    const { fetchUserSettings } = useUserSettingsStore()
+    fetchUserSettings()
     return navigateTo(localePath('/login?fullpath=' + from.fullPath))
   }
 })
