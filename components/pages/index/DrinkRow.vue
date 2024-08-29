@@ -11,8 +11,7 @@ defineProps<{
   <div>
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
-        <AtomsButtonsMinusButton
-          :click-function="decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
+        <AtomsButtonsMinusButton :click-function="decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
 
         <MoleculesDrinkColumn
           class="column mb-0"
