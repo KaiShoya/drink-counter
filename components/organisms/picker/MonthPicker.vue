@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useMonthlyStore } from '~/store/pages/data/monthly'
-
 const monthlyStore = useMonthlyStore()
 const { yearMonth } = storeToRefs(monthlyStore)
 const { prevMonth, nextMonth } = monthlyStore

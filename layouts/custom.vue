@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useSupabaseStore } from '~/store/supabase'
-import { useUserStore } from '~/store/user'
-
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
 const { locale, locales } = useI18n()

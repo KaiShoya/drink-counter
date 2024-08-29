@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { DrinkLabelWithDrinks } from '~/store/types/numberOfDrink'
-
 defineProps<{
   label: DrinkLabelWithDrinks,
   increment: Function,
@@ -14,8 +12,7 @@ defineProps<{
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
         <AtomsButtonsMinusButton
-          :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
-        />
+          :click-function="decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
 
         <MoleculesDrinkColumn
           class="column mb-0"
@@ -28,9 +25,7 @@ defineProps<{
           :update-default-drink
         />
 
-        <AtomsButtonsPlusButton
-          :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
-        />
+        <AtomsButtonsPlusButton :click-function="increment(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
       </div>
 
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">

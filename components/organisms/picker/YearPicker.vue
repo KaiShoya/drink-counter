@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useAnnualStore } from '~/store/pages/data/annual'
-
 const annualStore = useAnnualStore()
 const { year } = storeToRefs(annualStore)
 const { prevYear, nextYear } = annualStore
