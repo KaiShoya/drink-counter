@@ -8,13 +8,13 @@ const { prevMonth, nextMonth } = monthlyStore
 
 <template>
   <div class="columns is-mobile my-2 mx-0">
-    <MoleculesMinusButton :click-function="prevMonth" />
+    <AtomsButtonsPickerMinusButton :click-function="prevMonth" />
     <input
       v-model="yearMonth"
       aria-label="year month picker"
       class="column input is-large radius-unset"
       type="month"
     >
-    <MoleculesPlusButton :click-function="nextMonth" />
+    <AtomsButtonsPickerPlusButton :click-function="nextMonth" />
   </div>
 </template>

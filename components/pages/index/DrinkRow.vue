@@ -13,7 +13,9 @@ defineProps<{
   <div>
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
-        <AtomsMinusButton :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
+        <AtomsButtonsMinusButton
+          :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+        />
 
         <MoleculesDrinkColumn
           class="column mb-0"
@@ -26,7 +28,9 @@ defineProps<{
           :update-default-drink
         />
 
-        <AtomsPlusButton :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
+        <AtomsButtonsPlusButton
+          :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+        />
       </div>
 
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">
@@ -47,7 +51,7 @@ defineProps<{
 
     <template v-else>
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-24">
-        <AtomsMinusButton
+        <AtomsButtonsMinusButton
           :click-function="() => { }"
           :disabled="!label.currentDrink"
         />
@@ -59,7 +63,7 @@ defineProps<{
           :color="label.color || label.default_color"
         />
 
-        <AtomsPlusButton
+        <AtomsButtonsPlusButton
           :click-function="() => { }"
           :disabled="!label.currentDrink"
         />

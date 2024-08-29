@@ -8,14 +8,14 @@ const { fetchDate, prevDate, nextDate } = indexStore
 
 <template>
   <div class="columns is-mobile my-4 mx-0">
-    <MoleculesMinusButton :click-function="prevDate" />
-    <MoleculesTodayButton :click-function="fetchDate" />
+    <AtomsButtonsPickerMinusButton :click-function="prevDate" />
+    <AtomsButtonsTodayButton :click-function="fetchDate" />
     <input
       v-model="date"
       aria-label="date picker"
       class="column input is-large radius-unset"
       type="date"
     >
-    <MoleculesPlusButton :click-function="nextDate" />
+    <AtomsButtonsPickerPlusButton :click-function="nextDate" />
   </div>
 </template>
