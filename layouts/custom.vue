@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useSupabaseStore } from '~/store/supabase'
-import { useUserStore } from '~/store/user'
-
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
 const { locale, locales } = useI18n()
@@ -50,7 +47,7 @@ useHead({
             v-if="isLogin"
             class="navbar-burger navbar-burger-left"
           >
-            <MoleculesHeaderUserIcon :user-avatar-url />
+            <AtomsButtonsUserIcon :user-avatar-url />
           </div>
           <div
             v-else
@@ -60,7 +57,7 @@ useHead({
           </div>
 
           <div class="navbar-burger navbar-burger-right navbar-burger-left">
-            <MoleculesHeaderThemeButton
+            <AtomsButtonsThemeButton
               :is-light
               :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
             />
@@ -158,8 +155,8 @@ useHead({
 
           <div class="navbar-end">
             <template v-if="!active">
-              <MoleculesHeaderUserIcon :user-avatar-url />
-              <MoleculesHeaderThemeButton
+              <AtomsButtonsUserIcon :user-avatar-url />
+              <AtomsButtonsThemeButton
                 :is-light
                 :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
               />

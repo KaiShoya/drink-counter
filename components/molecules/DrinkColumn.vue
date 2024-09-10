@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { NumberOfDrink } from '~/store/types/numberOfDrink'
-
 defineProps<{
   labelId: number,
   labelName: string,

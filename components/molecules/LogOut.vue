@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useSupabaseStore } from '~/store/supabase'
-
 defineProps<{
   isLogin: boolean,
 }>()

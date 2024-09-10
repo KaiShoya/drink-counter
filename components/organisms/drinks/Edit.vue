@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useDrinkLabelsStore } from '~/store/data/drinkLabels'
-import type { DrinkLabel } from '~/store/data/types/drinkLabel'
-
 const localePath = useLocalePath()
 
 const drinkLabelsStore = useDrinkLabelsStore()
