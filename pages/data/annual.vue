@@ -25,15 +25,15 @@ watch(year, async () => {
     <OrganismsPickerYearPicker />
 
     <!-- メモリリークするため一旦コメントアウト -->
-    <!-- <PagesDataGraphsCalendar
+    <!-- <MoleculesGraphsCalendar
       :title="calendarTitle"
       :data="computeCalendarData"
     /> -->
 
-    <PagesDataGraphsPieChart />
+    <MoleculesGraphsPieChart />
 
-    <PagesDataAggregationByDrinksTable />
+    <OrganismsDataAggregationByDrinksTable />
 
-    <PagesDataAggregationByDowTable />
+    <OrganismsDataAggregationByDowTable />
   </div>
 </template>

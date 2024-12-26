@@ -15,10 +15,10 @@ fetchDrinkCountersAll()
 
 <template>
   <div class="container">
-    <PagesDataGraphsPieChart />
+    <MoleculesGraphsPieChart />
 
-    <PagesDataAggregationByDrinksTable />
+    <OrganismsDataAggregationByDrinksTable />
 
-    <PagesDataAggregationByDowTable />
+    <OrganismsDataAggregationByDowTable />
   </div>
 </template>
