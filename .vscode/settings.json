@@ -29,4 +29,5 @@
   "javascript.format.insertSpaceAfterConstructor": true,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
   "typescript.format.insertSpaceAfterConstructor": true,
+  "html.format.wrapLineLength": 125,
 }

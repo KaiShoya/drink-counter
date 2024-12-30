@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useAggregationByDowStore } from '~/store/pages/data/components/aggregationByDow'
-
 const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowStore())
 </script>
 

@@ -51,7 +51,7 @@ watch(date, async () => {
         v-for="(label, i) in labelsWithDrinks"
         :key="i"
       >
-        <PagesIndexDrinkRow
+        <OrganismsIndexDrinkRow
           :label="label"
           :update-default-drink
           :increment="plusCheck"
