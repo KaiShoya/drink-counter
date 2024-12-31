@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { DrinkLabelWithDrinks } from '~/store/types/numberOfDrink'
-
 defineProps<{
   label: DrinkLabelWithDrinks,
   increment: Function,
@@ -13,9 +11,11 @@ defineProps<{
   <div>
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
-        <AtomsMinusButton :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
+        <AtomsButtonsMinusButton
+          :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+        />
 
-        <MoleculesDrinkColumn
+        <MoleculesDrinkColumns
           class="column mb-0"
           :label-id="label.id"
           :label-name="label.name"
@@ -26,14 +26,16 @@ defineProps<{
           :update-default-drink
         />
 
-        <AtomsPlusButton :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)" />
+        <AtomsButtonsPlusButton
+          :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+        />
       </div>
 
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">
         <div class="column is-2" />
         <details class="column">
           <summary>詳細</summary>
-          <MoleculesDrinkColumnSub
+          <MoleculesDrinkColumnsSub
             v-for="drink in label.drinks"
             :key="drink.id"
             :name="drink.name"
@@ -47,19 +49,19 @@ defineProps<{
 
     <template v-else>
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-24">
-        <AtomsMinusButton
+        <AtomsButtonsMinusButton
           :click-function="() => { }"
           :disabled="!label.currentDrink"
         />
 
-        <MoleculesDrinkColumnDisabled
+        <MoleculesDrinkColumnsDisabled
           class="column"
           :name="label.name"
           :count="0"
           :color="label.color || label.default_color"
         />
 
-        <AtomsPlusButton
+        <AtomsButtonsPlusButton
           :click-function="() => { }"
           :disabled="!label.currentDrink"
         />

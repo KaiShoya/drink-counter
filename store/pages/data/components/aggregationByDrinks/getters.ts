@@ -40,6 +40,7 @@ export const useAggregationByDrinksGetters = () => {
   })
 
   return {
+    computedTableData,
     computedSumCount,
     computedChartData,
     computedPieChartOptions,

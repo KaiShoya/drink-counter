@@ -28,20 +28,20 @@ watch(yearMonth, async () => {
   <div class="container">
     <OrganismsPickerMonthPicker />
 
-    <PagesDataGraphsFCalendar
+    <MoleculesGraphsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"
       :data="computeCalendarData"
     />
-    <PagesDataGraphsComboChart
+    <MoleculesGraphsComboChart
       :data="computeGraphData"
       :options="computedChartOptions"
     />
 
-    <PagesDataGraphsPieChart />
+    <MoleculesGraphsPieChart />
 
-    <PagesDataAggregationByDrinksTable />
+    <OrganismsDataAggregationByDrinksTable />
 
-    <PagesDataAggregationByDowTable />
+    <OrganismsDataAggregationByDowTable />
   </div>
 </template>
