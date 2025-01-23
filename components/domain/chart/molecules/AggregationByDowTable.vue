@@ -3,7 +3,7 @@ const { computedAggregationByDowToArray } = storeToRefs(useAggregationByDowStore
 </script>
 
 <template>
-  <MoleculesBaseTable
+  <DomainChartAtomsBaseTable
     :headers="[
       $t(LOCALE_AGGREGATION_DOW),
       $t(LOCALE_AGGREGATION_SUM_COUNT),

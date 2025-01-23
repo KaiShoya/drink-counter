@@ -15,7 +15,7 @@ fetchUserData()
 
 <template>
   <div onclick="false">
-    <OrganismsAppLoader v-show="isLoading" />
+    <CommonAppAtomsLoader v-show="isLoading" />
     <NuxtLayout name="custom">
       <NuxtPage />
     </NuxtLayout>

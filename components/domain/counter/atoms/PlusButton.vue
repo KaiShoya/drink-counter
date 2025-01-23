@@ -5,11 +5,10 @@ defineProps<{
 </script>
 
 <template>
-  <button
-    class="column is-2 button is-button-large"
-    aria-label="plus"
-    @click="clickFunction()"
+  <BaseAtomsButton
+    label="plus"
+    :click-function="clickFunction"
   >
     <Icon name="mdi:plus" />
-  </button>
+  </BaseAtomsButton>
 </template>

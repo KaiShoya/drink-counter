@@ -1,5 +1,6 @@
 <script setup lang="ts">
 defineProps<{
+  label: string,
   clickFunction: Function,
 }>()
 </script>
@@ -7,9 +8,9 @@ defineProps<{
 <template>
   <button
     class="column is-2 button is-button-large"
-    aria-label="minus"
+    :aria-label="label"
     @click="clickFunction()"
   >
-    <Icon name="mdi:minus" />
+    <slot />
   </button>
 </template>

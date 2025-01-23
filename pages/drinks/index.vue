@@ -143,7 +143,7 @@ initPage()
       </template>
     </draggable>
 
-    <ShareDangerModal
+    <CommonModalMoleculesDanger
       :title="$t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
       :content="$t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
       :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"

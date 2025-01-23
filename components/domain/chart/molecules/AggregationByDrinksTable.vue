@@ -3,7 +3,7 @@ const { chartDataTitle, computedTableData, computedSumCount } = storeToRefs(useA
 </script>
 
 <template>
-  <MoleculesBaseTable
+  <DomainChartAtomsBaseTable
     :headers="chartDataTitle"
     :table-data="computedTableData"
     :footers="[

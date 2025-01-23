@@ -5,13 +5,16 @@
   "html.validate.scripts": true,
   "html.validate.styles": true,
   "editor.formatOnSave": true,
+  "editor.tabSize": 2,
   "[sql]": {
     "editor.formatOnSave": false
   },
   "[svg]": {
     "editor.formatOnSave": false
   },
-  "editor.tabSize": 2,
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
   "[markdown]": {
     "editor.wordWrap": "on",
     "editor.quickSuggestions": {

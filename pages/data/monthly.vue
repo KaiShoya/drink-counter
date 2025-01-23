@@ -26,22 +26,22 @@ watch(yearMonth, async () => {
 
 <template>
   <div class="container">
-    <OrganismsPickerMonthPicker />
+    <DomainPickerMoleculesMonthPicker />
 
-    <MoleculesGraphsFCalendar
+    <DomainChartAtomsFCalendar
       :key="updateCalendar"
       :year-month="yearMonth"
       :data="computeCalendarData"
     />
-    <MoleculesGraphsComboChart
+    <DomainChartAtomsComboChart
       :data="computeGraphData"
       :options="computedChartOptions"
     />
 
-    <MoleculesGraphsPieChart />
+    <DomainChartAtomsPieChart />
 
-    <OrganismsDataAggregationByDrinksTable />
+    <DomainChartMoleculesAggregationByDowTable />
 
-    <OrganismsDataAggregationByDowTable />
+    <DomainChartMoleculesAggregationByDowTable />
   </div>
 </template>

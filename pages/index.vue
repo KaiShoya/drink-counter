@@ -44,14 +44,14 @@ watch(date, async () => {
 
 <template>
   <div>
-    <OrganismsPickerDatePicker />
+    <DomainPickerMoleculesDatePicker />
 
     <div>
       <template
         v-for="(label, i) in labelsWithDrinks"
         :key="i"
       >
-        <OrganismsIndexDrinkRow
+        <DomainCounterMoleculesRow
           :label="label"
           :update-default-drink
           :increment="plusCheck"
@@ -60,7 +60,7 @@ watch(date, async () => {
       </template>
     </div>
 
-    <ShareWarningModal
+    <CommonModalMoleculesWarning
       :title="$t(LOCALE_INDEX_WARNING_TITLE)"
       :content="$t(LOCALE_INDEX_WARNING_CONTENT, { drinkCountForDay })"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"

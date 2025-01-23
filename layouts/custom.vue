@@ -47,7 +47,7 @@ useHead({
             v-if="isLogin"
             class="navbar-burger navbar-burger-left"
           >
-            <AtomsButtonsUserIcon :user-avatar-url />
+            <DomainUserAtomsUserIcon :user-avatar-url />
           </div>
           <div
             v-else
@@ -57,7 +57,7 @@ useHead({
           </div>
 
           <div class="navbar-burger navbar-burger-right navbar-burger-left">
-            <AtomsButtonsThemeButton
+            <DomainHeaderAtomsThemeButton
               :is-light
               :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
             />
@@ -150,13 +150,13 @@ useHead({
               {{ $t(LOCALE_ROUTES_SETTINGS) }}
             </NuxtLink>
 
-            <OrganismsShowQrModal />
+            <CommonModalMoleculesQr />
           </div>
 
           <div class="navbar-end">
             <template v-if="!active">
-              <AtomsButtonsUserIcon :user-avatar-url />
-              <AtomsButtonsThemeButton
+              <DomainUserAtomsUserIcon :user-avatar-url />
+              <DomainHeaderAtomsThemeButton
                 :is-light
                 :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
               />
@@ -190,7 +190,7 @@ useHead({
               {{ $t(LOCALE_AUTH_GOOGLE) }}
             </a>
 
-            <MoleculesLogOut :is-login />
+            <DomainHeaderAtomsLogOutButton :is-login />
           </div>
         </div>
       </nav>
