@@ -150,7 +150,7 @@ useHead({
               {{ $t(LOCALE_ROUTES_SETTINGS) }}
             </NuxtLink>
 
-            <CommonModalMoleculesQr />
+            <DomainHeaderMoleculesQr />
           </div>
 
           <div class="navbar-end">
@@ -190,6 +190,7 @@ useHead({
               {{ $t(LOCALE_AUTH_GOOGLE) }}
             </a>
 
+            <SignInAdmin :is-login />
             <DomainHeaderAtomsLogOutButton :is-login />
           </div>
         </div>

@@ -10,7 +10,7 @@ const showModal = ref(false)
   >
     {{ $t(LOCALE_SHOW_QR) }}
   </a>
-  <CommonModalAtomsQr
+  <DomainHeaderAtomsQr
     v-show="showModal"
     :close="() => showModal = false"
   />
