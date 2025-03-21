@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
-  label: string,
-  clickFunction: Function,
+  label: string
+  clickFunction: () => void
 }>()
 </script>
 

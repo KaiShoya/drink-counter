@@ -6,8 +6,8 @@ const { drinkLabels } = storeToRefs(drinkLabelsStore)
 const { findById } = drinkLabelsStore
 
 defineProps<{
-  saveFunction: Function,
-  save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD,
+  saveFunction: () => void
+  save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD
 }>()
 const drinkLabelId = defineModel<number | null>('drinkLabelId')
 const name = defineModel<string | null>('name')

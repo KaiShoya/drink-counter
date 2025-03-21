@@ -1,8 +1,9 @@
 <script setup lang="ts">
 defineProps<{
-  clickFunction: Function,
+  clickFunction: () => void
 }>()
 </script>
+
 <template>
   <button
     aria-label="today"

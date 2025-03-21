@@ -1,4 +1,5 @@
 import { AuthError } from '@supabase/supabase-js'
+import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
   // nuxtApp.vueApp.config.errorHandler = (error, instance, info) => {
@@ -9,7 +10,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     showDangerToast(err.toString())
   })
 
-  window.addEventListener('unhandledrejection', (event: any) => {
+  window.addEventListener('unhandledrejection', (event) => {
     handler(event.reason)
   })
   nuxtApp.hook('vue:error', (error, _instance, _info) => {
@@ -23,12 +24,10 @@ const handler = (error: unknown) => {
   } else if (error instanceof AuthError) {
     showDangerToast(error.code + ' : ' + error.message)
   } else if (error instanceof Error) {
-    // eslint-disable-next-line no-console
-    console.log(error)
+    console.error(error)
     showDangerToast(error.name + ' : ' + error.message)
   } else {
-    // eslint-disable-next-line no-console
-    console.log(error)
+    console.error(error)
     showDangerToast(LOCALE_ERROR_UNKNOWN + '\n' + error?.toString())
   }
 }

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
-  isLight: boolean,
-  changeTheme: Function
+  isLight: boolean
+  changeTheme: (theme: 'theme-dark' | 'theme-light') => void
 }>()
 </script>
 

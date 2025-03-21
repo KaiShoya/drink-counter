@@ -61,10 +61,10 @@ export const useProcessDate = () => {
  * @returns string #000000
  */
 export const generateRandomColor = () => {
-  return '#' +
-    ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2) +
-    ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2) +
-    ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2)
+  return '#'
+    + ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2)
+    + ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2)
+    + ('00' + Math.floor(256 * Math.random()).toString(16)).slice(-2)
 }
 
 /**

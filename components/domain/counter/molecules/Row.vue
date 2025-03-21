@@ -1,9 +1,9 @@
 <script setup lang="ts">
 defineProps<{
-  label: DrinkLabelWithDrinks,
-  increment: Function,
-  decrement: Function,
-  updateDefaultDrink: Function,
+  label: DrinkLabelWithDrinks
+  increment: (drinkId: number, drinkCounterId: number) => void
+  decrement: (drinkId: number, drinkCounterId: number) => void
+  updateDefaultDrink: (labelId: number, drinkId: number) => void
 }>()
 </script>
 

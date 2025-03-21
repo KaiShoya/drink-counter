@@ -2,28 +2,10 @@ import pkg from './package.json'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@nuxt/test-utils/module', 'nuxt-icon', '@nuxtjs/supabase', '@nuxt/eslint'],
+
   ssr: true,
-  routeRules: {
-    '/confirm': { ssr: false },
-  },
-  spaLoadingTemplate: true,
-  runtimeConfig: {
-    public: {
-      baseUrl: 'http://localhost:3000',
-      supabaseUrl: 'http://localhost:54321',
-      supabaseKey: '',
-      gtagAppName: '',
-      gtagConfig: '',
-      version: pkg.version,
-    },
-  },
-  modules: [
-    '@nuxtjs/i18n',
-    '@pinia/nuxt',
-    '@nuxt/test-utils/module',
-    'nuxt-icon',
-    '@nuxtjs/supabase',
-  ],
+
   app: {
     head: {
       title: pkg.title,
@@ -55,10 +37,42 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   css: [
     'assets/scss/index.scss',
     'animate.css/animate.min.css',
   ],
+
+  spaLoadingTemplate: true,
+
+  runtimeConfig: {
+    public: {
+      baseUrl: 'http://localhost:3000',
+      supabaseUrl: 'http://localhost:54321',
+      supabaseKey: '',
+      gtagAppName: '',
+      gtagConfig: '',
+      version: pkg.version,
+    },
+  },
+
+  routeRules: {
+    '/confirm': { ssr: false },
+  },
+
+  compatibilityDate: '2025-03-16',
+
+  eslint: {
+    checker: true,
+    config: {
+      stylistic: {
+        indent: 2,
+        quotes: 'single',
+        semi: false,
+      },
+    },
+  },
+
   i18n: {
     vueI18n: './i18n.config.ts',
     locales: [
@@ -70,9 +84,11 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default', // https://v8.i18n.nuxtjs.org/guide/routing-strategies
     lazy: true,
   },
+
   pinia: {
     storesDirs: ['./store/**'],
   },
+
   supabase: {
     redirect: false,
   },

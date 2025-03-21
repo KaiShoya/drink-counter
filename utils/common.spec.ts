@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest'
+
 const { processIntoString, processIntoYearMonth, processIntoYearMonthAdd1Month } = useProcessDate()
 
 describe('processIntoString()のテスト', () => {

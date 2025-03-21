@@ -4,7 +4,7 @@
   "html.format.wrapAttributes": "force-expand-multiline",
   "html.validate.scripts": true,
   "html.validate.styles": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.tabSize": 2,
   "[sql]": {
     "editor.formatOnSave": false
@@ -33,4 +33,9 @@
   "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
   "typescript.format.insertSpaceAfterConstructor": true,
   "html.format.wrapLineLength": 125,
+  "eslint.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+  },
+  // "eslint.codeActionsOnSave.rules": null
 }

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { GChart } from 'vue-google-charts'
+
 withDefaults(defineProps<{
-  data: Array<Array<String | Number>>,
-  options?: any,
+  data: Array<Array<string | number>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  options?: any
 }>(), {
   options: {
     seriesType: 'bars',

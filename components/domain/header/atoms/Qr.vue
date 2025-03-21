@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  close: Function
+  close: () => void
 }>()
 </script>
 

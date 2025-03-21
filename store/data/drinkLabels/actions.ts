@@ -51,7 +51,6 @@ export function useDrinkLabelsActions () {
   const updateDrinkLabel = async (drinkLabelId: number, name: string, color: string | null, standardAmount: number) => {
     const { error } = await supabase.from(TABLE_NAME).update({ name, color, standard_amount: standardAmount }).eq('id', drinkLabelId)
     if (error) {
-      // eslint-disable-next-line no-console
       console.error(error)
       throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }

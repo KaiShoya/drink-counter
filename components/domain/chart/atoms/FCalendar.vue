@@ -5,9 +5,9 @@ import type { CalendarOptions } from '@fullcalendar/core'
 
 const props = defineProps<{
   data: Array<{
-    date: string,
+    date: string
     count: number
-  }>,
+  }>
   yearMonth: string
 }>()
 

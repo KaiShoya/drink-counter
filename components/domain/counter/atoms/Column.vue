@@ -1,12 +1,12 @@
 <script setup lang="ts">
 defineProps<{
-  labelId: number,
-  labelName: string,
-  currentDrink: NumberOfDrink | null,
-  drinks: Array<NumberOfDrink>,
-  count: number,
-  color: string,
-  updateDefaultDrink: Function,
+  labelId: number
+  labelName: string
+  currentDrink: NumberOfDrink | null
+  drinks: Array<NumberOfDrink>
+  count: number
+  color: string
+  updateDefaultDrink: (labelId: number, drinkId: number) => void
 }>()
 </script>
 

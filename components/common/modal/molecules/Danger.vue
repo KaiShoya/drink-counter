@@ -1,12 +1,9 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 defineProps<{
-  title: string,
-  content: string,
-  success: Function,
-  cancel: Function
+  title: string
+  content: string
+  success: () => void
+  cancel: () => void
 }>()
 </script>
 

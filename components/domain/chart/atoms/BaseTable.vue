@@ -1,8 +1,8 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
-  headers?: Array<String>,
-  tableData: Array<Array<String | Number>>,
-  footers?: Array<String | number>
+  headers?: Array<string>
+  tableData: Array<Array<string | number>>
+  footers?: Array<string | number>
 }>(), {
   headers: () => [],
   footers: () => [],

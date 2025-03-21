@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  isLogin: boolean,
+  isLogin: boolean
 }>()
 
 const localePath = useLocalePath()
@@ -10,8 +10,8 @@ const clickFn = async () => {
   await signOut()
   navigateTo(localePath('/'), { external: true })
 }
-
 </script>
+
 <template>
   <a
     v-if="isLogin"

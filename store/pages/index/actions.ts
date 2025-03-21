@@ -1,6 +1,4 @@
-// @ts-ignore
 import { findTimeZone, getZonedTime } from 'timezone-support'
-// @ts-ignore
 import { formatZonedTime } from 'timezone-support/parse-format'
 
 export function useIndexActions () {
@@ -74,7 +72,7 @@ export function useIndexActions () {
           drinkLabelId: drink.drink_label_id,
         })
       }
-    } catch (error) {
+    } catch {
       throw new CustomError(LOCALE_ERROR_UNKNOWN)
     }
 

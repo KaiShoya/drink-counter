@@ -2,8 +2,8 @@
 const localePath = useLocalePath()
 
 defineProps<{
-  saveFunction: Function,
-  save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD,
+  saveFunction: () => void
+  save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD
 }>()
 const name = defineModel<string | null>('name')
 const color = defineModel<string | null>('color')

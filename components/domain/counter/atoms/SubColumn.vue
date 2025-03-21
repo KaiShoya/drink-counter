@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps<{
-  name: string,
-  count: Number,
-  color: string,
+  name: string
+  count: number
+  color: string
 }>()
 </script>
 

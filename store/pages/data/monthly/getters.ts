@@ -36,6 +36,7 @@ export const useMonthlyGetters = () => {
   })
 
   const computedChartOptions = computed(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const options: any = {
       seriesType: 'bars',
       legend: { position: 'bottom' },
