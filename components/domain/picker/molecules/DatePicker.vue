@@ -5,15 +5,21 @@ const { fetchDate, prevDate, nextDate } = indexStore
 </script>
 
 <template>
-  <div class="columns is-mobile my-4 mx-0">
+  <div class="is-mobile my-4 mx-0 is-vcentered">
     <DomainPickerAtomsMinusButton :click-function="prevDate" />
     <DomainPickerAtomsTodayButton :click-function="fetchDate" />
     <input
       v-model="date"
       aria-label="date picker"
-      class="column input is-large radius-unset"
+      class="input is-large radius-unset is-fullwidth"
       type="date"
     >
     <DomainPickerAtomsPlusButton :click-function="nextDate" />
   </div>
 </template>
+
+<style scoped>
+input[type="date"] {
+}
+</style>
+x

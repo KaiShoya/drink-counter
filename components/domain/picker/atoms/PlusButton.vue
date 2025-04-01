@@ -6,15 +6,19 @@ defineProps<{
 
 <template>
   <button
-    class="column is-2 button is-large radius-left-unset"
+    class="is-2 button is-large radius-left-unset"
     @click="clickFunction()"
   >
-    &gt;
+    <Icon
+      name="mdi:chevron-right"
+      class="icon"
+    />
   </button>
 </template>
 
 <style scoped>
 .button {
   border-left: none;
+  height: 62px;
 }
 </style>

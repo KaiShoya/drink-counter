@@ -5,12 +5,12 @@ const { prevMonth, nextMonth } = monthlyStore
 </script>
 
 <template>
-  <div class="columns is-mobile my-2 mx-0">
+  <div class="is-mobile my-2 mx-0 is-vcentered">
     <DomainPickerAtomsMinusButton :click-function="prevMonth" />
     <input
       v-model="yearMonth"
       aria-label="year month picker"
-      class="column input is-large radius-unset"
+      class="input is-large radius-unset is-fullwidth"
       type="month"
     >
     <DomainPickerAtomsPlusButton :click-function="nextMonth" />

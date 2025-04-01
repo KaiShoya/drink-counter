@@ -9,6 +9,9 @@ defineProps<{
     label="plus"
     :click-function="clickFunction"
   >
-    <Icon name="mdi:plus" />
+    <Icon
+      name="mdi:plus"
+      class="icon"
+    />
   </BaseAtomsButton>
 </template>

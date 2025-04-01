@@ -177,7 +177,7 @@ useHead({
               </div>
               <Icon
                 name="mdi:web"
-                class="is-left ml-1"
+                class="icon is-left ml-1"
                 style="width: 30px;"
               />
             </div>

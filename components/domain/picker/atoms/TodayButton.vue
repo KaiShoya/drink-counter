@@ -7,20 +7,21 @@ defineProps<{
 <template>
   <button
     aria-label="today"
-    class="column is-50px button radius-unset"
+    class="button radius-unset"
     @click="clickFunction()"
   >
-    <Icon name="mdi:calendar-today" />
+    <Icon
+      name="mdi:calendar-today"
+      class="icon"
+    />
   </button>
 </template>
 
 <style scoped>
 .button {
   border-right: none;
-}
-
-.is-50px {
   flex: none;
   width: 50px;
+  height: 62px;
 }
 </style>

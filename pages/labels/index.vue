@@ -54,7 +54,7 @@ initPage()
             <div class="handle mr-2">
               <Icon
                 name="mdi:drag-horizontal-variant"
-                class="is-small"
+                class="icon is-small"
               />
             </div>
             {{ drinkLabel.name }}
@@ -83,7 +83,10 @@ initPage()
               :to="localePath(`/labels/${drinkLabel.id}`)"
               class="icon has-text-info"
             >
-              <Icon name="mdi:text-box-edit-outline" />
+              <Icon
+                name="mdi:text-box-edit-outline"
+                class="icon"
+              />
             </NuxtLink>
 
             <span
@@ -93,10 +96,12 @@ initPage()
               <Icon
                 v-if="drinkLabel.visible"
                 name="mdi:eye"
+                class="icon"
               />
               <Icon
                 v-else
                 name="mdi:eye-off"
+                class="icon"
               />
             </span>
 
@@ -104,7 +109,10 @@ initPage()
               class="icon has-text-danger"
               @click="clickDeleteDrinkButton(drinkLabel)"
             >
-              <Icon name="mdi:delete-forever-outline" />
+              <Icon
+                name="mdi:delete-forever-outline"
+                class="icon"
+              />
             </span>
           </div>
         </div>

@@ -9,25 +9,22 @@ defineProps<{
   <Icon
     v-if="isLight"
     name="mdi:white-balance-sunny"
-    class="is-medium mdi-white-balance-sunny"
-    style="margin: auto;"
+    class="icon is-medium"
+    style="color: rgb(244, 186, 67);"
     @click="changeTheme('theme-dark')"
   />
   <Icon
     v-else
     name="mdi:moon-waning-crescent"
-    class="is-medium mdi-moon-waning-crescent"
-    style="margin: auto;"
+    class="icon is-medium"
+    style="color: rgb(122, 88, 237);"
     @click="changeTheme('theme-light')"
   />
 </template>
 
 <style scoped>
-.mdi-white-balance-sunny {
-  color: rgb(244, 186, 67);
-}
-
-.mdi-moon-waning-crescent {
-  color: rgb(122, 88, 237);
+.icon {
+  left: 4px !important;
+  top: 4px !important;
 }
 </style>

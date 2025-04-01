@@ -50,7 +50,10 @@ const standardAmount = defineModel<number>('standardAmount')
             class="button"
             @click="color = generateRandomColor()"
           >
-            <Icon name="mdi:cached" />
+            <Icon
+              name="mdi:cached"
+              class="icon"
+            />
           </button>
         </div>
       </div>
