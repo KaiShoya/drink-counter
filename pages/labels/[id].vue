@@ -12,7 +12,7 @@ initPage()
 
 <template>
   <div>
-    <OrganismsLabelsEdit
+    <DomainLabelAtomsEdit
       v-model:name="name"
       v-model:color="color"
       v-model:standard-amount="standardAmount"

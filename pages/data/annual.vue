@@ -22,7 +22,7 @@ watch(year, async () => {
 
 <template>
   <div class="container">
-    <OrganismsPickerYearPicker />
+    <DomainPickerMoleculesYearPicker />
 
     <!-- メモリリークするため一旦コメントアウト -->
     <!-- <MoleculesGraphsCalendar
@@ -30,10 +30,10 @@ watch(year, async () => {
       :data="computeCalendarData"
     /> -->
 
-    <MoleculesGraphsPieChart />
+    <DomainChartAtomsPieChart />
 
-    <OrganismsDataAggregationByDrinksTable />
+    <DomainChartMoleculesAggregationByDrinksTable />
 
-    <OrganismsDataAggregationByDowTable />
+    <DomainChartMoleculesAggregationByDowTable />
   </div>
 </template>

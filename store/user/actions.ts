@@ -7,7 +7,7 @@ export function useUserActions () {
       isLogin.value = !!(user.value)
       userName.value = user.value?.user_metadata?.name
       userAvatarUrl.value = user.value?.user_metadata?.avatar_url
-    } catch (error) {
+    } catch {
       isLogin.value = false
       userName.value = null
       userAvatarUrl.value = null

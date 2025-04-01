@@ -7,6 +7,7 @@
     "vue.volar",
     "yzhang.markdown-all-in-one",
     "nuxtr.nuxtr-vscode",
-    "gruntfuggly.todo-tree"
+    "gruntfuggly.todo-tree",
+    "antfu.iconify"
   ]
 }

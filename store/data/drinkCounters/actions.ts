@@ -71,7 +71,7 @@ export function useDrinkCountersActions () {
     if (error) {
       throw new Response500Error()
     }
-    drinkCounter.count = Number(data) ?? 0
+    drinkCounter.count = isNaN(data) ? 0 : Number(data)
   }
 
   /**
@@ -91,7 +91,7 @@ export function useDrinkCountersActions () {
     if (error) {
       throw new Response500Error()
     }
-    drinkCounter.count = Number(data) ?? 0
+    drinkCounter.count = isNaN(data) ? 0 : Number(data)
   }
 
   /**

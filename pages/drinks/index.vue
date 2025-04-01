@@ -59,7 +59,7 @@ initPage()
             <div class="handle mr-2">
               <Icon
                 name="mdi:drag-horizontal-variant"
-                class="is-small"
+                class="icon is-small"
               />
             </div>
           </div>
@@ -99,7 +99,10 @@ initPage()
               :to="localePath(`/drinks/${drink.id}`)"
               class="icon has-text-info"
             >
-              <Icon name="mdi:text-box-edit-outline" />
+              <Icon
+                name="mdi:text-box-edit-outline"
+                class="icon"
+              />
             </NuxtLink>
 
             <span
@@ -109,10 +112,12 @@ initPage()
               <Icon
                 v-if="drink.visible"
                 name="mdi:eye"
+                class="icon"
               />
               <Icon
                 v-else
                 name="mdi:eye-off"
+                class="icon"
               />
             </span>
 
@@ -120,7 +125,10 @@ initPage()
               class="icon has-text-danger"
               @click="clickDeleteDrinkButton(drink)"
             >
-              <Icon name="mdi:delete-forever-outline" />
+              <Icon
+                name="mdi:delete-forever-outline"
+                class="icon"
+              />
             </span>
           </div>
         </div>
@@ -143,7 +151,7 @@ initPage()
       </template>
     </draggable>
 
-    <ShareDangerModal
+    <CommonModalMoleculesDanger
       :title="$t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
       :content="$t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
       :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"

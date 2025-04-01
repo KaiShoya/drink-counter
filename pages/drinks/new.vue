@@ -12,7 +12,7 @@ initPage()
 
 <template>
   <div>
-    <OrganismsDrinksEdit
+    <DomainDrinkAtomsEdit
       v-model:name="name"
       v-model:color="color"
       v-model:amount="amount"
