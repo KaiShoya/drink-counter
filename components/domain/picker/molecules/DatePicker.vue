@@ -17,9 +17,3 @@ const { fetchDate, prevDate, nextDate } = indexStore
     <DomainPickerAtomsPlusButton :click-function="nextDate" />
   </div>
 </template>
-
-<style scoped>
-input[type="date"] {
-}
-</style>
-x
