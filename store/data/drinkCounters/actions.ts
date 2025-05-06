@@ -1,6 +1,15 @@
+import { mande } from 'mande'
+
 const TABLE_NAME = 'drink_counters'
 
 export function useDrinkCountersActions () {
+  const mandeOptions = {
+    headers: {
+      Authorization: 'Bearer ' + useUserStore().accessToken,
+    },
+  }
+  const api = mande(useRuntimeConfig().public.supabaseUrl + '/functions/v1/drink-counters', mandeOptions)
+
   const { supabase } = useSupabaseStore()
   const { drinkCounters } = useDrinkCountersState()
   const { findDrinkCountersById } = useDrinkCountersGetters()
@@ -9,11 +18,12 @@ export function useDrinkCountersActions () {
    * 自分のデータを全件取得する
    */
   const fetchDrinkCounters = async () => {
-    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0)
-    if (error) {
-      throw new Response500Error()
-    }
-    drinkCounters.value = data ?? []
+    drinkCounters.value = await api.get('/fetch')
+    // const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0)
+    // if (error) {
+    //   throw new Response500Error()
+    // }
+    // drinkCounters.value = data ?? []
   }
 
   /**
@@ -21,13 +31,14 @@ export function useDrinkCountersActions () {
    * @param year 年
    */
   const fetchDrinkCountersPerYear = async (year: number) => {
-    const minDate = `${year}-01-01`
-    const maxDate = `${year}-12-31`
-    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
-    if (error) {
-      throw new Response500Error()
-    }
-    drinkCounters.value = data ?? []
+    drinkCounters.value = await api.post('/fetch-per-year', { year })
+    // const minDate = `${year}-01-01`
+    // const maxDate = `${year}-12-31`
+    // const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', minDate).lte('date', maxDate)
+    // if (error) {
+    //   throw new Response500Error()
+    // }
+    // drinkCounters.value = data ?? []
   }
 
   /**
@@ -36,13 +47,14 @@ export function useDrinkCountersActions () {
    * @param month 月
    */
   const fetchDrinkCountersPerMonth = async (year: number, month: number) => {
-    const { processIntoYearMonthAdd1Month } = useProcessDate()
-    const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
-    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
-    if (error) {
-      throw new Response500Error()
-    }
-    drinkCounters.value = data ?? []
+    drinkCounters.value = await api.post('/fetch-per-month', { year, month })
+    // const { processIntoYearMonthAdd1Month } = useProcessDate()
+    // const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
+    // const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
+    // if (error) {
+    //   throw new Response500Error()
+    // }
+    // drinkCounters.value = data ?? []
   }
 
   /**
@@ -50,11 +62,19 @@ export function useDrinkCountersActions () {
    * @param date 日付 '2023-01-01'
    */
   const fetchDrinkCountersForDay = async (date: string) => {
-    const { data, error } = await supabase.from(TABLE_NAME).select('*').eq('date', date)
-    if (error) {
+    try {
+      const response = await api.post<{ data: DrinkCounter[] }>('/fetch-for-day', { date })
+      // drinkCounters.value = await api.post('/fetch-for-day', { date })
+      drinkCounters.value = response?.data ?? []
+    } catch (error) {
+      console.error(error)
       throw new Response500Error()
     }
-    drinkCounters.value = data ?? []
+    // const { data, error } = await supabase.from(TABLE_NAME).select('*').eq('date', date)
+    // if (error) {
+    //   throw new Response500Error()
+    // }
+    // drinkCounters.value = data ?? []
   }
 
   /**
