@@ -1,5 +1,5 @@
 export function usePageDrinkLabelNewActions () {
-  const { name, color, standardAmount } = usePageDrinkLabelEditState()
+  const { name, color, standardAmount } = usePageDrinkLabelNewState()
   const { $i18n } = useNuxtApp()
   const localePath = useLocalePath()
 
