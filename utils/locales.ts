@@ -60,6 +60,7 @@ export const LOCALE_TERMS_OF_SERVICE = 'terms_of_service' as const
 export const LOCALE_LICENSE = 'license' as const
 export const LOCALE_VERSION = 'version' as const
 export const LOCALE_SHOW_QR = 'show_qr' as const
+export const LOCALE_DETAIL = 'detail' as const
 
 const LOCALE_SETTINGS = 'settings' as const
 export const LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING = `${LOCALE_SETTINGS}.threshold_for_detecting_overdrinking` as const

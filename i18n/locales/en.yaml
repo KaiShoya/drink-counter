@@ -54,6 +54,7 @@ terms_of_service: Terms of service
 license: License
 version: Version
 show_qr: Show QR code
+detail: Details
 
 settings:
     threshold_for_detecting_overdrinking: Threshold for detecting overdrinking

@@ -54,6 +54,7 @@ terms_of_service: 利用規約
 license: ライセンス
 version: バージョン
 show_qr: QRコードを表示する
+detail: 詳細
 
 settings:
     threshold_for_detecting_overdrinking: アラートの閾値(杯数)
