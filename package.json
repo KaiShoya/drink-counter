@@ -3,7 +3,7 @@
   "title": "飲酒カウンター",
   "description": "飲酒量を家計簿のように記録することで、自分の飲酒傾向を把握して飲酒量や頻度の見直しを図ることを目的としたアプリです。",
   "url": "https://drink-counter-theta.vercel.app",
-  "version": "1.19.13",
+  "version": "1.19.14",
   "license": "MIT",
   "engines": {
     "node": "22"
