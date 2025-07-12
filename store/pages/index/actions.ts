@@ -135,7 +135,7 @@ export function useIndexActions () {
     drinkCountForDay.value = updateDrinkCountForDay()
   }
 
-  const updateDefaultDrink = async (labelId: number, drinkId: number) => {
+  const updateDefaultDrink = (labelId: number, drinkId: number) => {
     const labelWithDrinks = findLabelsWithDrinks(labelId)
     if (!labelWithDrinks) {
       throw new GetRecordError()
@@ -144,7 +144,7 @@ export function useIndexActions () {
     if (!drink) {
       throw new GetRecordError()
     }
-    await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+    updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
     labelWithDrinks.currentDrink = drink
   }
 
