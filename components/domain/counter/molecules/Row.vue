@@ -12,7 +12,7 @@ defineProps<{
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
         <DomainCounterAtomsMinusButton
-          :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+          :click-function="() => label.currentDrink && decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
         />
 
         <DomainCounterAtomsColumn
@@ -27,7 +27,7 @@ defineProps<{
         />
 
         <DomainCounterAtomsPlusButton
-          :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+          :click-function="() => label.currentDrink && increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
         />
       </div>
 
