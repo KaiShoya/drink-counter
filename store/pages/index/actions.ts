@@ -1,4 +1,4 @@
-import { findTimeZone, getZonedTime } from 'timezone-support'
+import { findTimeZone, getZonedTime, convertTimeToDate } from 'timezone-support'
 import { formatZonedTime } from 'timezone-support/parse-format'
 
 export function useIndexActions () {
@@ -24,11 +24,13 @@ export function useIndexActions () {
     // TODO: 日付計算はuserSettingsStoreの方が良い？
     const tz = findTimeZone(userSettings.value.timezone)
     const nativeDate = new Date()
-    const tzTime = getZonedTime(nativeDate, tz)
+    let tzTime = getZonedTime(nativeDate, tz)
 
     // 現在時刻が設定時刻を超えない場合、日付を-1する（0時過ぎても前日の日付でカウントするため）
     if (tzTime.hours < userSettings.value.switchingTiming) {
-      tzTime.day = tzTime.day - 1
+      const date = convertTimeToDate(tzTime)
+      date.setDate(date.getDate() - 1)
+      tzTime = getZonedTime(date, tz)
     }
     const displayTime = formatZonedTime(tzTime, 'YYYY-MM-DD')
     date.value = displayTime
