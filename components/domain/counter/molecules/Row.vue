@@ -34,7 +34,9 @@ defineProps<{
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">
         <div class="column is-2" />
         <details class="column">
-          <summary class="detail-link">{{ $t(LOCALE_DETAIL) }}</summary>
+          <summary class="detail-link">
+            {{ $t(LOCALE_DETAIL) }}
+          </summary>
           <DomainCounterAtomsSubColumn
             v-for="drink in label.drinks"
             :key="drink.id"
@@ -78,10 +80,5 @@ defineProps<{
 .detail-link {
   text-decoration: underline;
   cursor: pointer;
-  color: #3273dc; /* Bulma link color */
-}
-
-.detail-link:hover {
-  color: #2366d1; /* Slightly darker on hover */
 }
 </style>
