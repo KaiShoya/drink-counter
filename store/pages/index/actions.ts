@@ -23,8 +23,7 @@ export function useIndexActions () {
   const fetchDate = () => {
     // TODO: 日付計算はuserSettingsStoreの方が良い？
     const tz = findTimeZone(userSettings.value.timezone)
-    // const nativeDate = new Date()
-    const nativeDate = new Date('2025-06-30T15:00:00Z')
+    const nativeDate = new Date()
     let tzTime = getZonedTime(nativeDate, tz)
 
     // 現在時刻が設定時刻を超えない場合、日付を-1する（0時過ぎても前日の日付でカウントするため）
