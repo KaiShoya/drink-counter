@@ -55,7 +55,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/confirm': { ssr: false },
+    '/confirm': { prerender: false },
   },
 
   compatibilityDate: '2025-03-16',
