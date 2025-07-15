@@ -12,7 +12,7 @@ defineProps<{
     <template v-if="label.currentDrink">
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-0">
         <DomainCounterAtomsMinusButton
-          :click-function="() => decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+          :click-function="() => label.currentDrink && decrement(label.currentDrink.id, label.currentDrink.drinkCounterId)"
         />
 
         <DomainCounterAtomsColumn
@@ -27,14 +27,16 @@ defineProps<{
         />
 
         <DomainCounterAtomsPlusButton
-          :click-function="() => increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
+          :click-function="() => label.currentDrink && increment(label.currentDrink.id, label.currentDrink.drinkCounterId)"
         />
       </div>
 
       <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">
         <div class="column is-2" />
         <details class="column">
-          <summary>詳細</summary>
+          <summary class="detail-link">
+            {{ $t(LOCALE_DETAIL) }}
+          </summary>
           <DomainCounterAtomsSubColumn
             v-for="drink in label.drinks"
             :key="drink.id"
@@ -73,5 +75,10 @@ defineProps<{
 <style scoped>
 .mb-24 {
   margin-bottom: 24px !important;
+}
+
+.detail-link {
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>
