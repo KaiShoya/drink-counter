@@ -24,6 +24,11 @@
     },
     "editor.snippetSuggestions": "top"
   },
+  "files.exclude": {
+    ".nuxt": true,
+    ".output": true,
+    "node_modules": true,
+  },
   "markdown.extension.tableFormatter.enabled": true,
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
   "markdown.extension.tableFormatter.normalizeIndentation": false,
