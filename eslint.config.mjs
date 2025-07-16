@@ -1,44 +1,26 @@
-import withNuxt from './.nuxt/eslint.config.mjs'
+import { defineFlatConfigs } from '@nuxt/eslint-config'
+import stylistic from '@stylistic/eslint-plugin'
 
-export default withNuxt([
-  {
-    ignores: [
-      'database.types.ts',
-      '.vscode/**',
-    ],
+export default defineFlatConfigs({
+  ignores: [
+    'database.types.ts',
+    '.vscode/**',
+    '.nuxt/**',
+    '.output/**',
+  ],
+  plugins: {
+    '@stylistic': stylistic,
   },
-  {
-    rules: {
-      // 'comma-dangle': [
-      //   'error',
-      //   'always-multiline',
-      // ],
-      'vue/multi-word-component-names': 0,
-    },
+  rules: {
+    // 'comma-dangle': [
+    //   'error',
+    //   'always-multiline',
+    // ],
+    'vue/multi-word-component-names': 0,
+    '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+    '@stylistic/space-before-function-paren': ['error', 'always'],
+    'indent': ['error', 2],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'never'],
   },
-])
-  .override('nuxt/stylistic', {
-    rules: {
-      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-      '@stylistic/space-before-function-paren': ['error', 'always'],
-    },
-  })
-
-// export default defineConfig([{
-//     extends: compat.extends(
-//         "plugin:vue/vue3-recommended",
-//         "eslint:recommended",
-//         "@nuxtjs/eslint-config-typescript",
-//     ),
-
-//     languageOptions: {
-//         globals: {
-//             ...globals.browser,
-//         },
-//     },
-
-//     rules: {
-//         "comma-dangle": ["error", "always-multiline"],
-//         "vue/multi-word-component-names": ["off"],
-//     },
-// }]);
+})

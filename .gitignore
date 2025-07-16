@@ -17,4 +17,4 @@ _i18n.config.ts
 # store/
 docs/
 store/user_
-components/SignInAdmin.vue
+app/components/SignInAdmin.vue
