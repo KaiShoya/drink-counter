@@ -6,8 +6,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   //   console.log('errorHandler', error, instance, info)
   // }
 
-  nuxtApp.hook("app:error", (err: ErrorConstructor) => {
-    showDangerToast(err.toString());
+  nuxtApp.hook("app:error", (err: unknown) => {
+    handler(err);
   });
 
   window.addEventListener("unhandledrejection", (event) => {
