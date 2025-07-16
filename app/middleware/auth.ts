@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware(async (_to, from) => {
 
   if (!isLogin.value) {
     return navigateTo(
-      localePath("/login?fullpath=" + encodeURIComponent(from.fullPath))
+      localePath("/login?fullpath=" + encodeURIComponent(from.fullPath)),
     );
   }
 
