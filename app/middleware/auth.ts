@@ -1,8 +1,9 @@
 export default defineNuxtRouteMiddleware(async (_to, from) => {
   const localePath = useLocalePath();
 
-  const { fetchUserData } = useUserStore();
-  const { isLogin } = storeToRefs(useUserStore());
+  const userStore = useUserStore();
+  const { fetchUserData } = userStore;
+  const { isLogin } = storeToRefs(userStore);
 
   try {
     await fetchUserData();
