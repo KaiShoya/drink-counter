@@ -27,7 +27,7 @@
   "files.exclude": {
     ".nuxt": true,
     ".output": true,
-    "node_modules": true,
+    "node_modules": true
   },
   "markdown.extension.tableFormatter.enabled": true,
   "markdown.extension.tableFormatter.delimiterRowNoPadding": false,
@@ -40,7 +40,7 @@
   "html.format.wrapLineLength": 125,
   "eslint.useFlatConfig": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-  },
+    "source.fixAll.eslint": "explicit"
+  }
   // "eslint.codeActionsOnSave.rules": null
 }
