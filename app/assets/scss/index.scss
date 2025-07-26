@@ -65,7 +65,7 @@
 // @use "bulma/sass/helpers/aspect-ratio";
 // // @use "bulma/sass/helpers/border";
 // @use "bulma/sass/helpers/color";
-// @use "bulma/sass/helpers/flexbox";
+@use "bulma/sass/helpers/flexbox";
 // @use "bulma/sass/helpers/float";
 // // @use "bulma/sass/helpers/gap";
 // // @use "bulma/sass/helpers/overflow";
@@ -139,6 +139,7 @@
 
 .button.is-button-large {
   height: 38px;
+  display: flex;
 }
 
 .navbar-burger-left {
