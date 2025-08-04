@@ -1,15 +1,18 @@
-import { defineFlatConfigs } from '@nuxt/eslint-config'
-import stylistic from '@stylistic/eslint-plugin'
+import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
-export default defineFlatConfigs({
+export default createConfigForNuxt({
   ignores: [
-    'database.types.ts',
+    '**/database.types.ts',
     '.vscode/**',
     '.nuxt/**',
     '.output/**',
   ],
-  plugins: {
-    '@stylistic': stylistic,
+  features: {
+    stylistic: {
+      semi: false,
+      indent: 2, // 4 or 'tab'
+      quotes: 'single',
+    },
   },
   rules: {
     // 'comma-dangle': [
@@ -17,10 +20,14 @@ export default defineFlatConfigs({
     //   'always-multiline',
     // ],
     'vue/multi-word-component-names': 0,
-    '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-    '@stylistic/space-before-function-paren': ['error', 'always'],
     'indent': ['error', 2],
     'quotes': ['error', 'single'],
     'semi': ['error', 'never'],
   },
 })
+  .override('nuxt/stylistic', {
+    rules: {
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/space-before-function-paren': ['error', 'always'],
+    },
+  })

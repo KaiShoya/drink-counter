@@ -1,4 +1,4 @@
-import * as bulmaToast from "bulma-toast";
+import * as bulmaToast from 'bulma-toast'
 
 export const showToast = (
   message: string,
@@ -10,18 +10,18 @@ export const showToast = (
     duration,
     type,
     dismissible: true,
-    animate: { in: "fadeIn", out: "fadeOut" },
-  });
-};
+    animate: { in: 'fadeIn', out: 'fadeOut' },
+  })
+}
 
 export const showSuccessToast = (message: string) => {
-  showToast(message, "is-success");
-};
+  showToast(message, 'is-success')
+}
 
 export const showWarningToast = (message: string) => {
-  showToast(message, "is-warning");
-};
+  showToast(message, 'is-warning')
+}
 
 export const showDangerToast = (message: string) => {
-  showToast(message, "is-danger", 10000);
-};
+  showToast(message, 'is-danger', 10000)
+}
