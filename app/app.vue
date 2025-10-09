@@ -10,7 +10,7 @@ useSeoMeta({
 })
 
 const { fetchUserData } = useUserStore()
-fetchUserData()
+await fetchUserData()
 </script>
 
 <template>
