@@ -158,3 +158,21 @@ export const LOCALE_ERROR_SUPABASE_AUTH =
   `${LOCALE_ERROR_SUPABASE}.AUTH` as const;
 export const LOCALE_ERROR_SUPABASE_PROVIDER_DISABLED =
   `${LOCALE_ERROR_SUPABASE}.PROVIDER_DISABLED` as const;
+
+// Monthly View (docs/specs/monthly-view.md)
+const LOCALE_MONTHLY = 'monthly' as const;
+const LOCALE_MONTHLY_KPI = `${LOCALE_MONTHLY}.kpi` as const;
+export const LOCALE_MONTHLY_KPI_TOTAL_DRINKS = `${LOCALE_MONTHLY_KPI}.totalDrinks` as const;
+export const LOCALE_MONTHLY_KPI_TOTAL_VOLUME = `${LOCALE_MONTHLY_KPI}.totalVolume` as const;
+export const LOCALE_MONTHLY_KPI_ACTIVE_DAYS = `${LOCALE_MONTHLY_KPI}.activeDays` as const;
+export const LOCALE_MONTHLY_KPI_AVG_PER_DAY = `${LOCALE_MONTHLY_KPI}.avgPerDay` as const;
+export const LOCALE_MONTHLY_KPI_AVG_PER_ACTIVE_DAY = `${LOCALE_MONTHLY_KPI}.avgPerActiveDay` as const;
+export const LOCALE_MONTHLY_KPI_MOM = `${LOCALE_MONTHLY_KPI}.mom` as const;
+
+const LOCALE_MONTHLY_CHART = `${LOCALE_MONTHLY}.chart` as const;
+export const LOCALE_MONTHLY_CHART_DAILY_SERIES = `${LOCALE_MONTHLY_CHART}.dailySeries` as const;
+export const LOCALE_MONTHLY_CHART_LABEL_DONUT = `${LOCALE_MONTHLY_CHART}.labelDonut` as const;
+
+const LOCALE_MONTHLY_TABLE = `${LOCALE_MONTHLY}.table` as const;
+export const LOCALE_MONTHLY_TABLE_WEEKDAY = `${LOCALE_MONTHLY_TABLE}.weekday` as const;
+export const LOCALE_MONTHLY_TABLE_LABEL = `${LOCALE_MONTHLY_TABLE}.label` as const;
