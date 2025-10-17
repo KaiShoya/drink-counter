@@ -16,7 +16,6 @@ const { fetchDrinkCounters } = annualStore
 fetchDrinkCounters()
 
 // 年次KPIの新ストア
-import { useAnnualSummaryStore } from '../../../store/pages/index/annualSummary'
 const annualSummary = useAnnualSummaryStore()
 const { data: annualData } = storeToRefs(annualSummary)
 // 初回取得

@@ -14,7 +14,6 @@ const { yearMonth, computeCalendarData, computeGraphData, computedChartOptions }
 const { fetchDrinkCounters } = monthlyStore
 
 // 新しい月次集計ストア
-import { useMonthlySummaryStore } from '../../../store/pages/index/monthlySummary'
 const monthlySummary = useMonthlySummaryStore()
 const { data: monthlyData } = storeToRefs(monthlySummary)
 
