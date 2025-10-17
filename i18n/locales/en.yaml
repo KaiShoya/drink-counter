@@ -56,6 +56,30 @@ version: Version
 show_qr: Show QR code
 detail: Details
 
+monthly:
+    kpi:
+        totalDrinks: Total drinks
+        totalVolume: Total volume
+        activeDays: Active days
+        avgPerDay: Daily average (all days)
+        avgPerActiveDay: Daily average (drinking days)
+        mom: MoM
+    chart:
+        dailySeries: Daily series
+        labelDonut: Label composition
+    table:
+        weekday: Weekday averages
+        label: Label averages
+
+annual:
+    kpi:
+        totalDrinks: Total drinks
+        totalVolume: Total volume
+        activeDays: Active days
+        avgPerDay: Daily average (all days)
+        avgPerActiveDay: Daily average (drinking days)
+        yoy: YoY
+
 settings:
     threshold_for_detecting_overdrinking: Threshold for detecting overdrinking
     cups: cups
