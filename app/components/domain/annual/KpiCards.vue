@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useAnnualSummaryStore } from '../../../../store/pages/index/annualSummary'
-import { LOCALE_ANNUAL_KPI_TOTAL_DRINKS, LOCALE_ANNUAL_KPI_TOTAL_VOLUME, LOCALE_ANNUAL_KPI_ACTIVE_DAYS, LOCALE_ANNUAL_KPI_YOY } from '../../../utils/locales'
-
 const annual = useAnnualSummaryStore()
 const { data, loading } = storeToRefs(annual)
 </script>

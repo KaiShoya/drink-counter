@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useMonthlySummaryStore } from '../../../../store/pages/index/monthlySummary'
-import { LOCALE_MONTHLY_KPI_TOTAL_DRINKS, LOCALE_MONTHLY_KPI_TOTAL_VOLUME, LOCALE_MONTHLY_KPI_ACTIVE_DAYS, LOCALE_MONTHLY_KPI_MOM } from '../../../utils/locales'
-
 const monthly = useMonthlySummaryStore()
 const { data, loading } = storeToRefs(monthly)
 </script>
