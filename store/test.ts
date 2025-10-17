@@ -1,5 +1,5 @@
 export const useTestStore = defineStore('testStore', () => {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const drinksStore = useDrinksStore()
   const { fetchDrinks, findDrink } = drinksStore
   const drinkLabelsStore = useDrinkLabelsStore()
@@ -23,7 +23,7 @@ export const useTestStore = defineStore('testStore', () => {
 
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {
-      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
+      showDangerToast(t(LOCALE_ERROR_GET_RECORD))
     } else {
       name.value = drink.name
       drinkLabelId.value = drink.drink_label_id

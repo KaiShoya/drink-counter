@@ -1,6 +1,6 @@
 export function usePageDrinkLabelEditActions () {
   const { drinkLabelId, name, color, standardAmount } = usePageDrinkLabelEditState()
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const localePath = useLocalePath()
 
   const { fetchDrinks } = useDrinksStore()
@@ -14,7 +14,7 @@ export function usePageDrinkLabelEditActions () {
 
     const drinkLabel = findById(drinkLabelId.value)
     if (drinkLabel === undefined) {
-      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
+      showDangerToast(t(LOCALE_ERROR_GET_RECORD))
       navigateTo(localePath('/labels'))
     } else {
       name.value = drinkLabel.name
@@ -27,7 +27,7 @@ export function usePageDrinkLabelEditActions () {
 
   const update = async () => {
     await updateDrinkLabel(drinkLabelId.value, name.value, color.value, standardAmount.value)
-    showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
+    showSuccessToast(t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
     navigateTo(localePath('/labels'))
   }
 

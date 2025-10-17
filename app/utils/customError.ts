@@ -25,9 +25,9 @@ export class CustomError extends Error implements CustomErrorInterface {
   }
 
   getMessage() {
-    const { $i18n } = useNuxtApp();
+    const { t } = useI18n()
     return (
-      (this.named ? $i18n.t(this.message, this.named) : $i18n.t(this.message)) +
+      (this.named ? t(this.message, this.named) : t(this.message)) +
       (this.appendString ?? "")
     );
   }
@@ -91,14 +91,14 @@ export class SupabaseAuthError extends CustomSupabaseError {
   }
 
   override getMessage(): string {
-    const { $i18n } = useNuxtApp();
+    const { t } = useI18n()
     // https://supabase.com/docs/reference/javascript/auth-error-codes
     switch (this.error.code) {
       case "provider_disabled":
-        return $i18n.t(LOCALE_ERROR_SUPABASE_PROVIDER_DISABLED);
+        return t(LOCALE_ERROR_SUPABASE_PROVIDER_DISABLED);
       default:
         return (
-          $i18n.t(LOCALE_ERROR_SUPABASE_AUTH) +
+          t(LOCALE_ERROR_SUPABASE_AUTH) +
           "<br>" +
           this.error.code +
           " : " +
