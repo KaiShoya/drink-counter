@@ -55,7 +55,7 @@ const calendarDataNormalized = computed(() => computeCalendarData.value.map(d =>
 
     <DomainChartAtomsPieChart />
 
-    <DomainChartMoleculesAggregationByDowTable />
+    <DomainChartMoleculesAggregationByDrinksTable />
 
     <DomainChartMoleculesAggregationByDowTable />
   </div>
