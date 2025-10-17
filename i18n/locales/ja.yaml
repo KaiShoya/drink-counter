@@ -71,6 +71,15 @@ monthly:
         weekday: 曜日別平均
         label: ラベル別平均
 
+annual:
+    kpi:
+        totalDrinks: 合計杯数
+        totalVolume: 合計容量
+        activeDays: アクティブ日数
+        avgPerDay: 1日平均（全日）
+        avgPerActiveDay: 1日平均（飲んだ日）
+        yoy: 前年比
+
 settings:
     threshold_for_detecting_overdrinking: アラートの閾値(杯数)
     cups: 杯

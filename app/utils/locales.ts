@@ -176,3 +176,13 @@ export const LOCALE_MONTHLY_CHART_LABEL_DONUT = `${LOCALE_MONTHLY_CHART}.labelDo
 const LOCALE_MONTHLY_TABLE = `${LOCALE_MONTHLY}.table` as const;
 export const LOCALE_MONTHLY_TABLE_WEEKDAY = `${LOCALE_MONTHLY_TABLE}.weekday` as const;
 export const LOCALE_MONTHLY_TABLE_LABEL = `${LOCALE_MONTHLY_TABLE}.label` as const;
+
+// Annual View
+const LOCALE_ANNUAL = 'annual' as const;
+const LOCALE_ANNUAL_KPI = `${LOCALE_ANNUAL}.kpi` as const;
+export const LOCALE_ANNUAL_KPI_TOTAL_DRINKS = `${LOCALE_ANNUAL_KPI}.totalDrinks` as const;
+export const LOCALE_ANNUAL_KPI_TOTAL_VOLUME = `${LOCALE_ANNUAL_KPI}.totalVolume` as const;
+export const LOCALE_ANNUAL_KPI_ACTIVE_DAYS = `${LOCALE_ANNUAL_KPI}.activeDays` as const;
+export const LOCALE_ANNUAL_KPI_AVG_PER_DAY = `${LOCALE_ANNUAL_KPI}.avgPerDay` as const;
+export const LOCALE_ANNUAL_KPI_AVG_PER_ACTIVE_DAY = `${LOCALE_ANNUAL_KPI}.avgPerActiveDay` as const;
+export const LOCALE_ANNUAL_KPI_YOY = `${LOCALE_ANNUAL_KPI}.yoy` as const;

@@ -71,6 +71,15 @@ monthly:
         weekday: Weekday averages
         label: Label averages
 
+annual:
+    kpi:
+        totalDrinks: Total drinks
+        totalVolume: Total volume
+        activeDays: Active days
+        avgPerDay: Daily average (all days)
+        avgPerActiveDay: Daily average (drinking days)
+        yoy: YoY
+
 settings:
     threshold_for_detecting_overdrinking: Threshold for detecting overdrinking
     cups: cups

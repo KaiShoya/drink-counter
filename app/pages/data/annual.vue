@@ -15,14 +15,24 @@ const { fetchDrinkCounters } = annualStore
 
 fetchDrinkCounters()
 
+// 年次KPIの新ストア
+import { useAnnualSummaryStore } from '../../../store/pages/index/annualSummary'
+const annualSummary = useAnnualSummaryStore()
+const { data: annualData } = storeToRefs(annualSummary)
+// 初回取得
+annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
+
 watch(year, async () => {
   await fetchDrinkCounters()
+  await annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
 })
 </script>
 
 <template>
   <div class="container">
     <DomainPickerMoleculesYearPicker />
+
+    <DomainAnnualKpiCards />
 
     <!-- メモリリークするため一旦コメントアウト -->
     <!-- <MoleculesGraphsCalendar
