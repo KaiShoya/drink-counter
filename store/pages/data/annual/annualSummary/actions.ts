@@ -11,9 +11,6 @@ export const useAnnualSummaryActions = () => {
       await fetchDrinks()
 
       const { supabase } = useSupabaseStore()
-      const userSettingsStore = useUserSettingsStore()
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { userSettings } = storeToRefs(userSettingsStore)
 
       const y = input.year
       const start = `${y}-01-01`

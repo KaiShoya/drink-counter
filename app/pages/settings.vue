@@ -8,9 +8,11 @@ useSeoMeta({
   title: $i18n.t(LOCALE_ROUTES_SETTINGS),
 })
 
-const userSettingsStore = useUserSettingsStore()
-const { userSettings } = storeToRefs(userSettingsStore)
-const { updateSettings } = useSettingsStore()
+const settingsStore = useSettingsStore()
+const { thresholdForDetectingOverdrinking, timezone, switchingTiming } = storeToRefs(settingsStore)
+const { fetchSettings, updateSettings } = settingsStore
+
+fetchSettings()
 </script>
 
 <template>
@@ -21,7 +23,7 @@ const { updateSettings } = useSettingsStore()
           <th>{{ $t(LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING) }}</th>
           <td>
             <input
-              v-model="userSettings.thresholdForDetectingOverdrinking"
+              v-model="thresholdForDetectingOverdrinking"
               class="input"
               type="number"
             >
@@ -35,13 +37,13 @@ const { updateSettings } = useSettingsStore()
           <th>{{ $t(LOCALE_SETTINGS_TIMEZONE) }}</th>
           <td>
             <div class="select">
-              <select @change="userSettings.timezone = ($event.target as HTMLInputElement).value">
+              <select @change="timezone = ($event.target as HTMLInputElement).value">
                 <option
                   v-for="tz in TIMEZONE"
                   :key="tz.timezone"
                   :value="tz.timezone"
                   :label="tz.timezone"
-                  :selected="userSettings.timezone === tz.timezone"
+                  :selected="timezone === tz.timezone"
                 />
               </select>
             </div>
@@ -53,7 +55,7 @@ const { updateSettings } = useSettingsStore()
           <th>{{ $t(LOCALE_SETTINGS_SWITCHING_TIMING) }}</th>
           <td>
             <input
-              v-model="userSettings.switchingTiming"
+              v-model="switchingTiming"
               class="input"
               type="number"
             >

@@ -1,5 +1,6 @@
 export function useUserActions () {
-  const { isLogin, userName, userAvatarUrl } = useUserState()
+  const { isLogin, userName, userAvatarUrl, userSetting } = useUserState()
+  const { $userSettingsRepository } = useNuxtApp()
 
   const fetchUserData = async () => {
     try {
@@ -16,6 +17,12 @@ export function useUserActions () {
           userName.value = null
           userAvatarUrl.value = null
         } else {
+          // ユーザー設定を取得
+          const userSettingRow = await $userSettingsRepository.fetchUserSettings()
+          if (userSettingRow) {
+            userSetting.value = userSettingRow
+          }
+
           userName.value = (data.user?.user_metadata as any)?.name ?? null
           userAvatarUrl.value = (data.user?.user_metadata as any)?.avatar_url ?? null
         }

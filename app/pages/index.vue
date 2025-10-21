@@ -8,7 +8,7 @@ useSeoMeta({
   title: $i18n.t(LOCALE_ROUTES_TOP),
 })
 
-const { userSettings } = storeToRefs(useUserSettingsStore())
+const { userSetting } = storeToRefs(useUserStore())
 
 const indexStore = useIndexStore()
 const { date, labelsWithDrinks, drinkCountForDay } = storeToRefs(indexStore)
@@ -30,7 +30,7 @@ const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
   thisCounterId.value = counterId
   // 今飲んでる杯数が閾値を超えてたらアラートを出す
-  if (userSettings.value.thresholdForDetectingOverdrinking <= drinkCountForDay.value) {
+  if (userSetting.value.threshold_for_detecting_overdrinking <= drinkCountForDay.value) {
     modalIsActive.value = true
   } else {
     plus(drinkId, counterId)

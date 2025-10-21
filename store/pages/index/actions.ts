@@ -14,20 +14,19 @@ export function useIndexActions () {
   const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
   const drinkLabelsStore = useDrinkLabelsStore()
   const { fetchDrinkLabels, findByVisible, updateDefaultDrinkId } = drinkLabelsStore
-  const userSettingsStore = useUserSettingsStore()
-  const { userSettings } = storeToRefs(userSettingsStore)
+  const { userSetting } = storeToRefs(useUserStore())
 
   /**
    * 日付を取得する
    */
   const fetchDate = () => {
     // TODO: 日付計算はuserSettingsStoreの方が良い？
-    const tz = findTimeZone(userSettings.value.timezone)
+    const tz = findTimeZone(userSetting.value.timezone)
     const nativeDate = new Date()
     let tzTime = getZonedTime(nativeDate, tz)
 
     // 現在時刻が設定時刻を超えない場合、日付を-1する（0時過ぎても前日の日付でカウントするため）
-    if (tzTime.hours < userSettings.value.switchingTiming) {
+    if (tzTime.hours < userSetting.value.switching_timing) {
       const date = convertTimeToDate(tzTime)
       date.setDate(date.getDate() - 1)
       tzTime = getZonedTime(date, tz)
