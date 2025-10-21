@@ -35,7 +35,7 @@ export function useDrinksActions () {
   const deleteDrinkById = async (drinkId: number, name: string) => {
     const { error } = await supabase.rpc('delete_drink_data', { drinkid: drinkId })
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_DELETE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_DELETE_FAILURE, { name })
     }
     await fetchDrinks()
   }
@@ -52,7 +52,7 @@ export function useDrinksActions () {
   const updateDrink = async (drinkId: number, name: string, color: string | null, amount: number, driknLabelId: number | null) => {
     const { error } = await supabase.from(TABLE_NAME).update({ name, color, amount, drink_label_id: driknLabelId }).eq('id', drinkId)
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
     const drink = findDrink(drinkId)
     if (!drink) {
@@ -69,7 +69,7 @@ export function useDrinksActions () {
     }
     const { error } = await supabase.from(TABLE_NAME).update({ visible }).eq('id', drinkId)
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name: drink.name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name: drink.name })
     }
     drink.visible = visible
   }
@@ -91,7 +91,7 @@ export function useDrinksActions () {
   const createDrink = async (name: string, color: string | null, amount: number, driknLabelId: number | null) => {
     const { error } = await supabase.from(TABLE_NAME).insert({ name, color, amount, drink_label_id: driknLabelId })
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_CREATE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_CREATE_FAILURE, { name })
     }
     await fetchDrinks()
   }

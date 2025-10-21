@@ -1,4 +1,4 @@
-import type { AuthError } from "@supabase/supabase-js";
+import type { AuthError, PostgrestError } from "@supabase/supabase-js";
 
 interface CustomErrorInterface {
   message: string;
@@ -37,8 +37,10 @@ export class CustomSupabaseError
   extends CustomError
   implements CustomErrorInterface
 {
-  constructor(message: string, name: string = CustomSupabaseError.name) {
-    super(message, name);
+  error: PostgrestError | AuthError;
+  constructor(error: PostgrestError | AuthError, name: string = CustomSupabaseError.name, named?: Record<string, unknown>) {
+    super(name, error.message, named);
+    this.error = error;
   }
 
   override getMessage() {
@@ -76,16 +78,16 @@ export class UnknownError extends CustomError {
   }
 }
 
-export class SupabaseResponseError extends CustomError {
-  constructor(message: string, named?: Record<string, unknown>) {
-    super(message, SupabaseResponseError.name, named);
+export class SupabaseResponseError extends CustomSupabaseError {
+  constructor(error: PostgrestError, message: string, named?: Record<string, unknown>) {
+    super(error, SupabaseResponseError.name, named);
   }
 }
 
 export class SupabaseAuthError extends CustomSupabaseError {
-  error: AuthError;
+  override error: AuthError;
   constructor(error: AuthError) {
-    super(error.message, SupabaseAuthError.name);
+    super(error, SupabaseAuthError.name);
     super.setAppendString(error.message);
     this.error = error;
   }

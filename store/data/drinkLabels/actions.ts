@@ -35,7 +35,7 @@ export function useDrinkLabelsActions () {
   const deleteById = async (drinkLabelId: number, name: string) => {
     const { error } = await supabase.from(TABLE_NAME).delete().eq('id', drinkLabelId)
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_DELETE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_DELETE_FAILURE, { name })
     }
 
     await fetchDrinkLabels()
@@ -52,7 +52,7 @@ export function useDrinkLabelsActions () {
     const { error } = await supabase.from(TABLE_NAME).update({ name, color, standard_amount: standardAmount }).eq('id', drinkLabelId)
     if (error) {
       console.error(error)
-      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
     const drinkLabel = findById(drinkLabelId)
     if (drinkLabel) {
@@ -64,7 +64,7 @@ export function useDrinkLabelsActions () {
   const updateDrinkLabelVisible = async (drinkLabelId: number, name: string, visible: boolean) => {
     const { error } = await supabase.from(TABLE_NAME).update({ visible }).eq('id', drinkLabelId)
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_UPDATE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
     const drinkLabel = findById(drinkLabelId)
     if (drinkLabel) {
@@ -98,7 +98,7 @@ export function useDrinkLabelsActions () {
   const createDrinkLabel = async (name: string, color: string | null, standardAmount: number) => {
     const { error } = await supabase.from(TABLE_NAME).insert({ name, color, standard_amount: standardAmount })
     if (error) {
-      throw new SupabaseResponseError(LOCALE_DRINKS_CREATE_FAILURE, { name })
+      throw new SupabaseResponseError(error, LOCALE_DRINKS_CREATE_FAILURE, { name })
     }
     await fetchDrinkLabels()
   }
