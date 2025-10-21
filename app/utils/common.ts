@@ -3,16 +3,37 @@
  * @param date Date
  * @returns string YYYY-MM-DD
  */
-const processIntoString = (date: Date) =>
-  `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
+const processIntoString = (date: Date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
 
 /**
  * DateオブジェクトをYYYY-MM形式に変換する
  * @param date Date
  * @returns string YYYY-MM
  */
-const processIntoYearMonth = (date: Date) =>
-  `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}`;
+const processIntoYearMonth = (date: Date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  return `${year}-${month}`
+}
+
+/**
+ * 年月をYYYY-MM-DD形式に変換する
+ * 日付は01固定
+ * @param year number
+ * @param month number
+ * @returns string YYYY-MM-01
+ */
+const yearMonthToDateString = (year: number, month: number): string => {
+  const date = new Date(year, month - 1, 1);
+  const normalizedYear = date.getFullYear()
+  const normalizedMonth = String(date.getMonth() + 1).padStart(2, '0')
+	return `${normalizedYear}-${normalizedMonth}-01`
+}
 
 /**
  * 引数で渡したyear, monthの翌月を返却する
@@ -72,6 +93,7 @@ export const useProcessDate = () => {
   return {
     processIntoString,
     processIntoYearMonth,
+    yearMonthToDateString,
     processIntoYearMonthToNextMonth,
     processIntoYearMonthToPrevMonth,
     formatDrinkCounters,
