@@ -4,7 +4,8 @@ import { describe, it, expect } from "vitest";
 const {
   processIntoString,
   processIntoYearMonth,
-  processIntoYearMonthAdd1Month,
+  processIntoYearMonthToNextMonth,
+  processIntoYearMonthToPrevMonth,
 } = useProcessDate();
 
 describe("processIntoString()のテスト", () => {
@@ -39,22 +40,72 @@ describe("processIntoYearMonth()のテスト", () => {
   });
 });
 
-describe("processIntoYearMonthAdd1Month()のテスト", () => {
+describe("processIntoYearMonthToNextMonth()のテスト", () => {
   it("通常の処理", () => {
-    expect(processIntoYearMonthAdd1Month(2024, 1)).toEqual({
+    expect(processIntoYearMonthToNextMonth(2024, 1)).toEqual({
       year: 2024,
       month: 2,
     });
-    expect(processIntoYearMonthAdd1Month(2024, 9)).toEqual({
+    expect(processIntoYearMonthToNextMonth(2024, 9)).toEqual({
       year: 2024,
       month: 10,
     });
   });
 
   it("年跨ぎ", () => {
-    expect(processIntoYearMonthAdd1Month(2023, 12)).toEqual({
+    expect(processIntoYearMonthToNextMonth(2023, 12)).toEqual({
       year: 2024,
       month: 1,
+    });
+  });
+
+  it("1~12以外の数字", () => {
+    expect(processIntoYearMonthToNextMonth(2024, 0)).toEqual({
+      year: 2024,
+      month: 1,
+    });
+    expect(processIntoYearMonthToNextMonth(2024, -1)).toEqual({
+      year: 2023,
+      month: 12,
+    });
+    expect(processIntoYearMonthToNextMonth(2024, 13)).toEqual({
+      year: 2025,
+      month: 2,
+    });
+  });
+});
+
+describe("processIntoYearMonthToPrevMonth()のテスト", () => {
+  it("通常の処理", () => {
+    expect(processIntoYearMonthToPrevMonth(2024, 2)).toEqual({
+      year: 2024,
+      month: 1,
+    });
+    expect(processIntoYearMonthToPrevMonth(2024, 9)).toEqual({
+      year: 2024,
+      month: 8,
+    });
+  });
+
+  it("年跨ぎ", () => {
+    expect(processIntoYearMonthToPrevMonth(2024, 1)).toEqual({
+      year: 2023,
+      month: 12,
+    });
+  });
+
+  it("1~12以外の数字", () => {
+    expect(processIntoYearMonthToPrevMonth(2024, 0)).toEqual({
+      year: 2023,
+      month: 11,
+    });
+    expect(processIntoYearMonthToPrevMonth(2024, -1)).toEqual({
+      year: 2023,
+      month: 10,
+    });
+    expect(processIntoYearMonthToPrevMonth(2024, 13)).toEqual({
+      year: 2024,
+      month: 12,
     });
   });
 });

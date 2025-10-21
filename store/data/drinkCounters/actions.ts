@@ -36,8 +36,8 @@ export function useDrinkCountersActions () {
    * @param month 月
    */
   const fetchDrinkCountersPerMonth = async (year: number, month: number) => {
-    const { processIntoYearMonthAdd1Month } = useProcessDate()
-    const nextYearMonth = processIntoYearMonthAdd1Month(year, month)
+    const { processIntoYearMonthToNextMonth } = useProcessDate()
+    const nextYearMonth = processIntoYearMonthToNextMonth(year, month)
     const { data, error } = await supabase.from(TABLE_NAME).select('*').order('date,drink_id').gt('count', 0).gte('date', `${year}-${month}-01`).lt('date', `${nextYearMonth.year}-${nextYearMonth.month}-01`)
     if (error) {
       throw new Response500Error()

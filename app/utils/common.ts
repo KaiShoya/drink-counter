@@ -15,13 +15,27 @@ const processIntoYearMonth = (date: Date) =>
   `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}`;
 
 /**
- * 引数で渡したyear, monthに1ヶ月追加する
+ * 引数で渡したyear, monthの翌月を返却する
  * @param year 2023
  * @param month 12
  * @returns { year: 2024, month: 1 }
  */
-const processIntoYearMonthAdd1Month = (year: number, month: number) => {
+const processIntoYearMonthToNextMonth = (year: number, month: number) => {
   const date = new Date(year, month, 1);
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+  };
+};
+
+/**
+ * 引数で渡したyear, monthの前月を返却する
+ * @param year 2023
+ * @param month 12
+ * @returns { year: 2023, month: 11 }
+ */
+const processIntoYearMonthToPrevMonth = (year: number, month: number) => {
+  const date = new Date(year, month - 2, 1);
   return {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
@@ -58,7 +72,8 @@ export const useProcessDate = () => {
   return {
     processIntoString,
     processIntoYearMonth,
-    processIntoYearMonthAdd1Month,
+    processIntoYearMonthToNextMonth,
+    processIntoYearMonthToPrevMonth,
     formatDrinkCounters,
   };
 };
