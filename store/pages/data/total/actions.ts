@@ -1,18 +1,18 @@
 export const useTotalActions = () => {
+  const { drinks, drinkCounters, aggregationByDrinks, aggregationByDow } = useTotalState()
+
   const { showLoading, hideLoading } = useAppStore()
-  const drinkCountersStore = useDrinkCountersStore()
-  const { fetchDrinkCounters } = drinkCountersStore
-  const drinksStore = useDrinksStore()
-  const { fetchDrinks } = drinksStore
-  const { fetchAggregationByDow } = useAggregationByDowStore()
-  const { fetchSumCount } = useAggregationByDrinksStore()
+
+  const { $drinksRepository, $drinkCountersRepository, $drinkLabelsRepository } = useNuxtApp()
 
   const fetchDrinkCountersAll = async () => {
     showLoading()
-    await fetchDrinks()
-    await fetchDrinkCounters()
-    await fetchSumCount()
-    await fetchAggregationByDow()
+
+    drinks.value = await $drinksRepository.fetchAll()
+    drinkCounters.value = await $drinkCountersRepository.fetchAll()
+    aggregationByDrinks.value = await $drinkLabelsRepository.fetchSumCount()
+    aggregationByDow.value = await $drinkCountersRepository.fetchAggregationByDow()
+
     hideLoading()
   }
 

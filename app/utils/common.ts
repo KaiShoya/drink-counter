@@ -22,6 +22,14 @@ const processIntoYearMonth = (date: Date) => {
 }
 
 /**
+ * 年月をYYYY-MM形式に変換する
+ * @param year number
+ * @param month number
+ * @returns string YYYY-MM
+ */
+const YearMonthToString = (year: number, month: number) => `${year}-${month}`
+
+/**
  * 年月をYYYY-MM-DD形式に変換する
  * 日付は01固定
  * @param year number
@@ -93,6 +101,7 @@ export const useProcessDate = () => {
   return {
     processIntoString,
     processIntoYearMonth,
+    YearMonthToString,
     yearMonthToDateString,
     processIntoYearMonthToNextMonth,
     processIntoYearMonthToPrevMonth,

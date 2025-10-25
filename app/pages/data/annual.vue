@@ -17,7 +17,6 @@ fetchDrinkCounters()
 
 // 年次KPIの新ストア
 const annualSummary = useAnnualSummaryStore()
-const { data: annualData } = storeToRefs(annualSummary)
 // 初回取得
 annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
 
