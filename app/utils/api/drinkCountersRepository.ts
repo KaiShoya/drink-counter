@@ -5,14 +5,26 @@ const TABLE_NAME = 'drink_counters' as const
 
 export type DrinkCounterRow = Database['public']['Tables'][typeof TABLE_NAME]['Row']
 
+export type AggregationByDow = {
+  dow: number
+  sum_count: number
+  avg_count: number
+  max_type_of_drinks: number
+  avg_type_of_drinks: number
+  record_count: number
+}
+
 export interface DrinkCountersRepository {
-  fetchAll(): Promise<DrinkCounterRow[]>
-  fetchByYear(year: number): Promise<DrinkCounterRow[]>
-  fetchByMonth(year: number, month: number): Promise<DrinkCounterRow[]>
-  fetchByDate(date: string): Promise<DrinkCounterRow[]>
-  increment(id: number): Promise<number>
-  decrement(id: number): Promise<number>
-  create(drinkId: number, date: string): Promise<DrinkCounterRow>
+  fetchAll (): Promise<DrinkCounterRow[]>
+  fetchByYear (year: number): Promise<DrinkCounterRow[]>
+  fetchByMonth (year: number, month: number): Promise<DrinkCounterRow[]>
+  fetchByDate (date: string): Promise<DrinkCounterRow[]>
+  increment (id: number): Promise<number>
+  decrement (id: number): Promise<number>
+  create (drinkId: number, date: string): Promise<DrinkCounterRow>
+  fetchAggregationByDow (): Promise<AggregationByDow[]>
+  fetchAggregationByDowPerYear (year: number): Promise<AggregationByDow[]>
+  fetchAggregationByDowPerMonth (year: number, month: number): Promise<AggregationByDow[]>
 }
 
 const { yearMonthToDateString, processIntoYearMonthToNextMonth } = useProcessDate()
@@ -159,6 +171,33 @@ export const createDrinkCountersRepository = (
     return data
   }
 
+  const fetchAggregationByDow = async (): Promise<AggregationByDow[]> => {
+    const { data, error } = await client.rpc('aggregation_by_dow')
+    if (error) {
+      console.error(error)
+      throw new SupabaseResponseError(error, LOCALE_ERROR_UNKNOWN)
+    }
+    return data ?? []
+  }
+
+  const fetchAggregationByDowPerYear = async (year: number): Promise<AggregationByDow[]> => {
+    const { data, error } = await client.rpc('aggregation_by_dow', { year })
+    if (error) {
+      console.error(error)
+      throw new SupabaseResponseError(error, LOCALE_ERROR_UNKNOWN)
+    }
+    return data ?? []
+  }
+
+  const fetchAggregationByDowPerMonth = async (year: number, month: number): Promise<AggregationByDow[]> => {
+    const { data, error } = await client.rpc('aggregation_by_dow', { year, month })
+    if (error) {
+      console.error(error)
+      throw new SupabaseResponseError(error, LOCALE_ERROR_UNKNOWN)
+    }
+    return data ?? []
+  }
+
   return {
     fetchAll,
     fetchByYear,
@@ -167,5 +206,8 @@ export const createDrinkCountersRepository = (
     increment,
     decrement,
     create,
+    fetchAggregationByDow,
+    fetchAggregationByDowPerYear,
+    fetchAggregationByDowPerMonth,
   }
 }

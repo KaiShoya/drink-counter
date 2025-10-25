@@ -9,14 +9,22 @@ export type DrinkLabelWithDefaultColor = DrinkLabelRow & {
   readonly default_color: string
 }
 
+export type DrinkLabelSummaryCountRow = {
+  drink_label_id: number
+  count: number
+}
+
 export interface DrinkLabelsRepository {
-  fetchAll(): Promise<DrinkLabelWithDefaultColor[]>
-  deleteById(drinkLabelId: number, name: string): Promise<void>
-  updateById(drinkLabelId: number, name: string, color: string | null, standardAmount: number): Promise<void>
-  updateVisible(drinkLabelId: number, name: string, visible: boolean): Promise<void>
-  updateSort(payload: Array<{ id: number; sort: number }>): Promise<void>
-  updateDefaultDrinkId(drinkLabelId: number, defaultDrinkId: number, drinkLabelName: string): Promise<void>
-  create(name: string, color: string | null, standardAmount: number): Promise<DrinkLabelWithDefaultColor>
+  fetchAll (): Promise<DrinkLabelWithDefaultColor[]>
+  deleteById (drinkLabelId: number, name: string): Promise<void>
+  updateById (drinkLabelId: number, name: string, color: string | null, standardAmount: number): Promise<void>
+  updateVisible (drinkLabelId: number, name: string, visible: boolean): Promise<void>
+  updateSort (payload: Array<{ id: number; sort: number }>): Promise<void>
+  updateDefaultDrinkId (drinkLabelId: number, defaultDrinkId: number, drinkLabelName: string): Promise<void>
+  create (name: string, color: string | null, standardAmount: number): Promise<DrinkLabelWithDefaultColor>
+  fetchSumCount (): Promise<DrinkLabelSummaryCountRow[]>
+  fetchSumCountPerYear (year: number): Promise<DrinkLabelSummaryCountRow[]>
+  fetchSumCountPerMonth (year: number, month: number): Promise<DrinkLabelSummaryCountRow[]>
 }
 
 export const createDrinkLabelsRepository = (
@@ -145,6 +153,38 @@ export const createDrinkLabelsRepository = (
     } satisfies DrinkLabelWithDefaultColor
   }
 
+  /**
+   * 飲み物ラベルごとの集計カウントを取得する
+   * @returns Promise<DrinkLabelSummaryCountRow[]>
+   */
+  const fetchSumCount = async (): Promise<DrinkLabelSummaryCountRow[]> => {
+    const { data, error } = await client.rpc('aggregation_by_drink_labels')
+    if (error) {
+      throw new SupabaseResponseError(error, LOCALE_ERROR_GET_RECORD)
+    }
+    return data ?? []
+  }
+
+  /**
+   * 年ごとの飲み物ラベルごとの集計カウントを取得する
+   * @param year number
+   * @returns Promise<DrinkLabelSummaryCountRow[]>
+   */
+  const fetchSumCountPerYear = async (year: number): Promise<DrinkLabelSummaryCountRow[]> => {
+    const { data, error } = await client.rpc('aggregation_by_drink_labels', { year })
+    if (error) {
+      throw new SupabaseResponseError(error, LOCALE_ERROR_GET_RECORD)
+    }
+    return data ?? []
+  }
+
+  const fetchSumCountPerMonth = async (year: number, month: number): Promise<DrinkLabelSummaryCountRow[]> => {
+    const { data, error } = await client.rpc('aggregation_by_drink_labels', { year, month })
+    if (error) {
+      throw new SupabaseResponseError(error, LOCALE_ERROR_GET_RECORD)
+    }
+    return data ?? []
+  }
   return {
     fetchAll,
     deleteById,
@@ -153,5 +193,8 @@ export const createDrinkLabelsRepository = (
     updateSort,
     updateDefaultDrinkId,
     create,
+    fetchSumCount,
+    fetchSumCountPerYear,
+    fetchSumCountPerMonth,
   }
 }
