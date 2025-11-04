@@ -1,19 +1,17 @@
 import { findTimeZone, getZonedTime, convertTimeToDate } from 'timezone-support'
 import { formatZonedTime } from 'timezone-support/parse-format'
+import { DrinkCounterDomain } from '~/utils/domain/drinkCounters'
+import { DrinkLabelDomain } from '~/utils/domain/drinkLabels'
+import { DrinkDomain } from '~/utils/domain/drinks'
 
 export function useIndexActions () {
-  const { date, numberOfDrinks, labelsWithDrinks, drinkCountForDay } = useIndexState()
-  const { findNumberOfDrinkByDrinkId, findNumberOfDrinkByLabels, findLabelsWithDrinks, updateDrinkCountForDay } = useIndexGetters()
+  const { date, numberOfDrinks, labelsWithDrinks, drinkCountForDay, drinks, drinkCounters, drinkLabels } = useIndexState()
+  const { findNumberOfDrinkByDrinkId, findNumberOfDrinkByLabels, findLabelsWithDrinks, countForDay } = useIndexGetters()
 
   const { processIntoString } = useProcessDate()
 
+  const { $drinksRepository, $drinkCountersRepository, $drinkLabelsRepository } = useNuxtApp()
   const { showLoading, hideLoading } = useAppStore()
-  const drinksStore = useDrinksStore()
-  const { fetchDrinks, findDrinksVisible } = drinksStore
-  const drinkCountersStore = useDrinkCountersStore()
-  const { fetchDrinkCountersForDay, findDrinkCountersByDrinkId, increment, decrement, create } = drinkCountersStore
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels, findByVisible, updateDefaultDrinkId } = drinkLabelsStore
   const { userSetting } = storeToRefs(useUserStore())
 
   /**
@@ -53,17 +51,20 @@ export function useIndexActions () {
    */
   const fetchNumberOfDrinks = async (date: string) => {
     showLoading()
-    await fetchDrinkLabels()
-    await fetchDrinks()
-    await fetchDrinkCountersForDay(date)
+
+    drinkLabels.value = await $drinkLabelsRepository.fetchAll()
+    drinks.value = await $drinksRepository.fetchAll()
+    drinkCounters.value = await $drinkCountersRepository.fetchByDate(date)
 
     numberOfDrinks.value = []
     labelsWithDrinks.value = []
     drinkCountForDay.value = 0
 
+    // visible = trueの飲み物を取得し、それに紐づくdrinkCountersを取得。（当日）
+    // numberOfDrinksの形式で保存。
     try {
-      for (const drink of findDrinksVisible()) {
-        const drinkCounter = findDrinkCountersByDrinkId(drink.id)
+      for (const drink of DrinkDomain.findVisible(drinks.value)) {
+        const drinkCounter = DrinkCounterDomain.findByDrinkId(drinkCounters.value, drink.id)
         numberOfDrinks.value.push({
           id: drink.id,
           name: drink.name,
@@ -77,19 +78,25 @@ export function useIndexActions () {
       throw new CustomError(LOCALE_ERROR_UNKNOWN)
     }
 
-    for (const label of findByVisible()) {
+    // visible = trueのdrinkLablesを取得し、そのラベルに紐づく飲み物を取得。
+    // default_drink_idがnullだったら登録する
+    for (const label of DrinkLabelDomain.findVisible(drinkLabels.value)) {
       const drinks = findNumberOfDrinkByLabels(label.id)
       const labelWithDrinks = {
         ...label,
         drinks,
-        currentDrink: (label.default_drink_id ? findNumberOfDrinkByDrinkId(label.default_drink_id) : null) || drinks[0] || null,
+        currentDrink: (
+          label.default_drink_id
+            ? findNumberOfDrinkByDrinkId(label.default_drink_id)
+            : null
+        ) || drinks[0] || null,
       }
 
       // default_drink_idがnullだったら登録する
       if (!labelWithDrinks.default_drink_id) {
         const drink = drinks[0]
         if (drink) {
-          await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+          await $drinkLabelsRepository.updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
           labelWithDrinks.default_drink_id = drink.id
           labelWithDrinks.currentDrink = drink
         }
@@ -98,7 +105,7 @@ export function useIndexActions () {
       labelsWithDrinks.value.push(labelWithDrinks)
     }
 
-    drinkCountForDay.value = updateDrinkCountForDay()
+    drinkCountForDay.value = countForDay()
 
     hideLoading()
   }
@@ -107,16 +114,16 @@ export function useIndexActions () {
     const numberOfDrink = findNumberOfDrinkByDrinkId(drinkId)
     if (drinkCounterId === -1) {
       // レコードがなければ作成する
-      const newDrinkCounterId = await create(drinkId, date.value)
+      const newDrinkCounter = await $drinkCountersRepository.create(drinkId, date.value)
       // DrinkCounterId更新
-      numberOfDrink!.drinkCounterId = newDrinkCounterId
+      numberOfDrink!.drinkCounterId = newDrinkCounter.id
     } else {
-      await increment(drinkCounterId)
+      await $drinkCountersRepository.increment(drinkCounterId)
     }
 
-    const drinkCounter = findDrinkCountersByDrinkId(drinkId)
+    const drinkCounter = DrinkCounterDomain.findByDrinkId(drinkCounters.value, drinkId)
     numberOfDrink!.count = drinkCounter!.count
-    drinkCountForDay.value = updateDrinkCountForDay()
+    drinkCountForDay.value = countForDay()
   }
 
   const minus = async (drinkId: number, drinkCounterId: number) => {
@@ -129,11 +136,11 @@ export function useIndexActions () {
     if (numberOfDrink === undefined || numberOfDrink.count === 0) {
       return
     }
-    await decrement(drinkCounterId)
+    await $drinkCountersRepository.decrement(drinkCounterId)
 
-    const drinkCounter = findDrinkCountersByDrinkId(drinkId)
+    const drinkCounter = DrinkCounterDomain.findByDrinkId(drinkCounters.value, drinkId)
     numberOfDrink!.count = drinkCounter!.count
-    drinkCountForDay.value = updateDrinkCountForDay()
+    drinkCountForDay.value = countForDay()
   }
 
   const updateDefaultDrink = (labelId: number, drinkId: number) => {
@@ -145,7 +152,7 @@ export function useIndexActions () {
     if (!drink) {
       throw new GetRecordError()
     }
-    updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+    $drinkLabelsRepository.updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
     labelWithDrinks.currentDrink = drink
   }
 

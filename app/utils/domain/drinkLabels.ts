@@ -1,4 +1,4 @@
-import type { DrinkLabelRow } from '../api/drinkLabelsRepository'
+import type { DrinkLabelWithDefaultColor } from '../api/drinkLabelsRepository'
 
 export const DrinkLabelDomain = {
   /**
@@ -6,7 +6,7 @@ export const DrinkLabelDomain = {
    * @param drinkLabels readonly DrinkLabelRow[]
    * @returns DrinkLabelRow[]
    */
-  findVisible(drinkLabels: readonly DrinkLabelRow[]) {
+  findVisible(drinkLabels: readonly DrinkLabelWithDefaultColor[]) {
     return drinkLabels.filter(({ visible }) => visible)
   },
 
@@ -16,7 +16,7 @@ export const DrinkLabelDomain = {
    * @param drinkLabelId number
    * @returns DrinkLabelRow | undefined
    */
-  findById(drinkLabels: readonly DrinkLabelRow[], drinkLabelId: number): DrinkLabelRow | undefined {
+  findById(drinkLabels: readonly DrinkLabelWithDefaultColor[], drinkLabelId: number): DrinkLabelWithDefaultColor | undefined {
     return drinkLabels.find(({ id }) => id === drinkLabelId)
   },
 } as const
