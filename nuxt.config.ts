@@ -97,4 +97,19 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
+
+  vite: {
+    plugins: [
+      {
+        name: "vue-spec-plugin",
+        transform (_, id) {
+          if (/vue&type=spec/.test(id)) {
+            return ''
+            // return `export default {}`;
+          }
+          return;
+        },
+      },
+    ],
+  },
 });

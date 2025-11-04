@@ -46,7 +46,7 @@ pnpm dev
 
 ```bash
 supabase db diff -f [file_name]
-supabase gen types --lang=typescript --local > database.types.ts
+supabase gen types --lang=typescript --local > app/types/database.types.ts
 ```
 
 # Release
