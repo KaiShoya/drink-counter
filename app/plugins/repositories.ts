@@ -1,4 +1,4 @@
-import type { Database } from '~/../database.types'
+import type { Database } from '~/types/database.types'
 import { type DrinkLabelsRepository, createDrinkLabelsRepository } from '~/utils/api/drinkLabelsRepository'
 import { type DrinkCountersRepository, createDrinkCountersRepository } from '~/utils/api/drinkCountersRepository'
 import { type DrinksRepository, createDrinksRepository } from '~/utils/api/drinksRepository'
