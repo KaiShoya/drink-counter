@@ -1,6 +1,6 @@
 
 export function useSettingsActions () {
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const { $userSettingsRepository } = useNuxtApp()
   const { thresholdForDetectingOverdrinking, timezone, switchingTiming } = useSettingsState()
   const { userSetting } = storeToRefs(useUserStore())
@@ -17,7 +17,7 @@ export function useSettingsActions () {
       timezone.value,
       switchingTiming.value,
     )
-    showSuccessToast($i18n.t(LOCALE_GENERAL_UPDATE_SUCCESS))
+    showSuccessToast(t(LOCALE_GENERAL_UPDATE_SUCCESS))
   }
 
   return {

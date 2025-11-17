@@ -3,9 +3,9 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 useSeoMeta({
-  title: $i18n.t(LOCALE_ROUTES_MONTHLY),
+  title: t(LOCALE_ROUTES_MONTHLY),
 })
 
 // 既存ページは旧monthlyStoreを使用しているが、新しい月次集計も併用して試せるように追加

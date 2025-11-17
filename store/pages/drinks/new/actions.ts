@@ -1,7 +1,7 @@
 export function usePageDrinkNewActions () {
   const { name, color, amount, drinkLabelId } = usePageDrinkNewState()
 
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const localePath = useLocalePath()
 
   const { createDrink } = useDrinksStore()
@@ -15,7 +15,7 @@ export function usePageDrinkNewActions () {
 
   const create = async () => {
     await createDrink(name.value, color.value, amount.value, drinkLabelId.value)
-    showSuccessToast($i18n.t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
+    showSuccessToast(t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
     navigateTo(localePath('/drinks'))
   }
 

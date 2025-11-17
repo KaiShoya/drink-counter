@@ -3,9 +3,9 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 useSeoMeta({
-  title: $i18n.t(LOCALE_ROUTES_LABELS),
+  title: t(LOCALE_ROUTES_LABELS),
 })
 
 const localePath = useLocalePath()
