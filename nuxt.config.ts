@@ -104,8 +104,7 @@ export default defineNuxtConfig({
         name: "vue-spec-plugin",
         transform (_, id) {
           if (/vue&type=spec/.test(id)) {
-            return ''
-            // return `export default {}`;
+            return `export default {}`;
           }
           return;
         },
