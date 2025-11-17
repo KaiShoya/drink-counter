@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { DrinkLabelWithDefaultColor } from '~/utils/api/drinkLabelsRepository';
+
 const localePath = useLocalePath()
 
 const drinkLabelsStore = useDrinkLabelsStore()
@@ -14,7 +16,7 @@ const name = defineModel<string | null>('name')
 const color = defineModel<string | null>('color')
 const amount = defineModel<number | null>('amount')
 
-const selectedLabel = ref<DrinkLabel | null | undefined>(drinkLabelId.value ? findById(drinkLabelId.value) : undefined)
+const selectedLabel = ref<DrinkLabelWithDefaultColor | null | undefined>(drinkLabelId.value ? findById(drinkLabelId.value) : undefined)
 
 const changeDrinkLabelId = (id: number | null) => {
   drinkLabelId.value = id

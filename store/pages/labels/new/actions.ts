@@ -3,12 +3,9 @@ export function usePageDrinkLabelNewActions () {
   const { $i18n } = useNuxtApp()
   const localePath = useLocalePath()
 
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels, createDrinkLabel } = drinkLabelsStore
+  const { createDrinkLabel } = useDrinkLabelsStore()
 
   const initPage = async () => {
-    await fetchDrinkLabels()
-
     name.value = ''
     color.value = generateRandomColor()
     standardAmount.value = 1

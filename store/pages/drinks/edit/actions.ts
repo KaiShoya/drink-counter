@@ -5,15 +5,11 @@ export function usePageDrinkEditActions () {
   const localePath = useLocalePath()
 
   const drinksStore = useDrinksStore()
-  const { fetchDrinks, findDrink, updateDrink } = drinksStore
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels } = drinkLabelsStore
+  const { findDrink, updateDrink } = drinksStore
 
   const initPage = async () => {
     const route = useRoute()
     drinkId.value = Number(route.params.id)
-    await fetchDrinks()
-    await fetchDrinkLabels()
 
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {

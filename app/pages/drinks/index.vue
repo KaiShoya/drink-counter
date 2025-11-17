@@ -12,13 +12,12 @@ const localePath = useLocalePath()
 
 const pageDrinksStore = usePageDrinksStore()
 const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinksStore)
-const { initPage, updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
+const { updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
+
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
 const drinkLabelsStore = useDrinkLabelsStore()
 const { findById } = drinkLabelsStore
-
-initPage()
 </script>
 
 <template>

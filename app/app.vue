@@ -10,7 +10,15 @@ useSeoMeta({
 })
 
 const { fetchUserData } = useUserStore()
+const { fetchDrinkLabels } = useDrinkLabelsStore()
+const { fetchDrinks } = useDrinksStore()
+
 await fetchUserData()
+
+Promise.all([
+  fetchDrinkLabels(),
+  fetchDrinks(),
+])
 </script>
 
 <template>

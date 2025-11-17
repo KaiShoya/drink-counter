@@ -4,7 +4,7 @@ export const useMonthlyActions = () => {
   const { yearMonth, graphDataTitleBase, graphDataTitle, drinks, drinkCounters, aggregationByDrinks, aggregationByDow } = useMonthlyState()
   const { computedYearMonth } = useMonthlyGetters()
 
-  const { YearMonthToString, processIntoYearMonthToPrevMonth, processIntoYearMonthToNextMonth } = useProcessDate()
+  const { yearMonthToString, processIntoYearMonthToPrevMonth, processIntoYearMonthToNextMonth } = useProcessDate()
 
   const { $drinksRepository, $drinkCountersRepository, $drinkLabelsRepository } = useNuxtApp()  
   const { showLoading, hideLoading } = useAppStore()
@@ -16,7 +16,7 @@ export const useMonthlyActions = () => {
     }
 
     const { year: prevYear, month: prevMonth } = processIntoYearMonthToPrevMonth(year, month)
-    yearMonth.value = YearMonthToString(prevYear, prevMonth)
+    yearMonth.value = yearMonthToString(prevYear, prevMonth)
   }
 
   const nextMonth = () => {
@@ -26,7 +26,7 @@ export const useMonthlyActions = () => {
     }
 
     const { year: nextYear, month: nextMonth } = processIntoYearMonthToNextMonth(year, month)
-    yearMonth.value = YearMonthToString(nextYear, nextMonth)
+    yearMonth.value = yearMonthToString(nextYear, nextMonth)
   }
 
   const fetchDrinkCounters = async () => {

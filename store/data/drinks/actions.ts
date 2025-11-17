@@ -1,28 +1,17 @@
 const TABLE_NAME = 'drinks'
 
 export function useDrinksActions () {
-  const { supabase } = useSupabaseStore()
   const { drinks } = useDrinksState()
   const { findDrink } = useDrinksGetters()
+
+  const { $drinksRepository } = useNuxtApp()
 
   /**
    * Drinksテーブルから飲み物のデータを取得する
    * @returns Promise<error_message_code | undefined>
    */
   const fetchDrinks = async () => {
-    const { data, error } = await supabase.from(TABLE_NAME).select('*').order('sort,id')
-    if (error) {
-      throw new Response500Error()
-    }
-    drinks.value = []
-
-    // デフォルトカラーをランダムセットする
-    for (const drink of data) {
-      drinks.value.push({
-        ...drink,
-        default_color: generateRandomColor(),
-      })
-    }
+    drinks.value = await $drinksRepository.fetchAll()
   }
 
   /**
@@ -33,11 +22,8 @@ export function useDrinksActions () {
    * @returns Promise<error_message_code | undefined>
    */
   const deleteDrinkById = async (drinkId: number, name: string) => {
-    const { error } = await supabase.rpc('delete_drink_data', { drinkid: drinkId })
-    if (error) {
-      throw new SupabaseResponseError(error, LOCALE_DRINKS_DELETE_FAILURE, { name })
-    }
-    await fetchDrinks()
+    await $drinksRepository.deleteById(drinkId, name)
+    drinks.value = drinks.value.filter(d => d.id !== drinkId)
   }
 
   /**
@@ -46,20 +32,21 @@ export function useDrinksActions () {
    * @param name string
    * @param color string | null
    * @param amount number
-   * @param driknLabelId number | null
+   * @param drinkLabelId number | null
    * @returns Promise<error_message_code | undefined>
    */
-  const updateDrink = async (drinkId: number, name: string, color: string | null, amount: number, driknLabelId: number | null) => {
-    const { error } = await supabase.from(TABLE_NAME).update({ name, color, amount, drink_label_id: driknLabelId }).eq('id', drinkId)
-    if (error) {
-      throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
-    }
+  const updateDrink = async (drinkId: number, name: string, color: string | null, amount: number, drinkLabelId: number | null) => {
     const drink = findDrink(drinkId)
     if (!drink) {
       throw new GetRecordError()
     }
+    await $drinksRepository.updateById(drinkId, name, color, amount, drinkLabelId)
     drink.name = name
     drink.color = color
+    drink.amount = amount
+    drink.drink_label_id = drinkLabelId
+
+    drinks.value = drinks.value.map(d => (d.id === drinkId ? drink : d))
   }
 
   const updateDrinkVisible = async (drinkId: number, visible: boolean) => {
@@ -67,10 +54,7 @@ export function useDrinksActions () {
     if (!drink) {
       throw new GetRecordError()
     }
-    const { error } = await supabase.from(TABLE_NAME).update({ visible }).eq('id', drinkId)
-    if (error) {
-      throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name: drink.name })
-    }
+    await $drinksRepository.updateVisible(drinkId, drink.name, visible)
     drink.visible = visible
   }
 
@@ -82,19 +66,14 @@ export function useDrinksActions () {
         sort: drink.sort,
       }
     })
-    const { error } = await supabase.rpc('bulk_update_drinks_sort', { payload })
-    if (error) {
-      throw new Response500Error()
-    }
+    await $drinksRepository.updateSort(payload)
   }
 
-  const createDrink = async (name: string, color: string | null, amount: number, driknLabelId: number | null) => {
-    const { error } = await supabase.from(TABLE_NAME).insert({ name, color, amount, drink_label_id: driknLabelId })
-    if (error) {
-      throw new SupabaseResponseError(error, LOCALE_DRINKS_CREATE_FAILURE, { name })
-    }
-    await fetchDrinks()
+  const createDrink = async (name: string, color: string | null, amount: number, drinkLabelId: number | null) => {
+    const drink = await $drinksRepository.create(name, color, amount, drinkLabelId)
+    drinks.value.push(drink)
   }
+
   return {
     fetchDrinks,
     deleteDrinkById,

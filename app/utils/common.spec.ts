@@ -4,6 +4,7 @@ import { describe, it, expect } from "vitest";
 const {
   processIntoString,
   processIntoYearMonth,
+  yearMonthToString,
   yearMonthToDateString,
   processIntoYearMonthToNextMonth,
   processIntoYearMonthToPrevMonth,
@@ -38,6 +39,18 @@ describe("processIntoYearMonth()のテスト", () => {
     // 閏年
     const leapYear = new Date(2024, 1, 29, 0, 0, 0, 0);
     expect(processIntoYearMonth(leapYear)).toEqual("2024-02");
+  });
+});
+
+describe("yearMonthToString()のテスト", () => {
+  it("2024-01", () => {
+    expect(yearMonthToString(2024, 1)).toEqual("2024-01");
+  });
+
+  it("1~12以外の数字", () => {
+    expect(yearMonthToString(2024, 0)).toEqual("2023-12");
+    expect(yearMonthToString(2024, -1)).toEqual("2023-11");
+    expect(yearMonthToString(2024, 13)).toEqual("2025-01");
   });
 });
 

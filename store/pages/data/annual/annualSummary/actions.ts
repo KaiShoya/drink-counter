@@ -1,3 +1,4 @@
+// FIXME: supabase関連処理をrepositoryに移動する
 export const useAnnualSummaryActions = () => {
   const { loading, error, lastInput, data } = useAnnualSummaryState()
 

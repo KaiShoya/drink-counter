@@ -1,36 +1,20 @@
-import { findTimeZone, getZonedTime, convertTimeToDate } from 'timezone-support'
-import { formatZonedTime } from 'timezone-support/parse-format'
 import { DrinkCounterDomain } from '~/utils/domain/drinkCounters'
-import { DrinkLabelDomain } from '~/utils/domain/drinkLabels'
-import { DrinkDomain } from '~/utils/domain/drinks'
 
 export function useIndexActions () {
-  const { date, numberOfDrinks, labelsWithDrinks, drinkCountForDay, drinks, drinkCounters, drinkLabels } = useIndexState()
+  const { date, numberOfDrinks, labelsWithDrinks, drinkCountForDay, drinkCounters } = useIndexState()
   const { findNumberOfDrinkByDrinkId, findNumberOfDrinkByLabels, findLabelsWithDrinks, countForDay } = useIndexGetters()
 
   const { processIntoString } = useProcessDate()
 
-  const { $drinksRepository, $drinkCountersRepository, $drinkLabelsRepository } = useNuxtApp()
-  const { showLoading, hideLoading } = useAppStore()
-  const { userSetting } = storeToRefs(useUserStore())
+  const { $drinkCountersRepository } = useNuxtApp()
+  const { calcDate } = useUserStore()
+  const drinkLabelsStore = useDrinkLabelsStore()
+  const { findByVisible, updateDefaultDrinkId } = drinkLabelsStore
+  const drinksStore = useDrinksStore()
+  const { findDrinksVisible } = drinksStore
 
-  /**
-   * 日付を取得する
-   */
-  const fetchDate = () => {
-    // TODO: 日付計算はuserSettingsStoreの方が良い？
-    const tz = findTimeZone(userSetting.value.timezone)
-    const nativeDate = new Date()
-    let tzTime = getZonedTime(nativeDate, tz)
-
-    // 現在時刻が設定時刻を超えない場合、日付を-1する（0時過ぎても前日の日付でカウントするため）
-    if (tzTime.hours < userSetting.value.switching_timing) {
-      const date = convertTimeToDate(tzTime)
-      date.setDate(date.getDate() - 1)
-      tzTime = getZonedTime(date, tz)
-    }
-    const displayTime = formatZonedTime(tzTime, 'YYYY-MM-DD')
-    date.value = displayTime
+  const setToday = () => {
+    date.value = calcDate
   }
 
   const prevDate = () => {
@@ -46,15 +30,10 @@ export function useIndexActions () {
   }
 
   /**
-   * 指定した日付の飲んだ杯数を取得する
-   * @param date 日付 '2023-01-01'
+   * dateの日付の飲んだ杯数を取得する
    */
-  const fetchNumberOfDrinks = async (date: string) => {
-    showLoading()
-
-    drinkLabels.value = await $drinkLabelsRepository.fetchAll()
-    drinks.value = await $drinksRepository.fetchAll()
-    drinkCounters.value = await $drinkCountersRepository.fetchByDate(date)
+  const fetchNumberOfDrinks = async () => {
+    drinkCounters.value = await $drinkCountersRepository.fetchByDate(date.value)
 
     numberOfDrinks.value = []
     labelsWithDrinks.value = []
@@ -63,7 +42,7 @@ export function useIndexActions () {
     // visible = trueの飲み物を取得し、それに紐づくdrinkCountersを取得。（当日）
     // numberOfDrinksの形式で保存。
     try {
-      for (const drink of DrinkDomain.findVisible(drinks.value)) {
+      for (const drink of findDrinksVisible()) {
         const drinkCounter = DrinkCounterDomain.findByDrinkId(drinkCounters.value, drink.id)
         numberOfDrinks.value.push({
           id: drink.id,
@@ -80,7 +59,7 @@ export function useIndexActions () {
 
     // visible = trueのdrinkLablesを取得し、そのラベルに紐づく飲み物を取得。
     // default_drink_idがnullだったら登録する
-    for (const label of DrinkLabelDomain.findVisible(drinkLabels.value)) {
+    for (const label of findByVisible()) {
       const drinks = findNumberOfDrinkByLabels(label.id)
       const labelWithDrinks = {
         ...label,
@@ -96,7 +75,7 @@ export function useIndexActions () {
       if (!labelWithDrinks.default_drink_id) {
         const drink = drinks[0]
         if (drink) {
-          await $drinkLabelsRepository.updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+          await updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
           labelWithDrinks.default_drink_id = drink.id
           labelWithDrinks.currentDrink = drink
         }
@@ -106,8 +85,6 @@ export function useIndexActions () {
     }
 
     drinkCountForDay.value = countForDay()
-
-    hideLoading()
   }
 
   const plus = async (drinkId: number, drinkCounterId: number) => {
@@ -121,9 +98,8 @@ export function useIndexActions () {
       await $drinkCountersRepository.increment(drinkCounterId)
     }
 
-    const drinkCounter = DrinkCounterDomain.findByDrinkId(drinkCounters.value, drinkId)
-    numberOfDrink!.count = drinkCounter!.count
-    drinkCountForDay.value = countForDay()
+    numberOfDrink!.count++
+    drinkCountForDay.value++
   }
 
   const minus = async (drinkId: number, drinkCounterId: number) => {
@@ -138,9 +114,8 @@ export function useIndexActions () {
     }
     await $drinkCountersRepository.decrement(drinkCounterId)
 
-    const drinkCounter = DrinkCounterDomain.findByDrinkId(drinkCounters.value, drinkId)
-    numberOfDrink!.count = drinkCounter!.count
-    drinkCountForDay.value = countForDay()
+    numberOfDrink!.count--
+    drinkCountForDay.value--
   }
 
   const updateDefaultDrink = (labelId: number, drinkId: number) => {
@@ -152,12 +127,12 @@ export function useIndexActions () {
     if (!drink) {
       throw new GetRecordError()
     }
-    $drinkLabelsRepository.updateDefaultDrinkId(labelWithDrinks.id, drink.id, labelWithDrinks.name)
+    updateDefaultDrinkId(labelId, drink.id, drink.name)
     labelWithDrinks.currentDrink = drink
   }
 
   return {
-    fetchDate,
+    setToday,
     prevDate,
     nextDate,
     fetchNumberOfDrinks,

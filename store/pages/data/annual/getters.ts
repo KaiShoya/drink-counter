@@ -1,9 +1,11 @@
 import { DrinkDomain } from "~/utils/domain/drinks"
 
 export const useAnnualGetters = () => {
-  const { year, drinks, drinkCounters } = useAnnualState()
+  const { year, drinkCounters } = useAnnualState()
 
   const { formatDrinkCounters } = useProcessDate()
+
+  const { drinks } = storeToRefs(useDrinksStore())
 
   const prevYear = () => year.value--
   const nextYear = () => year.value++

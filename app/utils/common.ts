@@ -27,7 +27,12 @@ const processIntoYearMonth = (date: Date) => {
  * @param month number
  * @returns string YYYY-MM
  */
-const YearMonthToString = (year: number, month: number) => `${year}-${month}`
+const yearMonthToString = (year: number, month: number) => {
+  const date = new Date(year, month - 1, 1);
+  const normalizedYear = date.getFullYear()
+  const normalizedMonth = String(date.getMonth() + 1).padStart(2, '0')
+  return `${normalizedYear}-${normalizedMonth}`
+}
 
 /**
  * 年月をYYYY-MM-DD形式に変換する
@@ -101,7 +106,7 @@ export const useProcessDate = () => {
   return {
     processIntoString,
     processIntoYearMonth,
-    YearMonthToString,
+    yearMonthToString,
     yearMonthToDateString,
     processIntoYearMonthToNextMonth,
     processIntoYearMonthToPrevMonth,

@@ -9,11 +9,12 @@ export type DrinkRow = Database['public']['Tables'][typeof TABLE_NAME]['Row'] & 
 
 export interface DrinksRepository {
   fetchAll(): Promise<DrinkRow[]>
+  fetchById(id: number): Promise<DrinkRow | null>
   deleteById(drinkId: number, name: string): Promise<void>
   updateById(drinkId: number, name: string, color: string | null, amount: number, drinkLabelId: number | null): Promise<void>
   updateVisible(drinkId: number, name: string, visible: boolean): Promise<void>
   updateSort(payload: Array<{ id: number; sort: number }>): Promise<void>
-  create(name: string, color: string | null, amount: number, drinkLabelId: number | null): Promise<void>
+  create(name: string, color: string | null, amount: number, drinkLabelId: number | null): Promise<DrinkRow>
 }
 
 export const createDrinksRepository = (
@@ -38,6 +39,29 @@ export const createDrinksRepository = (
       ...drink,
       default_color: generateRandomColor(),
     }))
+  }
+
+  /**
+   * Drinksテーブルから指定したIDの飲み物のデータを取得する
+   * @return {Promise<DrinkRow | null>}
+   */
+  const fetchById = async (id: number): Promise<DrinkRow | null> => {
+    const { data, error } = await client
+      .from(TABLE_NAME)
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (error) {
+      throw new SupabaseResponseError(error, LOCALE_ERROR_GET_RECORD)
+    }
+
+    // デフォルトカラーをランダムセットする（colorがnullの場合に利用）
+    // dataがnullの場合はnullを返す
+    return data && {
+      ...data,
+      default_color: generateRandomColor(),
+    }
   }
 
   /**
@@ -101,14 +125,18 @@ export const createDrinksRepository = (
   }
 
   const create = async (name: string, color: string | null, amount: number, drinkLabelId: number | null) => {
-    const { error } = await client.from(TABLE_NAME).insert({ name, color, amount, drink_label_id: drinkLabelId })
+    const { data, error } = await client.from(TABLE_NAME).insert({ name, color, amount, drink_label_id: drinkLabelId }).select().single()
     if (error) {
       throw new SupabaseResponseError(error, LOCALE_DRINKS_CREATE_FAILURE, { name })
     }
-    await fetchAll()
-  }
+    return {
+      ...data,
+      default_color: generateRandomColor(),
+    }  }
+
   return {
     fetchAll,
+    fetchById,
     deleteById,
     updateById,
     updateVisible,

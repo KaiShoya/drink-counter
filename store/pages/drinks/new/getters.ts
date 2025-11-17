@@ -1,3 +1,9 @@
 export function usePageDrinkNewGetters () {
-  return {}
+  const getDrinkLabels = computed(() => {
+    const { drinkLabels } = storeToRefs(useDrinkLabelsStore())
+    return drinkLabels.value
+  })
+  return {
+    getDrinkLabels,
+  }
 }
