@@ -108,7 +108,6 @@ export default defineNuxtConfig({
           if (/vue&type=spec/.test(id)) {
             return `export default {}`;
           }
-          return;
         },
       },
     ],
