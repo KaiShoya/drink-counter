@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@nuxt/eslint",
     "nuxt-gtag",
+    "@nuxt/hints",
   ],
 
   ssr: true,

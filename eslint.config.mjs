@@ -1,5 +1,6 @@
 import { defineFlatConfigs } from '@nuxt/eslint-config'
 import stylistic from '@stylistic/eslint-plugin'
+import vue from 'eslint-plugin-vue'
 
 export default defineFlatConfigs({
   ignores: [
@@ -10,6 +11,7 @@ export default defineFlatConfigs({
   ],
   plugins: {
     '@stylistic': stylistic,
+    vue,
   },
   rules: {
     // 'comma-dangle': [
