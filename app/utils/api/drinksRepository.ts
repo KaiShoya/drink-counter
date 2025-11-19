@@ -132,7 +132,8 @@ export const createDrinksRepository = (
     return {
       ...data,
       default_color: generateRandomColor(),
-    }  }
+    }
+  }
 
   return {
     fetchAll,

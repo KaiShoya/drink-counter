@@ -81,7 +81,6 @@ export const createDrinkLabelsRepository = (
       .eq('id', drinkLabelId)
 
     if (error) {
-      console.error(error)
       throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
   }

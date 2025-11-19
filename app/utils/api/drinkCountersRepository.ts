@@ -174,7 +174,6 @@ export const createDrinkCountersRepository = (
   const fetchAggregationByDow = async (): Promise<AggregationByDow[]> => {
     const { data, error } = await client.rpc('aggregation_by_dow')
     if (error) {
-      console.error(error)
       throw new SupabaseResponseError(error, LOCALE_ERROR_UNKNOWN)
     }
     return data ?? []
@@ -183,7 +182,6 @@ export const createDrinkCountersRepository = (
   const fetchAggregationByDowPerYear = async (year: number): Promise<AggregationByDow[]> => {
     const { data, error } = await client.rpc('aggregation_by_dow', { year })
     if (error) {
-      console.error(error)
       throw new SupabaseResponseError(error, LOCALE_ERROR_UNKNOWN)
     }
     return data ?? []
@@ -192,7 +190,6 @@ export const createDrinkCountersRepository = (
   const fetchAggregationByDowPerMonth = async (year: number, month: number): Promise<AggregationByDow[]> => {
     const { data, error } = await client.rpc('aggregation_by_dow', { year, month })
     if (error) {
-      console.error(error)
       throw new SupabaseResponseError(error, LOCALE_ERROR_UNKNOWN)
     }
     return data ?? []

@@ -55,6 +55,7 @@ export default defineNuxtConfig({
       supabaseUrl: "http://localhost:54321",
       supabaseKey: "",
       version: pkg.version,
+      logLevel: process.env.NUXT_PUBLIC_LOG_LEVEL || 'warn',
     },
   },
 

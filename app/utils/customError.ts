@@ -81,6 +81,7 @@ export class UnknownError extends CustomError {
 export class SupabaseResponseError extends CustomSupabaseError {
   constructor(error: PostgrestError, message: string, named?: Record<string, unknown>) {
     super(error, SupabaseResponseError.name, named);
+    logger.error(message, { module: 'SupabaseResponseError' }, error);
   }
 }
 
@@ -90,6 +91,7 @@ export class SupabaseAuthError extends CustomSupabaseError {
     super(error, SupabaseAuthError.name);
     super.setAppendString(error.message);
     this.error = error;
+    logger.error(error.message, { module: 'SupabaseAuthError' }, error);
   }
 
   override getMessage(): string {
