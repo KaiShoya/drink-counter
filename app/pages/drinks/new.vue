@@ -5,7 +5,7 @@ definePageMeta({
 
 const drinkNewStore = usePageDrinkNewStore()
 const { name, color, amount, drinkLabelId } = storeToRefs(drinkNewStore)
-const { initPage, create, getDrinkLabels } = drinkNewStore
+const { initPage, create } = drinkNewStore
 
 initPage()
 </script>
@@ -13,7 +13,6 @@ initPage()
 <template>
   <div>
     <DomainDrinkAtomsEdit
-      v-model:drink-labels="getDrinkLabels"
       v-model:name="name"
       v-model:color="color"
       v-model:amount="amount"
