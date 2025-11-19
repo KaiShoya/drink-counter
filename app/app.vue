@@ -9,16 +9,23 @@ useSeoMeta({
   ogUrl: currentPath,
 })
 
+const { showLoading, hideLoading } = useAppStore()
 const { fetchUserData } = useUserStore()
 const { fetchDrinkLabels } = useDrinkLabelsStore()
 const { fetchDrinks } = useDrinksStore()
 
-await fetchUserData()
-
-Promise.all([
-  fetchDrinkLabels(),
-  fetchDrinks(),
-])
+showLoading()
+try {
+  await fetchUserData()
+  await Promise.all([
+    fetchDrinkLabels(),
+    fetchDrinks(),
+  ])
+} catch (error) {
+  logger.error('Failed to fetch initial data', { module: 'app.vue' }, error)
+} finally {
+  hideLoading()
+}
 </script>
 
 <template>
