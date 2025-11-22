@@ -66,7 +66,6 @@ export const createDrinksRepository = (
 
   /**
    * 指定したIDの飲み物を削除する
-   * 削除に成功したらDrinksを再取得する
    * @param drinkId number
    * @param name string
    */

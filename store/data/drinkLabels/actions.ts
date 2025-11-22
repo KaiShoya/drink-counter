@@ -42,8 +42,6 @@ export function useDrinkLabelsActions () {
     drinkLabel.name = name
     drinkLabel.color = color
     drinkLabel.standard_amount = standardAmount
-
-    // drinkLabels.value = drinkLabels.value.map(dl => (dl.id === drinkLabelId ? drinkLabel : dl))
   }
 
   const updateDrinkLabelVisible = async (drinkLabelId: number, name: string, visible: boolean) => {

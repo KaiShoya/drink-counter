@@ -54,7 +54,6 @@ export const createDrinkLabelsRepository = (
 
   /**
    * 指定したIDのラベルを削除する
-   * 削除に成功したらDrinkLabelsを再取得する
    * @param drinkLabelId number
    * @param name string drinkLabel.name
    */
@@ -74,6 +73,7 @@ export const createDrinkLabelsRepository = (
    * @param drinkLabelId number
    * @param name string
    * @param color string | null
+   * @param standardAmount number 標準量（ml）を指定
    */
   const updateById = async (drinkLabelId: number, name: string, color: string | null, standardAmount: number) => {
     const { error } = await client
@@ -82,7 +82,6 @@ export const createDrinkLabelsRepository = (
       .eq('id', drinkLabelId)
 
     if (error) {
-      logger.error('updateById drink_labels error', { drinkLabelId, name, color, standardAmount, error }, error)
       throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
   }
