@@ -45,7 +45,7 @@ const yearMonthToDateString = (year: number, month: number): string => {
   const date = new Date(year, month - 1, 1);
   const normalizedYear = date.getFullYear()
   const normalizedMonth = String(date.getMonth() + 1).padStart(2, '0')
-	return `${normalizedYear}-${normalizedMonth}-01`
+  return `${normalizedYear}-${normalizedMonth}-01`
 }
 
 /**
