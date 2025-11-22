@@ -14,7 +14,7 @@ export function useIndexActions () {
   const { findDrinksVisible } = drinksStore
 
   const setToday = () => {
-    date.value = calcDate
+    date.value = calcDate()
   }
 
   const prevDate = () => {

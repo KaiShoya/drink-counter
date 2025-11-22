@@ -16,6 +16,7 @@ export function useUserActions () {
           // ユーザーデータ取得に失敗した場合は安全にフォールバック
           userName.value = null
           userAvatarUrl.value = null
+          logger.error('Failed to get user data', { module: 'user/actions.ts' }, error)
         } else {
           // ユーザー設定を取得
           const userSettingRow = await $userSettingsRepository.fetchUserSettings()

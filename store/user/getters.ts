@@ -4,7 +4,7 @@ import { formatZonedTime } from 'timezone-support/parse-format'
 export function useUserGetters () {
   const { userSetting } = useUserState()
 
-  const calcDate = computed((): string => {
+  const calcDate = (): string => {
     const tz = findTimeZone(userSetting.value.timezone)
     const nativeDate = new Date()
     let tzTime = getZonedTime(nativeDate, tz)
@@ -17,7 +17,7 @@ export function useUserGetters () {
     }
     const displayTime = formatZonedTime(tzTime, 'YYYY-MM-DD')
     return displayTime
-  })
+  }
 
   return {
     calcDate,

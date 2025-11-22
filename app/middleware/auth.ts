@@ -7,6 +7,7 @@ export default defineNuxtRouteMiddleware(async (_to, from) => {
   await fetchUserData();
 
   if (!isLogin.value) {
-    return navigateTo(localePath("/login?fullpath=" + from.fullPath));
+    const fullPath = from?.fullPath || '/';
+    return navigateTo(localePath("/login?fullpath=" + fullPath));
   }
 });

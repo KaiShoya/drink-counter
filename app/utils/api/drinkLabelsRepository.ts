@@ -32,19 +32,20 @@ export const createDrinkLabelsRepository = (
 ): DrinkLabelsRepository => {
   /**
    * drink_labelsテーブルからラベルデータを取得する
-   * @return {Promise<DrinkLabelRow[]>}
+   * @return {Promise<DrinkLabelWithDefaultColor[]>}
    */
   const fetchAll = async () => {
     const { data, error } = await client
       .from(TABLE_NAME)
       .select('*')
-      .order('sort,id')
+      .order('sort', { ascending: true })
+      .order('id', { ascending: true })
 
     if (error) {
       throw new SupabaseResponseError(error, LOCALE_ERROR_GET_RECORD)
     }
 
-    // デフォルトカラーをランダムセットする（colorがnullの場合に利用）
+    // デフォルトカラーをランダムセットする（colorがnullの場合にdefault_colorを利用）
     return (data ?? []).map<DrinkLabelWithDefaultColor>((label) => ({
       ...label,
       default_color: generateRandomColor(),
@@ -81,6 +82,7 @@ export const createDrinkLabelsRepository = (
       .eq('id', drinkLabelId)
 
     if (error) {
+      logger.error('updateById drink_labels error', { drinkLabelId, name, color, standardAmount, error }, error)
       throw new SupabaseResponseError(error, LOCALE_DRINKS_UPDATE_FAILURE, { name })
     }
   }
@@ -104,9 +106,7 @@ export const createDrinkLabelsRepository = (
 
   /**
    * ソート順を更新する
-   * @param drinkLabelId number
-   * @param name string
-   * @param visible boolean
+   * @param payload Array<{ id: number; sort: number }>
    */
   const updateSort = async (payload: Array<{ id: number; sort: number }>) => {
     const { error } = await client.rpc('bulk_update_drink_labels_sort', { payload })
@@ -133,7 +133,7 @@ export const createDrinkLabelsRepository = (
    * @param name string
    * @param color string | null
    * @param standardAmount number
-   * @return {Promise<DrinkLabelRow>}
+   * @return {Promise<DrinkLabelWithDefaultColor>}
    */
   const create = async (name: string, color: string | null, standardAmount: number): Promise<DrinkLabelWithDefaultColor> => {
     const { data, error } = await client

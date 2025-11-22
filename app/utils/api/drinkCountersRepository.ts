@@ -27,18 +27,11 @@ export interface DrinkCountersRepository {
   fetchAggregationByDowPerMonth (year: number, month: number): Promise<AggregationByDow[]>
 }
 
-const { yearMonthToDateString, processIntoYearMonthToNextMonth } = useProcessDate()
-
-// /** Repository abstraction for drink counter aggregation workflows. */
-// export interface DrinkCountersRepository {
-//   fetchAll (): Promise<DrinkCounterRow[]>
-//   fetchByDateRange (params: FetchByDateRangeParams): Promise<DrinkCounterRow[]>
-//   fetchByMonth (year: number, month: number): Promise<DrinkCounterRow[]>
-// }
-
 export const createDrinkCountersRepository = (
   client: SupabaseClient<Database>,
 ): DrinkCountersRepository => {
+  const { yearMonthToDateString, processIntoYearMonthToNextMonth } = useProcessDate()
+
   /**
    * 自分のデータを全件取得する
    * @return {Promise<DrinkCounterRow[]>}
