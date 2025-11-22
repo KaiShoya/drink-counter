@@ -1,5 +1,6 @@
 import { defineFlatConfigs } from '@nuxt/eslint-config'
 import stylistic from '@stylistic/eslint-plugin'
+import vue from 'eslint-plugin-vue'
 
 export default defineFlatConfigs({
   ignores: [
@@ -10,6 +11,7 @@ export default defineFlatConfigs({
   ],
   plugins: {
     '@stylistic': stylistic,
+    vue,
   },
   rules: {
     // 'comma-dangle': [
@@ -17,6 +19,12 @@ export default defineFlatConfigs({
     //   'always-multiline',
     // ],
     'vue/multi-word-component-names': 0,
+    'vue/block-order': [
+      'error',
+      {
+        order: ['spec', 'script', 'template', 'style'],
+      },
+    ],
     '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
     '@stylistic/space-before-function-paren': ['error', 'always'],
     'indent': ['error', 2],

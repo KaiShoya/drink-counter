@@ -3,22 +3,21 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 useSeoMeta({
-  title: $i18n.t(LOCALE_ROUTES_DRINKS),
+  title: t(LOCALE_ROUTES_DRINKS),
 })
 
 const localePath = useLocalePath()
 
 const pageDrinksStore = usePageDrinksStore()
 const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinksStore)
-const { initPage, updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
+const { updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
+
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
 const drinkLabelsStore = useDrinkLabelsStore()
 const { findById } = drinkLabelsStore
-
-initPage()
 </script>
 
 <template>

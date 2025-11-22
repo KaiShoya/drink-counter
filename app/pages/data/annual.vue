@@ -3,9 +3,9 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const { $i18n } = useNuxtApp()
+const { t } = useI18n()
 useSeoMeta({
-  title: $i18n.t(LOCALE_ROUTES_ANNUAL),
+  title: t(LOCALE_ROUTES_ANNUAL),
 })
 
 const annualStore = useAnnualStore()
@@ -15,14 +15,22 @@ const { fetchDrinkCounters } = annualStore
 
 fetchDrinkCounters()
 
+// 年次KPIの新ストア
+const annualSummary = useAnnualSummaryStore()
+// 初回取得
+annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
+
 watch(year, async () => {
   await fetchDrinkCounters()
+  await annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
 })
 </script>
 
 <template>
   <div class="container">
     <DomainPickerMoleculesYearPicker />
+
+    <DomainAnnualKpiCards />
 
     <!-- メモリリークするため一旦コメントアウト -->
     <!-- <MoleculesGraphsCalendar

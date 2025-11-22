@@ -1,3 +1,4 @@
+import { defineNuxtConfig } from 'nuxt/config'
 import pkg from "./package.json";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -10,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@nuxt/eslint",
     "nuxt-gtag",
+    "@nuxt/hints",
   ],
 
   ssr: true,
@@ -54,6 +56,7 @@ export default defineNuxtConfig({
       supabaseUrl: "http://localhost:54321",
       supabaseKey: "",
       version: pkg.version,
+      logLevel: 'warn',
     },
   },
 
@@ -81,13 +84,12 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: "./i18n.config.ts",
     locales: [
-      { code: "ja", name: "日本語", iso: "ja_JP", file: "ja.yaml" },
-      { code: "en", name: "English(US)", iso: "en-US", file: "en.yaml" },
+      { code: "ja", name: "日本語", file: "ja.yaml" },
+      { code: "en", name: "English(US)", file: "en.yaml" },
     ],
     defaultLocale: "ja",
     langDir: "locales/",
     strategy: "prefix_except_default", // https://v8.i18n.nuxtjs.org/guide/routing-strategies
-    lazy: true,
   },
 
   pinia: {
@@ -96,5 +98,18 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false,
+  },
+
+  vite: {
+    plugins: [
+      {
+        name: "vue-spec-plugin",
+        transform (_, id) {
+          if (/vue&type=spec/.test(id)) {
+            return `export default {}`;
+          }
+        },
+      },
+    ],
   },
 });

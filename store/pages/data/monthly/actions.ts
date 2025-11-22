@@ -1,38 +1,51 @@
+import { DrinkDomain } from "~/utils/domain/drinks"
+
 export const useMonthlyActions = () => {
-  const { yearMonth, graphDataTitleBase, graphDataTitle } = useMonthlyState()
+  const { yearMonth, graphDataTitleBase, graphDataTitle, drinks, drinkCounters, aggregationByDrinks, aggregationByDow } = useMonthlyState()
   const { computedYearMonth } = useMonthlyGetters()
 
-  const { processIntoYearMonth } = useProcessDate()
+  const { yearMonthToString, processIntoYearMonthToPrevMonth, processIntoYearMonthToNextMonth } = useProcessDate()
 
+  const { $drinksRepository, $drinkCountersRepository, $drinkLabelsRepository } = useNuxtApp()  
   const { showLoading, hideLoading } = useAppStore()
-  const drinksStore = useDrinksStore()
-  const { getDrinksNameArray } = storeToRefs(drinksStore)
-  const { fetchDrinks } = drinksStore
-  const drinkCountersStore = useDrinkCountersStore()
-  const { fetchDrinkCountersPerMonth } = drinkCountersStore
-  const { fetchAggregationByDowPerMonth } = useAggregationByDowStore()
-  const { fetchSumCountPerMonth } = useAggregationByDrinksStore()
 
   const prevMonth = () => {
-    const newDate = new Date(yearMonth.value)
-    newDate.setMonth(newDate.getMonth() - 1)
-    yearMonth.value = processIntoYearMonth(newDate)
+    const { year, month } = computedYearMonth.value
+    if (year === undefined || month === undefined) {
+      throw new CustomError('年月の取得に失敗しました')
+    }
+
+    const { year: prevYear, month: prevMonth } = processIntoYearMonthToPrevMonth(year, month)
+    yearMonth.value = yearMonthToString(prevYear, prevMonth)
   }
 
   const nextMonth = () => {
-    const newDate = new Date(yearMonth.value)
-    newDate.setMonth(newDate.getMonth() + 1)
-    yearMonth.value = processIntoYearMonth(newDate)
+    const { year, month } = computedYearMonth.value
+    if (year === undefined || month === undefined) {
+      throw new CustomError('年月の取得に失敗しました')
+    }
+
+    const { year: nextYear, month: nextMonth } = processIntoYearMonthToNextMonth(year, month)
+    yearMonth.value = yearMonthToString(nextYear, nextMonth)
   }
 
   const fetchDrinkCounters = async () => {
     showLoading()
+
     const { year, month } = computedYearMonth.value
-    await fetchDrinks()
-    await fetchDrinkCountersPerMonth(year, month)
-    await fetchSumCountPerMonth(year, month)
-    await fetchAggregationByDowPerMonth(year, month)
-    graphDataTitle.value = [...graphDataTitleBase, ...getDrinksNameArray.value]
+    if (year === undefined || month === undefined) {
+      throw new CustomError('年月の取得に失敗しました')
+    }
+
+    drinks.value = await $drinksRepository.fetchAll()
+    drinkCounters.value = await $drinkCountersRepository.fetchByMonth(year, month)
+    aggregationByDrinks.value = await $drinkLabelsRepository.fetchSumCountPerMonth(year, month)
+    aggregationByDow.value = await $drinkCountersRepository.fetchAggregationByDowPerMonth(year, month)
+    graphDataTitle.value = [
+      ...graphDataTitleBase,
+      ...DrinkDomain.extractNames(drinks.value),
+    ]
+
     hideLoading()
   }
 

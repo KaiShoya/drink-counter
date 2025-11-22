@@ -16,12 +16,12 @@ export function useIndexGetters () {
    * numberOfDrinksのcountの合計値を返却する
    * @returns number 1日の合計数
    */
-  const updateDrinkCountForDay = () => numberOfDrinks.value.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0)
+  const countForDay = () => numberOfDrinks.value.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0)
 
   return {
     findNumberOfDrinkByDrinkId,
     findNumberOfDrinkByLabels,
     findLabelsWithDrinks,
-    updateDrinkCountForDay,
+    countForDay,
   }
 }

@@ -1,20 +1,15 @@
 export const useAnnualActions = () => {
-  const { year } = useAnnualState()
+  const { year, drinks, drinkCounters, aggregationByDrinks, aggregationByDow} = useAnnualState()
 
   const { showLoading, hideLoading } = useAppStore()
-  const drinkCountersStore = useDrinkCountersStore()
-  const { fetchDrinkCountersPerYear } = drinkCountersStore
-  const drinksStore = useDrinksStore()
-  const { fetchDrinks } = drinksStore
-  const { fetchAggregationByDowPerYear } = useAggregationByDowStore()
-  const { fetchSumCountPerYear } = useAggregationByDrinksStore()
+  const { $drinksRepository, $drinkCountersRepository, $drinkLabelsRepository } = useNuxtApp()
 
   const fetchDrinkCounters = async () => {
     showLoading()
-    await fetchDrinks()
-    await fetchDrinkCountersPerYear(year.value)
-    await fetchSumCountPerYear(year.value)
-    await fetchAggregationByDowPerYear(year.value)
+    drinks.value = await $drinksRepository.fetchAll()
+    drinkCounters.value = await $drinkCountersRepository.fetchByYear(year.value)
+    aggregationByDrinks.value = await $drinkLabelsRepository.fetchSumCountPerYear(year.value)
+    aggregationByDow.value = await $drinkCountersRepository.fetchAggregationByDowPerYear(year.value)
     hideLoading()
   }
 

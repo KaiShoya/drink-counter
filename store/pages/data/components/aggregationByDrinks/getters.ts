@@ -1,8 +1,5 @@
 export const useAggregationByDrinksGetters = () => {
-  const { chartDataTitle, aggregationByDrinks } = useAggregationByDrinksState()
-
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { drinkLabels } = storeToRefs(drinkLabelsStore)
+  const { chartDataTitle, aggregationByDrinks, drinkLabels } = useAggregationByDrinksState()
 
   /**
    * テーブル用データ（円グラフでも利用）

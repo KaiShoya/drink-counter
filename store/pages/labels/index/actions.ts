@@ -1,27 +1,22 @@
 export function usePageDrinkLabelsActions () {
   const { deleteTarget, showDeleteModal } = usePageDrinkLabelsState()
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
 
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels, updateDrinkLabelVisible, deleteById, updateDrinkLabelsSort } = drinkLabelsStore
-
-  const initPage = async () => {
-    await fetchDrinkLabels()
-  }
+  const { updateDrinkLabelVisible, deleteById, updateDrinkLabelsSort } = useDrinkLabelsStore()
 
   /**
- * ラベルの表示/非表示を切り替える
- * @param drink Drink
- * @returns
- */
+   * ラベルの表示/非表示を切り替える
+   * @param drink Drink
+   * @returns
+   */
   const updateHidden = async (label: DrinkLabel) => {
     await updateDrinkLabelVisible(label.id, label.name, !label.visible)
-    showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: label.name, status: $i18n.t(`drinks.${label.visible ? 'visible' : 'invisible'}`) }))
+    showSuccessToast(t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: label.name, status: t(`drinks.${label.visible ? 'visible' : 'invisible'}`) }))
   }
 
   const deleteDrinkLabel = async (drinkLabelId: number | undefined, drinkLabelName: string | undefined) => {
     if (drinkLabelId === undefined || drinkLabelName === undefined) {
-      showDangerToast($i18n.t(LOCALE_ERROR_GET_RECORD))
+      showDangerToast(t(LOCALE_ERROR_GET_RECORD))
       showDeleteModal.value = false
       return
     }
@@ -30,7 +25,7 @@ export function usePageDrinkLabelsActions () {
         showDeleteModal.value = false
         throw error
       })
-    showSuccessToast($i18n.t(LOCALE_DRINKS_DELETE_SUCCESS, { name: drinkLabelName }))
+    showSuccessToast(t(LOCALE_DRINKS_DELETE_SUCCESS, { name: drinkLabelName }))
     showDeleteModal.value = false
   }
 
@@ -41,11 +36,10 @@ export function usePageDrinkLabelsActions () {
 
   const saveSort = async () => {
     await updateDrinkLabelsSort()
-    showSuccessToast($i18n.t(LOCALE_DRINKS_SORT_SUCCESS))
+    showSuccessToast(t(LOCALE_DRINKS_SORT_SUCCESS))
   }
 
   return {
-    initPage,
     updateHidden,
     deleteDrinkLabel,
     clickDeleteDrinkButton,

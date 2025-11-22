@@ -1,14 +1,11 @@
 export function usePageDrinkLabelNewActions () {
   const { name, color, standardAmount } = usePageDrinkLabelNewState()
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const localePath = useLocalePath()
 
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels, createDrinkLabel } = drinkLabelsStore
+  const { createDrinkLabel } = useDrinkLabelsStore()
 
   const initPage = async () => {
-    await fetchDrinkLabels()
-
     name.value = ''
     color.value = generateRandomColor()
     standardAmount.value = 1
@@ -16,7 +13,7 @@ export function usePageDrinkLabelNewActions () {
 
   const create = async () => {
     await createDrinkLabel(name.value, color.value, standardAmount.value)
-    showSuccessToast($i18n.t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
+    showSuccessToast(t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
     navigateTo(localePath('/labels'))
   }
 

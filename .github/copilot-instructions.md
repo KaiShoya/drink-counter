@@ -68,3 +68,27 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - Nuxt 4（RC）を利用し、公式の推奨構成・設定を優先する。
 - コミットはConventional Commits（feat、fix、chore、docs、refactor等）に従って構造化する。
 - 依存パッケージのバージョンアップ時は breaking change に注意し、必要に応じてマイグレーションガイドを参照する。
+
+# Copilot Review Instructions for This Repository
+
+This is a Nuxt 4 project.  
+Nuxt provides extensive auto-import functionality.
+
+## ❌ Do NOT suggest adding import statements for:
+- Vue Composition API functions auto-imported by Nuxt  
+  (e.g., `ref`, `computed`, `reactive`, `watch`, etc.)
+- Nuxt composables  
+  (`useState`, `useAsyncData`, `useFetch`, `useRouter`, `useRoute`, etc.)
+- Nuxt utilities  
+  (`navigateTo`, `$fetch`)
+- Components inside `~/components`
+- Composables inside `~/composables`
+- Plugins and utilities that Nuxt registers automatically
+
+## When to warn about missing imports:
+- The symbol is NOT auto-imported by Nuxt
+- AND it comes from an external library or a local file that is not auto-imported
+
+## Additional Rules
+- Prefer idiomatic Nuxt 4 code patterns
+- Do not require unnecessary boilerplate imports

@@ -1,7 +1,10 @@
+import type { DrinkCounterRow } from '~/utils/api/drinkCountersRepository'
+
 const date = ref<string>('')
 const numberOfDrinks = ref<NumberOfDrink[]>([])
 const labelsWithDrinks = ref<DrinkLabelWithDrinks[]>([])
 const drinkCountForDay = ref<number>(0)
+const drinkCounters = ref<DrinkCounterRow[]>([])
 
 export function useIndexState () {
   return {
@@ -9,5 +12,6 @@ export function useIndexState () {
     numberOfDrinks,
     labelsWithDrinks,
     drinkCountForDay,
+    drinkCounters,
   }
 }

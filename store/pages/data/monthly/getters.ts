@@ -1,12 +1,9 @@
+import { DrinkDomain } from "~/utils/domain/drinks"
+
 export const useMonthlyGetters = () => {
-  const { yearMonth, graphDataTitle } = useMonthlyState()
+  const { yearMonth, graphDataTitle, drinks, drinkCounters } = useMonthlyState()
 
   const { formatDrinkCounters } = useProcessDate()
-
-  const drinksStore = useDrinksStore()
-  const { drinks, getDrinksIdArray } = storeToRefs(drinksStore)
-  const drinkCountersStore = useDrinkCountersStore()
-  const { drinkCounters } = storeToRefs(drinkCountersStore)
 
   const computedYearMonth = computed(() => {
     const [year, month] = yearMonth.value.split('-').map(v => Number(v))
@@ -17,7 +14,12 @@ export const useMonthlyGetters = () => {
    * カレンダー用データ
    */
   const computeCalendarData = computed(() => {
-    return Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => {
+    return Object.entries(
+      formatDrinkCounters(
+        drinkCounters.value,
+        DrinkDomain.extractIds(drinks.value)
+      ),
+    ).map(([key, value]) => {
       return {
         date: key,
         count: value[0],
@@ -31,7 +33,14 @@ export const useMonthlyGetters = () => {
   const computeGraphData = computed(() => {
     return [
       graphDataTitle.value,
-      ...Object.entries(formatDrinkCounters(drinkCounters.value, getDrinksIdArray.value)).map(([key, value]) => [key as string | number].concat(value)),
+      ...Object.entries(
+        formatDrinkCounters(
+          drinkCounters.value,
+          DrinkDomain.extractIds(drinks.value),
+        )
+      ).map(
+        ([key, value]) => [key as string | number].concat(value)
+      ),
     ]
   })
 

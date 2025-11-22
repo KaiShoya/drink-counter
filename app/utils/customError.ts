@@ -1,4 +1,4 @@
-import type { AuthError } from "@supabase/supabase-js";
+import type { AuthError, PostgrestError } from "@supabase/supabase-js";
 
 interface CustomErrorInterface {
   message: string;
@@ -25,9 +25,9 @@ export class CustomError extends Error implements CustomErrorInterface {
   }
 
   getMessage() {
-    const { $i18n } = useNuxtApp();
+    const { t } = useI18n()
     return (
-      (this.named ? $i18n.t(this.message, this.named) : $i18n.t(this.message)) +
+      (this.named ? t(this.message, this.named) : t(this.message)) +
       (this.appendString ?? "")
     );
   }
@@ -37,8 +37,10 @@ export class CustomSupabaseError
   extends CustomError
   implements CustomErrorInterface
 {
-  constructor(message: string, name: string = CustomSupabaseError.name) {
-    super(message, name);
+  error: PostgrestError | AuthError;
+  constructor(error: PostgrestError | AuthError, name: string = CustomSupabaseError.name, named?: Record<string, unknown>) {
+    super(error.message, name, named);
+    this.error = error;
   }
 
   override getMessage() {
@@ -76,29 +78,31 @@ export class UnknownError extends CustomError {
   }
 }
 
-export class SupabaseResponseError extends CustomError {
-  constructor(message: string, named?: Record<string, unknown>) {
-    super(message, SupabaseResponseError.name, named);
+export class SupabaseResponseError extends CustomSupabaseError {
+  constructor(error: PostgrestError, message: string, named?: Record<string, unknown>) {
+    super(error, SupabaseResponseError.name, named);
+    logger.error(message, { module: 'SupabaseResponseError' }, error);
   }
 }
 
 export class SupabaseAuthError extends CustomSupabaseError {
-  error: AuthError;
+  override error: AuthError;
   constructor(error: AuthError) {
-    super(error.message, SupabaseAuthError.name);
+    super(error, SupabaseAuthError.name);
     super.setAppendString(error.message);
     this.error = error;
+    logger.error(error.message, { module: 'SupabaseAuthError' }, error);
   }
 
   override getMessage(): string {
-    const { $i18n } = useNuxtApp();
+    const { t } = useI18n()
     // https://supabase.com/docs/reference/javascript/auth-error-codes
     switch (this.error.code) {
       case "provider_disabled":
-        return $i18n.t(LOCALE_ERROR_SUPABASE_PROVIDER_DISABLED);
+        return t(LOCALE_ERROR_SUPABASE_PROVIDER_DISABLED);
       default:
         return (
-          $i18n.t(LOCALE_ERROR_SUPABASE_AUTH) +
+          t(LOCALE_ERROR_SUPABASE_AUTH) +
           "<br>" +
           this.error.code +
           " : " +

@@ -1,26 +1,20 @@
+import type { DrinkRow } from "~/utils/api/drinksRepository"
+
 export function usePageDrinksActions () {
   const { deleteTarget, showDeleteModal } = usePageDrinksState()
 
-  const { $i18n } = useNuxtApp()
+  const { t } = useI18n()
   const drinksStore = useDrinksStore()
-
-  const { fetchDrinks, updateDrinkVisible, updateDrinksSort, deleteDrinkById } = drinksStore
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels } = drinkLabelsStore
-
-  const initPage = async () => {
-    await fetchDrinks()
-    await fetchDrinkLabels()
-  }
+  const { updateDrinkVisible, updateDrinksSort, deleteDrinkById } = drinksStore
 
   /**
    * 飲み物の表示/非表示を切り替える
-   * @param drink Drink
+   * @param drink DrinkRow
    * @returns
    */
-  const updateHidden = async (drink: Drink) => {
+  const updateHidden = async (drink: DrinkRow) => {
     await updateDrinkVisible(drink.id, !drink.visible)
-    showSuccessToast($i18n.t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: drink.name, status: $i18n.t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
+    showSuccessToast(t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: drink.name, status: t(`drinks.${drink.visible ? 'visible' : 'invisible'}`) }))
   }
 
   /**
@@ -39,16 +33,16 @@ export function usePageDrinksActions () {
         showDeleteModal.value = false
         throw error
       })
-    showSuccessToast($i18n.t(LOCALE_DRINKS_DELETE_SUCCESS, { name: drinkName }))
+    showSuccessToast(t(LOCALE_DRINKS_DELETE_SUCCESS, { name: drinkName }))
     showDeleteModal.value = false
   }
 
   /**
    * 削除ボタンクリック時の処理
-   * @param drink Drink
+   * @param drink DrinkRow
    * @returns
    */
-  const clickDeleteDrinkButton = (drink: Drink) => {
+  const clickDeleteDrinkButton = (drink: DrinkRow) => {
     deleteTarget.value = drink
     showDeleteModal.value = true
   }
@@ -58,11 +52,10 @@ export function usePageDrinksActions () {
    */
   const save = async () => {
     await updateDrinksSort()
-    showSuccessToast($i18n.t(LOCALE_DRINKS_SORT_SUCCESS))
+    showSuccessToast(t(LOCALE_DRINKS_SORT_SUCCESS))
   }
 
   return {
-    initPage,
     updateHidden,
     deleteDrink,
     clickDeleteDrinkButton,
