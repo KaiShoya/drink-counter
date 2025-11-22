@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@nuxt/eslint",
     "nuxt-gtag",
+    "@nuxt/hints",
   ],
 
   ssr: true,
@@ -55,6 +56,7 @@ export default defineNuxtConfig({
       supabaseUrl: "http://localhost:54321",
       supabaseKey: "",
       version: pkg.version,
+      logLevel: 'warn',
     },
   },
 
@@ -96,5 +98,18 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false,
+  },
+
+  vite: {
+    plugins: [
+      {
+        name: "vue-spec-plugin",
+        transform (_, id) {
+          if (/vue&type=spec/.test(id)) {
+            return `export default {}`;
+          }
+        },
+      },
+    ],
   },
 });

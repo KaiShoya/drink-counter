@@ -1,33 +1,18 @@
 export const useAggregationByDowActions = () => {
   const { aggregationByDow } = useAggregationByDowState()
 
-  const { supabase } = useSupabaseStore()
+  const { $drinkCountersRepository } = useNuxtApp()
 
   const fetchAggregationByDow = async () => {
-    const { data, error } = await supabase.rpc('aggregation_by_dow')
-    if (error) {
-      console.error(error)
-      throw new Response500Error()
-    }
-    aggregationByDow.value = data ?? []
+    aggregationByDow.value = await $drinkCountersRepository.fetchAggregationByDow()
   }
 
   const fetchAggregationByDowPerYear = async (year: number) => {
-    const { data, error } = await supabase.rpc('aggregation_by_dow', { year })
-    if (error) {
-      console.error(error)
-      throw new Response500Error()
-    }
-    aggregationByDow.value = data ?? []
+    aggregationByDow.value = await $drinkCountersRepository.fetchAggregationByDowPerYear(year)
   }
 
   const fetchAggregationByDowPerMonth = async (year: number, month: number) => {
-    const { data, error } = await supabase.rpc('aggregation_by_dow', { year, month })
-    if (error) {
-      console.error(error)
-      throw new Response500Error()
-    }
-    aggregationByDow.value = data ?? []
+    aggregationByDow.value = await $drinkCountersRepository.fetchAggregationByDowPerMonth(year, month)
   }
 
   return {

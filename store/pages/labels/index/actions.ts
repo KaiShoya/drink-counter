@@ -2,18 +2,13 @@ export function usePageDrinkLabelsActions () {
   const { deleteTarget, showDeleteModal } = usePageDrinkLabelsState()
   const { t } = useI18n()
 
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels, updateDrinkLabelVisible, deleteById, updateDrinkLabelsSort } = drinkLabelsStore
-
-  const initPage = async () => {
-    await fetchDrinkLabels()
-  }
+  const { updateDrinkLabelVisible, deleteById, updateDrinkLabelsSort } = useDrinkLabelsStore()
 
   /**
- * ラベルの表示/非表示を切り替える
- * @param drink Drink
- * @returns
- */
+   * ラベルの表示/非表示を切り替える
+   * @param drink Drink
+   * @returns
+   */
   const updateHidden = async (label: DrinkLabel) => {
     await updateDrinkLabelVisible(label.id, label.name, !label.visible)
     showSuccessToast(t(LOCALE_DRINKS_UPDATE_VISIBLE_SUCCESS, { name: label.name, status: t(`drinks.${label.visible ? 'visible' : 'invisible'}`) }))
@@ -45,7 +40,6 @@ export function usePageDrinkLabelsActions () {
   }
 
   return {
-    initPage,
     updateHidden,
     deleteDrinkLabel,
     clickDeleteDrinkButton,

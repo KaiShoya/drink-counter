@@ -8,20 +8,24 @@ useSeoMeta({
   title: t(LOCALE_ROUTES_TOP),
 })
 
-const { userSettings } = storeToRefs(useUserSettingsStore())
+const { userSetting } = storeToRefs(useUserStore())
 
+const { showLoading, hideLoading } = useAppStore()
 const indexStore = useIndexStore()
 const { date, labelsWithDrinks, drinkCountForDay } = storeToRefs(indexStore)
-const { fetchNumberOfDrinks, fetchDate, plus, minus, updateDefaultDrink } = indexStore
+const { setToday, fetchNumberOfDrinks, plus, minus, updateDefaultDrink } = indexStore
 
 // Modal用フラグ
 const modalIsActive = ref<boolean>(false)
 
-// 日付
-fetchDate()
 
-// numberOfDrinksにデータをセット
-fetchNumberOfDrinks(date.value)
+try {
+  showLoading()
+  setToday()
+  await fetchNumberOfDrinks()
+} finally {
+  hideLoading()
+}
 
 const thisDrinkId = ref<number>(0)
 const thisCounterId = ref<number>(0)
@@ -30,7 +34,7 @@ const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
   thisCounterId.value = counterId
   // 今飲んでる杯数が閾値を超えてたらアラートを出す
-  if (userSettings.value.thresholdForDetectingOverdrinking <= drinkCountForDay.value) {
+  if (userSetting.value.threshold_for_detecting_overdrinking <= drinkCountForDay.value) {
     modalIsActive.value = true
   } else {
     plus(drinkId, counterId)
@@ -38,7 +42,12 @@ const plusCheck = (drinkId: number, counterId: number) => {
 }
 
 watch(date, async () => {
-  await fetchNumberOfDrinks(date.value)
+  try {
+    showLoading()
+    await fetchNumberOfDrinks()
+  } finally {
+    hideLoading()
+  }
 })
 </script>
 

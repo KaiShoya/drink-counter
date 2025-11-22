@@ -1,5 +1,6 @@
 export function useUserActions () {
-  const { isLogin, userName, userAvatarUrl } = useUserState()
+  const { isLogin, userName, userAvatarUrl, userSetting } = useUserState()
+  const { $userSettingsRepository } = useNuxtApp()
 
   const fetchUserData = async () => {
     try {
@@ -15,7 +16,14 @@ export function useUserActions () {
           // ユーザーデータ取得に失敗した場合は安全にフォールバック
           userName.value = null
           userAvatarUrl.value = null
+          logger.error('Failed to get user data', { module: 'user/actions.ts' }, error)
         } else {
+          // ユーザー設定を取得
+          const userSettingRow = await $userSettingsRepository.fetchUserSettings()
+          if (userSettingRow) {
+            userSetting.value = userSettingRow
+          }
+
           userName.value = (data.user?.user_metadata as any)?.name ?? null
           userAvatarUrl.value = (data.user?.user_metadata as any)?.avatar_url ?? null
         }

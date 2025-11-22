@@ -1,3 +1,4 @@
+// FIXME: supabase関連処理をrepositoryに移動する
 export const useMonthlySummaryActions = () => {
   const { loading, error, lastInput, data } = useMonthlySummaryState()
 
@@ -14,8 +15,7 @@ export const useMonthlySummaryActions = () => {
       await Promise.all([fetchDrinks(), fetchDrinkLabels()])
 
       const { supabase } = useSupabaseStore()
-      const userSettingsStore = useUserSettingsStore()
-      const { userSettings } = storeToRefs(userSettingsStore)
+      const { userSetting } = storeToRefs(useUserStore())
 
       // 2) 期間計算（YYYY-MM -> [start, nextStart)）
       const [yearStr, monthStr] = input.month.split('-')
@@ -109,7 +109,7 @@ export const useMonthlySummaryActions = () => {
         for (const [lid, cnt] of Object.entries(agg.labelCounts)) {
           if (cnt > maxCount) { maxCount = cnt; topLabelId = lid }
         }
-        const threshold = userSettings.value.thresholdForDetectingOverdrinking
+        const threshold = userSetting.value.threshold_for_detecting_overdrinking
         const overGoal = agg.count > threshold
         return { date, count: agg.count, volumeMl: agg.volumeMl, topLabelId: topLabelId ? Number.isNaN(Number(topLabelId)) ? undefined : Number(topLabelId) : undefined, overGoal }
       })

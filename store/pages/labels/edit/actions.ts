@@ -3,14 +3,11 @@ export function usePageDrinkLabelEditActions () {
   const { t } = useI18n()
   const localePath = useLocalePath()
 
-  const { fetchDrinks } = useDrinksStore()
-  const drinkLabelsStore = useDrinkLabelsStore()
-  const { fetchDrinkLabels, findById, updateDrinkLabel } = drinkLabelsStore
+  const { findById, updateDrinkLabel } = useDrinkLabelsStore()
 
   const initPage = async () => {
     const route = useRoute()
     drinkLabelId.value = Number(route.params.id)
-    await fetchDrinkLabels()
 
     const drinkLabel = findById(drinkLabelId.value)
     if (drinkLabel === undefined) {
@@ -21,8 +18,6 @@ export function usePageDrinkLabelEditActions () {
       color.value = drinkLabel.color
       standardAmount.value = drinkLabel.standard_amount
     }
-
-    await fetchDrinks()
   }
 
   const update = async () => {

@@ -1,3 +1,4 @@
+// FIXME: supabase関連処理をrepositoryに移動する
 export const useAnnualSummaryActions = () => {
   const { loading, error, lastInput, data } = useAnnualSummaryState()
 
@@ -11,9 +12,6 @@ export const useAnnualSummaryActions = () => {
       await fetchDrinks()
 
       const { supabase } = useSupabaseStore()
-      const userSettingsStore = useUserSettingsStore()
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { userSettings } = storeToRefs(userSettingsStore)
 
       const y = input.year
       const start = `${y}-01-01`
