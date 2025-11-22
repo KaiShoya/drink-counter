@@ -39,7 +39,7 @@ export class CustomSupabaseError
 {
   error: PostgrestError | AuthError;
   constructor(error: PostgrestError | AuthError, name: string = CustomSupabaseError.name, named?: Record<string, unknown>) {
-    super(name, error.message, named);
+    super(error.message, name, named);
     this.error = error;
   }
 
