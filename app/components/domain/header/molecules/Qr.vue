@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { LOCALE_SHOW_QR } from '~/utils/locales'
+
+const { t } = useI18n()
 const showModal = ref(false)
 </script>
 
@@ -8,7 +11,7 @@ const showModal = ref(false)
     exact-active-class="is-active"
     @click="showModal = true"
   >
-    {{ $t(LOCALE_SHOW_QR) }}
+    {{ t(LOCALE_SHOW_QR) }}
   </a>
   <DomainHeaderAtomsQr
     v-show="showModal"

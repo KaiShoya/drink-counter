@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { LOCALE_MODAL_YES, LOCALE_MODAL_NO } from '~/utils/locales'
+
+const { t } = useI18n()
+
 defineProps<{
   title: string
   content: string
@@ -28,13 +32,13 @@ defineProps<{
           class="button is-success"
           @click="success()"
         >
-          {{ $t(LOCALE_MODAL_YES) }}
+          {{ t(LOCALE_MODAL_YES) }}
         </button>
         <button
           class="button"
           @click="cancel()"
         >
-          {{ $t(LOCALE_MODAL_NO) }}
+          {{ t(LOCALE_MODAL_NO) }}
         </button>
       </footer>
     </div>

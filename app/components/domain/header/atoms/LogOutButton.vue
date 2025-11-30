@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { LOCALE_AUTH_LOGOUT } from '~/utils/locales'
+
+const { t } = useI18n()
+
 defineProps<{
   isLogin: boolean
 }>()
@@ -19,6 +23,6 @@ const clickFn = async () => {
     exact-active-class="is-active"
     @click="clickFn()"
   >
-    {{ $t(LOCALE_AUTH_LOGOUT) }}
+    {{ t(LOCALE_AUTH_LOGOUT) }}
   </a>
 </template>

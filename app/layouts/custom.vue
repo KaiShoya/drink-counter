@@ -1,7 +1,20 @@
 <script setup lang="ts">
+import {
+  LOCALE_TITLE,
+  LOCALE_ROUTES_DATA,
+  LOCALE_ROUTES_TOTAL,
+  LOCALE_ROUTES_ANNUAL,
+  LOCALE_ROUTES_MONTHLY,
+  LOCALE_ROUTES_ABOUT,
+  LOCALE_ROUTES_DRINKS,
+  LOCALE_ROUTES_LABELS,
+  LOCALE_ROUTES_SETTINGS,
+  LOCALE_AUTH_GOOGLE
+} from '~/utils/locales'
+
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
-const { locale, locales } = useI18n()
+const { locale, locales, t } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
@@ -39,7 +52,7 @@ useHead({
               loading="lazy"
             >
             <span class="ml-1">
-              {{ $t(LOCALE_TITLE) }}
+              {{ t(LOCALE_TITLE) }}
             </span>
           </NuxtLink>
 
@@ -84,7 +97,7 @@ useHead({
         >
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">{{ $t(LOCALE_ROUTES_DATA) }}</a>
+              <a class="navbar-link">{{ t(LOCALE_ROUTES_DATA) }}</a>
 
               <div class="navbar-dropdown">
                 <NuxtLink
@@ -93,7 +106,7 @@ useHead({
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t(LOCALE_ROUTES_TOTAL) }}
+                  {{ t(LOCALE_ROUTES_TOTAL) }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
@@ -101,7 +114,7 @@ useHead({
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t(LOCALE_ROUTES_ANNUAL) }}
+                  {{ t(LOCALE_ROUTES_ANNUAL) }}
                 </NuxtLink>
                 <NuxtLink
                   class="navbar-item"
@@ -109,7 +122,7 @@ useHead({
                   exact-active-class="is-active"
                   @click="active = false"
                 >
-                  {{ $t(LOCALE_ROUTES_MONTHLY) }}
+                  {{ t(LOCALE_ROUTES_MONTHLY) }}
                 </NuxtLink>
               </div>
             </div>
@@ -120,7 +133,7 @@ useHead({
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t(LOCALE_ROUTES_ABOUT) }}
+              {{ t(LOCALE_ROUTES_ABOUT) }}
             </NuxtLink>
 
             <NuxtLink
@@ -129,7 +142,7 @@ useHead({
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t(LOCALE_ROUTES_DRINKS) }}
+              {{ t(LOCALE_ROUTES_DRINKS) }}
             </NuxtLink>
 
             <NuxtLink
@@ -138,7 +151,7 @@ useHead({
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t(LOCALE_ROUTES_LABELS) }}
+              {{ t(LOCALE_ROUTES_LABELS) }}
             </NuxtLink>
 
             <NuxtLink
@@ -147,7 +160,7 @@ useHead({
               exact-active-class="is-active"
               @click="active = false"
             >
-              {{ $t(LOCALE_ROUTES_SETTINGS) }}
+              {{ t(LOCALE_ROUTES_SETTINGS) }}
             </NuxtLink>
 
             <DomainHeaderMoleculesQr />
@@ -187,7 +200,7 @@ useHead({
               exact-active-class="is-active"
               @click="signInWithGoogle()"
             >
-              {{ $t(LOCALE_AUTH_GOOGLE) }}
+              {{ t(LOCALE_AUTH_GOOGLE) }}
             </a>
 
             <DomainHeaderAtomsLogOutButton :is-login />

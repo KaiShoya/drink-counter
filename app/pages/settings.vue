@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { LOCALE_ROUTES_SETTINGS, LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING, LOCALE_SETTINGS_CUPS, LOCALE_SETTINGS_TIMEZONE, LOCALE_SETTINGS_SWITCHING_TIMING, LOCALE_SETTINGS_OCLOCK, LOCALE_SETTINGS_SAVE } from '~/utils/locales'
+import { TIMEZONE } from '~/utils/constant'
+
 definePageMeta({
   middleware: 'auth',
 })
@@ -20,7 +23,7 @@ fetchSettings()
     <table class="table is-hoverable is-fullwidth is-striped">
       <tbody>
         <tr>
-          <th>{{ $t(LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING) }}</th>
+          <th>{{ t(LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING) }}</th>
           <td>
             <input
               v-model="thresholdForDetectingOverdrinking"
@@ -29,12 +32,12 @@ fetchSettings()
             >
           </td>
           <td>
-            {{ $t(LOCALE_SETTINGS_CUPS) }}
+            {{ t(LOCALE_SETTINGS_CUPS) }}
           </td>
         </tr>
 
         <tr>
-          <th>{{ $t(LOCALE_SETTINGS_TIMEZONE) }}</th>
+          <th>{{ t(LOCALE_SETTINGS_TIMEZONE) }}</th>
           <td>
             <div class="select">
               <select @change="timezone = ($event.target as HTMLInputElement).value">
@@ -52,7 +55,7 @@ fetchSettings()
         </tr>
 
         <tr>
-          <th>{{ $t(LOCALE_SETTINGS_SWITCHING_TIMING) }}</th>
+          <th>{{ t(LOCALE_SETTINGS_SWITCHING_TIMING) }}</th>
           <td>
             <input
               v-model="switchingTiming"
@@ -60,7 +63,7 @@ fetchSettings()
               type="number"
             >
           </td>
-          <td>{{ $t(LOCALE_SETTINGS_OCLOCK) }}</td>
+          <td>{{ t(LOCALE_SETTINGS_OCLOCK) }}</td>
         </tr>
       </tbody>
     </table>
@@ -68,7 +71,7 @@ fetchSettings()
       class="button"
       @click="updateSettings"
     >
-      {{ $t(LOCALE_SETTINGS_SAVE) }}
+      {{ t(LOCALE_SETTINGS_SAVE) }}
     </button>
   </div>
 </template>

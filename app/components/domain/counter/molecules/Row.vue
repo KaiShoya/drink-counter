@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { LOCALE_DETAIL } from '~/utils/locales'
+
+const { t } = useI18n()
+
 defineProps<{
   label: DrinkLabelWithDrinks
   increment: (drinkId: number, drinkCounterId: number) => void
   decrement: (drinkId: number, drinkCounterId: number) => void
-  updateDefaultDrink: (labelId: number, drinkId: number) => void
+  updateDefaultDrink: (labelId: number, drinkId: number) => Promise<void> | void
 }>()
 </script>
 
@@ -35,7 +39,7 @@ defineProps<{
         <div class="column is-2" />
         <details class="column">
           <summary class="detail-link">
-            {{ $t(LOCALE_DETAIL) }}
+            {{ t(LOCALE_DETAIL) }}
           </summary>
           <DomainCounterAtomsSubColumn
             v-for="drink in label.drinks"
