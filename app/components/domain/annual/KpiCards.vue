@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { LOCALE_ANNUAL_KPI_TOTAL_DRINKS, LOCALE_ANNUAL_KPI_TOTAL_VOLUME, LOCALE_ANNUAL_KPI_ACTIVE_DAYS, LOCALE_ANNUAL_KPI_YOY } from '~/utils/locales'
+
+const { t } = useI18n()
+
 const annual = useAnnualSummaryStore()
 const { data, loading } = storeToRefs(annual)
 </script>
@@ -7,25 +11,25 @@ const { data, loading } = storeToRefs(annual)
   <div class="columns is-mobile is-multiline is-gapless">
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_ANNUAL_KPI_TOTAL_DRINKS)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_ANNUAL_KPI_TOTAL_DRINKS) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.totalDrinks }}</p>
       </div>
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_ANNUAL_KPI_TOTAL_VOLUME)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_ANNUAL_KPI_TOTAL_VOLUME) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.totalVolumeMl.toLocaleString() }}<span class="kpi-unit"> ml</span></p>
       </div>
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_ANNUAL_KPI_ACTIVE_DAYS)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_ANNUAL_KPI_ACTIVE_DAYS) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.activeDays }}</p>
       </div>
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_ANNUAL_KPI_YOY)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_ANNUAL_KPI_YOY) }}</p>
         <p class="kpi-value">
           <template v-if="loading || !data">-</template>
           <template v-else-if="typeof data.kpi.yoyChangePct === 'number'">{{ data.kpi.yoyChangePct }}<span class="kpi-unit"> %</span></template>

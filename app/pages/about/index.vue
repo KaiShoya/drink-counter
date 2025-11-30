@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { LOCALE_ROUTES_ABOUT, LOCALE_SOURCE, LOCALE_LICENSE, LOCALE_VERSION } from '~/utils/locales'
+
 const { t } = useI18n()
 useSeoMeta({
   title: t(LOCALE_ROUTES_ABOUT),
@@ -14,7 +16,7 @@ useSeoMeta({
             to="https://github.com/KaiShoya/drink-counter"
             class="display is-block"
           >
-            {{ $t(LOCALE_SOURCE) }}
+            {{ t(LOCALE_SOURCE) }}
           </NuxtLink>
         </th>
       </tr>
@@ -24,12 +26,12 @@ useSeoMeta({
             to="/about/terms_of_service"
             class="display is-block"
           >
-            {{ $t(LOCALE_TERMS_OF_SERVICE) }}
+            {{ t(LOCALE_TERMS_OF_SERVICE) }}
           </NuxtLink>
         </th>
       </tr> -->
       <tr>
-        <th>{{ $t(LOCALE_LICENSE) }}</th>
+        <th>{{ t(LOCALE_LICENSE) }}</th>
         <td>
           <NuxtLink
             to="https://github.com/KaiShoya/drink-counter/blob/main/LICENSE.md"
@@ -41,7 +43,7 @@ useSeoMeta({
       </tr>
 
       <tr>
-        <th>{{ $t(LOCALE_VERSION) }}</th>
+        <th>{{ t(LOCALE_VERSION) }}</th>
         <td>{{ $config.public.version }}</td>
       </tr>
     </tbody>

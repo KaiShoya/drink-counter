@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { LOCALE_ROUTES_LABELS, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
+
 definePageMeta({
   middleware: 'auth',
 })
@@ -31,13 +33,13 @@ const { drinkLabels } = storeToRefs(drinkLabelsStore)
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
           <div class="column is-4">
-            {{ $t(LOCALE_DRINKS_NAME) }}
+            {{ t(LOCALE_DRINKS_NAME) }}
           </div>
           <div class="column is-1">
-            {{ $t(LOCALE_DRINKS_COLOR) }}
+            {{ t(LOCALE_DRINKS_COLOR) }}
           </div>
           <div class="column is-4">
-            {{ $t(LOCALE_LABELS_STANDARD_AMOUNT) }}
+            {{ t(LOCALE_LABELS_STANDARD_AMOUNT) }}
           </div>
           <div class="column is-3" />
         </div>
@@ -121,21 +123,21 @@ const { drinkLabels } = storeToRefs(drinkLabelsStore)
           class="button mr-3"
           @click="saveSort"
         >
-          {{ $t(LOCALE_DRINKS_SAVE_SORT) }}
+          {{ t(LOCALE_DRINKS_SAVE_SORT) }}
         </button>
 
         <NuxtLink
           :to="localePath('/labels/new')"
           class="button is-primary"
         >
-          {{ $t(LOCALE_DRINKS_ADD) }}
+          {{ t(LOCALE_DRINKS_ADD) }}
         </NuxtLink>
       </template>
     </draggable>
 
     <CommonModalMoleculesDanger
-      :title="$t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
-      :content="$t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
+      :title="t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
+      :content="t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
       :success="() => { deleteDrinkLabel(deleteTarget?.id, deleteTarget?.name) }"
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"

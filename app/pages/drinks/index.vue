@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { LOCALE_ROUTES_DRINKS, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
+
 definePageMeta({
   middleware: 'auth',
 })
@@ -35,16 +37,16 @@ const { findById } = drinkLabelsStore
         <div class="columns is-mobile title is-6 border-line">
           <div class="column is-1" />
           <div class="column is-2">
-            {{ $t(LOCALE_DRINKS_DRINK_LABEL) }}
+            {{ t(LOCALE_DRINKS_DRINK_LABEL) }}
           </div>
           <div class="column is-3">
-            {{ $t(LOCALE_DRINKS_NAME) }}
+            {{ t(LOCALE_DRINKS_NAME) }}
           </div>
           <div class="column is-1">
-            {{ $t(LOCALE_DRINKS_COLOR) }}
+            {{ t(LOCALE_DRINKS_COLOR) }}
           </div>
           <div class="column">
-            {{ $t(LOCALE_DRINKS_AMOUNT) }}
+            {{ t(LOCALE_DRINKS_AMOUNT) }}
           </div>
         </div>
       </template>
@@ -138,21 +140,21 @@ const { findById } = drinkLabelsStore
           class="button mr-3"
           @click="save"
         >
-          {{ $t(LOCALE_DRINKS_SAVE_SORT) }}
+          {{ t(LOCALE_DRINKS_SAVE_SORT) }}
         </button>
 
         <NuxtLink
           :to="localePath('/drinks/new')"
           class="button is-primary"
         >
-          {{ $t(LOCALE_DRINKS_ADD) }}
+          {{ t(LOCALE_DRINKS_ADD) }}
         </NuxtLink>
       </template>
     </draggable>
 
     <CommonModalMoleculesDanger
-      :title="$t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
-      :content="$t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
+      :title="t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
+      :content="t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
       :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"

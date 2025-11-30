@@ -18,6 +18,10 @@
 </spec>
 
 <script setup lang="ts">
+import { LOCALE_DRINKS_SELECT } from '~/utils/locales'
+
+const { t } = useI18n()
+
 const props = defineProps<{
   labelId: number
   labelName: string
@@ -70,7 +74,7 @@ const setSelectedDrink = async (drinkId: number | string) => {
         <BaseMoleculesDrumRollPickerPopup
           :model-value="currentDrink?.id ?? null"
           :items="drumRollItems"
-          :placeholder="$t(LOCALE_DRINKS_SELECT)"
+          :placeholder="t(LOCALE_DRINKS_SELECT)"
           :disabled="!hasDrinks || isUpdating"
           @update:model-value="setSelectedDrink"
         />
@@ -89,7 +93,7 @@ const setSelectedDrink = async (drinkId: number | string) => {
             selected
             style="display:none;"
           >
-            {{ $t(LOCALE_DRINKS_SELECT) }}
+            {{ t(LOCALE_DRINKS_SELECT) }}
           </option>
           <option
             v-for="item in drumRollItems"

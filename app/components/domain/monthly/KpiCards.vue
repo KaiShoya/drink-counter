@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { LOCALE_MONTHLY_KPI_ACTIVE_DAYS, LOCALE_MONTHLY_KPI_MOM, LOCALE_MONTHLY_KPI_TOTAL_DRINKS, LOCALE_MONTHLY_KPI_TOTAL_VOLUME } from '~/utils/locales'
+
+const { t } = useI18n()
 const monthly = useMonthlySummaryStore()
 const { data, loading } = storeToRefs(monthly)
 </script>
@@ -7,25 +10,25 @@ const { data, loading } = storeToRefs(monthly)
   <div class="columns is-mobile is-multiline is-gapless">
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_MONTHLY_KPI_TOTAL_DRINKS)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_TOTAL_DRINKS) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.totalDrinks }}</p>
       </div>
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_MONTHLY_KPI_TOTAL_VOLUME)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_TOTAL_VOLUME) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.totalVolumeMl.toLocaleString() }}<span class="kpi-unit"> ml</span></p>
       </div>
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_MONTHLY_KPI_ACTIVE_DAYS)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_ACTIVE_DAYS) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.activeDays }}</p>
       </div>
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
-        <p class="kpi-label">{{$t(LOCALE_MONTHLY_KPI_MOM)}}</p>
+        <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_MOM) }}</p>
         <p class="kpi-value">
           <template v-if="loading || !data">-</template>
           <template v-else-if="typeof data.kpi.momChangePct === 'number'">{{ data.kpi.momChangePct }}<span class="kpi-unit"> %</span></template>

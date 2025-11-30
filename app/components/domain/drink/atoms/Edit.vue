@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import type { DrinkLabelWithDefaultColor } from '~/utils/api/drinkLabelsRepository';
+import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT } from '~/utils/locales'
+import { generateRandomColor } from '~/utils/common'
+import type { DrinkLabelWithDefaultColor } from '~/utils/api/drinkLabelsRepository'
 
+const { t } = useI18n()
 const localePath = useLocalePath()
 
 const drinkLabelsStore = useDrinkLabelsStore()
@@ -32,7 +35,7 @@ const changeDrinkLabelId = (id: number | null) => {
 <template>
   <div>
     <div class="field">
-      <label class="label">{{ $t(LOCALE_DRINKS_DRINK_LABEL) }}</label>
+      <label class="label">{{ t(LOCALE_DRINKS_DRINK_LABEL) }}</label>
       <div
         class="control columns is-vcentered is-mobile"
         style="margin-left: 12px;"
@@ -53,7 +56,7 @@ const changeDrinkLabelId = (id: number | null) => {
               <option
                 key=""
                 :value="null"
-                :label="$t(LOCALE_DRINKS_SELECT)"
+                :label="t(LOCALE_DRINKS_SELECT)"
                 :selected="drinkLabelId === null"
               />
               <option
@@ -70,19 +73,19 @@ const changeDrinkLabelId = (id: number | null) => {
     </div>
 
     <div class="field">
-      <label class="label">{{ $t(LOCALE_DRINKS_NAME) }}</label>
+      <label class="label">{{ t(LOCALE_DRINKS_NAME) }}</label>
       <div class="control">
         <input
           v-model="name"
           class="input"
           type="text"
-          :placeholder="$t(LOCALE_DRINKS_NAME_PLACEHOLDER)"
+          :placeholder="t(LOCALE_DRINKS_NAME_PLACEHOLDER)"
         >
       </div>
     </div>
 
     <div class="field">
-      <label class="label">{{ $t(LOCALE_DRINKS_COLOR) }}</label>
+      <label class="label">{{ t(LOCALE_DRINKS_COLOR) }}</label>
       <div class="control columns is-vcentered is-mobile">
         <div
           class="column"
@@ -109,14 +112,14 @@ const changeDrinkLabelId = (id: number | null) => {
             class="button"
             @click="color = selectedLabel!.color"
           >
-            {{ $t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
+            {{ t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
           </button>
           <button
             v-else
             class="button"
             disabled
           >
-            {{ $t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
+            {{ t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
           </button>
         </div>
 
@@ -139,8 +142,8 @@ const changeDrinkLabelId = (id: number | null) => {
 
     <div class="field">
       <label class="label">
-        {{ $t(LOCALE_DRINKS_AMOUNT) }}
-        {{ $t(LOCALE_DRINKS_STANDARD_AMOUNT) }}
+        {{ t(LOCALE_DRINKS_AMOUNT) }}
+        {{ t(LOCALE_DRINKS_STANDARD_AMOUNT) }}
         {{ selectedLabel?.standard_amount }}
       </label>
       <div class="control">
@@ -158,14 +161,14 @@ const changeDrinkLabelId = (id: number | null) => {
         class="button"
         @click="saveFunction()"
       >
-        {{ $t(save) }}
+        {{ t(save) }}
       </button>
 
       <NuxtLink
         :to="localePath('/drinks')"
         class="button"
       >
-        {{ $t(LOCALE_DRINKS_CANCEL) }}
+        {{ t(LOCALE_DRINKS_CANCEL) }}
       </NuxtLink>
     </div>
   </div>

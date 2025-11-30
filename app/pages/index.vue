@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { LOCALE_ROUTES_TOP, LOCALE_INDEX_WARNING_TITLE, LOCALE_INDEX_WARNING_CONTENT } from '~/utils/locales'
+
 definePageMeta({
   middleware: 'auth',
 })
@@ -70,8 +72,8 @@ watch(date, async () => {
     </div>
 
     <CommonModalMoleculesWarning
-      :title="$t(LOCALE_INDEX_WARNING_TITLE)"
-      :content="$t(LOCALE_INDEX_WARNING_CONTENT, { drinkCountForDay })"
+      :title="t(LOCALE_INDEX_WARNING_TITLE)"
+      :content="t(LOCALE_INDEX_WARNING_CONTENT, { drinkCountForDay })"
       :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
       :cancel="() => modalIsActive = false"
       :class="modalIsActive ? 'is-active' : ''"

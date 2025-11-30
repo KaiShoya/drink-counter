@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { LOCALE_DRINKS_COLOR, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_NAME, LOCALE_LABELS_NAME_PLACEHOLDER, LOCALE_LABELS_STANDARD_AMOUNT } from '~/utils/locales'
+import { generateRandomColor } from '~/utils/common'
+
+const { t } = useI18n()
 const localePath = useLocalePath()
 
 defineProps<{
@@ -13,19 +17,19 @@ const standardAmount = defineModel<number>('standardAmount')
 <template>
   <div>
     <div class="field">
-      <label class="label">{{ $t(LOCALE_DRINKS_NAME) }}</label>
+      <label class="label">{{ t(LOCALE_DRINKS_NAME) }}</label>
       <div class="control">
         <input
           v-model="name"
           class="input"
           type="text"
-          :placeholder="$t(LOCALE_LABELS_NAME_PLACEHOLDER)"
+          :placeholder="t(LOCALE_LABELS_NAME_PLACEHOLDER)"
         >
       </div>
     </div>
 
     <div class="field">
-      <label class="label">{{ $t(LOCALE_DRINKS_COLOR) }}</label>
+      <label class="label">{{ t(LOCALE_DRINKS_COLOR) }}</label>
       <div class="control columns is-vcentered is-mobile">
         <div
           class="column"
@@ -60,7 +64,7 @@ const standardAmount = defineModel<number>('standardAmount')
     </div>
 
     <div class="field">
-      <label class="label">{{ $t(LOCALE_LABELS_STANDARD_AMOUNT) }}</label>
+      <label class="label">{{ t(LOCALE_LABELS_STANDARD_AMOUNT) }}</label>
       <div class="control">
         <input
           v-model="standardAmount"
@@ -76,14 +80,14 @@ const standardAmount = defineModel<number>('standardAmount')
         class="button"
         @click="saveFunction()"
       >
-        {{ $t(save) }}
+        {{ t(save) }}
       </button>
 
       <NuxtLink
         :to="localePath('/labels')"
         class="button"
       >
-        {{ $t(LOCALE_DRINKS_CANCEL) }}
+        {{ t(LOCALE_DRINKS_CANCEL) }}
       </NuxtLink>
     </div>
   </div>
