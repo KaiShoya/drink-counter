@@ -1,3 +1,22 @@
+<spec lang="md">
+飲み物カウンターの操作履歴を表示するコンポーネント。
+最終更新時刻と操作ログを折りたたみ可能なリストで表示する。
+
+## Features
+- 折りたたみ可能な履歴リスト（details/summary要素を使用）
+- 最終更新からの経過時間を表示（分/時間/日）
+- 各操作のタイムスタンプとアイコン（+/-）を表示
+- 3日間のログ保持、最大100件まで表示
+
+## State
+- useActivityLogStore から以下を取得:
+  - latestActivity: 最新の操作ログ
+  - allActivities: 全ての操作ログ
+  - timeSinceLastActivity: 最終更新からの経過時間
+  - timeSinceLastActivityUnit: 経過時間の単位（minutes/hours/days）
+  - hasRecentActivities: 保持期間内のログがあるかどうか
+</spec>
+
 <script setup lang="ts">
 import {
   LOCALE_ACTIVITY_LOG_TITLE,

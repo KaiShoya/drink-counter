@@ -71,7 +71,7 @@ watch(date, async () => {
       </template>
     </div>
 
-    <DomainActivityActivityLog />
+    <DomainActivityMoleculesLog />
 
     <CommonModalMoleculesWarning
       :title="t(LOCALE_INDEX_WARNING_TITLE)"
