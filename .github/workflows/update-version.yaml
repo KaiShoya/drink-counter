@@ -1,25 +1,35 @@
 name: Update version
 
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - labeled
   workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version type to update (patch, minor, major)'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+  workflow_call:
+    inputs:
+      version_type:
+        description: 'Version type to update (patch, minor, major)'
+        required: true
+        type: string
 
 jobs:
-  check_release_label:
+  update_version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '22.x'
 
       - run: |
           git config user.name "github-actions[bot]"
@@ -31,76 +41,13 @@ jobs:
           version: 10.7.0
           run_install: false
 
-      # 前回のリリースタグを取得する
-      - name: Get previous tag
-        id: pre_tag
+      - name: Update version
         run: |
-          pre_tag=$(curl -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
-          version=${pre_tag#v}
-          versions=(${version//-/ })
-          version_pre=${versions[1]}
-          versions=(${versions[0]//./ })
-          echo major=${versions[0]} >> $GITHUB_OUTPUT
-          echo minor=${versions[1]} >> $GITHUB_OUTPUT
-          echo patch=${versions[2]} >> $GITHUB_OUTPUT
-          echo preview=$version_pre >> $GITHUB_OUTPUT
-
-      # タグを取得する
-      - name: Get version
-        id: get-version
-        uses: beaconbrigade/package-json-version@v0.3
-        with:
-          path: .
-
-      - name: Generate release tag
-        id: release_tag
-        run: |
-          version=${{ steps.get-version.outputs.version }}
-          versions=(${version//-/ })
-          version_pre=${versions[1]}
-          versions=(${versions[0]//./ })
-          echo major=${versions[0]} >> $GITHUB_OUTPUT
-          echo minor=${versions[1]} >> $GITHUB_OUTPUT
-          echo patch=${versions[2]} >> $GITHUB_OUTPUT
-          echo preview=$version_pre >> $GITHUB_OUTPUT
-
-      # 最新のバージョンとブランチ内のバージョンに差異があったら処理を止める
-      - name: Check if it is the first execution
-        if: |
-          !contains(steps.pre_tag.outputs.major, steps.release_tag.outputs.major) ||
-          !contains(steps.pre_tag.outputs.minor, steps.release_tag.outputs.minor) ||
-          !contains(steps.pre_tag.outputs.patch, steps.release_tag.outputs.patch) ||
-          !contains(steps.pre_tag.outputs.preview, steps.release_tag.outputs.preview)
-        run: |
-          echo "Error: Version changes detected. Exiting."
-          exit 1
-
-      - name: Update patch version
-        id: patch
-        if: |
-          contains(github.event.pull_request.labels.*.name, 'release:patch') &&
-          !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
-          !contains(github.event.pull_request.labels.*.name, 'release:major')
-        run: |
-          pnpm version patch
-          git push
-
-      - name: Update minor version
-        id: minor
-        if: |
-          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
-          contains(github.event.pull_request.labels.*.name, 'release:minor') &&
-          !contains(github.event.pull_request.labels.*.name, 'release:major')
-        run: |
-          pnpm version minor
-          git push
-
-      - name: Update major version
-        id: major
-        if: |
-          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
-          !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
-          contains(github.event.pull_request.labels.*.name, 'release:major')
-        run: |
-          pnpm version major
+          pnpm version ${{ inputs.version_type }} --no-git-tag-version
+          if git diff --quiet package.json; then
+            echo "Error: package.json was not modified by pnpm version"
+            exit 1
+          fi
+          git add package.json
+          git commit -m "chore: bump version (${{ inputs.version_type }})"
           git push
