@@ -48,6 +48,6 @@ jobs:
             echo "Error: package.json was not modified by pnpm version"
             exit 1
           fi
-          git add package.json
+          git add package.json pnpm-lock.yaml
           git commit -m "chore: bump version (${{ inputs.version_type }})"
           git push
