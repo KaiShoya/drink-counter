@@ -55,6 +55,7 @@ jobs:
     uses: ./.github/workflows/update-version.yaml
     with:
       version_type: ${{ needs.get-release-label.outputs.version_type }}
+    secrets: inherit
 
   # リリースノートを作成する（バージョン更新後）
   create-release-note:
