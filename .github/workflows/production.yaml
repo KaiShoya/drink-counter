@@ -59,7 +59,7 @@ jobs:
   # リリースノートを作成する（バージョン更新後）
   create-release-note:
     needs: [get-release-label, update-version]
-    if: ${{ !failure() && !cancelled() && needs.get-release-label.outputs.version_type != '' && needs.update-version.result == 'success' }}
+    if: needs.update-version.result == 'success'
     uses: ./.github/workflows/create-release-note.yaml
 
   codacy:
