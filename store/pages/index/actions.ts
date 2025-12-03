@@ -12,6 +12,8 @@ export function useIndexActions () {
   const { findByVisible, updateDefaultDrinkId } = drinkLabelsStore
   const drinksStore = useDrinksStore()
   const { findDrinksVisible } = drinksStore
+  const activityLogStore = useActivityLogStore()
+  const { addActivity } = activityLogStore
 
   const setToday = () => {
     date.value = calcDate()
@@ -100,6 +102,9 @@ export function useIndexActions () {
 
     numberOfDrink!.count++
     drinkCountForDay.value++
+
+    // Log the activity
+    addActivity('plus', numberOfDrink!.name)
   }
 
   const minus = async (drinkId: number, drinkCounterId: number) => {
@@ -116,6 +121,9 @@ export function useIndexActions () {
 
     numberOfDrink!.count--
     drinkCountForDay.value--
+
+    // Log the activity
+    addActivity('minus', numberOfDrink!.name)
   }
 
   const updateDefaultDrink = (labelId: number, drinkId: number) => {

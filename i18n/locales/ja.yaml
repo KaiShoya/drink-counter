@@ -49,6 +49,16 @@ index:
     warning_title: 飲みすぎ注意
     warning_content: 今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？
 
+activity_log:
+    title: 履歴
+    last_update: 最終更新
+    minutes_ago: '{time}分前'
+    hours_ago: '{time}時間前'
+    days_ago: '{time}日前'
+    plus: '{drinkName} を追加'
+    minus: '{drinkName} を削除'
+    no_activity: まだ履歴がありません
+
 source: ソースコード
 terms_of_service: 利用規約
 license: ライセンス
