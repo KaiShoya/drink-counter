@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <button
-    class="column is-2 button is-button-large"
+    class="column is-2 button is-button-large is-justify-content-center is-align-items-center"
     :aria-label="label"
     @click="clickFunction()"
   >
