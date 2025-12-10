@@ -92,3 +92,14 @@ Nuxt provides extensive auto-import functionality.
 ## Additional Rules
 - Prefer idiomatic Nuxt 4 code patterns
 - Do not require unnecessary boilerplate imports
+
+---
+
+# 📋 Documentation & Task Management
+
+See [Agent Documentation Workflow](./agent-documentation-workflow.md) for detailed guidelines on:
+- `.agent/` directory structure and usage
+- QA list management and task tracking
+- Specification documentation workflow
+- GitHub Issues integration
+- PR review checklist and Copilot automation
