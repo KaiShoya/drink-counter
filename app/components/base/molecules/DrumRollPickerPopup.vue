@@ -15,6 +15,7 @@ DrumRollPickerをポップアップ表示するためのラッパーコンポー
 - トリガーボタンには現在の選択項目のラベルが表示される
 - ポップアップはフェード＆スケールアニメーションで表示される
 - 外部クリック（document click）と他のピッカーの開閉を検知してポップアップを閉じる
+- 項目を直接タップした時は自動的にポップアップが閉じる（スクロール操作では閉じない）
 </spec>
 
 <script setup lang="ts">
@@ -64,6 +65,11 @@ const closePicker = () => {
 
 const onSelect = (id: number | string) => {
   emit('update:modelValue', id)
+}
+
+const onTap = (id: number | string) => {
+  // タップされた時はポップアップを閉じる
+  closePicker()
 }
 
 const handleClickOutside = (event: MouseEvent) => {
@@ -123,6 +129,7 @@ onUnmounted(() => {
           :items="items"
           :selected-id="modelValue"
           @select="onSelect"
+          @tap="onTap"
         />
       </div>
     </transition>

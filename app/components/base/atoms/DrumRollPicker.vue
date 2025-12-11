@@ -11,9 +11,11 @@ CSS Scroll Snapを利用して、ネイティブライクなスクロール体�
 
 ## Events
 - select: (id: number | string) -> void - 項目が選択（スクロール停止またはクリック）されたときに発火
+- tap: (id: number | string) -> void - 項目が直接タップされたときに発火（スクロールによる選択では発火しない）
 
 ## Features
 - スクロール終了時に最も近い項目にスナップし、selectイベントを発火する
+- 項目をタップした時はselectとtapの両方のイベントを発火する
 - selectedIdが変更された場合、自動的にその位置までスクロールする
 - 横スクロールは無効化されている
 </spec>
@@ -38,6 +40,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   (e: 'select', id: number | string): void
+  (e: 'tap', id: number | string): void
 }>()
 
 const scroller = ref<HTMLElement | null>(null)
@@ -92,6 +95,7 @@ const onScroll = () => {
 
 const onItemClick = (id: number | string) => {
   emit('select', id)
+  emit('tap', id)
   // クリック時もスクロール位置を合わせるために selectedId の watch が発火するのを待つか、
   // ここで強制的にスクロールさせることもできるが、
   // 親コンポーネントが selectedId を更新してくれるはずなので watch に任せる
