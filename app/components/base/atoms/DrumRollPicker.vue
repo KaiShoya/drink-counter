@@ -16,7 +16,7 @@ CSS Scroll Snapを利用して、ネイティブライクなスクロール体�
 ## Features
 - スクロール終了時に最も近い項目にスナップし、selectイベントを発火する
 - 項目をタップした時はselectとtapの両方のイベントを発火する
-- タップ時は視覚的フィードバックとして、アイテムがパルスアニメーションで拡大し、スムーズにスクロールする
+- タップ時は視覚的フィードバックとして、アイテムがパルスアニメーションで拡大する
 - selectedIdが変更された場合、自動的にその位置までスクロールする
 - 横スクロールは無効化されている
 </spec>
@@ -105,21 +105,9 @@ const onItemClick = (id: number | string) => {
     tappedItemId.value = null
   }, TAP_ANIMATION_DURATION)
   
-  // タップ時は即座にスムーズスクロールで視覚的フィードバックを提供
-  // 既存の scrollToSelected を再利用せず、ここで直接スクロールする
-  // （親からのselectedIdの更新を待たずに即座にフィードバックを提供するため）
-  if (scroller.value) {
-    const index = props.items.findIndex(item => item.id === id)
-    if (index !== -1) {
-      scroller.value.scrollTo({
-        top: index * props.itemHeight,
-        behavior: 'smooth'
-      })
-    }
-  }
-  
   emit('select', id)
   emit('tap', id)
+  // 親コンポーネントが selectedId を更新すると watch が発火し、通常のスクロールが実行される
 }
 </script>
 
