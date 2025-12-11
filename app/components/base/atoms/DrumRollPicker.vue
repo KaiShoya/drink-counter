@@ -48,6 +48,9 @@ const scroller = ref<HTMLElement | null>(null)
 const isScrolling = ref(false)
 const tappedItemId = ref<number | string | null>(null)
 
+// アニメーション時間を定数として定義（CSS の animation duration と一致させる）
+const TAP_ANIMATION_DURATION = 400
+
 // 初期スクロール位置の設定
 onMounted(() => {
   nextTick(() => {
@@ -100,9 +103,11 @@ const onItemClick = (id: number | string) => {
   tappedItemId.value = id
   setTimeout(() => {
     tappedItemId.value = null
-  }, 400)
+  }, TAP_ANIMATION_DURATION)
   
   // タップ時は即座にスムーズスクロールで視覚的フィードバックを提供
+  // 既存の scrollToSelected を再利用せず、ここで直接スクロールする
+  // （親からのselectedIdの更新を待たずに即座にフィードバックを提供するため）
   if (scroller.value) {
     const index = props.items.findIndex(item => item.id === id)
     if (index !== -1) {
