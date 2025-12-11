@@ -16,6 +16,7 @@ CSS Scroll Snapを利用して、ネイティブライクなスクロール体�
 ## Features
 - スクロール終了時に最も近い項目にスナップし、selectイベントを発火する
 - 項目をタップした時はselectとtapの両方のイベントを発火する
+- タップ時は視覚的フィードバックとして、アイテムがパルスアニメーションで拡大し、スムーズにスクロールする
 - selectedIdが変更された場合、自動的にその位置までスクロールする
 - 横スクロールは無効化されている
 </spec>
@@ -45,6 +46,7 @@ const emit = defineEmits<{
 
 const scroller = ref<HTMLElement | null>(null)
 const isScrolling = ref(false)
+const tappedItemId = ref<number | string | null>(null)
 
 // 初期スクロール位置の設定
 onMounted(() => {
@@ -94,11 +96,25 @@ const onScroll = () => {
 }
 
 const onItemClick = (id: number | string) => {
+  // タップ時のアニメーションフィードバックを設定
+  tappedItemId.value = id
+  setTimeout(() => {
+    tappedItemId.value = null
+  }, 400)
+  
+  // タップ時は即座にスムーズスクロールで視覚的フィードバックを提供
+  if (scroller.value) {
+    const index = props.items.findIndex(item => item.id === id)
+    if (index !== -1) {
+      scroller.value.scrollTo({
+        top: index * props.itemHeight,
+        behavior: 'smooth'
+      })
+    }
+  }
+  
   emit('select', id)
   emit('tap', id)
-  // クリック時もスクロール位置を合わせるために selectedId の watch が発火するのを待つか、
-  // ここで強制的にスクロールさせることもできるが、
-  // 親コンポーネントが selectedId を更新してくれるはずなので watch に任せる
 }
 </script>
 
@@ -125,7 +141,10 @@ const onItemClick = (id: number | string) => {
         v-for="item in items"
         :key="item.id"
         class="drum-roll-item"
-        :class="{ 'is-selected': item.id === selectedId }"
+        :class="{ 
+          'is-selected': item.id === selectedId,
+          'is-tapped': item.id === tappedItemId
+        }"
         :style="{ height: `${itemHeight}px`, lineHeight: `${itemHeight}px` }"
         @click="onItemClick(item.id)"
         role="option"
@@ -192,6 +211,22 @@ const onItemClick = (id: number | string) => {
   text-overflow: ellipsis;
   padding: 0 16px;
   opacity: 0.6;
+}
+
+.drum-roll-item.is-tapped {
+  animation: tap-pulse 0.4s ease-out;
+}
+
+@keyframes tap-pulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .drum-roll-item.is-selected {
