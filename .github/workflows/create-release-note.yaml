@@ -51,8 +51,12 @@ jobs:
       # タグを切り、リリースノートを作成する
       - name: Create Release
         run: |
-          release_note='${{ steps.release_note.outputs.release_note }}'
-          escaped_body=$(printf '%s' "$release_note" | jq -Rs .)
+          release_body=$(cat <<'EOF'
+${{ steps.release_note.outputs.release_note }}
+EOF
+          )
+
+          escaped_body=$(printf '%s' "$release_body" | jq -Rs .)
 
           cat <<EOF | curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
