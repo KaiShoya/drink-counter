@@ -1,3 +1,34 @@
+<spec lang="md">
+# Top Page (Daily Counter)
+
+当日の飲み物をラベル別にカウント・調整する画面。
+
+## Data
+- page store: `indexStore` → `date`, `labelsWithDrinks`, `drinkCountForDay`
+- user settings: `userSetting.threshold_for_detecting_overdrinking`
+
+## Interactions
+- DatePicker で `date` が変わると `fetchNumberOfDrinks()` を再実行
+- `DomainCounterMoleculesRow` の increment から `plusCheck(drinkId, counterId)`
+  - 閾値超過なら警告モーダル表示
+  - 未超過なら `plus(drinkId, counterId)`
+- `DomainCounterMoleculesRow` の decrement から `minus(drinkId, counterId)`
+
+## Features
+- 日付選択（カレンダー）
+- ラベル/飲み物行のカウント増減
+- 過飲検知（閾値超過時の警告モーダル）
+
+## Error Handling
+- 例外処理・toast・logging は Page Store 側で責務分離（画面は直接処理しない）
+
+## i18n
+- SEO title / 警告文言は `utils/locales.ts` のキーを使用
+
+## Notes
+- #254 飲み物切り替え手順の改善の対象。UIフロー変更時に更新。
+</spec>
+
 <script setup lang="ts">
 import { LOCALE_ROUTES_TOP, LOCALE_INDEX_WARNING_TITLE, LOCALE_INDEX_WARNING_CONTENT } from '~/utils/locales'
 
