@@ -80,6 +80,6 @@ jobs:
     if: needs.update-version.result == 'success'
     uses: ./.github/workflows/create-release-note.yaml
 
-  codacy:
-    uses: ./.github/workflows/codacy-analysis.yaml
-    secrets: inherit
+  # codacy:
+  #   uses: ./.github/workflows/codacy-analysis.yaml
+  #   secrets: inherit
