@@ -1,29 +1,32 @@
 <spec lang="md">
 # Settings Page
 
-**Purpose**: ユーザー設定（過飲閾値、タイムゾーン、日付切替時刻）を編集する。
+ユーザー設定（過飲閾値、タイムゾーン、日付切替時刻）を編集する画面。
 
-**Responsibilities**
-- 現在設定の取得と表示
-- 入力値の双方向バインドと保存
-
-**Data**
-- from page store: `settingsStore` → `thresholdForDetectingOverdrinking`, `timezone`, `switchingTiming`
+## Data
+- page store: `settingsStore` → `thresholdForDetectingOverdrinking`, `timezone`, `switchingTiming`
 - constants: `TIMEZONE`（タイムゾーン一覧）
 
-**Interactions**
-- `fetchSettings()` 初期読み込み
-- `updateSettings()` 保存（成功時 toast、失敗時 error toast + logging は Page Store）
+## Interactions
+- 初期表示で `fetchSettings()`
+- 保存ボタンで `updateSettings()`
 
-**i18n**
+## Features
+- 数値入力（過飲閾値 / 日付切替時刻）
+- タイムゾーン選択（`TIMEZONE` から選択）
+
+## Error Handling
+- 保存失敗時の toast / logging は Page Store が担当（画面では直接処理しない）
+
+## i18n
 - すべてのラベル/ボタン文言は `utils/locales.ts` のキー管理
 
-**Accessibility**
+## Accessibility
 - 入力要素に適切なラベル関連付け（将来の改善項目）
 
-**Notes**
-- 閾値はトップページの過飲検知に連動
-- タイムゾーン・切替時刻は日付計算ロジックと整合が必要
+## Notes
+- 過飲閾値はトップページの警告判定に連動
+- タイムゾーン/切替時刻は日付計算ロジックと整合が必要
 </spec>
 
 <script setup lang="ts">

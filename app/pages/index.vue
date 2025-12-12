@@ -1,29 +1,31 @@
 <spec lang="md">
 # Top Page (Daily Counter)
 
-**Purpose**: 当日の飲み物をラベル別にカウント・調整できる。
+当日の飲み物をラベル別にカウント・調整する画面。
 
-**Responsibilities**
-- 日付選択（カレンダー）と当日の合計カウント表示
-- ラベル行ごとの増減・デフォルト飲み物設定
-- 過飲検知閾値超過時のモーダル警告表示
-
-**Data**
-- from page store: `indexStore` → `date`, `labelsWithDrinks`, `drinkCountForDay`
+## Data
+- page store: `indexStore` → `date`, `labelsWithDrinks`, `drinkCountForDay`
 - user settings: `userSetting.threshold_for_detecting_overdrinking`
 
-**Interactions**
-- increment: `plusCheck(drinkId, counterId)`（閾値チェック→必要時モーダル）
-- decrement: `minus(drinkId, counterId)`
-- set default drink: `updateDefaultDrink`
+## Interactions
+- DatePicker で `date` が変わると `fetchNumberOfDrinks()` を再実行
+- `DomainCounterMoleculesRow` の increment から `plusCheck(drinkId, counterId)`
+  - 閾値超過なら警告モーダル表示
+  - 未超過なら `plus(drinkId, counterId)`
+- `DomainCounterMoleculesRow` の decrement から `minus(drinkId, counterId)`
 
-**Error Handling**
-- Page Store が toast と logging を担当（画面は直接処理しない）
+## Features
+- 日付選択（カレンダー）
+- ラベル/飲み物行のカウント増減
+- 過飲検知（閾値超過時の警告モーダル）
 
-**i18n**
-- タイトルと警告文言は `utils/locales.ts` のキーを使用
+## Error Handling
+- 例外処理・toast・logging は Page Store 側で責務分離（画面は直接処理しない）
 
-**Notes**
+## i18n
+- SEO title / 警告文言は `utils/locales.ts` のキーを使用
+
+## Notes
 - #254 飲み物切り替え手順の改善の対象。UIフロー変更時に更新。
 </spec>
 

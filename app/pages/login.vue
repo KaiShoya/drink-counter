@@ -1,23 +1,23 @@
 <spec lang="md">
 # Login Page
 
-**Purpose**: Supabase 認証の入口。Google OAuth を使用。
+Supabase 認証の入口。Google OAuth を使用。
 
-**Responsibilities**
-- 未ログイン時の認証誘導
-- ログイン完了後、`fullpath` クエリまたはトップへリダイレクト
-
-**Data**
+## Data
 - `user`: Supabase ユーザー（auto-import composable）
-- `route.query.fullpath`: ログイン前遷移先の保持
+- `route.query.fullpath`: ログイン前の遷移先
 
-**Interactions**
-- `signInWithGoogle()` を実行して OAuth フロー開始
+## Interactions
+- ボタンクリックで `signInWithGoogle()` を実行して OAuth フロー開始
 
-**Error Handling**
-- 認証エラーは Page Store/プラグイン側で toast と logging（本画面は最小責務）
+## Features
+- `user` を watch（`immediate: true`）し、ログイン済みなら自動リダイレクト
+- リダイレクト先は `fullpath` があればそれを優先、なければトップ
 
-**i18n**
+## Error Handling
+- 認証エラーの通知/ログは Store/プラグイン側で実施（画面は最小責務）
+
+## i18n
 - ボタン文言は i18n キーへ移行予定（`utils/locales.ts` にキー追加）
 </spec>
 

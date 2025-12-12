@@ -67,14 +67,25 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 
 - 画面/コンポーネントの仕様は、Vue SFC の先頭に `<spec lang="md">` を置いて Markdown で記述する。
 - `<spec>` はコメント（`<!-- -->`）ではなく **カスタムブロック** を使う。
-- 記述内容の最小テンプレ:
+- 書式はプロジェクト内の [app/components/base/atoms/DrumRollPicker.vue](app/components/base/atoms/DrumRollPicker.vue) の `<spec>` を基準にする。
+- **画面（Page）の推奨テンプレ**（必要に応じて省略/追加してよい）:
   - `# Title`
-  - **Purpose**（なぜこの画面/コンポーネントがあるか）
-  - **Responsibilities**（このファイルが担う責務）
-  - **Data**（参照する store / props / composables）
-  - **Interactions**（ユーザー操作→呼ばれるアクション/emit）
-  - **Error Handling**（どの層で toast/log を出すか）
-  - **i18n**（キー管理・直接文字列禁止など）
+  - 1〜2行の概要（Purpose相当）
+  - `## Data`（参照する store / composables / params）
+  - `## Interactions`（ユーザー操作→呼ばれる action / navigation）
+  - `## Features`（画面として提供する機能の箇条書き）
+  - `## Error Handling`（どの層で toast/log を出すか）
+  - `## i18n`（キー管理・直接文字列禁止など）
+  - `## Notes`（関連Issueや注意点）
+- **コンポーネント（Component）の推奨テンプレ**:
+  - `# Title`
+  - 1〜2行の概要
+  - `## Props`（型と意味、既定値がある場合は明記）
+  - `## Events`（emit 名と payload）
+  - `## Features`（ふるまい・UI要点）
+  - `## Accessibility`（aria等が重要なら）
+  - `## Security`（認証情報や機密/危険な挙動があるなら）
+  - `## i18n`
 - 仕様更新を伴う実装変更では、コードと `<spec>` を同じコミット/PRで更新する。
 
 # その他
