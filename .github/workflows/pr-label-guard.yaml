@@ -1,0 +1,19 @@
+name: PR Label Guard
+
+on:
+  pull_request:
+    types: [opened, synchronize, labeled, unlabeled, reopened]
+
+jobs:
+  require-release-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure release label exists
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          labels=$(jq -r '.pull_request.labels[].name' "$GITHUB_EVENT_PATH")
+          if ! echo "$labels" | grep -qE '^release:(major|minor|patch)$'; then
+            echo "::error::Add release:major | release:minor | release:patch"
+            exit 1
+          fi
