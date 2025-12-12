@@ -1,3 +1,31 @@
+<spec lang="md">
+# Settings Page
+
+**Purpose**: ユーザー設定（過飲閾値、タイムゾーン、日付切替時刻）を編集する。
+
+**Responsibilities**
+- 現在設定の取得と表示
+- 入力値の双方向バインドと保存
+
+**Data**
+- from page store: `settingsStore` → `thresholdForDetectingOverdrinking`, `timezone`, `switchingTiming`
+- constants: `TIMEZONE`（タイムゾーン一覧）
+
+**Interactions**
+- `fetchSettings()` 初期読み込み
+- `updateSettings()` 保存（成功時 toast、失敗時 error toast + logging は Page Store）
+
+**i18n**
+- すべてのラベル/ボタン文言は `utils/locales.ts` のキー管理
+
+**Accessibility**
+- 入力要素に適切なラベル関連付け（将来の改善項目）
+
+**Notes**
+- 閾値はトップページの過飲検知に連動
+- タイムゾーン・切替時刻は日付計算ロジックと整合が必要
+</spec>
+
 <script setup lang="ts">
 import { LOCALE_ROUTES_SETTINGS, LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING, LOCALE_SETTINGS_CUPS, LOCALE_SETTINGS_TIMEZONE, LOCALE_SETTINGS_SWITCHING_TIMING, LOCALE_SETTINGS_OCLOCK, LOCALE_SETTINGS_SAVE } from '~/utils/locales'
 import { TIMEZONE } from '~/utils/constant'
@@ -20,26 +48,6 @@ fetchSettings()
 
 <template>
   <div>
-    <!-- <spec>
-      title: Settings Page
-      purpose: ユーザー設定（過飲閾値、タイムゾーン、日付切替時刻）の編集。
-      responsibilities:
-        - 現在設定の取得と表示
-        - 入力値の双方向バインドと保存
-      data:
-        - from page store: `settingsStore` → `thresholdForDetectingOverdrinking`, `timezone`, `switchingTiming`
-        - constants: `TIMEZONE`（タイムゾーン一覧）
-      interactions:
-        - `fetchSettings()` 初期読み込み
-        - `updateSettings()` 保存（成功時 toast、失敗時 error toast + logging は Page Store）
-      i18n:
-        - すべてのラベル/ボタン文言は `utils/locales.ts` のキー管理
-      accessibility:
-        - 入力要素に適切なラベル関連付け（将来の改善項目）
-      notes:
-        - 閾値はトップページの過飲検知に連動
-        - タイムゾーン・切替時刻は日付計算ロジックと整合が必要
-    </spec> -->
     <table class="table is-hoverable is-fullwidth is-striped">
       <tbody>
         <tr>

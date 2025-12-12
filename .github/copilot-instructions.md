@@ -63,6 +63,20 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - ルートやAPI通信の定義は utils ディレクトリで一元管理する。
 - i18n のキーは utils/locales.ts で定数化し、直接文字列を使わない。
 
+## SFCの `<spec>` カスタムブロック運用
+
+- 画面/コンポーネントの仕様は、Vue SFC の先頭に `<spec lang="md">` を置いて Markdown で記述する。
+- `<spec>` はコメント（`<!-- -->`）ではなく **カスタムブロック** を使う。
+- 記述内容の最小テンプレ:
+  - `# Title`
+  - **Purpose**（なぜこの画面/コンポーネントがあるか）
+  - **Responsibilities**（このファイルが担う責務）
+  - **Data**（参照する store / props / composables）
+  - **Interactions**（ユーザー操作→呼ばれるアクション/emit）
+  - **Error Handling**（どの層で toast/log を出すか）
+  - **i18n**（キー管理・直接文字列禁止など）
+- 仕様更新を伴う実装変更では、コードと `<spec>` を同じコミット/PRで更新する。
+
 # その他
 
 - Nuxt 4（RC）を利用し、公式の推奨構成・設定を優先する。
