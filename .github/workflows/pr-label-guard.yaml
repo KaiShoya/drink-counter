@@ -14,6 +14,6 @@ jobs:
         run: |
           labels=$(jq -r '.pull_request.labels[].name' "$GITHUB_EVENT_PATH")
           if ! echo "$labels" | grep -qE '^release:(major|minor|patch)$'; then
-            echo "::error::Add release:major | release:minor | release:patch"
+            echo "::error::PR must have one of the following labels: release:major, release:minor, or release:patch"
             exit 1
           fi
