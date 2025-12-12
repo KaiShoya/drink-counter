@@ -1,31 +1,24 @@
 name: Update version
 
 on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - labeled
   workflow_dispatch:
-    inputs:
-      version_type:
-        description: 'Version type to update (patch, minor, major)'
-        required: true
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
-  workflow_call:
-    inputs:
-      version_type:
-        description: 'Version type to update (patch, minor, major)'
-        required: true
-        type: string
 
 jobs:
   update_version:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
@@ -41,13 +34,31 @@ jobs:
           version: 10.7.0
           run_install: false
 
-      - name: Update version
+      - name: Determine release label
+        id: get_label
         run: |
-          pnpm version ${{ inputs.version_type }} --no-git-tag-version
-          if git diff --quiet package.json; then
-            echo "Error: package.json was not modified by pnpm version"
-            exit 1
+          echo "labels=${{ toJson(github.event.pull_request.labels.*.name) }}" >> /tmp/labels
+          echo "labels=$(cat /tmp/labels)"
+          has_patch=$(echo "${{ github.event.pull_request.labels.*.name }}" | grep -q 'release:patch' && echo true || echo false)
+          has_minor=$(echo "${{ github.event.pull_request.labels.*.name }}" | grep -q 'release:minor' && echo true || echo false)
+          has_major=$(echo "${{ github.event.pull_request.labels.*.name }}" | grep -q 'release:major' && echo true || echo false)
+          echo "patch=${has_patch}" >> $GITHUB_OUTPUT
+          echo "minor=${has_minor}" >> $GITHUB_OUTPUT
+          echo "major=${has_major}" >> $GITHUB_OUTPUT
+
+      - name: Run version bump
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.get_label.outputs.major }}" = "true" ]; then
+            pnpm version major
+          elif [ "${{ steps.get_label.outputs.minor }}" = "true" ]; then
+            pnpm version minor
+          elif [ "${{ steps.get_label.outputs.patch }}" = "true" ]; then
+            pnpm version patch
+          else
+            echo 'No release label present, skipping version bump'
+            exit 0
           fi
           git add package.json pnpm-lock.yaml
-          git commit -m "chore: bump version (${{ inputs.version_type }})"
+          git commit -m "chore: bump version (release label)"
           git push
