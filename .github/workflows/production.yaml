@@ -67,19 +67,10 @@ jobs:
             echo "version_type=" >> $GITHUB_OUTPUT
           fi
 
-  # バージョンを更新する（リリースラベルがある場合のみ）
-  update-version:
+  # リリースノートを作成する（リリースラベルがある場合のみ）
+  create-release-note:
     needs: get-release-label
     if: needs.get-release-label.outputs.version_type != ''
-    uses: ./.github/workflows/update-version.yaml
-    with:
-      version_type: ${{ needs.get-release-label.outputs.version_type }}
-    secrets: inherit
-
-  # リリースノートを作成する（バージョン更新後）
-  create-release-note:
-    needs: [get-release-label, update-version]
-    if: needs.update-version.result == 'success'
     uses: ./.github/workflows/create-release-note.yaml
 
   # codacy:
