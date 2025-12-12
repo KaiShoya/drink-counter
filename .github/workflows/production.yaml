@@ -16,6 +16,11 @@ jobs:
     outputs:
       version_type: ${{ steps.get_label.outputs.version_type }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
       - name: Get merged PR labels
         id: get_label
         env:
