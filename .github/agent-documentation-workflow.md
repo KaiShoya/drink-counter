@@ -8,11 +8,13 @@ This project uses `.agent/` directory for agent-driven documentation management:
 .agent/
   ├── specs/                  # Source of truth for specifications
   ├── docs/
-  │   ├── QA_AND_DECISIONS.md # Q&A and design decisions log
+  │   ├── qa-index.md         # QA index (updated at release)
   │   ├── tasks.md            # Task list index (updated at release)
+  │   ├── qa/                 # Version-based Q&A
   │   ├── tasks/              # Version-based task lists
-  │   ├── backlog-tasks.md    # Backlog and roadmap
-  │   └── task-archive/       # Completed versions
+  │   ├── qa-archive/         # Completed Q&A versions
+  │   ├── task-archive/       # Completed task versions
+  │   └── backlog-tasks.md    # Backlog and roadmap
   └── README.md               # Overview and quick start
 ```
 
@@ -48,6 +50,56 @@ Use this directory for:
   **Related**: #issue_number (if applicable)
   ```
 - Purpose: Document design decisions and architectural discussions for future reference
+
+**QA File Division Rule (Adopted from v1.20)**:
+
+QA lists are divided by version to prevent merge conflicts. Same structure as tasks.md.
+
+**Directory Structure**:
+```
+.agent/docs/
+├── qa-index.md              ← Index (equivalent to tasks.md)
+├── QA_AND_DECISIONS.md      ← Legacy (for v1.19 and earlier)
+└── qa/
+    ├── v1.20-qa.md          ← v1.20 Q&A and decisions during development
+    ├── v1.21-qa.md          ← v1.21 Q&A (planned)
+    ├── v1.22-qa.md          ← v1.22 Q&A (TBD)
+    ├── qa-backlog.md        ← Long-term Q&A independent of version
+    └── qa-archive/
+        ├── v1.19-qa.md      (completed)
+        └── ...
+```
+
+**During Development**:
+1. New Q&A occurs → Record in corresponding `qa/vX.Y-qa.md`
+2. Format: `## [Category] Issue #XXX: Question Title`
+3. Linked with discussions in GitHub Issues comments
+4. If spanning multiple versions → Record in v1.20 and reference from others
+
+**At Release**:
+1. Finalize the version's `qa/vX.Y-qa.md`
+2. Move completed Q&A to `qa-archive/vX.Y-qa.md` (optional)
+3. Update `qa-index.md`
+4. Integrate decided Q&A into `.agent/specs/`
+
+**GitHub Issues Sync Rules**:
+1. When Q&A occurs during development → Add comment to GitHub Issue (or create new)
+2. When task definitions/specs are updated → Add comment to related Issue
+3. All Q&A discussions → Record in GitHub Issue
+4. Final decisions → Record in QA file (link related Issue)
+
+**Flow**:
+```
+Development question
+    ↓
+Add comment to GitHub Issue (question and context)
+    ↓
+User feedback / decision
+    ↓
+Record in Issue + add to QA file
+    ↓
+Update task list (link task number)
+```
 
 #### **tasks/ Directory** - Version-based Task Lists
 - Format: `tasks/vX.Y-tasks.md` for each **minor version** (not patch version)
