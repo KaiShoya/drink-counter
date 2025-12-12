@@ -50,21 +50,15 @@ jobs:
       # タグを切り、リリースノートを作成する
       - name: Create Release
         run: |
-          release_body=$(cat <<'EOF'
-${{ steps.release_note.outputs.release_note }}
-EOF
-          )
+          release_body="${{ steps.release_note.outputs.release_note }}"
 
-          escaped_body=$(printf '%s' "$release_body" | jq -Rs .)
-
-          cat <<EOF | curl -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d @- \
-            https://api.github.com/repos/${{ github.repository }}/releases
-          {
-            "tag_name": "${{ steps.release_tag.outputs.release_tag }}",
-            "name": "${{ steps.release_tag.outputs.release_tag }}",
-            "body": $escaped_body
-          }
-          EOF
+          jq -n \
+            --arg tag "${{ steps.release_tag.outputs.release_tag }}" \
+            --arg name "${{ steps.release_tag.outputs.release_tag }}" \
+            --arg body "$release_body" \
+            '{tag_name:$tag, name:$name, body:$body}' \
+            | curl -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d @- \
+              https://api.github.com/repos/${{ github.repository }}/releases
