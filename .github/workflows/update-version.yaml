@@ -20,16 +20,12 @@ on:
 
 jobs:
   update_version:
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
@@ -46,8 +42,6 @@ jobs:
           run_install: false
 
       - name: Update version
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pnpm version ${{ inputs.version_type }} --no-git-tag-version
           if git diff --quiet package.json; then
@@ -56,28 +50,4 @@ jobs:
           fi
           git add package.json pnpm-lock.yaml
           git commit -m "chore: bump version (${{ inputs.version_type }})"
-
-          NEW_VERSION=$(node -p "require('./package.json').version")
-          BASE_BRANCH="${{ github.ref_name }}"
-          BUMP_BRANCH="chore/bump-version-v${NEW_VERSION}"
-
-          # Create and push bump branch
-          git switch -c "$BUMP_BRANCH"
-          git push -u origin "$BUMP_BRANCH"
-
-          # Ensure release label exists (best-effort; ignore if creation not allowed)
-          LABEL="release:${{ inputs.version_type }}"
-          if ! gh label list --limit 1000 | grep -q "^${LABEL}\b"; then
-            gh label create "$LABEL" --color FFDD00 --description "Release version bump: ${{ inputs.version_type }}" || true
-          fi
-
-          # Open PR back to base with appropriate label
-          gh pr create \
-            --base "$BASE_BRANCH" \
-            --head "$BUMP_BRANCH" \
-            --title "chore: bump version to v${NEW_VERSION}" \
-            --body "Automated version bump (${LABEL}). Created by workflow." \
-            --label "$LABEL"
-
-          PR_URL=$(gh pr view --json url --jq '.url' --head "$BUMP_BRANCH")
-          gh pr merge "$PR_URL" --auto --merge --delete-branch || true
+          git push
