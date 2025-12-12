@@ -2,7 +2,7 @@
 
 **最終更新**: 2025-12-10  
 **ステータス**: Active  
-**関連**: TASK_LIST.md, agent-documentation-workflow.md
+**関連**: tasks.md, agent-documentation-workflow.md
 
 ---
 

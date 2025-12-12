@@ -6,36 +6,68 @@ This project uses `.agent/` directory for agent-driven documentation management:
 
 ```
 .agent/
-  ├── docs/       # Working documents (QA, tasks, open questions)
-  └── specs/      # Source of truth for specifications
+  ├── specs/                  # Source of truth for specifications
+  ├── docs/
+  │   ├── QA_AND_DECISIONS.md # Q&A and design decisions log
+  │   ├── tasks.md            # Task list index (updated at release)
+  │   ├── tasks/              # Version-based task lists
+  │   ├── backlog-tasks.md    # Backlog and roadmap
+  │   └── task-archive/       # Completed versions
+  └── README.md               # Overview and quick start
 ```
 
 **Important**: If `.agent/` directory doesn't exist in a project, create it automatically when needed.
 
 ## 📝 Documentation Guidelines
 
+### Core Principles
+
+- **Single Source of Truth**: Specifications in `.agent/specs/` must always be up-to-date when code changes
+- **Separation of Concerns**: 
+  - `.agent/specs/` — finalized specifications and architecture decisions
+  - `.agent/docs/` — discussions, questions, task tracking, and roadmaps
+- **Synchronized Updates**: Code changes and documentation updates must be in the same PR
+- **Project-Specific Rules**: Language-specific and tool-specific details belong in `copilot-instructions.md`
+
 ### `.agent/docs/` - Working Documents
 
 Use this directory for:
-- **QA List**: Question & Answer format with categories
-  - Format: `## [Category] Question` → `**Answer**: ...`
-  - Categories: `[API]`, `[UI]`, `[Architecture]`, `[Testing]`, etc.
-- **Open Questions**: Open issues to be resolved in future discussions
-  - Format: `- [ ] Issue description (context, impact, options)`
-- **Task List**: Development tasks linked to GitHub Issues
-  - Format: `- [ ] Task description #issue_number`
 
-**Recommended QA Format**:
-```markdown
-## [Category] Question Title
+#### **QA_AND_DECISIONS.md** - Questions & Decisions Log
+- Format: `## [Category] Question Title`
+  - Categories: `[API]`, `[UI]`, `[Architecture]`, `[Testing]`, `[Database]`, etc.
+- Recommended structure:
+  ```markdown
+  ## [Category] Question Title
+  
+  **Question**: Detailed question description
+  
+  **Answer**: Answer with rationale
+  
+  **Decided on**: YYYY-MM-DD
+  **Related**: #issue_number (if applicable)
+  ```
+- Purpose: Document design decisions and architectural discussions for future reference
 
-**Question**: Detailed question description
+#### **tasks/ Directory** - Version-based Task Lists
+- Format: `tasks/vX.Y-tasks.md` for each **minor version** (not patch version)
+- Fields: `title`, `area`, `owner` (optional), `created` (YYYY-MM-DD), status (`- [ ]` / `- [x]`)
+- When task completed, add: `completed`, `pr` (URL), `commit` (SHA)
+- On release: Move completed version to `task-archive/`, update `tasks.md` (index)
 
-**Answer**: Answer with rationale
+#### **tasks.md** - Index of All Versions
+- Updated only at release time
+- Lists all active and archived version files
+- Provides quick reference to which version is being worked on
 
-**Decided on**: YYYY-MM-DD
-**Related**: #issue_number (if applicable)
-```
+#### **backlog-tasks.md** - Backlog & Roadmap
+- Tasks with undecided target versions
+- Roadmap for future releases (v1.21, v1.22, v2.0, etc.)
+- Long-term considerations and issue statistics
+
+#### **task-archive/** - Completed Versions
+- Store finished version task files here
+- Optional: Create `vX.Y-tasks-completed.md` with completed tasks summary
 
 ### `.agent/specs/` - Specifications (Source of Truth)
 
@@ -296,3 +328,17 @@ When code changes are ready for PR:
 - ❌ Duplicating information across multiple files
 - ❌ Forgetting to link GitHub Issues
 - ❌ Leaving resolved questions in `.agent/docs/` indefinitely
+
+---
+
+## 🚀 Setup & Adoption Guide
+
+For projects adopting this documentation workflow:
+
+1. **Create directory structure**: Set up `.agent/specs/` and `.agent/docs/` directories
+2. **Initialize specs**: Create initial specification files for your architecture and design
+3. **Start task tracking**: Begin with `tasks.md` index and version-based task lists
+4. **Establish PR policy**: Require documentation updates alongside code changes
+5. **Respect project rules**: Reference `copilot-instructions.md` for language/framework-specific details
+
+See [agent-operations.md](./agent-operations.md) for generic/reusable core rules applicable across projects.
