@@ -9,20 +9,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  update_version:
-    permissions:
-      contents: write
+  check_release_label:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: ${{ matrix.node }}
 
       - run: |
           git config user.name "github-actions[bot]"
@@ -34,31 +31,76 @@ jobs:
           version: 10.7.0
           run_install: false
 
-      - name: Determine release label
-        id: get_label
+      # 前回のリリースタグを取得する
+      - name: Get previous tag
+        id: pre_tag
         run: |
-          echo "labels=${{ toJson(github.event.pull_request.labels.*.name) }}" >> /tmp/labels
-          echo "labels=$(cat /tmp/labels)"
-          has_patch=$(echo "${{ github.event.pull_request.labels.*.name }}" | grep -q 'release:patch' && echo true || echo false)
-          has_minor=$(echo "${{ github.event.pull_request.labels.*.name }}" | grep -q 'release:minor' && echo true || echo false)
-          has_major=$(echo "${{ github.event.pull_request.labels.*.name }}" | grep -q 'release:major' && echo true || echo false)
-          echo "patch=${has_patch}" >> $GITHUB_OUTPUT
-          echo "minor=${has_minor}" >> $GITHUB_OUTPUT
-          echo "major=${has_major}" >> $GITHUB_OUTPUT
+          pre_tag=$(curl -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          version=${pre_tag#v}
+          versions=(${version//-/ })
+          version_pre=${versions[1]}
+          versions=(${versions[0]//./ })
+          echo major=${versions[0]} >> $GITHUB_OUTPUT
+          echo minor=${versions[1]} >> $GITHUB_OUTPUT
+          echo patch=${versions[2]} >> $GITHUB_OUTPUT
+          echo preview=$version_pre >> $GITHUB_OUTPUT
 
-      - name: Run version bump
+      # タグを取得する
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
+      - name: Generate release tag
+        id: release_tag
         run: |
-          set -euo pipefail
-          if [ "${{ steps.get_label.outputs.major }}" = "true" ]; then
-            pnpm version major
-          elif [ "${{ steps.get_label.outputs.minor }}" = "true" ]; then
-            pnpm version minor
-          elif [ "${{ steps.get_label.outputs.patch }}" = "true" ]; then
-            pnpm version patch
-          else
-            echo 'No release label present, skipping version bump'
-            exit 0
-          fi
-          git add package.json pnpm-lock.yaml
-          git commit -m "chore: bump version (release label)"
+          version=${{ steps.get-version.outputs.version }}
+          versions=(${version//-/ })
+          version_pre=${versions[1]}
+          versions=(${versions[0]//./ })
+          echo major=${versions[0]} >> $GITHUB_OUTPUT
+          echo minor=${versions[1]} >> $GITHUB_OUTPUT
+          echo patch=${versions[2]} >> $GITHUB_OUTPUT
+          echo preview=$version_pre >> $GITHUB_OUTPUT
+
+      # 最新のバージョンとブランチ内のバージョンに差異があったら処理を止める
+      - name: Check if it is the first execution
+        if: |
+          !contains(steps.pre_tag.outputs.major, steps.release_tag.outputs.major) ||
+          !contains(steps.pre_tag.outputs.minor, steps.release_tag.outputs.minor) ||
+          !contains(steps.pre_tag.outputs.patch, steps.release_tag.outputs.patch) ||
+          !contains(steps.pre_tag.outputs.preview, steps.release_tag.outputs.preview)
+        run: |
+          echo "Error: Version changes detected. Exiting."
+          exit 1
+
+      - name: Update patch version
+        id: patch
+        if: |
+          contains(github.event.pull_request.labels.*.name, 'release:patch') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:major')
+        run: |
+          pnpm version patch
+          git push
+
+      - name: Update minor version
+        id: minor
+        if: |
+          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
+          contains(github.event.pull_request.labels.*.name, 'release:minor') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:major')
+        run: |
+          pnpm version minor
+          git push
+
+      - name: Update major version
+        id: major
+        if: |
+          !contains(github.event.pull_request.labels.*.name, 'release:patch') &&
+          !contains(github.event.pull_request.labels.*.name, 'release:minor') &&
+          contains(github.event.pull_request.labels.*.name, 'release:major')
+        run: |
+          pnpm version major
           git push
