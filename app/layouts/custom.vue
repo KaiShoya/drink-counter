@@ -25,10 +25,10 @@ type ThemeClass = 'theme-light' | 'theme-dark'
 
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
-const themePreference = ref<ThemeClass>('theme-light')
+const themePreference = ref<ThemeClass | null>(null)
 const systemTheme = ref<ThemeClass>('theme-light')
 const resolvedTheme = computed<ThemeClass>(() =>
-  themePreference.value === 'theme-light' ? 'theme-light' : 'theme-dark'
+  themePreference.value ?? systemTheme.value
 )
 const isLight = computed(() => resolvedTheme.value === 'theme-light')
 const themeLabels = computed(() => ({
@@ -61,10 +61,8 @@ onMounted(() => {
     storedPreference === 'theme-dark'
   ) {
     themePreference.value = storedPreference
-  } else {
-    // 初回は OS 設定を採用
-    themePreference.value = systemTheme.value
   }
+  // 初回は OS 設定を使用（themePreference は null のまま）
 
   mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   mediaQuery.addEventListener('change', handleMediaChange)
@@ -75,7 +73,7 @@ onBeforeUnmount(() => {
 })
 
 watch(themePreference, (value) => {
-  if (import.meta.client) {
+  if (import.meta.client && value !== null) {
     window.localStorage.setItem(THEME_STORAGE_KEY, value)
   }
 })

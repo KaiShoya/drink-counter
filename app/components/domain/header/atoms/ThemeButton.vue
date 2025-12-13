@@ -4,7 +4,7 @@
 テーマ切り替えボタン。ライトモードとダークモードを切り替える。
 
 ## Props
-- themePreference: ThemeClass - 現在のテーマ設定（'theme-light' | 'theme-dark'）
+- themePreference: ThemeClass | null - ユーザーが選択したテーマ設定（nullの場合はOS設定使用）
 - resolvedTheme: ThemeClass - 解決済みのテーマクラス（'theme-light' | 'theme-dark'）
 - changeTheme: (theme: ThemeClass) => void - テーマ変更関数
 - labels: { light: string, dark: string } - ラベルオブジェクト
@@ -29,7 +29,7 @@
 type ThemeClass = 'theme-light' | 'theme-dark'
 
 const props = defineProps<{
-  themePreference: ThemeClass
+  themePreference: ThemeClass | null
   resolvedTheme: ThemeClass
   changeTheme: (theme: ThemeClass) => void
   labels: {
@@ -51,7 +51,7 @@ const iconLabel = computed(() => {
 })
 
 const cycleTheme = () => {
-  const nextTheme = props.themePreference === 'theme-light' ? 'theme-dark' : 'theme-light'
+  const nextTheme = props.resolvedTheme === 'theme-light' ? 'theme-dark' : 'theme-light'
   props.changeTheme(nextTheme)
 }
 </script>
