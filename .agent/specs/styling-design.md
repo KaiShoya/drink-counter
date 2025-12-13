@@ -6,16 +6,14 @@
 
 ## 優先順位・解決順
 - localStorage キー: `theme-preference`。
-- 許容値: `theme-system` / `theme-light` / `theme-dark`。
+- 許容値: `theme-light` / `theme-dark`。
 - 解決順序: 保存済みの設定があればそれを採用、なければ OS 設定にフォールバック。
-- `theme-system` 選択時は、OS 設定変化（`matchMedia('(prefers-color-scheme: dark)')`）に即時追従。
-- 解決後のテーマクラス（`theme-light` / `theme-dark`）を `useHead` で `<html>` にバインド。
+- ユーザー選択後はその設定を永続化（再訪時も継続）。
 
 ## UI コントロール
-- ヘッダーのトグルは `system → light → dark` の順に循環。
-- ツールチップ/ARIA 用ラベルは i18n `theme.system` / `theme.light` / `theme.dark` を使用。
-- アイコン状態: monitor(システム), sun(ライト), moon(ダーク)。色も状態に合わせる。
-- 循環操作で再び `theme-system` を選べる。
+- ヘッダーのトグルは light/dark の切り替えのみ。
+- ツールチップ/ARIA 用ラベルは i18n `theme.light` / `theme.dark` を使用。
+- アイコン状態: sun(ライト), moon(ダーク)。色も状態に合わせる。
 
 ## アクセシビリティ
 - ローカライズ済みラベルを用いた `<button>` で `aria-label` / `title` を付与。

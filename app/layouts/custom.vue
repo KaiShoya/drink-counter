@@ -11,8 +11,7 @@ import {
   LOCALE_ROUTES_SETTINGS,
   LOCALE_AUTH_GOOGLE,
   LOCALE_THEME_DARK,
-  LOCALE_THEME_LIGHT,
-  LOCALE_THEME_SYSTEM
+  LOCALE_THEME_LIGHT
 } from '~/utils/locales'
 
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
@@ -23,18 +22,16 @@ const switchLocalePath = useSwitchLocalePath()
 
 const THEME_STORAGE_KEY = 'theme-preference'
 type ThemeClass = 'theme-light' | 'theme-dark'
-type ThemePreference = ThemeClass | 'theme-system'
 
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
-const themePreference = ref<ThemePreference>('theme-system')
+const themePreference = ref<ThemeClass>('theme-light')
 const systemTheme = ref<ThemeClass>('theme-light')
 const resolvedTheme = computed<ThemeClass>(() =>
-  themePreference.value === 'theme-system' ? systemTheme.value : themePreference.value
+  themePreference.value === 'theme-light' ? 'theme-light' : 'theme-dark'
 )
 const isLight = computed(() => resolvedTheme.value === 'theme-light')
 const themeLabels = computed(() => ({
-  system: t(LOCALE_THEME_SYSTEM),
   light: t(LOCALE_THEME_LIGHT),
   dark: t(LOCALE_THEME_DARK),
 }))
@@ -51,7 +48,7 @@ const handleMediaChange = (event: MediaQueryListEvent) => {
   systemTheme.value = event.matches ? 'theme-dark' : 'theme-light'
 }
 
-const applyThemePreference = (preference: ThemePreference) => {
+const applyThemePreference = (preference: ThemeClass) => {
   themePreference.value = preference
 }
 
@@ -61,10 +58,12 @@ onMounted(() => {
   const storedPreference = window.localStorage.getItem(THEME_STORAGE_KEY)
   if (
     storedPreference === 'theme-light' ||
-    storedPreference === 'theme-dark' ||
-    storedPreference === 'theme-system'
+    storedPreference === 'theme-dark'
   ) {
     themePreference.value = storedPreference
+  } else {
+    // 初回は OS 設定を採用
+    themePreference.value = systemTheme.value
   }
 
   mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -265,6 +264,7 @@ useHead(() => ({
               {{ t(LOCALE_AUTH_GOOGLE) }}
             </a>
 
+            <SignInAdmin :is-login />
             <DomainHeaderAtomsLogOutButton :is-login />
           </div>
         </div>

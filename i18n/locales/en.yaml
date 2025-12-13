@@ -57,7 +57,6 @@ show_qr: Show QR code
 detail: Details
 
 theme:
-    system: Follow system
     light: Light
     dark: Dark
 
