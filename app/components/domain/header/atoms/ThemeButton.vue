@@ -1,3 +1,30 @@
+<spec lang="md">
+# ThemeButton
+
+テーマ切り替えボタン。ライトモードとダークモードを切り替える。
+
+## Props
+- themePreference: ThemeClass - 現在のテーマ設定（'theme-light' | 'theme-dark'）
+- resolvedTheme: ThemeClass - 解決済みのテーマクラス（'theme-light' | 'theme-dark'）
+- changeTheme: (theme: ThemeClass) => void - テーマ変更関数
+- labels: { light: string, dark: string } - ラベルオブジェクト
+
+## Events
+- なし（emitなし）
+
+## Features
+- クリックでライト/ダークを切り替え
+- アイコンは現在のテーマに応じて変化（sun/moon）
+- 色もテーマに応じて変化
+- アクセシビリティ対応（aria-label/title）
+
+## Accessibility
+- button要素を使用し、aria-label/titleにローカライズ済みラベルを設定
+
+## i18n
+- theme.light / theme.dark を使用
+</spec>
+
 <script lang="ts" setup>
 type ThemeClass = 'theme-light' | 'theme-dark'
 
