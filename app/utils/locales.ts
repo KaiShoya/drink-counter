@@ -64,6 +64,10 @@ export const LOCALE_VERSION = "version" as const;
 export const LOCALE_SHOW_QR = "show_qr" as const;
 export const LOCALE_DETAIL = "detail" as const;
 
+const LOCALE_THEME = "theme" as const;
+export const LOCALE_THEME_LIGHT = `${LOCALE_THEME}.light` as const;
+export const LOCALE_THEME_DARK = `${LOCALE_THEME}.dark` as const;
+
 const LOCALE_SETTINGS = "settings" as const;
 export const LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING =
   `${LOCALE_SETTINGS}.threshold_for_detecting_overdrinking` as const;

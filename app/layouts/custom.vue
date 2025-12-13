@@ -9,7 +9,9 @@ import {
   LOCALE_ROUTES_DRINKS,
   LOCALE_ROUTES_LABELS,
   LOCALE_ROUTES_SETTINGS,
-  LOCALE_AUTH_GOOGLE
+  LOCALE_AUTH_GOOGLE,
+  LOCALE_THEME_DARK,
+  LOCALE_THEME_LIGHT
 } from '~/utils/locales'
 
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
@@ -18,16 +20,69 @@ const { locale, locales, t } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
+const THEME_STORAGE_KEY = 'theme-preference'
+type ThemeClass = 'theme-light' | 'theme-dark'
+
 const { signInWithGoogle } = useSupabaseStore()
 const active = ref<boolean>(false)
-const theme = ref<'theme-light' | 'theme-dark'>('theme-light')
-const isLight = computed(() => theme.value === 'theme-light')
+const themePreference = ref<ThemeClass | null>(null)
+const systemTheme = ref<ThemeClass>('theme-light')
+const resolvedTheme = computed<ThemeClass>(() =>
+  themePreference.value ?? systemTheme.value
+)
+const isLight = computed(() => resolvedTheme.value === 'theme-light')
+const themeLabels = computed(() => ({
+  light: t(LOCALE_THEME_LIGHT),
+  dark: t(LOCALE_THEME_DARK),
+}))
+let mediaQuery: MediaQueryList | null = null
 
-useHead({
-  htmlAttrs: {
-    class: [theme],
-  },
+const syncSystemTheme = () => {
+  if (import.meta.server) return
+  systemTheme.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'theme-dark'
+    : 'theme-light'
+}
+
+const handleMediaChange = (event: MediaQueryListEvent) => {
+  systemTheme.value = event.matches ? 'theme-dark' : 'theme-light'
+}
+
+const applyThemePreference = (preference: ThemeClass) => {
+  themePreference.value = preference
+}
+
+onMounted(() => {
+  syncSystemTheme()
+
+  const storedPreference = window.localStorage.getItem(THEME_STORAGE_KEY)
+  if (
+    storedPreference === 'theme-light' ||
+    storedPreference === 'theme-dark'
+  ) {
+    themePreference.value = storedPreference
+  }
+  // 初回は OS 設定を使用（themePreference は null のまま）
+
+  mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  mediaQuery.addEventListener('change', handleMediaChange)
 })
+
+onBeforeUnmount(() => {
+  mediaQuery?.removeEventListener('change', handleMediaChange)
+})
+
+watch(themePreference, (value) => {
+  if (import.meta.client && value !== null) {
+    window.localStorage.setItem(THEME_STORAGE_KEY, value)
+  }
+})
+
+useHead(() => ({
+  htmlAttrs: {
+    class: [resolvedTheme.value],
+  },
+}))
 </script>
 
 <template>
@@ -71,8 +126,10 @@ useHead({
 
           <div class="navbar-burger navbar-burger-right navbar-burger-left">
             <DomainHeaderAtomsThemeButton
-              :is-light
-              :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
+              :theme-preference="themePreference"
+              :resolved-theme="resolvedTheme"
+              :change-theme="applyThemePreference"
+              :labels="themeLabels"
             />
           </div>
 
@@ -170,8 +227,10 @@ useHead({
             <template v-if="!active">
               <DomainUserAtomsUserIcon :user-avatar-url />
               <DomainHeaderAtomsThemeButton
-                :is-light
-                :change-theme="(themeString: 'theme-light' | 'theme-dark') => { theme = themeString }"
+                :theme-preference="themePreference"
+                :resolved-theme="resolvedTheme"
+                :change-theme="applyThemePreference"
+                :labels="themeLabels"
               />
             </template>
 

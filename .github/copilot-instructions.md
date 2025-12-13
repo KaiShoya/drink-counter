@@ -63,6 +63,12 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - ルートやAPI通信の定義は utils ディレクトリで一元管理する。
 - i18n のキーは utils/locales.ts で定数化し、直接文字列を使わない。
 
+## Branch & Commit Workflow
+
+- ブランチは Issue 番号付きで作成する: `feature/#<issue>_slug`, `bugfix/#<issue>_slug`, `docs/#<issue>_slug` など。
+- 変更は粒度別にコミットを分ける: (1) QA/ドキュメント更新, (2) 実装, (3) 仕様/翻訳などの追記。すべて Conventional Commits を厳守。
+- 仕様変更を伴う実装では、`.agent/specs/` 更新を同じ PR に必ず含め、コミットメッセージにも触れる。
+
 ## SFCの `<spec>` カスタムブロック運用
 
 - 画面/コンポーネントの仕様は、Vue SFC の先頭に `<spec lang="md">` を置いて Markdown で記述する。
