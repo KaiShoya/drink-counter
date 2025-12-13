@@ -61,6 +61,7 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - コミットは Conventional Commits（feat, fix, chore, docs, refactor など）に従う。
 - 型安全性を重視し、TypeScript の型定義を徹底する。
 - ルートやAPI通信の定義は utils ディレクトリで一元管理する。
+- リポジトリの実装は `app/repositories/` に配置する。`app/utils/api/` は使用しない。
 - i18n のキーは utils/locales.ts で定数化し、直接文字列を使わない。
 
 ## Branch & Commit Workflow
