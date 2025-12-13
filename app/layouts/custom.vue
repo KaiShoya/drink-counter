@@ -264,7 +264,6 @@ useHead(() => ({
               {{ t(LOCALE_AUTH_GOOGLE) }}
             </a>
 
-            <SignInAdmin :is-login />
             <DomainHeaderAtomsLogOutButton :is-login />
           </div>
         </div>
