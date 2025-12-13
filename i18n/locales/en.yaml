@@ -49,6 +49,16 @@ index:
     warning_title: Be careful not to drink too much.
     warning_content: You've had {drinkCountForDay} cups today, but do you still want to drink it?
 
+activity_log:
+    title: History
+    last_update: Last update
+    minutes_ago: '{time} min ago'
+    hours_ago: '{time} hour(s) ago'
+    days_ago: '{time} day(s) ago'
+    plus: 'Added {drinkName}'
+    minus: 'Removed {drinkName}'
+    no_activity: No activity yet
+
 source: Source
 terms_of_service: Terms of service
 license: License
