@@ -1,4 +1,4 @@
-import type { DrinkLabelWithDefaultColor } from "~/utils/api/drinkLabelsRepository"
+import type { DrinkLabelWithDefaultColor } from "~/repositories/drinkLabelsRepository"
 
 const drinkLabels = ref<DrinkLabelWithDefaultColor[]>([])
 

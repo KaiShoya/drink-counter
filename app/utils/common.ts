@@ -1,3 +1,5 @@
+import type { DrinkCounterRow as DrinkCounter } from '~/repositories/drinkCountersRepository'
+
 /**
  * DateオブジェクトをYYYY-MM-DD形式に変換する
  * @param date Date
@@ -89,15 +91,16 @@ const formatDrinkCounters = (
   const data: { [key: string]: Array<number> } = {};
 
   for (const drinkCounter of drinkCounters) {
-    if (!Object.getOwnPropertyDescriptor(data, drinkCounter.date)) {
+    let row = data[drinkCounter.date]
+
+    if (!row) {
       // 配列初期化
-      data[drinkCounter.date] = new Array(getDrinksIdArray.length + 1);
-      data[drinkCounter.date].fill(0);
+      row = new Array(getDrinksIdArray.length + 1).fill(0);
+      data[drinkCounter.date] = row;
     }
-    data[drinkCounter.date][
-      getDrinksIdArray.indexOf(drinkCounter.drink_id) + 1
-    ] = drinkCounter.count;
-    data[drinkCounter.date][0] += drinkCounter.count;
+    
+    row[getDrinksIdArray.indexOf(drinkCounter.drink_id) + 1] = drinkCounter.count;
+    row[0] += drinkCounter.count;
   }
   return data;
 };

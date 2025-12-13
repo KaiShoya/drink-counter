@@ -473,7 +473,7 @@ const mockDrinksRepository: DrinksRepository = {
 ---
 
 **関連ファイル**:
-- リポジトリ実装: `app/utils/api/*Repository.ts`
+- リポジトリ実装: `app/repositories/*Repository.ts`
 - DI プラグイン: `app/plugins/repositories.ts`
 - 型定義: `app/types/database.types.ts`
 - エラークラス: `app/utils/customError.ts`

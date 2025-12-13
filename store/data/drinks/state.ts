@@ -1,4 +1,4 @@
-import type { DrinkRow } from "~/utils/api/drinksRepository"
+import type { DrinkRow } from "~/repositories/drinksRepository"
 
 const drinks = ref<DrinkRow[]>([])
 

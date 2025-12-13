@@ -1,4 +1,6 @@
-export const useAggregationByDowGetters = () => {
+import type { AggregationByDow } from '~/repositories/drinkCountersRepository'
+
+export function useAggregationByDowGetters () {
   const { t } = useI18n()
   const { aggregationByDow } = useAggregationByDowState()
 
