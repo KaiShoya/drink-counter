@@ -1,4 +1,4 @@
-import type { DrinkRow } from '~/utils/api/drinksRepository'
+import type { DrinkRow } from '~/app/repositories/drinksRepository'
 
 export const DrinkDomain = {
   /**

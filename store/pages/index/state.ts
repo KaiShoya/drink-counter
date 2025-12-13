@@ -1,4 +1,4 @@
-import type { DrinkCounterRow } from '~/utils/api/drinkCountersRepository'
+import type { DrinkCounterRow } from '~/app/repositories/drinkCountersRepository'
 
 const date = ref<string>('')
 const numberOfDrinks = ref<NumberOfDrink[]>([])

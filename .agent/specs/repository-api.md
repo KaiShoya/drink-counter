@@ -2,7 +2,7 @@
 
 **最終更新**: 2025-12-13  
 **ステータス**: Living Document  
-**関連**: `app/utils/api/`, `app/plugins/repositories.ts`
+**関連**: `app/repositories/`, `app/plugins/repositories.ts`
 
 ## 概要
 
@@ -71,7 +71,7 @@ class SupabaseResponseError extends CustomError {
 
 ## 1. DrinksRepository
 
-**ファイル**: `app/utils/api/drinksRepository.ts`  
+**ファイル**: `app/repositories/drinksRepository.ts`  
 **テーブル**: `public.drinks`
 
 ### Interface
@@ -182,7 +182,7 @@ export type DrinkRow = Database['public']['Tables']['drinks']['Row'] & {
 
 ## 2. DrinkLabelsRepository
 
-**ファイル**: `app/utils/api/drinkLabelsRepository.ts`  
+**ファイル**: `app/repositories/drinkLabelsRepository.ts`  
 **テーブル**: `public.drink_labels`
 
 ### Interface
@@ -246,7 +246,7 @@ _（DrinksRepository と類似の CRUD メソッド）_
 
 ## 3. DrinkCountersRepository
 
-**ファイル**: `app/utils/api/drinkCountersRepository.ts`  
+**ファイル**: `app/repositories/drinkCountersRepository.ts`  
 **テーブル**: `public.drink_counters`
 
 ### Interface
@@ -324,6 +324,21 @@ export type AggregationByDow = {
 
 ---
 
+#### `create(drinkId: number, date: string, count: number): Promise<DrinkCounterRow>`
+**用途**: 新しいカウンターを作成  
+**クエリ**: `INSERT INTO drink_counters (drink_id, date, count) VALUES (...)`  
+**戻り値**: 作成されたカウンターオブジェクト  
+**エラー**: `SupabaseResponseError(LOCALE_ERROR_CREATE_RECORD)` をスロー
+
+---
+
+#### `deleteById(id: number): Promise<void>`
+**用途**: カウンターを削除  
+**クエリ**: `DELETE FROM drink_counters WHERE id = $1`  
+**エラー**: `SupabaseResponseError(LOCALE_ERROR_DELETE_RECORD)` をスロー
+
+---
+
 #### `sumCount(): Promise<Array<{ drink_id, count }>>`
 **用途**: 飲み物ごとの総カウント（全期間）  
 **RPC**: `sum_count()`
@@ -352,7 +367,7 @@ export type AggregationByDow = {
 
 ## 4. UserSettingsRepository
 
-**ファイル**: `app/utils/api/userSettingsRepository.ts`  
+**ファイル**: `app/repositories/userSettingsRepository.ts`  
 **テーブル**: `public.user_settings`
 
 ### Interface

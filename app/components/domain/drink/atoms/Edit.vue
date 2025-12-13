@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT } from '~/utils/locales'
 import { generateRandomColor } from '~/utils/common'
-import type { DrinkLabelWithDefaultColor } from '~/utils/api/drinkLabelsRepository'
+import type { DrinkLabelWithDefaultColor } from '~/app/repositories/drinkLabelsRepository'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
