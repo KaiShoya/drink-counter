@@ -100,6 +100,7 @@ const formatDrinkCounters = (
     }
     
     row[getDrinksIdArray.indexOf(drinkCounter.drink_id) + 1] = drinkCounter.count;
+    // @ts-ignore: row is guaranteed to be initialized above
     row[0] += drinkCounter.count;
   }
   return data;
