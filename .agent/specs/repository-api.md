@@ -1,6 +1,6 @@
 # リポジトリ API 仕様
 
-**最終更新**: 2025-12-10  
+**最終更新**: 2025-12-13  
 **ステータス**: Living Document  
 **関連**: `app/utils/api/`, `app/plugins/repositories.ts`
 
@@ -256,6 +256,7 @@ export interface DrinkCountersRepository {
   fetchAll(): Promise<DrinkCounterRow[]>
   fetchByDate(date: string): Promise<DrinkCounterRow[]>
   fetchByMonth(year: number, month: number): Promise<DrinkCounterRow[]>
+  fetchByPeriod(start: string, end: string): Promise<DrinkCounterRow[]>
   increment(rowId: number): Promise<void>
   decrement(rowId: number): Promise<void>
   create(drinkId: number, date: string, count: number): Promise<DrinkCounterRow>
@@ -296,6 +297,16 @@ export type AggregationByDow = {
 **用途**: 月のカウンターを取得  
 **クエリ**: `SELECT * FROM drink_counters WHERE date >= $1 AND date < $2`  
 **ユースケース**: 月次集計ビュー
+
+---
+
+#### `fetchByPeriod(start: string, end: string): Promise<DrinkCounterRow[]>`
+**用途**: 指定期間のカウンターを取得  
+**クエリ**: `SELECT * FROM drink_counters WHERE count > 0 AND date >= $1 AND date < $2`  
+**パラメータ**:
+- `start`: 開始日 (YYYY-MM-DD)
+- `end`: 終了日 (YYYY-MM-DD, 含まない)
+**ユースケース**: カスタム期間集計、月次/週次レポート
 
 ---
 
