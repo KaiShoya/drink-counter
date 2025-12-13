@@ -56,6 +56,11 @@ version: バージョン
 show_qr: QRコードを表示する
 detail: 詳細
 
+theme:
+    system: システム設定に合わせる
+    light: ライトモード
+    dark: ダークモード
+
 monthly:
     kpi:
         totalDrinks: 合計杯数
