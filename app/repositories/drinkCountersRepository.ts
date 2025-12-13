@@ -18,6 +18,7 @@ export interface DrinkCountersRepository {
   fetchAll (): Promise<DrinkCounterRow[]>
   fetchByYear (year: number): Promise<DrinkCounterRow[]>
   fetchByMonth (year: number, month: number): Promise<DrinkCounterRow[]>
+  fetchByPeriod (start: string, end: string): Promise<DrinkCounterRow[]>
   fetchByDate (date: string): Promise<DrinkCounterRow[]>
   increment (id: number): Promise<number>
   decrement (id: number): Promise<number>
@@ -83,6 +84,28 @@ export const createDrinkCountersRepository = (
     const start = yearMonthToDateString(year, month)
     const nextYearMonth = processIntoYearMonthToNextMonth(year, month)
     const end = yearMonthToDateString(nextYearMonth.year, nextYearMonth.month)
+    const { data, error } = await client
+      .from(TABLE_NAME)
+      .select('*')
+      .order('date,drink_id')
+      .gt('count', 0)
+      .gte('date', start)
+      .lt('date', end)
+
+    if (error) {
+      throw new SupabaseResponseError(error, LOCALE_ERROR_GET_RECORD)
+    }
+
+    return data ?? []
+  }
+
+  /**
+   * 指定した期間の自分のデータを取得する
+   * @param start 開始日
+   * @param end 終了日
+   * @return {Promise<DrinkCounterRow[]>}
+   */
+  const fetchByPeriod = async (start: string, end: string): Promise<DrinkCounterRow[]> => {
     const { data, error } = await client
       .from(TABLE_NAME)
       .select('*')
@@ -192,6 +215,7 @@ export const createDrinkCountersRepository = (
     fetchAll,
     fetchByYear,
     fetchByMonth,
+    fetchByPeriod,
     fetchByDate,
     increment,
     decrement,

@@ -257,7 +257,7 @@ Supabase API
 
 **Each Layer's Responsibility**:
 
-1. **Repository** (`app/utils/api/`)
+1. **Repository** (`app/repositories/`)
    - Catch Supabase errors
    - Convert to `CustomError` and throw
    - Messages for developers (English)

@@ -2,14 +2,14 @@
 
 **最終更新**: 2025-12-13  
 **対象**: Nuxt 4 / Supabase / Repository Pattern  
-**関連**: `.agent/specs/repository-api.md`, `.agent/specs/state-management.md`, `app/utils/api/`, `app/utils/customError.ts`, `app/plugins/repositories.ts`
+**関連**: `.agent/specs/repository-api.md`, `.agent/specs/state-management.md`, `app/repositories/`, `app/utils/customError.ts`, `app/plugins/repositories.ts`
 
 ## 目的
 - クライアントからのデータアクセスを統一し、再現性のあるエラー処理・ロギング・リトライ・キャッシュ戦略を定義する。
 - Repository Pattern を前提とした層別責務に沿って、API通信の規約を明文化する。
 
 ## 層の責務（再確認）
-- Repository（`app/utils/api/` 配下・`repositories.ts`経由）
+- Repository（`app/repositories/` 配下・`repositories.ts`経由）
   - Supabase SDK 呼び出しを一元化。
   - Supabase エラーを `CustomError` に変換して throw。
   - 成功時は型安全なデータを返却。

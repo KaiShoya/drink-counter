@@ -1,3 +1,5 @@
+import type { DrinkRow as Drink } from '~/repositories/drinksRepository'
+
 export function useDrinksGetters () {
   const { drinks } = useDrinksState()
   /**

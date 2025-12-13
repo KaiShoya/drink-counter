@@ -1,4 +1,4 @@
-import type { DrinkLabelWithDefaultColor } from '../api/drinkLabelsRepository'
+import type { DrinkLabelWithDefaultColor } from '~/repositories/drinkLabelsRepository'
 
 export const DrinkLabelDomain = {
   /**

@@ -1,3 +1,5 @@
+import type { DrinkLabelWithDefaultColor as DrinkLabel } from '~/repositories/drinkLabelsRepository'
+
 export interface NumberOfDrink {
   id: number
   name: string

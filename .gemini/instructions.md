@@ -1,6 +1,6 @@
-# GitHub Copilot Instructions
+# Gemini Instructions
 
-These instructions define how GitHub Copilot should assist with this TypeScript project. The goal is to ensure consistent, high-quality code generation aligned with TypeScript conventions, modern tooling, and our architecture standards.
+These instructions define how Gemini / Antigravity should assist with this TypeScript project. The goal is to ensure consistent, high-quality code generation aligned with TypeScript conventions, modern tooling, and our architecture standards.
 
 ## 🧠 Context
 
@@ -61,7 +61,6 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - コミットは Conventional Commits（feat, fix, chore, docs, refactor など）に従う。
 - 型安全性を重視し、TypeScript の型定義を徹底する。
 - ルートやAPI通信の定義は utils ディレクトリで一元管理する。
-- リポジトリの実装は `app/repositories/` に配置する。`app/utils/api/` は使用しない。
 - i18n のキーは utils/locales.ts で定数化し、直接文字列を使わない。
 
 ## Branch & Commit Workflow
@@ -101,7 +100,7 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - コミットはConventional Commits（feat、fix、chore、docs、refactor等）に従って構造化する。
 - 依存パッケージのバージョンアップ時は breaking change に注意し、必要に応じてマイグレーションガイドを参照する。
 
-# Copilot Review Instructions for This Repository
+# AI Agent Review Instructions for This Repository
 
 This is a Nuxt 4 project.  
 Nuxt provides extensive auto-import functionality.
@@ -129,9 +128,9 @@ Nuxt provides extensive auto-import functionality.
 
 # 📋 Documentation & Task Management
 
-See [Agent Documentation Workflow](./agent-documentation-workflow.md) for detailed guidelines on:
+See [Agent Documentation Workflow](../.github/agent-documentation-workflow.md) for detailed guidelines on:
 - `.agent/` directory structure and usage
 - QA list management and task tracking
 - Specification documentation workflow
 - GitHub Issues integration
-- PR review checklist and Copilot automation
+- PR review checklist and automation
