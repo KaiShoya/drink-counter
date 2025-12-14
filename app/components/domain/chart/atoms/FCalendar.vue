@@ -14,14 +14,17 @@ const props = defineProps<{
 
 const calcEvents = () => {
   const maxCount = Math.max(...props.data.map(v => v.count))
-  const events = props.data.map((v) => {
-    return {
-      start: v.date,
-      display: 'background',
-      color: `#044A05${Math.floor(255 * (v.count / maxCount)).toString(16)}`,
-      classNames: v.overGoal ? ['fc-event-over-goal'] : [],
-    }
-  })
+  const events = props.data
+    .filter(v => v.count > 0 || v.overGoal) // 0杯かつoverGoalでない日は表示しない
+    .map((v) => {
+      const alpha = v.count > 0 ? Math.floor(255 * (v.count / maxCount)).toString(16).padStart(2, '0') : '00'
+      return {
+        start: v.date,
+        display: 'background',
+        color: `#044A05${alpha}`,
+        classNames: v.overGoal ? ['fc-event-over-goal'] : [],
+      }
+    })
 
   return events.length > 0 ? events : undefined
 }
