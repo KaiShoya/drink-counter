@@ -69,7 +69,8 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - ブランチは Issue 番号付きで作成する: `feature/#<issue>_slug`, `bugfix/#<issue>_slug`, `docs/#<issue>_slug` など。
 - 変更は粒度別にコミットを分ける: (1) QA/ドキュメント更新, (2) 実装, (3) 仕様/翻訳などの追記。すべて Conventional Commits を厳守。
 - 仕様変更を伴う実装では、`.agent/specs/` 更新を同じ PR に必ず含め、コミットメッセージにも触れる。
-- **Push頻度の抑制**: CIリソース節約のため、Pushは「ある程度まとまった作業が完了し、動作確認（型チェック・テスト）が取れたタイミング」で行う。修正のたびにPushしない。
+- **Push頻度の抑制**: CIリソース節約のため、Pushは「ある程度まとまった作業が完了し、動作確認（型チェック・テスト）が取れたタイミング」で行う。**勝手にPushしない**。
+- **Commitの整理**: 軽微な修正やリファクタリングは、可能な限り `git commit --amend` を使用して既存のコミットに統合し、履歴を汚さないようにする。
 
 ## SFCの `<spec>` カスタムブロック運用
 
