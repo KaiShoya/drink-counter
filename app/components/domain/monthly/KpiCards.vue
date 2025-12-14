@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_MONTHLY_KPI_ACTIVE_DAYS, LOCALE_MONTHLY_KPI_MOM, LOCALE_MONTHLY_KPI_TOTAL_DRINKS, LOCALE_MONTHLY_KPI_TOTAL_VOLUME } from '~/utils/locales'
+import { LOCALE_MONTHLY_KPI_ACTIVE_DAYS, LOCALE_MONTHLY_KPI_AVG_PER_ACTIVE_DAY, LOCALE_MONTHLY_KPI_MOM, LOCALE_MONTHLY_KPI_TOTAL_DRINKS, LOCALE_MONTHLY_KPI_TOTAL_VOLUME } from '~/utils/locales'
 
 const { t } = useI18n()
 const monthly = useMonthlySummaryStore()
@@ -22,6 +22,12 @@ const { data, loading } = storeToRefs(monthly)
     </div>
     <div class="column is-one-quarter kpi-col">
       <div class="box kpi-square has-text-centered">
+        <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_AVG_PER_ACTIVE_DAY) }}</p>
+        <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.avgPerActiveDay }}</p>
+      </div>
+    </div>
+    <div class="column is-one-quarter kpi-col">
+      <div class="box kpi-square has-text-centered">
         <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_ACTIVE_DAYS) }}</p>
         <p class="kpi-value">{{ (loading || !data) ? '-' : data.kpi.activeDays }}</p>
       </div>
@@ -31,7 +37,12 @@ const { data, loading } = storeToRefs(monthly)
         <p class="kpi-label">{{ t(LOCALE_MONTHLY_KPI_MOM) }}</p>
         <p class="kpi-value">
           <template v-if="loading || !data">-</template>
-          <template v-else-if="typeof data.kpi.momChangePct === 'number'">{{ data.kpi.momChangePct }}<span class="kpi-unit"> %</span></template>
+          <template v-else-if="typeof data.kpi.momChangePct === 'number'">
+            <span :class="{'has-text-danger': data.kpi.momChangePct > 0, 'has-text-info': data.kpi.momChangePct < 0}">
+              {{ data.kpi.momChangePct > 0 ? '+' : '' }}{{ data.kpi.momChangePct }}
+            </span>
+            <span class="kpi-unit"> %</span>
+          </template>
           <template v-else>—</template>
         </p>
       </div>
