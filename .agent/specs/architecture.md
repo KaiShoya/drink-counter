@@ -44,10 +44,11 @@ app/
 ├── plugins/                 # Nuxt plugins
 │   ├── error.client.ts     # Global error handler
 │   └── repositories.ts     # DI for repositories
+├── repositories/        # Data access repositories
 ├── types/                   # TypeScript types
 │   └── database.types.ts   # Supabase-generated types
 └── utils/                   # Utilities and constants
-    ├── api/                # Repository implementations
+    ├── api/                # (Deprecated)
     ├── domain/             # Domain logic
     ├── logging/            # Logger utilities
     ├── common.ts           # Common utilities
@@ -112,7 +113,7 @@ supabase/
 - サインイン/サインアップ/サインアウト
 - OAuth 連携（Google）
 
-### 3. Repository 層（`app/utils/api/`）
+### 3. Repository 層（`app/repositories/`）
 - **責務**: データアクセスの抽象化
 - **パターン**: リポジトリインターフェースを返すファクトリ関数
 - **エラーハンドリング**: カスタムエラー（`SupabaseResponseError`）をスロー
