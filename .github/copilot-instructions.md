@@ -61,7 +61,41 @@ Avoid inline styling; use Tailwind / CSS Modules / styled-components
 - コミットは Conventional Commits（feat, fix, chore, docs, refactor など）に従う。
 - 型安全性を重視し、TypeScript の型定義を徹底する。
 - ルートやAPI通信の定義は utils ディレクトリで一元管理する。
+- リポジトリの実装は `app/repositories/` に配置する。`app/utils/api/` は使用しない。
 - i18n のキーは utils/locales.ts で定数化し、直接文字列を使わない。
+
+## Branch & Commit Workflow
+
+- ブランチは Issue 番号付きで作成する: `feature/#<issue>_slug`, `bugfix/#<issue>_slug`, `docs/#<issue>_slug` など。
+- 変更は粒度別にコミットを分ける: (1) QA/ドキュメント更新, (2) 実装, (3) 仕様/翻訳などの追記。すべて Conventional Commits を厳守。
+- 仕様変更を伴う実装では、`.agent/specs/` 更新を同じ PR に必ず含め、コミットメッセージにも触れる。
+- **Push頻度の抑制**: CIリソース節約のため、Pushは「ある程度まとまった作業が完了し、動作確認（型チェック・テスト）が取れたタイミング」で行う。**勝手にPushしない**。
+- **Commitの整理**: 軽微な修正やリファクタリングは、可能な限り `git commit --amend` を使用して既存のコミットに統合し、履歴を汚さないようにする。
+
+## SFCの `<spec>` カスタムブロック運用
+
+- 画面/コンポーネントの仕様は、Vue SFC の先頭に `<spec lang="md">` を置いて Markdown で記述する。
+- `<spec>` はコメント（`<!-- -->`）ではなく **カスタムブロック** を使う。
+- 書式はプロジェクト内の [app/components/base/atoms/DrumRollPicker.vue](app/components/base/atoms/DrumRollPicker.vue) の `<spec>` を基準にする。
+- **画面（Page）の推奨テンプレ**（必要に応じて省略/追加してよい）:
+  - `# Title`
+  - 1〜2行の概要（Purpose相当）
+  - `## Data`（参照する store / composables / params）
+  - `## Interactions`（ユーザー操作→呼ばれる action / navigation）
+  - `## Features`（画面として提供する機能の箇条書き）
+  - `## Error Handling`（どの層で toast/log を出すか）
+  - `## i18n`（キー管理・直接文字列禁止など）
+  - `## Notes`（関連Issueや注意点）
+- **コンポーネント（Component）の推奨テンプレ**:
+  - `# Title`
+  - 1〜2行の概要
+  - `## Props`（型と意味、既定値がある場合は明記）
+  - `## Events`（emit 名と payload）
+  - `## Features`（ふるまい・UI要点）
+  - `## Accessibility`（aria等が重要なら）
+  - `## Security`（認証情報や機密/危険な挙動があるなら）
+  - `## i18n`
+- 仕様更新を伴う実装変更では、コードと `<spec>` を同じコミット/PRで更新する。
 
 # その他
 
@@ -92,3 +126,14 @@ Nuxt provides extensive auto-import functionality.
 ## Additional Rules
 - Prefer idiomatic Nuxt 4 code patterns
 - Do not require unnecessary boilerplate imports
+
+---
+
+# 📋 Documentation & Task Management
+
+See [Agent Documentation Workflow](./agent-documentation-workflow.md) for detailed guidelines on:
+- `.agent/` directory structure and usage
+- QA list management and task tracking
+- Specification documentation workflow
+- GitHub Issues integration
+- PR review checklist and Copilot automation

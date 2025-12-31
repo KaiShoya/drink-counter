@@ -1,6 +1,6 @@
-import type { DrinkCounterRow, AggregationByDow } from "~/utils/api/drinkCountersRepository"
-import type { DrinkRow } from "~/utils/api/drinksRepository"
-import type { DrinkLabelSummaryCountRow } from "~/utils/api/drinkLabelsRepository"
+import type { DrinkCounterRow, AggregationByDow } from "~/repositories/drinkCountersRepository"
+import type { DrinkRow } from "~/repositories/drinksRepository"
+import type { DrinkLabelSummaryCountRow } from "~/repositories/drinkLabelsRepository"
 
 const year = ref<number>((new Date()).getFullYear())
 const drinks = ref<DrinkRow[]>([])

@@ -1,4 +1,4 @@
-name: Create release note & check Codacy
+name: Production - create release note
 
 on:
   push:
@@ -10,6 +10,6 @@ jobs:
   create-release-note:
     uses: ./.github/workflows/create-release-note.yaml
 
-  codacy:
-    uses: ./.github/workflows/codacy-analysis.yaml
-    secrets: inherit
+  # codacy:
+  #   uses: ./.github/workflows/codacy-analysis.yaml
+  #   secrets: inherit

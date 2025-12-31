@@ -66,6 +66,10 @@ version: Version
 show_qr: Show QR code
 detail: Details
 
+theme:
+    light: Light
+    dark: Dark
+
 monthly:
     kpi:
         totalDrinks: Total drinks

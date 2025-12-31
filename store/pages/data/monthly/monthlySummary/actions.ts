@@ -1,4 +1,4 @@
-// FIXME: supabase関連処理をrepositoryに移動する
+// 既存ページは旧monthlyStoreを使用しているが、新しい月次集計も併用して試せるように追加
 export const useMonthlySummaryActions = () => {
   const { loading, error, lastInput, data } = useMonthlySummaryState()
 
@@ -14,8 +14,8 @@ export const useMonthlySummaryActions = () => {
       const { fetchDrinkLabels } = drinkLabelsStore
       await Promise.all([fetchDrinks(), fetchDrinkLabels()])
 
-      const { supabase } = useSupabaseStore()
       const { userSetting } = storeToRefs(useUserStore())
+      const { $drinkCountersRepository } = useNuxtApp()
 
       // 2) 期間計算（YYYY-MM -> [start, nextStart)）
       const [yearStr, monthStr] = input.month.split('-')
@@ -32,20 +32,7 @@ export const useMonthlySummaryActions = () => {
       const end = `${yearStr}-${monthStr}-${String(daysInMonth).padStart(2, '0')}`
 
       // 3) データ取得（当月）
-      type DbDrinkCounter = { id: number; date: string; drink_id: number; count: number }
-      const { data: counters, error } = await supabase
-        .from('drink_counters')
-        .select('id,date,drink_id,count')
-        .order('date,drink_id')
-        .gt('count', 0)
-        .gte('date', start)
-        .lt('date', next)
-
-      if (error) {
-        throw new Response500Error()
-      }
-
-      const countersArr: DbDrinkCounter[] = counters ?? []
+      const counters = await $drinkCountersRepository.fetchByPeriod(start, next)
 
       // 4) フィルタ準備（drink/label可視・labelIds）
       const drinks = drinksStore.findDrinksVisible ? (
@@ -79,7 +66,7 @@ export const useMonthlySummaryActions = () => {
         labelTotals.set(labelId, cur)
       }
 
-      for (const c of countersArr) {
+      for (const c of counters) {
         if (!isAllowedDrink(c.drink_id)) continue
         const drink = drinkById.get(c.drink_id)
         const amount = Number(drink?.amount ?? 0)
@@ -111,14 +98,14 @@ export const useMonthlySummaryActions = () => {
         }
         const threshold = userSetting.value.threshold_for_detecting_overdrinking
         const overGoal = agg.count > threshold
-        return { date, count: agg.count, volumeMl: agg.volumeMl, topLabelId: topLabelId ? Number.isNaN(Number(topLabelId)) ? undefined : Number(topLabelId) : undefined, overGoal }
+        return { date, count: agg.count, volumeMl: agg.volumeMl, topLabelId: topLabelId ? (Number.isNaN(Number(topLabelId)) ? undefined : Number(topLabelId)) : undefined, overGoal }
       })
 
       const dailySeries = calendar.map((c) => {
         const agg = dayAgg.get(c.date) || { count: 0, volumeMl: 0, labelCounts: {}, labelVolumes: {} }
         const byLabel: Record<string, { count: number; volumeMl: number }> = {}
         for (const lid of Object.keys(agg.labelCounts)) {
-          byLabel[lid] = { count: agg.labelCounts[lid], volumeMl: agg.labelVolumes[lid] }
+          byLabel[lid] = { count: agg.labelCounts[lid] ?? 0, volumeMl: agg.labelVolumes[lid] ?? 0 }
         }
         return { date: c.date, byLabel, total: { count: c.count, volumeMl: c.volumeMl } }
       })
@@ -130,9 +117,11 @@ export const useMonthlySummaryActions = () => {
       const weekdayAgg = new Array(7).fill(0).map(() => ({ sumCount: 0, sumVolume: 0, days: 0 }))
       calendar.forEach((c) => {
         const dow = new Date(c.date).getDay()
-        weekdayAgg[dow].sumCount += c.count
-        weekdayAgg[dow].sumVolume += c.volumeMl
-        weekdayAgg[dow].days += 1
+        if (weekdayAgg[dow]) {
+          weekdayAgg[dow].sumCount += c.count
+          weekdayAgg[dow].sumVolume += c.volumeMl
+          weekdayAgg[dow].days += 1
+        }
       })
       const byWeekday = weekdayAgg.map((w, i) => ({ weekday: i, countAvg: w.days ? Number((w.sumCount / w.days).toFixed(2)) : 0, volumeAvgMl: w.days ? Number((w.sumVolume / w.days).toFixed(2)) : 0 }))
 
@@ -155,18 +144,12 @@ export const useMonthlySummaryActions = () => {
         return `${y}-${m}-01`
       })()
       const prevNext = start // 当月開始が前月のnext
-      const { data: prevCounters, error: prevErr } = await supabase
-        .from('drink_counters')
-        .select('drink_id,count')
-        .gt('count', 0)
-        .gte('date', prevStart)
-        .lt('date', prevNext)
-      if (prevErr) {
-        throw new Response500Error()
-      }
+
+      const prevCounters = await $drinkCountersRepository.fetchByPeriod(prevStart, prevNext)
+
       let prevTotalDrinks = 0
       if (prevCounters) {
-        for (const c of prevCounters as Array<{ drink_id: number; count: number }>) {
+        for (const c of prevCounters) {
           if (!isAllowedDrink(c.drink_id)) continue
           prevTotalDrinks += c.count
         }

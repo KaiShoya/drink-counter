@@ -15,6 +15,5 @@ supabase/functions/README.md
 _i18n.config.ts
 .prettierignore
 # store/
-docs/
 store/user_
 app/components/SignInAdmin.vue
