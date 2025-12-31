@@ -49,6 +49,7 @@ defineProps<{
             :color="drink.color"
             :increment="() => increment(drink.id, drink.drinkCounterId)"
             :decrement="() => decrement(drink.id, drink.drinkCounterId)"
+            :select="() => updateDefaultDrink(label.id, drink.id)"
           />
         </details>
         <div class="column is-2" />

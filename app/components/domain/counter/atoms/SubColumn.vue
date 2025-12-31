@@ -5,6 +5,7 @@ defineProps<{
   color: string
   increment?: () => void
   decrement?: () => void
+  select?: () => void
 }>()
 </script>
 
@@ -18,7 +19,7 @@ defineProps<{
     />
 
     <div class="column control subtitle ml-2">
-      <span class="subtitle is-6">
+      <span class="subtitle is-6 clickable" @click="select && select()">
         {{ name }}
       </span>
     </div>
@@ -32,3 +33,10 @@ defineProps<{
     <DomainCounterAtomsPlusButton :click-function="increment ?? (() => {})" />
   </div>
 </template>
+
+<style scoped>
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+</style>
