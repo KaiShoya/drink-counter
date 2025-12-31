@@ -102,6 +102,8 @@ watch(date, async () => {
       </template>
     </div>
 
+    <DomainActivityMoleculesLog />
+
     <CommonModalMoleculesWarning
       :title="t(LOCALE_INDEX_WARNING_TITLE)"
       :content="t(LOCALE_INDEX_WARNING_CONTENT, { drinkCountForDay })"

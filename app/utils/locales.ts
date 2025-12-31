@@ -57,6 +57,24 @@ export const LOCALE_INDEX_WARNING_TITLE =
 export const LOCALE_INDEX_WARNING_CONTENT =
   `${LOCALE_INDEX}.warning_content` as const;
 
+const LOCALE_ACTIVITY_LOG = "activity_log" as const;
+export const LOCALE_ACTIVITY_LOG_TITLE =
+  `${LOCALE_ACTIVITY_LOG}.title` as const;
+export const LOCALE_ACTIVITY_LOG_LAST_UPDATE =
+  `${LOCALE_ACTIVITY_LOG}.last_update` as const;
+export const LOCALE_ACTIVITY_LOG_MINUTES_AGO =
+  `${LOCALE_ACTIVITY_LOG}.minutes_ago` as const;
+export const LOCALE_ACTIVITY_LOG_HOURS_AGO =
+  `${LOCALE_ACTIVITY_LOG}.hours_ago` as const;
+export const LOCALE_ACTIVITY_LOG_DAYS_AGO =
+  `${LOCALE_ACTIVITY_LOG}.days_ago` as const;
+export const LOCALE_ACTIVITY_LOG_PLUS =
+  `${LOCALE_ACTIVITY_LOG}.plus` as const;
+export const LOCALE_ACTIVITY_LOG_MINUS =
+  `${LOCALE_ACTIVITY_LOG}.minus` as const;
+export const LOCALE_ACTIVITY_LOG_NO_ACTIVITY =
+  `${LOCALE_ACTIVITY_LOG}.no_activity` as const;
+
 export const LOCALE_SOURCE = "source" as const;
 export const LOCALE_TERMS_OF_SERVICE = "terms_of_service" as const;
 export const LOCALE_LICENSE = "license" as const;
