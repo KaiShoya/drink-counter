@@ -47,6 +47,8 @@ defineProps<{
             :name="drink.name"
             :count="drink.count"
             :color="drink.color"
+            :increment="() => increment(drink.id, drink.drinkCounterId)"
+            :decrement="() => decrement(drink.id, drink.drinkCounterId)"
           />
         </details>
         <div class="column is-2" />

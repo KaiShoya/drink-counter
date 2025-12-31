@@ -3,11 +3,15 @@ defineProps<{
   name: string
   count: number
   color: string
+  increment?: () => void
+  decrement?: () => void
 }>()
 </script>
 
 <template>
   <div class="columns is-gapless is-multiline is-mobile is-vcentered mb-1 p-0">
+    <DomainCounterAtomsMinusButton class="is-medium" :click-function="decrement ?? (() => {})" />
+
     <div
       class="ml-5"
       :style="{ padding: '5px', height: '14px', backgroundColor: color }"
@@ -24,5 +28,7 @@ defineProps<{
         {{ count }}
       </span>
     </div>
+
+    <DomainCounterAtomsPlusButton :click-function="increment ?? (() => {})" />
   </div>
 </template>
