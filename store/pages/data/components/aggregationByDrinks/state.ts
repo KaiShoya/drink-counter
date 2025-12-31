@@ -1,4 +1,4 @@
-import type { DrinkLabelWithDefaultColor, DrinkLabelSummaryCountRow } from "~/utils/api/drinkLabelsRepository"
+import type { DrinkLabelWithDefaultColor, DrinkLabelSummaryCountRow } from "~/repositories/drinkLabelsRepository"
 
 const chartDataTitle = ref<Array<string>>(['Name', 'Count'])
 const aggregationByDrinks = ref<Array<DrinkLabelSummaryCountRow>>([])

@@ -1,4 +1,4 @@
-import type { DrinkCounterRow } from '../api/drinkCountersRepository'
+import type { DrinkCounterRow } from '~/repositories/drinkCountersRepository'
 
 export const DrinkCounterDomain = {
   /**

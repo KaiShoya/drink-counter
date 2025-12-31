@@ -1,3 +1,5 @@
+import type { DrinkLabelWithDefaultColor as DrinkLabel } from '~/repositories/drinkLabelsRepository'
+
 export function usePageDrinkLabelsActions () {
   const { deleteTarget, showDeleteModal } = usePageDrinkLabelsState()
   const { t } = useI18n()

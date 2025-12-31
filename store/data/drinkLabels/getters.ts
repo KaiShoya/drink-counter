@@ -1,3 +1,5 @@
+import type { DrinkLabelWithDefaultColor as DrinkLabel } from '~/repositories/drinkLabelsRepository'
+
 export function useDrinkLabelsGetters () {
   const { drinkLabels } = useDrinkLabelsState()
   /**

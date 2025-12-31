@@ -1,4 +1,4 @@
-import type { AggregationByDow } from "~/utils/api/drinkCountersRepository"
+import type { AggregationByDow } from "~/repositories/drinkCountersRepository"
 
 const aggregationByDow = ref<Array<AggregationByDow>>([])
 

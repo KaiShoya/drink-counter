@@ -1,4 +1,4 @@
-import type { UserSettingsRow } from "~/utils/api/userSettingsRepository"
+import type { UserSettingsRow } from "~/repositories/userSettingsRepository"
 
 const isLogin = ref<boolean>(false)
 const userName = ref<string | null>(null)

@@ -1,8 +1,8 @@
 # リポジトリ API 仕様
 
-**最終更新**: 2025-12-10  
+**最終更新**: 2025-12-13  
 **ステータス**: Living Document  
-**関連**: `app/utils/api/`, `app/plugins/repositories.ts`
+**関連**: `app/repositories/`, `app/plugins/repositories.ts`
 
 ## 概要
 
@@ -71,7 +71,7 @@ class SupabaseResponseError extends CustomError {
 
 ## 1. DrinksRepository
 
-**ファイル**: `app/utils/api/drinksRepository.ts`  
+**ファイル**: `app/repositories/drinksRepository.ts`  
 **テーブル**: `public.drinks`
 
 ### Interface
@@ -182,7 +182,7 @@ export type DrinkRow = Database['public']['Tables']['drinks']['Row'] & {
 
 ## 2. DrinkLabelsRepository
 
-**ファイル**: `app/utils/api/drinkLabelsRepository.ts`  
+**ファイル**: `app/repositories/drinkLabelsRepository.ts`  
 **テーブル**: `public.drink_labels`
 
 ### Interface
@@ -246,7 +246,7 @@ _（DrinksRepository と類似の CRUD メソッド）_
 
 ## 3. DrinkCountersRepository
 
-**ファイル**: `app/utils/api/drinkCountersRepository.ts`  
+**ファイル**: `app/repositories/drinkCountersRepository.ts`  
 **テーブル**: `public.drink_counters`
 
 ### Interface
@@ -256,6 +256,7 @@ export interface DrinkCountersRepository {
   fetchAll(): Promise<DrinkCounterRow[]>
   fetchByDate(date: string): Promise<DrinkCounterRow[]>
   fetchByMonth(year: number, month: number): Promise<DrinkCounterRow[]>
+  fetchByPeriod(start: string, end: string): Promise<DrinkCounterRow[]>
   increment(rowId: number): Promise<void>
   decrement(rowId: number): Promise<void>
   create(drinkId: number, date: string, count: number): Promise<DrinkCounterRow>
@@ -299,6 +300,16 @@ export type AggregationByDow = {
 
 ---
 
+#### `fetchByPeriod(start: string, end: string): Promise<DrinkCounterRow[]>`
+**用途**: 指定期間のカウンターを取得  
+**クエリ**: `SELECT * FROM drink_counters WHERE count > 0 AND date >= $1 AND date < $2`  
+**パラメータ**:
+- `start`: 開始日 (YYYY-MM-DD)
+- `end`: 終了日 (YYYY-MM-DD, 含まない)
+**ユースケース**: カスタム期間集計、月次/週次レポート
+
+---
+
 #### `increment(rowId: number): Promise<void>`
 **用途**: カウントを1増やす  
 **RPC**: `increment(row_id)`  
@@ -310,6 +321,21 @@ export type AggregationByDow = {
 **用途**: カウントを1減らす（最小0）  
 **RPC**: `decrement(row_id)`  
 **制約**: カウントは0未満にならない
+
+---
+
+#### `create(drinkId: number, date: string, count: number): Promise<DrinkCounterRow>`
+**用途**: 新しいカウンターを作成  
+**クエリ**: `INSERT INTO drink_counters (drink_id, date, count) VALUES (...)`  
+**戻り値**: 作成されたカウンターオブジェクト  
+**エラー**: `SupabaseResponseError(LOCALE_ERROR_CREATE_RECORD)` をスロー
+
+---
+
+#### `deleteById(id: number): Promise<void>`
+**用途**: カウンターを削除  
+**クエリ**: `DELETE FROM drink_counters WHERE id = $1`  
+**エラー**: `SupabaseResponseError(LOCALE_ERROR_DELETE_RECORD)` をスロー
 
 ---
 
@@ -341,7 +367,7 @@ export type AggregationByDow = {
 
 ## 4. UserSettingsRepository
 
-**ファイル**: `app/utils/api/userSettingsRepository.ts`  
+**ファイル**: `app/repositories/userSettingsRepository.ts`  
 **テーブル**: `public.user_settings`
 
 ### Interface
@@ -447,7 +473,7 @@ const mockDrinksRepository: DrinksRepository = {
 ---
 
 **関連ファイル**:
-- リポジトリ実装: `app/utils/api/*Repository.ts`
+- リポジトリ実装: `app/repositories/*Repository.ts`
 - DI プラグイン: `app/plugins/repositories.ts`
 - 型定義: `app/types/database.types.ts`
 - エラークラス: `app/utils/customError.ts`

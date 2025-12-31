@@ -33,7 +33,16 @@ watch(yearMonth, async () => {
 })
 
 // 型安全のため、count を number に正規化
-const calendarDataNormalized = computed(() => computeCalendarData.value.map(d => ({ date: d.date, count: d.count ?? 0 })))
+const calendarDataNormalized = computed(() => {
+  if (monthlyData.value?.calendar) {
+    return monthlyData.value.calendar.map(c => ({
+      date: c.date,
+      count: c.count,
+      overGoal: c.overGoal ?? false
+    }))
+  }
+  return computeCalendarData.value.map(d => ({ date: d.date, count: d.count ?? 0, overGoal: false }))
+})
 </script>
 
 <template>
@@ -56,6 +65,7 @@ const calendarDataNormalized = computed(() => computeCalendarData.value.map(d =>
 
     <DomainChartMoleculesAggregationByDrinksTable />
 
+    <DomainChartMoleculesAggregationByDowChart />
     <DomainChartMoleculesAggregationByDowTable />
   </div>
 </template>
