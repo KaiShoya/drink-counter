@@ -14,6 +14,10 @@ export function useDrinksActions () {
     drinks.value = await $drinksRepository.fetchAll()
   }
 
+  const fetchDrinksByLabel = async (drinkLabelId: number | null) => {
+    drinks.value = await $drinksRepository.fetchByLabel(drinkLabelId)
+  }
+
   /**
    * 指定したIDの飲み物を削除する
    * 削除に成功したらDrinksを再取得する
@@ -67,6 +71,17 @@ export function useDrinksActions () {
     await $drinksRepository.updateSort(payload)
   }
 
+  const updateDrinksSortByLabel = async (drinkLabelId: number | null) => {
+    const payload = drinks.value.map((drink, i) => {
+      drink.sort = i
+      return {
+        id: drink.id,
+        sort: drink.sort,
+      }
+    })
+    await $drinksRepository.updatePositionsForLabel(drinkLabelId, payload)
+  }
+
   const createDrink = async (name: string, color: string | null, amount: number, drinkLabelId: number | null) => {
     const drink = await $drinksRepository.create(name, color, amount, drinkLabelId)
     drinks.value.push(drink)
@@ -74,10 +89,12 @@ export function useDrinksActions () {
 
   return {
     fetchDrinks,
+    fetchDrinksByLabel,
     deleteDrinkById,
     updateDrink,
     updateDrinkVisible,
     updateDrinksSort,
+    updateDrinksSortByLabel,
     createDrink,
   }
 }

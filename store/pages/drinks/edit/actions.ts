@@ -9,12 +9,20 @@ export function usePageDrinkEditActions () {
 
   const initPage = async () => {
     const route = useRoute()
-    drinkId.value = Number(route.params.id)
+    // support both top-level route param `id` and nested child param `drinkId`
+    const paramId = route.params.id ?? route.params.drinkId
+    drinkId.value = Number(paramId)
 
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {
       showDangerToast(t(LOCALE_ERROR_GET_RECORD))
-      navigateTo(localePath('/drinks'))
+      // if nested under label, navigate back to label page when possible
+      const labelId = route.params.id ?? route.params.labelId
+      if (labelId) {
+        navigateTo(localePath(`/labels/${labelId}`))
+      } else {
+        navigateTo(localePath('/drinks'))
+      }
     } else {
       name.value = drink.name
       color.value = drink.color
@@ -26,7 +34,13 @@ export function usePageDrinkEditActions () {
   const updateDrinkById = async () => {
     await updateDrink(drinkId.value, name.value, color.value, amount.value, drinkLabelId.value)
     showSuccessToast(t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
-    navigateTo(localePath('/drinks'))
+    const route = useRoute()
+    const labelId = route.params.id ?? route.params.labelId
+    if (labelId) {
+      navigateTo(localePath(`/labels/${labelId}`))
+    } else {
+      navigateTo(localePath('/drinks'))
+    }
   }
 
   return {

@@ -23,3 +23,15 @@ initPage()
     <LabelDrinksList :labelId="Number(useRoute().params.id)" />
   </div>
 </template>
+
+<!-- <template>
+  <div>
+    <DomainLabelAtomsEdit
+      v-model:name="name"
+      v-model:color="color"
+      v-model:standard-amount="standardAmount"
+      :save-function="update"
+      save="drinks.update"
+    />
+  </div>
+</template> -->
