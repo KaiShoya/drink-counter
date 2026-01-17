@@ -5,12 +5,36 @@ import { setActivePinia, createPinia } from 'pinia'
 describe('ActivityLog Store', () => {
   let store: ReturnType<typeof import('./index').useActivityLogStore>
 
+  const createLocalStorageMock = (): Storage => {
+    const storage: Record<string, string> = {}
+    return {
+      get length () {
+        return Object.keys(storage).length
+      },
+      clear: vi.fn(() => {
+        Object.keys(storage).forEach(key => delete storage[key])
+      }),
+      getItem: vi.fn((key: string) => (key in storage ? storage[key] : null)),
+      key: vi.fn((index: number) => Object.keys(storage)[index] ?? null),
+      removeItem: vi.fn((key: string) => {
+        delete storage[key]
+      }),
+      setItem: vi.fn((key: string, value: string) => {
+        storage[key] = value
+      }),
+    }
+  }
+
   beforeEach(async () => {
     // creates a fresh pinia and makes it active
     setActivePinia(createPinia())
 
     // Reset the module to get fresh state
     vi.resetModules()
+
+    // Nuxt runtime flag for client-side only APIs
+    ;(process as any).client = true
+    globalThis.localStorage = createLocalStorageMock()
 
     const { useActivityLogStore } = await import('./index')
     store = useActivityLogStore()
@@ -109,6 +133,31 @@ describe('ActivityLog Store', () => {
     it('returns true when there are recent activities', () => {
       store.addActivity('plus', 'ビール')
       expect(store.hasRecentActivities).toBe(true)
+    })
+  })
+
+  describe('initializeActivityLog', () => {
+    it('hydrates from localStorage, removes expired entries, and keeps next id', () => {
+      const now = new Date()
+      const expired = new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000)
+      const recent = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+
+      const payload = [
+        { id: 1, type: 'plus', drinkName: '古い', timestamp: expired.toISOString() },
+        { id: 5, type: 'minus', drinkName: '新しい', timestamp: recent.toISOString() },
+      ]
+
+      localStorage.setItem('activityLog:v1', JSON.stringify(payload))
+
+      store.initializeActivityLog()
+
+      expect(store.activityLog.length).toBe(1)
+      expect(store.activityLog[0].drinkName).toBe('新しい')
+      expect(store.activityLog[0].timestamp).toBeInstanceOf(Date)
+
+      store.addActivity('plus', '追加')
+      expect(store.activityLog[0].id).toBe(6)
+      expect(localStorage.getItem('activityLog:v1')).not.toBeNull()
     })
   })
 })

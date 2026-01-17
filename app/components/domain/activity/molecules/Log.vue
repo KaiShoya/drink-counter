@@ -6,7 +6,8 @@
 - 折りたたみ可能な履歴リスト（details/summary要素を使用）
 - 最終更新からの経過時間を表示（分/時間/日）
 - 各操作のタイムスタンプとアイコン（+/-）を表示
-- 3日間のログ保持、最大100件まで表示
+- 7日間のログ保持、最大100件まで表示
+- ローカルストレージに永続化し、アクセス時に期限切れを削除
 
 ## State
 - useActivityLogStore から以下を取得:
@@ -33,6 +34,10 @@ const { t } = useI18n()
 
 const activityLogStore = useActivityLogStore()
 const { latestActivity, allActivities, timeSinceLastActivity, timeSinceLastActivityUnit, hasRecentActivities } = storeToRefs(activityLogStore)
+
+onMounted(() => {
+  activityLogStore.initializeActivityLog()
+})
 
 const formatTimeAgo = (time: string | null, unit: 'days' | 'hours' | 'minutes' | null) => {
   if (time === null || unit === null) {

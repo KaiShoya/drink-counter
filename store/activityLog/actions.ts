@@ -1,13 +1,30 @@
 import type { ActivityLogEntry } from './type'
-import { getNextId, getMaxLogEntries, getLogRetentionDays } from './state'
+import {
+  getNextId,
+  getMaxLogEntries,
+  getLogRetentionDays,
+  hydrateActivityLogFromStorage,
+  persistActivityLog,
+} from './state'
 
 export function useActivityLogActions () {
   const { activityLog } = useActivityLogState()
 
   /**
+   * Hydrate from localStorage and cleanup once on entry.
+   */
+  const initializeActivityLog = () => {
+    hydrateActivityLogFromStorage()
+    cleanupExpiredEntries()
+    persistActivityLog()
+  }
+
+  /**
    * Add a new activity log entry
    */
   const addActivity = (type: 'plus' | 'minus', drinkName: string) => {
+    cleanupExpiredEntries()
+
     const entry: ActivityLogEntry = {
       id: getNextId(),
       type,
@@ -22,6 +39,8 @@ export function useActivityLogActions () {
     if (activityLog.value.length > getMaxLogEntries()) {
       activityLog.value = activityLog.value.slice(0, getMaxLogEntries())
     }
+
+    persistActivityLog()
   }
 
   /**
@@ -29,6 +48,7 @@ export function useActivityLogActions () {
    */
   const clearActivityLog = () => {
     activityLog.value = []
+    persistActivityLog()
   }
 
   /**
@@ -40,9 +60,12 @@ export function useActivityLogActions () {
     activityLog.value = activityLog.value.filter(
       entry => now.getTime() - entry.timestamp.getTime() < retentionMs
     )
+
+    persistActivityLog()
   }
 
   return {
+    initializeActivityLog,
     addActivity,
     clearActivityLog,
     cleanupExpiredEntries,
