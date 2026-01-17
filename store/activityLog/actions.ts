@@ -46,6 +46,7 @@ export function useActivityLogActions () {
       activityLog.value = activityLog.value.slice(0, getMaxLogEntries())
     }
 
+    // Persist once after all mutations
     persistActivityLog()
   }
 
@@ -59,6 +60,7 @@ export function useActivityLogActions () {
 
   /**
    * Remove expired log entries (older than retention period)
+   * Note: Does not persist automatically - caller should persist after cleanup
    */
   const cleanupExpiredEntries = () => {
     const retentionMs = getLogRetentionDays() * 24 * 60 * 60 * 1000
@@ -66,8 +68,6 @@ export function useActivityLogActions () {
     activityLog.value = activityLog.value.filter(
       entry => now.getTime() - entry.timestamp.getTime() < retentionMs
     )
-
-    persistActivityLog()
   }
 
   return {
