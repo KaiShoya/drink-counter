@@ -147,8 +147,8 @@ describe('ActivityLog Store', () => {
       const recent = new Date(now.getTime() - 24 * 60 * 60 * 1000)
 
       const payload = [
-        { id: 1, type: 'plus', drinkName: '古い', date: '2024-01-01', timestamp: expired.toISOString() },
-        { id: 5, type: 'minus', drinkName: '新しい', date: '2024-01-15', timestamp: recent.toISOString() },
+        { id: 1, type: 'plus', drinkName: '古い', drinkLabelName: null, date: '2024-01-01', timestamp: expired.toISOString() },
+        { id: 5, type: 'minus', drinkName: '新しい', drinkLabelName: null, date: '2024-01-15', timestamp: recent.toISOString() },
       ]
 
       localStorage.setItem('activityLog:v1', JSON.stringify(payload))
