@@ -21,8 +21,12 @@ export function useActivityLogActions () {
 
   /**
    * Add a new activity log entry
+   * @param type - Operation type: 'plus' or 'minus'
+   * @param drinkName - Name of the drink
+   * @param drinkLabelName - Label name associated with the drink (optional)
+   * @param date - Date of the activity in YYYY-MM-DD format (required)
    */
-  const addActivity = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null = null, date: string = '') => {
+  const addActivity = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null, date: string) => {
     cleanupExpiredEntries()
 
     const entry: ActivityLogEntry = {
