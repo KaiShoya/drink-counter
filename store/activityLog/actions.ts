@@ -22,7 +22,7 @@ export function useActivityLogActions () {
   /**
    * Add a new activity log entry
    */
-  const addActivity = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null = null) => {
+  const addActivity = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null = null, date: string = '') => {
     cleanupExpiredEntries()
 
     const entry: ActivityLogEntry = {
@@ -30,6 +30,7 @@ export function useActivityLogActions () {
       type,
       drinkName,
       drinkLabelName,
+      date,
       timestamp: new Date(),
     }
 

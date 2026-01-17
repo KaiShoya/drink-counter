@@ -30,13 +30,27 @@ import {
   LOCALE_ACTIVITY_LOG_NO_ACTIVITY,
 } from '~/utils/locales'
 
+interface Props {
+  date: string
+}
+
+const props = defineProps<Props>()
+
 const { t } = useI18n()
 
 const activityLogStore = useActivityLogStore()
-const { latestActivity, allActivities, timeSinceLastActivity, timeSinceLastActivityUnit, hasRecentActivities } = storeToRefs(activityLogStore)
+const { activitiesByDate, latestActivity, timeSinceLastActivity, timeSinceLastActivityUnit } = storeToRefs(activityLogStore)
 
 onMounted(() => {
   activityLogStore.initializeActivityLog()
+})
+
+const currentDateActivities = computed(() => {
+  return activitiesByDate.value(props.date)
+})
+
+const hasActivitiesForDate = computed(() => {
+  return currentDateActivities.value.length > 0
 })
 
 const formatTimeAgo = (time: string | null, unit: 'days' | 'hours' | 'minutes' | null) => {
@@ -81,9 +95,9 @@ const formatTime = (date: Date) => {
       </span>
     </summary>
     <div class="activity-log-content mt-2">
-      <template v-if="hasRecentActivities">
+      <template v-if="hasActivitiesForDate">
         <div
-          v-for="activity in allActivities"
+          v-for="activity in currentDateActivities"
           :key="activity.id"
           class="activity-log-item is-size-7 py-1"
         >
