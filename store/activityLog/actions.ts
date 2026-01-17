@@ -1,17 +1,40 @@
 import type { ActivityLogEntry } from './type'
-import { getNextId, getMaxLogEntries, getLogRetentionDays } from './state'
+import {
+  getNextId,
+  getMaxLogEntries,
+  getLogRetentionDays,
+  hydrateActivityLogFromStorage,
+  persistActivityLog,
+} from './state'
 
 export function useActivityLogActions () {
   const { activityLog } = useActivityLogState()
 
   /**
-   * Add a new activity log entry
+   * Hydrate from localStorage and cleanup once on entry.
    */
-  const addActivity = (type: 'plus' | 'minus', drinkName: string) => {
+  const initializeActivityLog = () => {
+    hydrateActivityLogFromStorage()
+    cleanupExpiredEntries()
+    persistActivityLog()
+  }
+
+  /**
+   * Add a new activity log entry
+   * @param type - Operation type: 'plus' or 'minus'
+   * @param drinkName - Name of the drink
+   * @param drinkLabelName - Label name associated with the drink (optional)
+   * @param date - Date of the activity in YYYY-MM-DD format (required)
+   */
+  const addActivity = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null, date: string) => {
+    cleanupExpiredEntries()
+
     const entry: ActivityLogEntry = {
       id: getNextId(),
       type,
       drinkName,
+      drinkLabelName,
+      date,
       timestamp: new Date(),
     }
 
@@ -22,6 +45,9 @@ export function useActivityLogActions () {
     if (activityLog.value.length > getMaxLogEntries()) {
       activityLog.value = activityLog.value.slice(0, getMaxLogEntries())
     }
+
+    // Persist once after all mutations
+    persistActivityLog()
   }
 
   /**
@@ -29,10 +55,12 @@ export function useActivityLogActions () {
    */
   const clearActivityLog = () => {
     activityLog.value = []
+    persistActivityLog()
   }
 
   /**
    * Remove expired log entries (older than retention period)
+   * Note: Does not persist automatically - caller should persist after cleanup
    */
   const cleanupExpiredEntries = () => {
     const retentionMs = getLogRetentionDays() * 24 * 60 * 60 * 1000
@@ -43,6 +71,7 @@ export function useActivityLogActions () {
   }
 
   return {
+    initializeActivityLog,
     addActivity,
     clearActivityLog,
     cleanupExpiredEntries,

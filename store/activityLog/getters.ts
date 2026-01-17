@@ -5,7 +5,16 @@ export function useActivityLogGetters () {
   const { activityLog } = useActivityLogState()
 
   /**
-   * Get the most recent activity log entry
+   * Get activities for a specific date (YYYY-MM-DD)
+   */
+  const activitiesByDate = computed(() => {
+    return (date: string) => {
+      return activityLog.value.filter(entry => entry.date === date)
+    }
+  })
+
+  /**
+   * Get the most recent activity (across all dates)
    */
   const latestActivity = computed<ActivityLogEntry | null>(() => {
     if (activityLog.value.length === 0) {
@@ -88,6 +97,7 @@ export function useActivityLogGetters () {
   })
 
   return {
+    activitiesByDate,
     latestActivity,
     allActivities,
     timeSinceLastActivity,

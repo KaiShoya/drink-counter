@@ -8,6 +8,10 @@ export interface ActivityLogEntry {
   type: 'plus' | 'minus'
   /** Name of the drink */
   drinkName: string
+  /** Name of the drink label */
+  drinkLabelName: string | null
+  /** Date of the operation (YYYY-MM-DD) */
+  date: string
   /** Timestamp of the operation */
   timestamp: Date
 }

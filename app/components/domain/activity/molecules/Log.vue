@@ -6,7 +6,8 @@
 - 折りたたみ可能な履歴リスト（details/summary要素を使用）
 - 最終更新からの経過時間を表示（分/時間/日）
 - 各操作のタイムスタンプとアイコン（+/-）を表示
-- 3日間のログ保持、最大100件まで表示
+- 7日間のログ保持、最大100件まで表示
+- ローカルストレージに永続化し、アクセス時に期限切れを削除
 
 ## State
 - useActivityLogStore から以下を取得:
@@ -29,10 +30,28 @@ import {
   LOCALE_ACTIVITY_LOG_NO_ACTIVITY,
 } from '~/utils/locales'
 
+interface Props {
+  date: string
+}
+
+const props = defineProps<Props>()
+
 const { t } = useI18n()
 
 const activityLogStore = useActivityLogStore()
-const { latestActivity, allActivities, timeSinceLastActivity, timeSinceLastActivityUnit, hasRecentActivities } = storeToRefs(activityLogStore)
+const { activitiesByDate, latestActivity, timeSinceLastActivity, timeSinceLastActivityUnit } = storeToRefs(activityLogStore)
+
+onMounted(() => {
+  activityLogStore.initializeActivityLog()
+})
+
+const currentDateActivities = computed(() => {
+  return activitiesByDate.value(props.date)
+})
+
+const hasActivitiesForDate = computed(() => {
+  return currentDateActivities.value.length > 0
+})
 
 const formatTimeAgo = (time: string | null, unit: 'days' | 'hours' | 'minutes' | null) => {
   if (time === null || unit === null) {
@@ -51,11 +70,12 @@ const formatTimeAgo = (time: string | null, unit: 'days' | 'hours' | 'minutes' |
   }
 }
 
-const formatActivityType = (type: 'plus' | 'minus', drinkName: string) => {
+const formatActivityType = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null) => {
+  const displayName = drinkLabelName ? `${drinkLabelName}：${drinkName}` : drinkName
   if (type === 'plus') {
-    return t(LOCALE_ACTIVITY_LOG_PLUS, { drinkName })
+    return t(LOCALE_ACTIVITY_LOG_PLUS, { drinkName: displayName })
   }
-  return t(LOCALE_ACTIVITY_LOG_MINUS, { drinkName })
+  return t(LOCALE_ACTIVITY_LOG_MINUS, { drinkName: displayName })
 }
 
 const formatTime = (date: Date) => {
@@ -75,9 +95,9 @@ const formatTime = (date: Date) => {
       </span>
     </summary>
     <div class="activity-log-content mt-2">
-      <template v-if="hasRecentActivities">
+      <template v-if="hasActivitiesForDate">
         <div
-          v-for="activity in allActivities"
+          v-for="activity in currentDateActivities"
           :key="activity.id"
           class="activity-log-item is-size-7 py-1"
         >
@@ -88,7 +108,7 @@ const formatTime = (date: Date) => {
           >
             <Icon :name="activity.type === 'plus' ? 'mdi:plus-circle' : 'mdi:minus-circle'" />
           </span>
-          <span class="ml-1">{{ formatActivityType(activity.type, activity.drinkName) }}</span>
+          <span class="ml-1">{{ formatActivityType(activity.type, activity.drinkName, activity.drinkLabelName) }}</span>
         </div>
       </template>
       <template v-else>
