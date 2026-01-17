@@ -103,8 +103,9 @@ export function useIndexActions () {
     numberOfDrink!.count++
     drinkCountForDay.value++
 
-    // Log the activity
-    addActivity('plus', numberOfDrink!.name)
+    // Log the activity with label name
+    const labelWithDrink = labelsWithDrinks.value.find(lwd => lwd.id === numberOfDrink!.drinkLabelId)
+    addActivity('plus', numberOfDrink!.name, labelWithDrink?.name ?? null)
   }
 
   const minus = async (drinkId: number, drinkCounterId: number) => {
@@ -122,8 +123,9 @@ export function useIndexActions () {
     numberOfDrink!.count--
     drinkCountForDay.value--
 
-    // Log the activity
-    addActivity('minus', numberOfDrink!.name)
+    // Log the activity with label name
+    const labelWithDrink = labelsWithDrinks.value.find(lwd => lwd.id === numberOfDrink!.drinkLabelId)
+    addActivity('minus', numberOfDrink!.name, labelWithDrink?.name ?? null)
   }
 
   const updateDefaultDrink = (labelId: number, drinkId: number) => {

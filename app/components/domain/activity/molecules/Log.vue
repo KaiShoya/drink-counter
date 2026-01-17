@@ -56,11 +56,12 @@ const formatTimeAgo = (time: string | null, unit: 'days' | 'hours' | 'minutes' |
   }
 }
 
-const formatActivityType = (type: 'plus' | 'minus', drinkName: string) => {
+const formatActivityType = (type: 'plus' | 'minus', drinkName: string, drinkLabelName: string | null) => {
+  const displayName = drinkLabelName ? `${drinkLabelName}：${drinkName}` : drinkName
   if (type === 'plus') {
-    return t(LOCALE_ACTIVITY_LOG_PLUS, { drinkName })
+    return t(LOCALE_ACTIVITY_LOG_PLUS, { drinkName: displayName })
   }
-  return t(LOCALE_ACTIVITY_LOG_MINUS, { drinkName })
+  return t(LOCALE_ACTIVITY_LOG_MINUS, { drinkName: displayName })
 }
 
 const formatTime = (date: Date) => {
@@ -93,7 +94,7 @@ const formatTime = (date: Date) => {
           >
             <Icon :name="activity.type === 'plus' ? 'mdi:plus-circle' : 'mdi:minus-circle'" />
           </span>
-          <span class="ml-1">{{ formatActivityType(activity.type, activity.drinkName) }}</span>
+          <span class="ml-1">{{ formatActivityType(activity.type, activity.drinkName, activity.drinkLabelName) }}</span>
         </div>
       </template>
       <template v-else>

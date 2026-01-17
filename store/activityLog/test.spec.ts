@@ -44,25 +44,27 @@ describe('ActivityLog Store', () => {
 
   describe('addActivity', () => {
     it('adds a plus activity to the log', () => {
-      store.addActivity('plus', 'ビール')
+      store.addActivity('plus', 'ビール', 'アルコール')
 
       expect(store.activityLog.length).toBe(1)
       expect(store.activityLog[0].type).toBe('plus')
       expect(store.activityLog[0].drinkName).toBe('ビール')
+      expect(store.activityLog[0].drinkLabelName).toBe('アルコール')
       expect(store.activityLog[0].timestamp).toBeInstanceOf(Date)
     })
 
     it('adds a minus activity to the log', () => {
-      store.addActivity('minus', 'ハイボール')
+      store.addActivity('minus', 'ハイボール', 'アルコール')
 
       expect(store.activityLog.length).toBe(1)
       expect(store.activityLog[0].type).toBe('minus')
       expect(store.activityLog[0].drinkName).toBe('ハイボール')
+      expect(store.activityLog[0].drinkLabelName).toBe('アルコール')
     })
 
     it('adds new activities at the beginning (newest first)', () => {
-      store.addActivity('plus', 'ビール')
-      store.addActivity('plus', 'ハイボール')
+      store.addActivity('plus', 'ビール', 'アルコール')
+      store.addActivity('plus', 'ハイボール', 'アルコール')
 
       expect(store.activityLog.length).toBe(2)
       expect(store.activityLog[0].drinkName).toBe('ハイボール')
@@ -76,8 +78,8 @@ describe('ActivityLog Store', () => {
     })
 
     it('returns the most recent activity', () => {
-      store.addActivity('plus', 'ビール')
-      store.addActivity('minus', 'ハイボール')
+      store.addActivity('plus', 'ビール', 'アルコール')
+      store.addActivity('minus', 'ハイボール', 'アルコール')
 
       expect(store.latestActivity?.drinkName).toBe('ハイボール')
       expect(store.latestActivity?.type).toBe('minus')
@@ -90,9 +92,9 @@ describe('ActivityLog Store', () => {
     })
 
     it('returns all activities sorted by timestamp (newest first)', () => {
-      store.addActivity('plus', 'ビール')
-      store.addActivity('minus', 'ハイボール')
-      store.addActivity('plus', 'ワイン')
+      store.addActivity('plus', 'ビール', 'アルコール')
+      store.addActivity('minus', 'ハイボール', 'アルコール')
+      store.addActivity('plus', 'ワイン', 'アルコール')
 
       expect(store.allActivities.length).toBe(3)
       expect(store.allActivities[0].drinkName).toBe('ワイン')
@@ -107,7 +109,7 @@ describe('ActivityLog Store', () => {
     })
 
     it('returns the time since the last activity', () => {
-      store.addActivity('plus', 'ビール')
+      store.addActivity('plus', 'ビール', 'アルコール')
       // The activity was just added, so the time should be very short
       expect(store.timeSinceLastActivity).toBe('0')
       expect(store.timeSinceLastActivityUnit).toBe('minutes')
@@ -116,8 +118,8 @@ describe('ActivityLog Store', () => {
 
   describe('clearActivityLog', () => {
     it('clears all activities', () => {
-      store.addActivity('plus', 'ビール')
-      store.addActivity('minus', 'ハイボール')
+      store.addActivity('plus', 'ビール', 'アルコール')
+      store.addActivity('minus', 'ハイボール', 'アルコール')
 
       store.clearActivityLog()
 
@@ -131,7 +133,7 @@ describe('ActivityLog Store', () => {
     })
 
     it('returns true when there are recent activities', () => {
-      store.addActivity('plus', 'ビール')
+      store.addActivity('plus', 'ビール', 'アルコール')
       expect(store.hasRecentActivities).toBe(true)
     })
   })
