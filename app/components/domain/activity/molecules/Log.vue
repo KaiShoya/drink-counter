@@ -29,6 +29,7 @@ import {
   LOCALE_ACTIVITY_LOG_MINUS,
   LOCALE_ACTIVITY_LOG_NO_ACTIVITY,
 } from '~/utils/locales'
+import { useActivityLogStore } from '~/stores/activityLog'
 
 interface Props {
   date: string

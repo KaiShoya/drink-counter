@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LOCALE_AUTH_LOGOUT } from '~/utils/locales'
+import { useSupabaseStore } from '~/stores/supabase'
 
 const { t } = useI18n()
 

@@ -13,6 +13,8 @@ import {
   LOCALE_THEME_DARK,
   LOCALE_THEME_LIGHT
 } from '~/utils/locales'
+import { useSupabaseStore } from '~/stores/supabase'
+import { useUserStore } from '~/stores/user'
 
 const { isLogin, userAvatarUrl } = storeToRefs(useUserStore())
 
