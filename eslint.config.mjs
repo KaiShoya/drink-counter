@@ -30,9 +30,9 @@ export default defineFlatConfigs(
       ],
       '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/space-before-function-paren': ['error', 'always'],
-      'indent': ['error', 2],
-      'quotes': ['error', 'single'],
-      'semi': ['error', 'never'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': ['error', 'never'],
     },
   },
 )
