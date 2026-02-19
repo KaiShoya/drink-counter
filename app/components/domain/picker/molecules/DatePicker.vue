@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useIndexStore } from '~/stores/pages/index'
+
 const indexStore = useIndexStore()
 const { date } = storeToRefs(indexStore)
 const { setToday, prevDate, nextDate } = indexStore

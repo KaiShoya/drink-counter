@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { useAppStore } from '~/stores/app'
+import { useUserStore } from '~/stores/user'
+import { useDrinkLabelsStore } from '~/stores/data/drinkLabels'
+import { useDrinksStore } from '~/stores/data/drinks'
+
 const { isLoading } = storeToRefs(useAppStore())
 
 const { t } = useI18n()
