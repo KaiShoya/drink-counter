@@ -126,7 +126,7 @@ useHead(() => ({
             <!-- navbar-burger-rightの切り替えが効かないため、ダミーのdivを追加した -->
           </div>
 
-          <div class="navbar-burger navbar-burger-right navbar-burger-left">
+          <div class="navbar-burger navbar-burger-right navbar-burger-left is-hidden-desktop">
             <DomainHeaderAtomsThemeButton
               :theme-preference="themePreference"
               :resolved-theme="resolvedTheme"
