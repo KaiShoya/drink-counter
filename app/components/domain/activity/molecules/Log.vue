@@ -87,6 +87,7 @@ const formatTime = (date: Date) => {
 <template>
   <details class="activity-log-details mt-4">
     <summary class="activity-log-summary">
+      <Icon name="mdi:chevron-right" class="activity-log-chevron" />
       <span class="is-size-6 has-text-weight-semibold">{{ t(LOCALE_ACTIVITY_LOG_TITLE) }}</span>
       <span
         v-if="latestActivity"
@@ -129,10 +130,22 @@ const formatTime = (date: Date) => {
 .activity-log-summary {
   cursor: pointer;
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .activity-log-summary::-webkit-details-marker {
   display: none;
+}
+
+.activity-log-chevron {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+details[open] .activity-log-chevron {
+  transform: rotate(90deg);
 }
 
 .activity-log-content {

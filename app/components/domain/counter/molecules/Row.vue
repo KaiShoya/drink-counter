@@ -39,6 +39,7 @@ defineProps<{
         <div class="column is-2" />
         <details class="column">
           <summary class="detail-link">
+            <Icon name="mdi:chevron-right" class="detail-chevron" />
             {{ t(LOCALE_DETAIL) }}
           </summary>
           <DomainCounterAtomsSubColumn
@@ -87,5 +88,21 @@ defineProps<{
 .detail-link {
   text-decoration: underline;
   cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.detail-link::-webkit-details-marker {
+  display: none;
+}
+
+.detail-chevron {
+  transition: transform 0.2s ease;
+}
+
+details[open] .detail-chevron {
+  transform: rotate(90deg);
 }
 </style>
