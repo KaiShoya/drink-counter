@@ -51,7 +51,7 @@ const { findById } = drinkLabelsStore
         <div class="columns is-mobile border-line is-vcentered">
           <div
             class="column is-1"
-            style="display: flex;"
+            class="is-flex"
           >
             <div class="handle mr-2">
               <Icon
@@ -62,21 +62,21 @@ const { findById } = drinkLabelsStore
           </div>
           <div
             class="column is-2"
-            style="display: flex;"
+            class="is-flex"
           >
             {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
           </div>
 
           <div
             class="column is-3"
-            style="display: flex;"
+            class="is-flex"
           >
             {{ drink.name }}
           </div>
 
           <div
             class="column is-1 is-vcentered is-mobile"
-            style="display: flex;"
+            class="is-flex"
           >
             <div
               class="mx-1 tag"
@@ -86,7 +86,7 @@ const { findById } = drinkLabelsStore
 
           <div
             class="column is-2"
-            style="display: flex;"
+            class="is-flex"
           >
             {{ drink.amount }}
           </div>
