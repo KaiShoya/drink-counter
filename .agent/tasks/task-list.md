@@ -15,7 +15,6 @@
 
 | ID | タイトル | 優先度 | 種別 | 担当バージョン |
 |----|----------|--------|------|--------------|
-| [T-0005](items/T-0005.md) | SubColumn の飲み物選択タップエリアがテキスト幅に依存して狭い | Medium | enhancement | - |
 | [T-0006](items/T-0006.md) | details/summary の折りたたみ可能を示す視覚的手がかりが不足 | Medium | enhancement | - |
 | [T-0007](items/T-0007.md) | 設定フォームが table 実装でアクセシビリティが欠如している | Medium | enhancement | - |
 | [T-0008](items/T-0008.md) | Drinks 一覧のインラインスタイルを Bulma クラスに統一する | Low | refactoring | - |
@@ -38,3 +37,4 @@
 | [T-0002](items/done/T-0002.md) | BaseAtomsButton に disabled prop がなく無効化できない | 2026-05-07 | - |
 | [T-0003](items/done/T-0003.md) | DatePicker のボタンと input の高さ不一致 | 2026-05-07 | - |
 | [T-0004](items/done/T-0004.md) | ナビバーのテーマボタンが SP / PC 両領域に二重レンダリングされている | 2026-05-07 | - |
+| [T-0005](items/done/T-0005.md) | SubColumn の飲み物選択タップエリアがテキスト幅に依存して狭い | 2026-05-07 | - |

@@ -18,8 +18,8 @@ defineProps<{
       :style="{ padding: '5px', height: '14px', backgroundColor: color }"
     />
 
-    <div class="column control subtitle ml-2">
-      <span class="subtitle is-6 clickable" @click="select && select()">
+    <div class="column control subtitle ml-2 clickable" @click="select && select()">
+      <span class="subtitle is-6">
         {{ name }}
       </span>
     </div>
