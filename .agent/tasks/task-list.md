@@ -15,7 +15,6 @@
 
 | ID | タイトル | 優先度 | 種別 | 担当バージョン |
 |----|----------|--------|------|--------------|
-| [T-0002](items/T-0002.md) | BaseAtomsButton に disabled prop がなく無効化できない | High | bug | v1.20 |
 | [T-0003](items/T-0003.md) | DatePicker のボタンと input の高さ不一致 | Medium | bug | v1.20 |
 | [T-0004](items/T-0004.md) | ナビバーのテーマボタンが SP / PC 両領域に二重レンダリングされている | Medium | bug | v1.20 |
 | [T-0005](items/T-0005.md) | SubColumn の飲み物選択タップエリアがテキスト幅に依存して狭い | Medium | enhancement | - |
@@ -38,3 +37,4 @@
 | ID | タイトル | 完了日 | PR |
 |----|----------|--------|----|  
 | [T-0001](items/done/T-0001.md) | Warning モーダルの × ボタンが機能しない | 2026-05-07 | - |
+| [T-0002](items/done/T-0002.md) | BaseAtomsButton に disabled prop がなく無効化できない | 2026-05-07 | - |

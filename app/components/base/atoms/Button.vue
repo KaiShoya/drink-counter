@@ -2,6 +2,7 @@
 defineProps<{
   label: string
   clickFunction: () => void
+  disabled?: boolean
 }>()
 </script>
 
@@ -9,6 +10,7 @@ defineProps<{
   <button
     class="column is-2 button is-button-large"
     :aria-label="label"
+    :disabled="disabled"
     @click="clickFunction()"
   >
     <slot />
