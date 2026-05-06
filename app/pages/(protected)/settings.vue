@@ -60,6 +60,7 @@ fetchSettings()
               v-model="thresholdForDetectingOverdrinking"
               class="input"
               type="number"
+              min="1"
             >
           </div>
           <div class="control">
@@ -107,6 +108,8 @@ fetchSettings()
               v-model="switchingTiming"
               class="input"
               type="number"
+              min="0"
+              max="23"
             >
           </div>
           <div class="control">
