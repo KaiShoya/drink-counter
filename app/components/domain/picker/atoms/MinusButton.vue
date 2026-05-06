@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <button
-    class="is-2 button is-large radius-right-unset"
+    class="is-2 button radius-right-unset"
     @click="clickFunction()"
   >
     <Icon
@@ -20,5 +20,6 @@ defineProps<{
 .button {
   border-right: none;
   height: 62px;
+  font-size: 1.25rem;
 }
 </style>
