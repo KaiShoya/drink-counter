@@ -118,6 +118,7 @@ drinks:
     validation_name_required: '名前を入力してください'
     validation_color_invalid: '有効なカラーコード（#RRGGBB または #RGB）を入力してください'
     validation_amount_invalid: '1 以上の整数を入力してください'
+    validation_label_required: 'ラベルを選択してください'
     drink_label: ラベル
     delete_modal_title: 「{name}」を削除します。
     delete_modal_content: 「{name}」を削除すると、飲んだ杯数もすべて削除されます。それでも削除しますか？

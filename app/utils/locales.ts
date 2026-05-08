@@ -119,6 +119,8 @@ export const LOCALE_DRINKS_VALIDATION_COLOR_INVALID =
   `${LOCALE_DRINKS}.validation_color_invalid` as const;
 export const LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID =
   `${LOCALE_DRINKS}.validation_amount_invalid` as const;
+export const LOCALE_DRINKS_VALIDATION_LABEL_REQUIRED =
+  `${LOCALE_DRINKS}.validation_label_required` as const;
 export const LOCALE_DRINKS_DRINK_LABEL =
   `${LOCALE_DRINKS}.drink_label` as const;
 export const LOCALE_DRINKS_DELETE_MODAL_TITLE =

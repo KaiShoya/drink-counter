@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_RANDOM_COLOR_TITLE, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT, LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID, LOCALE_DRINKS_VALIDATION_COLOR_INVALID, LOCALE_DRINKS_VALIDATION_NAME_REQUIRED } from '~/utils/locales'
+import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_RANDOM_COLOR_TITLE, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT, LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID, LOCALE_DRINKS_VALIDATION_COLOR_INVALID, LOCALE_DRINKS_VALIDATION_LABEL_REQUIRED, LOCALE_DRINKS_VALIDATION_NAME_REQUIRED } from '~/utils/locales'
 import { generateRandomColor } from '~/utils/common'
 import type { DrinkLabelWithDefaultColor } from '~/repositories/drinkLabelsRepository'
 
@@ -76,6 +76,7 @@ const errors = computed(() => ({
   name: !name.value?.trim() ? t(LOCALE_DRINKS_VALIDATION_NAME_REQUIRED) : null,
   color: !localColor.value || !HEX_COLOR_RE.test(localColor.value) ? t(LOCALE_DRINKS_VALIDATION_COLOR_INVALID) : null,
   amount: amount.value == null || amount.value < 1 || !Number.isInteger(Number(amount.value)) ? t(LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID) : null,
+  drinkLabel: !drinkLabelId.value ? t(LOCALE_DRINKS_VALIDATION_LABEL_REQUIRED) : null,
 }))
 
 const hasError = computed(() => Object.values(errors.value).some(v => v !== null))
@@ -100,13 +101,17 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
           :style="{ flex: 'none', padding: '10px', width: '50px', border: '1px solid' }"
         />
         <div class="column">
-          <div class="select is-fullwidth">
+          <div
+            class="select is-fullwidth"
+            :class="{ 'is-danger': submitted && errors.drinkLabel }"
+          >
             <select @change="changeDrinkLabelId(Number(($event.target as HTMLInputElement).value))">
               <option
                 key=""
-                :value="null"
+                value=""
                 :label="t(LOCALE_DRINKS_SELECT)"
-                :selected="drinkLabelId === null"
+                disabled
+                :selected="!drinkLabelId"
               />
               <option
                 v-for="label in drinkLabels"
@@ -119,6 +124,12 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
           </div>
         </div>
       </div>
+      <p
+        v-if="submitted && errors.drinkLabel"
+        class="help is-danger"
+      >
+        {{ errors.drinkLabel }}
+      </p>
     </div>
 
     <div class="field">
