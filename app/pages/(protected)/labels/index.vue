@@ -98,7 +98,7 @@ onBeforeRouteLeave(() => {
               :to="localePath(`/labels/${drinkLabel.id}`)"
               class="button is-ghost p-1 has-text-info"
             >
-              <Icon name="mdi:text-box-edit-outline" />
+              <Icon name="mdi:text-box-edit-outline" size="20" />
             </NuxtLink>
 
             <button
@@ -108,10 +108,12 @@ onBeforeRouteLeave(() => {
               <Icon
                 v-if="drinkLabel.visible"
                 name="mdi:eye"
+                size="20"
               />
               <Icon
                 v-else
                 name="mdi:eye-off"
+                size="20"
               />
             </button>
 
@@ -119,7 +121,7 @@ onBeforeRouteLeave(() => {
               class="button is-ghost p-1 has-text-danger"
               @click="clickDeleteDrinkButton(drinkLabel)"
             >
-              <Icon name="mdi:delete-forever-outline" />
+              <Icon name="mdi:delete-forever-outline" size="20" />
             </button>
           </div>
         </div>
