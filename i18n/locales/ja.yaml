@@ -144,6 +144,12 @@ labels:
     new_title: 'ラベルを追加'
     name_placeholder: ビール
     standard_amount: 基準量(ml,合など)
+    drinks_section_title: このラベルの飲み物
+    drinks_empty: まだ飲み物がありません
+    drinks_add: このラベルに追加
+    save_sort: 並び順を保存する
+    sort_success: 並び順を保存しました。
+    unsaved_sort_confirm: '並び順が保存されていません。このページを離れますか？'
 
 data:
     total: 合計

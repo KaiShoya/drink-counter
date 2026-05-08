@@ -161,6 +161,18 @@ export const LOCALE_LABELS_NAME_PLACEHOLDER =
   `${LOCALE_LABELS}.name_placeholder` as const;
 export const LOCALE_LABELS_STANDARD_AMOUNT =
   `${LOCALE_LABELS}.standard_amount` as const;
+export const LOCALE_LABELS_DRINKS_SECTION_TITLE =
+  `${LOCALE_LABELS}.drinks_section_title` as const;
+export const LOCALE_LABELS_DRINKS_EMPTY =
+  `${LOCALE_LABELS}.drinks_empty` as const;
+export const LOCALE_LABELS_DRINKS_ADD =
+  `${LOCALE_LABELS}.drinks_add` as const;
+export const LOCALE_LABELS_SAVE_SORT =
+  `${LOCALE_LABELS}.save_sort` as const;
+export const LOCALE_LABELS_SORT_SUCCESS =
+  `${LOCALE_LABELS}.sort_success` as const;
+export const LOCALE_LABELS_UNSAVED_SORT_CONFIRM =
+  `${LOCALE_LABELS}.unsaved_sort_confirm` as const;
 
 const LOCALE_DATA = "data" as const;
 export const LOCALE_DATA_TOTAL = `${LOCALE_DATA}.total` as const;

@@ -144,6 +144,12 @@ labels:
     new_title: 'Add Label'
     name_placeholder: Beer
     standard_amount: Standard amount(ml, %, etc)
+    drinks_section_title: Drinks in this label
+    drinks_empty: No drinks yet
+    drinks_add: Add to this label
+    save_sort: Save sort order
+    sort_success: Sort order saved.
+    unsaved_sort_confirm: 'The sort order has not been saved. Leave this page?'
 
 data:
   total: Total
