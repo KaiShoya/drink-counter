@@ -1,6 +1,6 @@
 # 📋 Task List
 
-**最終更新**: 2026-05-07  
+**最終更新**: 2026-05-08  
 **用途**: `.agent/tasks/items/` 配下のタスクファイルのインデックス
 
 ## ステータス凡例
@@ -15,6 +15,15 @@
 
 | ID | タイトル | 優先度 | 種別 | 担当バージョン |
 |----|----------|--------|------|--------------|
+| [T-0010](items/T-0010.md) | 飲み物編集フォームのモーダル/ドロワー化 | High | enhancement | - |
+| [T-0011](items/T-0011.md) | 保存ボタンのローディング状態・二重送信防止（全フォーム共通） | High | enhancement | - |
+| [T-0012](items/T-0012.md) | ラベル選択時の量自動上書き通知の追加 | High | enhancement | - |
+| [T-0013](items/T-0013.md) | 編集系ページへの見出し・パンくずの追加 | High | enhancement | - |
+| [T-0014](items/T-0014.md) | 飲み物フォームのフロントエンドバリデーション追加 | Medium | enhancement | - |
+| [T-0015](items/T-0015.md) | ドラッグ並び替えの自動保存または離脱ガードの追加 | Medium | enhancement | - |
+| [T-0016](items/T-0016.md) | 量フィールドのラベル整理とカラーHEX入力のdebounceバリデーション | Medium | enhancement | - |
+| [T-0017](items/T-0017.md) | 編集フォームの未保存変更ガードの追加 | Medium | enhancement | - |
+| [T-0018](items/T-0018.md) | 飲み物一覧の操作UI改善（visible トグル・操作列ヘッダー・ラベルコピーボタン） | Low | enhancement | - |
 
 ---
 
