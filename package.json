@@ -29,6 +29,7 @@
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/devtools": "^3.2.4",
     "@nuxt/eslint": "1.15.1",
+    "@nuxt/eslint-config": "1.15.1",
     "@nuxt/hints": "1.0.0-alpha.7",
     "@nuxt/icon": "^2.2.2",
     "@nuxt/test-utils": "^4.0.3",
@@ -60,6 +61,6 @@
     "string-width": "^8.2.1",
     "timezone-support": "^3.1.0",
     "vue-google-charts": "^1.1.0",
-    "vuedraggable": "github:KaiShoya/vue.draggable.next"
+    "vuedraggable": "^4.1.0"
   }
 }
