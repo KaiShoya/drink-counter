@@ -48,12 +48,54 @@ const applyStandardAmount = () => {
 
 const HEX_COLOR_RE = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
 
+// カラーテキスト入力は localColor で管理し、有効な HEX のみ debounce 後に color モデルへ反映する
+const localColor = ref<string>(color.value ?? '')
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+// カラーピッカー側の変更（常に有効値）を localColor に同期する
+watch(color, (val) => {
+  if (val && val !== localColor.value) {
+    localColor.value = val
+  }
+})
+
+const onLocalColorInput = (val: string) => {
+  localColor.value = val
+  if (debounceTimer) clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    if (HEX_COLOR_RE.test(val)) {
+      color.value = val
+    }
+  }, 300)
+}
+
+// カラーテキスト入力は localColor で管理し、有効な HEX のみ debounce 後に color モデルへ反映する
+const localColor = ref<string>(color.value ?? '')
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+// カラーピッカー側の変更（常に有効値）を localColor に同期する
+watch(color, (val) => {
+  if (val && val !== localColor.value) {
+    localColor.value = val
+  }
+})
+
+const onLocalColorInput = (val: string) => {
+  localColor.value = val
+  if (debounceTimer) clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    if (HEX_COLOR_RE.test(val)) {
+      color.value = val
+    }
+  }, 300)
+}
+
 // 初回保存試行後のみエラーを表示する
 const submitted = ref(false)
 
 const errors = computed(() => ({
   name: !name.value?.trim() ? t(LOCALE_DRINKS_VALIDATION_NAME_REQUIRED) : null,
-  color: !color.value || !HEX_COLOR_RE.test(color.value) ? t(LOCALE_DRINKS_VALIDATION_COLOR_INVALID) : null,
+  color: !localColor.value || !HEX_COLOR_RE.test(localColor.value) ? t(LOCALE_DRINKS_VALIDATION_COLOR_INVALID) : null,
   amount: amount.value == null || amount.value < 1 || !Number.isInteger(Number(amount.value)) ? t(LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID) : null,
 }))
 
@@ -132,10 +174,12 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
           >
         </div>
         <input
-          v-model="color"
+          :value="localColor"
           class="input column"
+          :class="{ 'is-danger': submitted && errors.color }"
           type="text"
           placeholder="#000000"
+          @input="onLocalColorInput(($event.target as HTMLInputElement).value)"
         >
 
         <div
