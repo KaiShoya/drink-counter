@@ -36,6 +36,7 @@
     "@nuxtjs/i18n": "^10.3.0",
     "@nuxtjs/supabase": "^2.0.6",
     "@pinia/testing": "^1.0.3",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@vue/test-utils": "^2.4.10",
     "eslint": "^10.3.0",
     "eslint-plugin-vue": "^10.9.1",
