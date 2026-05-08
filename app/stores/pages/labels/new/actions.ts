@@ -18,7 +18,7 @@ export function usePageDrinkLabelNewActions () {
     try {
       await createDrinkLabel(name.value, color.value, standardAmount.value)
       showSuccessToast(t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/labels'))
+      navigateTo(localePath('/drinks'))
     } finally {
       isSaving.value = false
     }

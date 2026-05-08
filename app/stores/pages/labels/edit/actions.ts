@@ -17,7 +17,7 @@ export function usePageDrinkLabelEditActions () {
     const drinkLabel = findById(drinkLabelId.value)
     if (drinkLabel === undefined) {
       showDangerToast(t(LOCALE_ERROR_GET_RECORD))
-      navigateTo(localePath('/labels'))
+      navigateTo(localePath('/drinks'))
     } else {
       name.value = drinkLabel.name
       color.value = drinkLabel.color
@@ -30,7 +30,7 @@ export function usePageDrinkLabelEditActions () {
     try {
       await updateDrinkLabel(drinkLabelId.value, name.value, color.value, standardAmount.value)
       showSuccessToast(t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/labels'))
+      navigateTo(localePath('/drinks'))
     } finally {
       isSaving.value = false
     }

@@ -87,7 +87,7 @@ const standardAmount = defineModel<number>('standardAmount')
       </button>
 
       <NuxtLink
-        :to="localePath('/labels')"
+        :to="localePath('/drinks')"
         class="button"
       >
         {{ t(LOCALE_DRINKS_CANCEL) }}

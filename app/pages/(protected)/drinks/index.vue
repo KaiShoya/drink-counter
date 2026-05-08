@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_ROUTES_DRINKS, LOCALE_DRINKS_ACTIONS_HEADER, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
+import { LOCALE_ROUTES_DRINKS, LOCALE_DRINKS_ACTIONS_HEADER, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
 
 const { t } = useI18n()
 useSeoMeta({
@@ -8,15 +8,12 @@ useSeoMeta({
 
 const localePath = useLocalePath()
 
-const pageDrinksStore = usePageDrinksStore()
-const { deleteTarget, showDeleteModal, hasUnsavedSort } = storeToRefs(pageDrinksStore)
-const { updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksStore
-
-const drinksStore = useDrinksStore()
-const { drinks } = storeToRefs(drinksStore)
-const { resetSort } = drinksStore
+const pageDrinkLabelsStore = usePageDrinkLabelsStore()
+const { deleteTarget, showDeleteModal, hasUnsavedSort } = storeToRefs(pageDrinkLabelsStore)
+const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort } = pageDrinkLabelsStore
 const drinkLabelsStore = useDrinkLabelsStore()
-const { findById } = drinkLabelsStore
+const { drinkLabels } = storeToRefs(drinkLabelsStore)
+const { resetSort } = drinkLabelsStore
 
 // ドラッグ完了時に未保存状態をセット
 const onDragEnd = () => { hasUnsavedSort.value = true }
@@ -43,29 +40,25 @@ onBeforeRouteLeave(() => {
 <template>
   <div class="mx-2">
     <draggable
-      v-model="drinks"
+      v-model="drinkLabels"
       :delay="100"
       :delay-on-touch-only="true"
       :touch-start-threshold="35"
       handle=".handle"
-      group="drinks"
+      group="drinkLabels"
       item-key="id"
       @end="onDragEnd"
     >
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
-          <div class="column is-1" />
-          <div class="column is-2">
-            {{ t(LOCALE_DRINKS_DRINK_LABEL) }}
-          </div>
-          <div class="column is-3">
+          <div class="column is-4">
             {{ t(LOCALE_DRINKS_NAME) }}
           </div>
           <div class="column is-1">
             {{ t(LOCALE_DRINKS_COLOR) }}
           </div>
-          <div class="column">
-            {{ t(LOCALE_DRINKS_AMOUNT) }}
+          <div class="column is-4">
+            {{ t(LOCALE_LABELS_STANDARD_AMOUNT) }}
           </div>
           <div class="column is-3">
             {{ t(LOCALE_DRINKS_ACTIONS_HEADER) }}
@@ -73,10 +66,11 @@ onBeforeRouteLeave(() => {
         </div>
       </template>
 
-      <template #item="{ element: drink }">
+      <template #item="{ element: drinkLabel }">
         <div class="columns is-mobile border-line is-vcentered">
           <div
-              class="column is-1 is-flex"
+            class="column is-4"
+            style="display: flex;"
           >
             <div class="handle mr-2">
               <Icon
@@ -84,48 +78,41 @@ onBeforeRouteLeave(() => {
                 class="icon is-small"
               />
             </div>
-          </div>
-          <div
-              class="column is-2 is-flex"
-          >
-            {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
+            {{ drinkLabel.name }}
           </div>
 
           <div
-              class="column is-3 is-flex"
-          >
-            {{ drink.name }}
-          </div>
-
-          <div
-              class="column is-1 is-vcentered is-mobile is-flex"
+            class="column is-1 is-vcentered is-mobile"
+            style="display: flex;"
           >
             <div
               class="mx-1 tag"
-              :style="{ padding: '10px', backgroundColor: drink.color }"
+              :style="{ padding: '10px', backgroundColor: drinkLabel.color }"
             />
+            <!-- {{ drink.color }} -->
           </div>
 
           <div
-              class="column is-2 is-flex"
+            class="column is-4 is-vcentered is-mobile"
+            style="display: flex;"
           >
-            {{ drink.amount }}
+            {{ drinkLabel.standard_amount }}
           </div>
 
           <div class="column is-3 is-flex is-align-items-center">
             <NuxtLink
-              :to="localePath(`/drinks/${drink.id}`)"
+              :to="localePath(`/drinks/${drinkLabel.id}`)"
               class="button is-ghost p-1 has-text-info"
             >
               <Icon name="mdi:text-box-edit-outline" size="20" />
             </NuxtLink>
 
             <button
-              :class="['button', 'is-ghost', 'p-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
-              @click="updateHidden(drink)"
+              :class="['button', 'is-ghost', 'p-1', drinkLabel.visible ? 'has-text-primary' : 'has-text-dark']"
+              @click="updateHidden(drinkLabel)"
             >
               <Icon
-                v-if="drink.visible"
+                v-if="drinkLabel.visible"
                 name="mdi:eye"
                 size="20"
               />
@@ -138,7 +125,7 @@ onBeforeRouteLeave(() => {
 
             <button
               class="button is-ghost p-1 has-text-danger"
-              @click="clickDeleteDrinkButton(drink)"
+              @click="clickDeleteDrinkButton(drinkLabel)"
             >
               <Icon name="mdi:delete-forever-outline" size="20" />
             </button>
@@ -149,7 +136,7 @@ onBeforeRouteLeave(() => {
       <template #footer>
         <button
           class="button mr-3"
-          @click="save"
+          @click="saveSort"
         >
           {{ t(LOCALE_DRINKS_SAVE_SORT) }}
         </button>
@@ -166,7 +153,7 @@ onBeforeRouteLeave(() => {
     <CommonModalMoleculesDanger
       :title="t(LOCALE_DRINKS_DELETE_MODAL_TITLE, { name: deleteTarget?.name })"
       :content="t(LOCALE_DRINKS_DELETE_MODAL_CONTENT, { name: deleteTarget?.name })"
-      :success="() => { deleteDrink(deleteTarget?.id, deleteTarget?.name) }"
+      :success="() => { deleteDrinkLabel(deleteTarget?.id, deleteTarget?.name) }"
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"
     />
