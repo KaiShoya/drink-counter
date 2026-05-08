@@ -103,6 +103,8 @@ settings:
     save: Save
 
 drinks:
+    edit_title: 'Edit "{name}"'
+    new_title: 'Add Drink'
     select: Please select
     name_placeholder: 350ml
     name: Name
@@ -131,6 +133,8 @@ drinks:
     copy_label_color: Copy label color
 
 labels:
+    edit_title: 'Edit "{name}"'
+    new_title: 'Add Label'
     name_placeholder: Beer
     standard_amount: Standard amount(ml, %, etc)
 

@@ -97,6 +97,8 @@ export const LOCALE_SETTINGS_OCLOCK = `${LOCALE_SETTINGS}.oclock` as const;
 export const LOCALE_SETTINGS_SAVE = `${LOCALE_SETTINGS}.save` as const;
 
 const LOCALE_DRINKS = "drinks" as const;
+export const LOCALE_DRINKS_EDIT_TITLE = `${LOCALE_DRINKS}.edit_title` as const;
+export const LOCALE_DRINKS_NEW_TITLE = `${LOCALE_DRINKS}.new_title` as const;
 export const LOCALE_DRINKS_SELECT = `${LOCALE_DRINKS}.select` as const;
 export const LOCALE_DRINKS_NAME_PLACEHOLDER =
   `${LOCALE_DRINKS}.name_placeholder` as const;
@@ -141,6 +143,8 @@ export const LOCALE_DRINKS_COPY_LABEL_COLOR =
   `${LOCALE_DRINKS}.copy_label_color` as const;
 
 const LOCALE_LABELS = "labels" as const;
+export const LOCALE_LABELS_EDIT_TITLE = `${LOCALE_LABELS}.edit_title` as const;
+export const LOCALE_LABELS_NEW_TITLE = `${LOCALE_LABELS}.new_title` as const;
 export const LOCALE_LABELS_NAME_PLACEHOLDER =
   `${LOCALE_LABELS}.name_placeholder` as const;
 export const LOCALE_LABELS_STANDARD_AMOUNT =
