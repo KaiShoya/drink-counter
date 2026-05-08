@@ -75,6 +75,11 @@ export function useDrinksActions () {
     drinks.value.push(drink)
   }
 
+  /** 保存せずに離脱する際、並び順を sort 属性の値に基づいてリセットする */
+  const resetSort = () => {
+    drinks.value = [...drinks.value].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
+  }
+
   return {
     fetchDrinks,
     deleteDrinkById,
@@ -82,5 +87,6 @@ export function useDrinksActions () {
     updateDrinkVisible,
     updateDrinksSort,
     createDrink,
+    resetSort,
   }
 }

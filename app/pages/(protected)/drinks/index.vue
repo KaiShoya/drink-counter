@@ -14,6 +14,7 @@ const { updateHidden, deleteDrink, clickDeleteDrinkButton, save } = pageDrinksSt
 
 const drinksStore = useDrinksStore()
 const { drinks } = storeToRefs(drinksStore)
+const { resetSort } = drinksStore
 const drinkLabelsStore = useDrinkLabelsStore()
 const { findById } = drinkLabelsStore
 
@@ -29,7 +30,12 @@ onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload)
 
 onBeforeRouteLeave(() => {
   if (hasUnsavedSort.value) {
-    return window.confirm(t(LOCALE_DRINKS_UNSAVED_SORT_CONFIRM))
+    const confirmed = window.confirm(t(LOCALE_DRINKS_UNSAVED_SORT_CONFIRM))
+    if (confirmed) {
+      resetSort()
+      hasUnsavedSort.value = false
+    }
+    return confirmed
   }
 })
 </script>

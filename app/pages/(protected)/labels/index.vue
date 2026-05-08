@@ -13,6 +13,7 @@ const { deleteTarget, showDeleteModal, hasUnsavedSort } = storeToRefs(pageDrinkL
 const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort } = pageDrinkLabelsStore
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
+const { resetSort } = drinkLabelsStore
 
 // ドラッグ完了時に未保存状態をセット
 const onDragEnd = () => { hasUnsavedSort.value = true }
@@ -26,7 +27,12 @@ onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload)
 
 onBeforeRouteLeave(() => {
   if (hasUnsavedSort.value) {
-    return window.confirm(t(LOCALE_DRINKS_UNSAVED_SORT_CONFIRM))
+    const confirmed = window.confirm(t(LOCALE_DRINKS_UNSAVED_SORT_CONFIRM))
+    if (confirmed) {
+      resetSort()
+      hasUnsavedSort.value = false
+    }
+    return confirmed
   }
 })
 </script>

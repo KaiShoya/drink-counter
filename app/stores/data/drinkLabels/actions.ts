@@ -81,6 +81,11 @@ export function useDrinkLabelsActions () {
     drinkLabels.value.push(drinkLabel)
   }
 
+  /** 保存せずに離脱する際、並び順を sort 属性の値に基づいてリセットする */
+  const resetSort = () => {
+    drinkLabels.value = [...drinkLabels.value].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
+  }
+
   return {
     fetchDrinkLabels,
     deleteById,
@@ -88,6 +93,7 @@ export function useDrinkLabelsActions () {
     updateDrinkLabelVisible,
     updateDrinkLabelsSort,
     updateDefaultDrinkId,
+    resetSort,
     createDrinkLabel,
   }
 }
