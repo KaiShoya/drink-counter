@@ -4,10 +4,13 @@ import type { DrinkLabelWithDefaultColor as DrinkLabel } from '~/repositories/dr
 const deleteTarget = ref<DrinkLabel | null>(null)
 // 削除モーダル表示フラグ
 const showDeleteModal = ref<boolean>(false)
+// ドラッグ並び替え後に未保存の状態を追跡する
+const hasUnsavedSort = ref<boolean>(false)
 
 export function usePageDrinkLabelsState () {
   return {
     deleteTarget,
     showDeleteModal,
+    hasUnsavedSort,
   }
 }

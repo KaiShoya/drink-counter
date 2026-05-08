@@ -2,7 +2,7 @@ import type { DrinkRow } from "~/repositories/drinksRepository"
 import { usePageDrinksState } from './state'
 
 export function usePageDrinksActions () {
-  const { deleteTarget, showDeleteModal } = usePageDrinksState()
+  const { deleteTarget, showDeleteModal, hasUnsavedSort } = usePageDrinksState()
 
   const { t } = useI18n()
   const drinksStore = useDrinksStore()
@@ -53,6 +53,7 @@ export function usePageDrinksActions () {
    */
   const save = async () => {
     await updateDrinksSort()
+    hasUnsavedSort.value = false
     showSuccessToast(t(LOCALE_DRINKS_SORT_SUCCESS))
   }
 

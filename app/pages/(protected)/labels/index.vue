@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_ROUTES_LABELS, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
+import { LOCALE_ROUTES_LABELS, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
 
 const { t } = useI18n()
 useSeoMeta({
@@ -9,10 +9,26 @@ useSeoMeta({
 const localePath = useLocalePath()
 
 const pageDrinkLabelsStore = usePageDrinkLabelsStore()
-const { deleteTarget, showDeleteModal } = storeToRefs(pageDrinkLabelsStore)
+const { deleteTarget, showDeleteModal, hasUnsavedSort } = storeToRefs(pageDrinkLabelsStore)
 const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort } = pageDrinkLabelsStore
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
+
+// ドラッグ完了時に未保存状態をセット
+const onDragEnd = () => { hasUnsavedSort.value = true }
+
+const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  if (hasUnsavedSort.value) { e.preventDefault() }
+}
+
+onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
+onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
+
+onBeforeRouteLeave(() => {
+  if (hasUnsavedSort.value) {
+    return window.confirm(t(LOCALE_DRINKS_UNSAVED_SORT_CONFIRM))
+  }
+})
 </script>
 
 <template>
@@ -25,6 +41,7 @@ const { drinkLabels } = storeToRefs(drinkLabelsStore)
       handle=".handle"
       group="drinkLabels"
       item-key="id"
+      @end="onDragEnd"
     >
       <template #header>
         <div class="columns is-mobile title is-6 border-line">
