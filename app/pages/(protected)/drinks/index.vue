@@ -50,8 +50,7 @@ const { findById } = drinkLabelsStore
       <template #item="{ element: drink }">
         <div class="columns is-mobile border-line is-vcentered">
           <div
-            class="column is-1"
-            class="is-flex"
+              class="column is-1 is-flex"
           >
             <div class="handle mr-2">
               <Icon
@@ -61,22 +60,19 @@ const { findById } = drinkLabelsStore
             </div>
           </div>
           <div
-            class="column is-2"
-            class="is-flex"
+              class="column is-2 is-flex"
           >
             {{ drink.drink_label_id ? findById(drink.drink_label_id)?.name : '' }}
           </div>
 
           <div
-            class="column is-3"
-            class="is-flex"
+              class="column is-3 is-flex"
           >
             {{ drink.name }}
           </div>
 
           <div
-            class="column is-1 is-vcentered is-mobile"
-            class="is-flex"
+              class="column is-1 is-vcentered is-mobile is-flex"
           >
             <div
               class="mx-1 tag"
@@ -85,8 +81,7 @@ const { findById } = drinkLabelsStore
           </div>
 
           <div
-            class="column is-2"
-            class="is-flex"
+              class="column is-2 is-flex"
           >
             {{ drink.amount }}
           </div>
