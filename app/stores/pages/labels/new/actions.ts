@@ -1,7 +1,7 @@
 import { usePageDrinkLabelNewState } from './state'
 
 export function usePageDrinkLabelNewActions () {
-  const { name, color, standardAmount } = usePageDrinkLabelNewState()
+  const { name, color, standardAmount, isSaving } = usePageDrinkLabelNewState()
   const { t } = useI18n()
   const localePath = useLocalePath()
 
@@ -14,13 +14,19 @@ export function usePageDrinkLabelNewActions () {
   }
 
   const create = async () => {
-    await createDrinkLabel(name.value, color.value, standardAmount.value)
-    showSuccessToast(t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
-    navigateTo(localePath('/labels'))
+    isSaving.value = true
+    try {
+      await createDrinkLabel(name.value, color.value, standardAmount.value)
+      showSuccessToast(t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
+      navigateTo(localePath('/labels'))
+    } finally {
+      isSaving.value = false
+    }
   }
 
   return {
     initPage,
     create,
+    isSaving,
   }
 }

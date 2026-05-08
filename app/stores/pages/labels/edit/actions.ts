@@ -1,7 +1,7 @@
 import { usePageDrinkLabelEditState } from './state'
 
 export function usePageDrinkLabelEditActions () {
-  const { drinkLabelId, name, color, standardAmount } = usePageDrinkLabelEditState()
+  const { drinkLabelId, name, color, standardAmount, isSaving } = usePageDrinkLabelEditState()
   const { t } = useI18n()
   const localePath = useLocalePath()
 
@@ -23,13 +23,19 @@ export function usePageDrinkLabelEditActions () {
   }
 
   const update = async () => {
-    await updateDrinkLabel(drinkLabelId.value, name.value, color.value, standardAmount.value)
-    showSuccessToast(t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
-    navigateTo(localePath('/labels'))
+    isSaving.value = true
+    try {
+      await updateDrinkLabel(drinkLabelId.value, name.value, color.value, standardAmount.value)
+      showSuccessToast(t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
+      navigateTo(localePath('/labels'))
+    } finally {
+      isSaving.value = false
+    }
   }
 
   return {
     initPage,
     update,
+    isSaving,
   }
 }

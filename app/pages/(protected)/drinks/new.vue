@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const drinkNewStore = usePageDrinkNewStore()
-const { name, color, amount, drinkLabelId } = storeToRefs(drinkNewStore)
+const { name, color, amount, drinkLabelId, isSaving } = storeToRefs(drinkNewStore)
 const { initPage, create } = drinkNewStore
 
 initPage()
@@ -14,6 +14,7 @@ initPage()
       v-model:amount="amount"
       v-model:drink-label-id="drinkLabelId"
       :save-function="create"
+      :is-saving="isSaving"
       save="drinks.add"
     />
   </div>

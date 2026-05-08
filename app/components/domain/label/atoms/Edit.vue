@@ -8,6 +8,7 @@ const localePath = useLocalePath()
 defineProps<{
   saveFunction: () => void
   save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD
+  isSaving?: boolean
 }>()
 const name = defineModel<string | null>('name')
 const color = defineModel<string | null>('color')
@@ -78,6 +79,8 @@ const standardAmount = defineModel<number>('standardAmount')
     <div>
       <button
         class="button"
+        :class="{ 'is-loading': isSaving }"
+        :disabled="isSaving"
         @click="saveFunction()"
       >
         {{ t(save) }}
