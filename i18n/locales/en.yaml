@@ -113,6 +113,9 @@ drinks:
     standard_amount: 'Standard amount :'
     apply_standard_amount: 'Apply standard amount {amount} to the quantity?'
     apply_standard_amount_button: 'Apply'
+    validation_name_required: 'Name is required'
+    validation_color_invalid: 'Enter a valid color code (#RRGGBB or #RGB)'
+    validation_amount_invalid: 'Enter an integer of 1 or more'
     drink_label: Drink label
     delete_modal_title: Delete \"{name}\".
     delete_modal_content: If you delete \"{name}\", all the drink counts you drank will also be deleted. Do you want to delete it?

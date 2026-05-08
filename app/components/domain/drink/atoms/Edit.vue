@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT } from '~/utils/locales'
+import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT, LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID, LOCALE_DRINKS_VALIDATION_COLOR_INVALID, LOCALE_DRINKS_VALIDATION_NAME_REQUIRED } from '~/utils/locales'
 import { generateRandomColor } from '~/utils/common'
 import type { DrinkLabelWithDefaultColor } from '~/repositories/drinkLabelsRepository'
 
@@ -14,7 +14,7 @@ defineProps<{
   saveFunction: () => void
   save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD
   isSaving?: boolean
-}>() 
+}>()
 const drinkLabelId = defineModel<number | null>('drinkLabelId')
 const name = defineModel<string | null>('name')
 const color = defineModel<string | null>('color')
@@ -45,6 +45,19 @@ const applyStandardAmount = () => {
     pendingStandardAmount.value = null
   }
 }
+
+const HEX_COLOR_RE = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
+
+// 初回保存試行後のみエラーを表示する
+const submitted = ref(false)
+
+const errors = computed(() => ({
+  name: !name.value?.trim() ? t(LOCALE_DRINKS_VALIDATION_NAME_REQUIRED) : null,
+  color: !color.value || !HEX_COLOR_RE.test(color.value) ? t(LOCALE_DRINKS_VALIDATION_COLOR_INVALID) : null,
+  amount: amount.value == null || amount.value < 1 || !Number.isInteger(Number(amount.value)) ? t(LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID) : null,
+}))
+
+const hasError = computed(() => Object.values(errors.value).some(v => v !== null))
 </script>
 
 <template>
@@ -93,10 +106,17 @@ const applyStandardAmount = () => {
         <input
           v-model="name"
           class="input"
+          :class="{ 'is-danger': submitted && errors.name }"
           type="text"
           :placeholder="t(LOCALE_DRINKS_NAME_PLACEHOLDER)"
         >
       </div>
+      <p
+        v-if="submitted && errors.name"
+        class="help is-danger"
+      >
+        {{ errors.name }}
+      </p>
     </div>
 
     <div class="field">
@@ -167,10 +187,17 @@ const applyStandardAmount = () => {
         <input
           v-model="amount"
           class="input"
+          :class="{ 'is-danger': submitted && errors.amount }"
           type="number"
           placeholder="1"
         >
       </div>
+      <p
+        v-if="submitted && errors.amount"
+        class="help is-danger"
+      >
+        {{ errors.amount }}
+      </p>
       <div
         v-if="pendingStandardAmount != null"
         class="mt-2 is-flex is-align-items-center"
@@ -193,7 +220,7 @@ const applyStandardAmount = () => {
         class="button"
         :class="{ 'is-loading': isSaving }"
         :disabled="isSaving"
-        @click="saveFunction()"
+        @click="submitted = true; !hasError && saveFunction()"
       >
         {{ t(save) }}
       </button>
