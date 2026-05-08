@@ -64,6 +64,7 @@ onBeforeRouteLeave(() => {
           <div class="column is-3">
             {{ t(LOCALE_DRINKS_ACTIONS_HEADER) }}
           </div>
+        </div>
       </template>
 
       <template #item="{ element: drink }">
@@ -105,43 +106,34 @@ onBeforeRouteLeave(() => {
             {{ drink.amount }}
           </div>
 
-          <div class="column columns is-mobile is-3">
+          <div class="column is-3 is-flex is-align-items-center">
             <NuxtLink
               :to="localePath(`/drinks/${drink.id}`)"
-              class="icon has-text-info"
+              class="button is-ghost p-1 has-text-info"
             >
-              <Icon
-                name="mdi:text-box-edit-outline"
-                class="icon"
-              />
+              <Icon name="mdi:text-box-edit-outline" />
             </NuxtLink>
 
             <button
-              :class="['button', 'is-ghost', 'mx-1', 'p-0', drink.visible ? 'has-text-primary' : 'has-text-dark']"
-              style="min-width: 44px; min-height: 44px;"
+              :class="['button', 'is-ghost', 'p-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
               @click="updateHidden(drink)"
             >
               <Icon
                 v-if="drink.visible"
                 name="mdi:eye"
-                class="icon"
               />
               <Icon
                 v-else
                 name="mdi:eye-off"
-                class="icon"
               />
             </button>
 
-            <span
-              class="icon has-text-danger"
+            <button
+              class="button is-ghost p-1 has-text-danger"
               @click="clickDeleteDrinkButton(drink)"
             >
-              <Icon
-                name="mdi:delete-forever-outline"
-                class="icon"
-              />
-            </span>
+              <Icon name="mdi:delete-forever-outline" />
+            </button>
           </div>
         </div>
       </template>
