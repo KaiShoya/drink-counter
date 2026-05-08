@@ -1,3 +1,4 @@
+import type { DrinkRow } from '~/repositories/drinksRepository'
 import { useDrinksState } from './state'
 import { useDrinksGetters } from './getters'
 
@@ -59,12 +60,21 @@ export function useDrinksActions () {
     drink.visible = visible
   }
 
-  const updateDrinksSort = async () => {
-    const payload = drinks.value.map((drink, i) => {
-      drink.sort = i
+  /**
+   * 指定した飲み物の並び順をまとめて保存する。
+   * 対象ドリンクが元々占有していた sort 値をプールとして収集し、
+   * 昇順に整列して新しい配列順に再割り当てする。
+   * 対象外ドリンクの sort 値は変更されない。
+   * @param targetDrinks 並び替え対象の DrinkRow 配列（全件 or ラベル絞り込み後のサブリスト）
+   */
+  const updateDrinksSort = async (targetDrinks: DrinkRow[]) => {
+    // 対象ドリンクが保有していた sort 値を昇順に収集（スロットとして再利用）
+    const sortSlots = [...targetDrinks.map(d => d.sort ?? 0)].sort((a, b) => a - b)
+    const payload = targetDrinks.map((drink, i) => {
+      drink.sort = sortSlots[i]!
       return {
         id: drink.id,
-        sort: drink.sort,
+        sort: sortSlots[i]!,
       }
     })
     await $drinksRepository.updateSort(payload)
