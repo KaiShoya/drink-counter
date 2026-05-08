@@ -105,6 +105,8 @@ settings:
 drinks:
     edit_title: 'Edit "{name}"'
     new_title: 'Add Drink'
+    actions_header: 'Actions'
+    random_color_title: 'Generate random color'
     select: Please select
     name_placeholder: 350ml
     name: Name

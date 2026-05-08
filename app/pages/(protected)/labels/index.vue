@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_ROUTES_LABELS, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
+import { LOCALE_ROUTES_LABELS, LOCALE_DRINKS_ACTIONS_HEADER, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
 
 const { t } = useI18n()
 useSeoMeta({
@@ -54,7 +54,9 @@ onBeforeRouteLeave(() => {
           <div class="column is-4">
             {{ t(LOCALE_LABELS_STANDARD_AMOUNT) }}
           </div>
-          <div class="column is-3" />
+          <div class="column is-3">
+            {{ t(LOCALE_DRINKS_ACTIONS_HEADER) }}
+          </div>
         </div>
       </template>
 
@@ -102,8 +104,9 @@ onBeforeRouteLeave(() => {
               />
             </NuxtLink>
 
-            <span
-              :class="['icon', 'mx-1', drinkLabel.visible ? 'has-text-primary' : 'has-text-dark']"
+            <button
+              :class="['button', 'is-ghost', 'mx-1', 'p-0', drinkLabel.visible ? 'has-text-primary' : 'has-text-dark']"
+              style="min-width: 44px; min-height: 44px;"
               @click="updateHidden(drinkLabel)"
             >
               <Icon
@@ -116,7 +119,7 @@ onBeforeRouteLeave(() => {
                 name="mdi:eye-off"
                 class="icon"
               />
-            </span>
+            </button>
 
             <span
               class="icon has-text-danger"

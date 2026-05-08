@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT, LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID, LOCALE_DRINKS_VALIDATION_COLOR_INVALID, LOCALE_DRINKS_VALIDATION_NAME_REQUIRED } from '~/utils/locales'
+import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_RANDOM_COLOR_TITLE, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT, LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID, LOCALE_DRINKS_VALIDATION_COLOR_INVALID, LOCALE_DRINKS_VALIDATION_NAME_REQUIRED } from '~/utils/locales'
 import { generateRandomColor } from '~/utils/common'
 import type { DrinkLabelWithDefaultColor } from '~/repositories/drinkLabelsRepository'
 
@@ -172,13 +172,6 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
           >
             {{ t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
           </button>
-          <button
-            v-else
-            class="button"
-            disabled
-          >
-            {{ t(LOCALE_DRINKS_COPY_LABEL_COLOR) }}
-          </button>
         </div>
 
         <div
@@ -187,10 +180,11 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
         >
           <button
             class="button"
+            :title="t(LOCALE_DRINKS_RANDOM_COLOR_TITLE)"
             @click="color = generateRandomColor()"
           >
             <Icon
-              name="mdi:cached"
+              name="mdi:dice-multiple"
               class="icon"
             />
           </button>
@@ -240,7 +234,7 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
 
     <div>
       <button
-        class="button"
+        class="button mr-2"
         :class="{ 'is-loading': isSaving }"
         :disabled="isSaving"
         @click="submitted = true; !hasError && saveFunction()"

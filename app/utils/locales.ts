@@ -99,6 +99,8 @@ export const LOCALE_SETTINGS_SAVE = `${LOCALE_SETTINGS}.save` as const;
 const LOCALE_DRINKS = "drinks" as const;
 export const LOCALE_DRINKS_EDIT_TITLE = `${LOCALE_DRINKS}.edit_title` as const;
 export const LOCALE_DRINKS_NEW_TITLE = `${LOCALE_DRINKS}.new_title` as const;
+export const LOCALE_DRINKS_ACTIONS_HEADER = `${LOCALE_DRINKS}.actions_header` as const;
+export const LOCALE_DRINKS_RANDOM_COLOR_TITLE = `${LOCALE_DRINKS}.random_color_title` as const;
 export const LOCALE_DRINKS_SELECT = `${LOCALE_DRINKS}.select` as const;
 export const LOCALE_DRINKS_NAME_PLACEHOLDER =
   `${LOCALE_DRINKS}.name_placeholder` as const;

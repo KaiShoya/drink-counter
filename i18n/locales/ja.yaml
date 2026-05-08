@@ -105,6 +105,8 @@ settings:
 drinks:
     edit_title: '「{name}」を編集'
     new_title: '飲み物を追加'
+    actions_header: '操作'
+    random_color_title: 'ランダムな色を生成'
     select: 選択してください
     name_placeholder: 350ml
     name: 名前
