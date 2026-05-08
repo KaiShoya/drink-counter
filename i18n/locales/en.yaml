@@ -125,6 +125,7 @@ drinks:
     sort_success: Update sort.
     save_sort: Save sort
     unsaved_sort_confirm: 'The sort order has not been saved. Leave this page?'
+    unsaved_form_confirm: 'Your changes have not been saved. Leave this page?'
     delete_success: \"{name}\" was successfully deleted.
     delete_failure: Failed to delete \"{name}\".
     create_success: \"{name}\" was successfully added.

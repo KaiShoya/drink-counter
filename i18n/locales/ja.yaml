@@ -125,6 +125,7 @@ drinks:
     sort_success: 並び順を保存しました。
     save_sort: 並び順を保存する
     unsaved_sort_confirm: '並び順が保存されていません。このページを離れますか？'
+    unsaved_form_confirm: '変更内容が保存されていません。このページを離れますか？'
     delete_success: 「{name}」を削除しました。
     delete_failure: 「{name}」の削除に失敗しました。
     create_success: 「{name}」を追加しました。

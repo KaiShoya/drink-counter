@@ -69,27 +69,6 @@ const onLocalColorInput = (val: string) => {
   }, 300)
 }
 
-// カラーテキスト入力は localColor で管理し、有効な HEX のみ debounce 後に color モデルへ反映する
-const localColor = ref<string>(color.value ?? '')
-let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-// カラーピッカー側の変更（常に有効値）を localColor に同期する
-watch(color, (val) => {
-  if (val && val !== localColor.value) {
-    localColor.value = val
-  }
-})
-
-const onLocalColorInput = (val: string) => {
-  localColor.value = val
-  if (debounceTimer) clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(() => {
-    if (HEX_COLOR_RE.test(val)) {
-      color.value = val
-    }
-  }, 300)
-}
-
 // 初回保存試行後のみエラーを表示する
 const submitted = ref(false)
 

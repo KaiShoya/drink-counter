@@ -131,6 +131,8 @@ export const LOCALE_DRINKS_SORT_SUCCESS =
 export const LOCALE_DRINKS_SAVE_SORT = `${LOCALE_DRINKS}.save_sort` as const;
 export const LOCALE_DRINKS_UNSAVED_SORT_CONFIRM =
   `${LOCALE_DRINKS}.unsaved_sort_confirm` as const;
+export const LOCALE_DRINKS_UNSAVED_FORM_CONFIRM =
+  `${LOCALE_DRINKS}.unsaved_form_confirm` as const;
 export const LOCALE_DRINKS_DELETE_SUCCESS =
   `${LOCALE_DRINKS}.delete_success` as const;
 export const LOCALE_DRINKS_DELETE_FAILURE =
