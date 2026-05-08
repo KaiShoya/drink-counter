@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT } from '~/utils/locales'
+import { LOCALE_DRINKS_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON, LOCALE_DRINKS_CANCEL, LOCALE_DRINKS_COLOR, LOCALE_DRINKS_COPY_LABEL_COLOR, LOCALE_DRINKS_DRINK_LABEL, LOCALE_DRINKS_NAME, LOCALE_DRINKS_NAME_PLACEHOLDER, LOCALE_DRINKS_SELECT, LOCALE_DRINKS_STANDARD_AMOUNT } from '~/utils/locales'
 import { generateRandomColor } from '~/utils/common'
 import type { DrinkLabelWithDefaultColor } from '~/repositories/drinkLabelsRepository'
 
@@ -22,13 +22,27 @@ const amount = defineModel<number | null>('amount')
 
 const selectedLabel = ref<DrinkLabelWithDefaultColor | null | undefined>(drinkLabelId.value ? findById(drinkLabelId.value) : undefined)
 
+// ラベル変更時に標準量を即時上書きせず、ユーザーに確認を促すために保持する
+const pendingStandardAmount = ref<number | null>(null)
+
 const changeDrinkLabelId = (id: number | null) => {
   drinkLabelId.value = id
+  pendingStandardAmount.value = null
   if (id) {
     selectedLabel.value = findById(id)
-    amount.value = selectedLabel.value?.standard_amount
+    const std = selectedLabel.value?.standard_amount
+    if (std != null) {
+      pendingStandardAmount.value = std
+    }
   } else {
     selectedLabel.value = null
+  }
+}
+
+const applyStandardAmount = () => {
+  if (pendingStandardAmount.value != null) {
+    amount.value = pendingStandardAmount.value
+    pendingStandardAmount.value = null
   }
 }
 </script>
@@ -142,11 +156,13 @@ const changeDrinkLabelId = (id: number | null) => {
     </div>
 
     <div class="field">
-      <label class="label">
-        {{ t(LOCALE_DRINKS_AMOUNT) }}
-        {{ t(LOCALE_DRINKS_STANDARD_AMOUNT) }}
-        {{ selectedLabel?.standard_amount }}
-      </label>
+      <label class="label">{{ t(LOCALE_DRINKS_AMOUNT) }}</label>
+      <p
+        v-if="selectedLabel"
+        class="help mb-1"
+      >
+        {{ t(LOCALE_DRINKS_STANDARD_AMOUNT) }} {{ selectedLabel.standard_amount }}
+      </p>
       <div class="control">
         <input
           v-model="amount"
@@ -154,6 +170,21 @@ const changeDrinkLabelId = (id: number | null) => {
           type="number"
           placeholder="1"
         >
+      </div>
+      <div
+        v-if="pendingStandardAmount != null"
+        class="mt-2 is-flex is-align-items-center"
+        style="gap: 0.5rem;"
+      >
+        <p class="help">
+          {{ t(LOCALE_DRINKS_APPLY_STANDARD_AMOUNT, { amount: pendingStandardAmount }) }}
+        </p>
+        <button
+          class="button is-small is-info is-light"
+          @click="applyStandardAmount()"
+        >
+          {{ t(LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON) }}
+        </button>
       </div>
     </div>
 

@@ -105,6 +105,10 @@ export const LOCALE_DRINKS_COLOR = `${LOCALE_DRINKS}.color` as const;
 export const LOCALE_DRINKS_AMOUNT = `${LOCALE_DRINKS}.amount` as const;
 export const LOCALE_DRINKS_STANDARD_AMOUNT =
   `${LOCALE_DRINKS}.standard_amount` as const;
+export const LOCALE_DRINKS_APPLY_STANDARD_AMOUNT =
+  `${LOCALE_DRINKS}.apply_standard_amount` as const;
+export const LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON =
+  `${LOCALE_DRINKS}.apply_standard_amount_button` as const;
 export const LOCALE_DRINKS_DRINK_LABEL =
   `${LOCALE_DRINKS}.drink_label` as const;
 export const LOCALE_DRINKS_DELETE_MODAL_TITLE =
