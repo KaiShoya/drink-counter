@@ -175,6 +175,11 @@ if (drinkCountForDay.length >= threshold) {
 **アクセス条件**: 認証ユーザーのみ  
 **認証ガード**: `auth` middleware
 
+**2026-05-09 時点の実装差分**:
+- `/drinks` はラベル一覧（旧 labels 一覧）として利用
+- `/drinks/[id]`（ラベル詳細）内の「このラベルの飲み物」で、飲み物の新規追加/編集はモーダルで完結
+- `/drinks/item/new` と `/drinks/item/[id]` は直接遷移時のフォールバックとして維持
+
 #### サブページ
 
 ##### 4a. 飲み物一覧（`/drinks`）

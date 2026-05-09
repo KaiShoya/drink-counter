@@ -15,12 +15,14 @@ export function usePageDrinkNewActions () {
     drinkLabelId.value = null
   }
 
-  const create = async () => {
+  const create = async (redirectPath: string | null = '/drinks') => {
     isSaving.value = true
     try {
       await createDrink(name.value, color.value, amount.value, drinkLabelId.value)
       showSuccessToast(t(LOCALE_DRINKS_CREATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/drinks'))
+      if (redirectPath) {
+        navigateTo(localePath(redirectPath))
+      }
     } finally {
       isSaving.value = false
     }
