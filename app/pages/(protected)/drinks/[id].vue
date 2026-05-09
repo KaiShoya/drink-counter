@@ -20,10 +20,9 @@ const {
   name, color, standardAmount, isSaving,
   hasUnsavedSort, deleteTarget, showDeleteModal, filteredDrinks,
 } = storeToRefs(drinkLabelEditStore)
-const { initPage, update, updateHidden, clickDeleteDrinkButton, deleteDrink, onDragEnd, saveSort } = drinkLabelEditStore
+const { initPage, update, updateHidden, clickDeleteDrinkButton, deleteDrink, onDragEnd, saveSort, resetSort } = drinkLabelEditStore
 
 const localePath = useLocalePath()
-const route = useRoute()
 
 initPage()
 
@@ -59,7 +58,11 @@ onBeforeRouteLeave(() => {
     const msg = hasUnsavedSort.value
       ? t(LOCALE_LABELS_UNSAVED_SORT_CONFIRM)
       : t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)
-    return window.confirm(msg)
+    const confirmed = window.confirm(msg)
+    if (confirmed && hasUnsavedSort.value) {
+      resetSort()
+    }
+    return confirmed
   }
 })
 </script>

@@ -105,7 +105,7 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
             class="select is-fullwidth"
             :class="{ 'is-danger': submitted && errors.drinkLabel }"
           >
-            <select @change="changeDrinkLabelId(Number(($event.target as HTMLInputElement).value))">
+            <select @change="changeDrinkLabelId(($event.target as HTMLInputElement).value === '' ? null : Number(($event.target as HTMLInputElement).value))">
               <option
                 key=""
                 value=""
