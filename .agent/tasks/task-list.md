@@ -25,6 +25,11 @@
 | [T-0030](items/T-0030.md) | 加算/減算操作に Undo トーストを追加 | Medium | enhancement | v1.22 |
 | [T-0031](items/T-0031.md) | 月次レビュー自動サマリーの表示追加 | Low | enhancement | v1.22 |
 | [T-0032](items/T-0032.md) | 目標ペースガイド表示の追加 | Low | enhancement | v1.22 |
+| [T-0033](items/T-0033.md) | 年次カレンダーの表示切れを修正する | High | bug | v1.21 |
+| [T-0034](items/T-0034.md) | オフラインサポートのMVP方針を実装する | Medium | enhancement | v1.22 |
+| [T-0035](items/T-0035.md) | ラベル削除時の関連飲み物挙動を仕様化して実装する | Medium | enhancement | v1.21 |
+| [T-0036](items/T-0036.md) | ラベル検索・フィルタリング機能を追加する | Medium | enhancement | v1.21 |
+| [T-0037](items/T-0037.md) | ローカル環境非依存のセットアップ手順を整備する | Low | documentation | v1.22 |
 
 
 
