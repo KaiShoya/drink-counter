@@ -348,6 +348,10 @@ aggregatedData: {
 **アクション**:
 - **月選択**: `setMonth(year, month)` → `fetchMonthlyData()` 呼び出し
 - **前月/翌月**: 日付ロジックで自動計算
+- **集計条件変更時の再取得**: `userSetting.timezone` または `userSetting.switching_timing` 変更時に月次集計を再取得
+
+**集計条件表示**:
+- 画面上に現在の `timezone` と `switching_timing` を表示し、集計取得引数と一致させる
 
 **参照**:
 - **Store**: `store/pages/data/` - `fetchMonthlyData()`
@@ -381,6 +385,13 @@ aggregatedData: {
 
 **参照**:
 - **Store**: `store/pages/data/` - `fetchAnnualData()`
+
+**アクション**:
+- **年選択**: `setYear(year)` → `fetchAnnualData()` 呼び出し
+- **集計条件変更時の再取得**: `userSetting.timezone` または `userSetting.switching_timing` 変更時に年次集計を再取得
+
+**集計条件表示**:
+- 画面上に現在の `timezone` と `switching_timing` を表示し、集計取得引数と一致させる
 
 ---
 

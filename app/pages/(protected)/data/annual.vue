@@ -8,23 +8,46 @@ const annualStore = useAnnualStore()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { year, calendarTitle, computeCalendarData } = storeToRefs(annualStore)
 const { fetchDrinkCounters } = annualStore
+const { userSetting } = storeToRefs(useUserStore())
+
+const annualSummaryConditions = computed(() => ({
+  timezone: userSetting.value.timezone,
+  dayCutoffHour: userSetting.value.switching_timing,
+  filters: { visibility: 'visible' as const },
+}))
 
 fetchDrinkCounters()
 
 // 年次KPIの新ストア
 const annualSummary = useAnnualSummaryStore()
-// 初回取得
-annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
+const fetchAnnualSummary = async () => {
+  await annualSummary.fetchAnnualSummary({
+    year: year.value,
+    ...annualSummaryConditions.value,
+  })
+}
 
-watch(year, async () => {
+// 初回取得
+fetchAnnualSummary()
+
+watch([
+  year,
+  () => userSetting.value.timezone,
+  () => userSetting.value.switching_timing,
+], async () => {
   await fetchDrinkCounters()
-  await annualSummary.fetchAnnualSummary({ year: year.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
+  await fetchAnnualSummary()
 })
 </script>
 
 <template>
   <div class="container">
     <DomainPickerMoleculesYearPicker />
+
+    <div class="notification is-light py-3 px-4">
+      <p>{{ t(LOCALE_SETTINGS_TIMEZONE) }}: {{ userSetting.timezone }}</p>
+      <p>{{ t(LOCALE_SETTINGS_SWITCHING_TIMING) }}: {{ userSetting.switching_timing }} {{ t(LOCALE_SETTINGS_OCLOCK) }}</p>
+    </div>
 
     <DomainAnnualKpiCards />
 

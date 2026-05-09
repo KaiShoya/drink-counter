@@ -18,6 +18,12 @@ export function useSettingsActions () {
       timezone.value,
       switchingTiming.value,
     )
+    userSetting.value = {
+      ...userSetting.value,
+      threshold_for_detecting_overdrinking: thresholdForDetectingOverdrinking.value,
+      timezone: timezone.value,
+      switching_timing: switchingTiming.value,
+    }
     showSuccessToast(t(LOCALE_GENERAL_UPDATE_SUCCESS))
   }
 

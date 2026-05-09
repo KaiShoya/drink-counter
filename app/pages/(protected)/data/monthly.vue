@@ -12,18 +12,36 @@ const { fetchDrinkCounters } = monthlyStore
 // 新しい月次集計ストア
 const monthlySummary = useMonthlySummaryStore()
 const { data: monthlyData } = storeToRefs(monthlySummary)
+const { userSetting } = storeToRefs(useUserStore())
+
+const monthlySummaryConditions = computed(() => ({
+  timezone: userSetting.value.timezone,
+  dayCutoffHour: userSetting.value.switching_timing,
+  filters: { visibility: 'visible' as const },
+}))
 
 // カレンダー再描画用
 const updateCalendar = ref<number>(0)
 
 fetchDrinkCounters()
 
-// 新しい集計も初回取得
-monthlySummary.fetchMonthlySummary({ month: yearMonth.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
+const fetchMonthlySummary = async () => {
+  await monthlySummary.fetchMonthlySummary({
+    month: yearMonth.value,
+    ...monthlySummaryConditions.value,
+  })
+}
 
-watch(yearMonth, async () => {
+// 新しい集計も初回取得
+fetchMonthlySummary()
+
+watch([
+  yearMonth,
+  () => userSetting.value.timezone,
+  () => userSetting.value.switching_timing,
+], async () => {
   await fetchDrinkCounters()
-  await monthlySummary.fetchMonthlySummary({ month: yearMonth.value, timezone: 'Asia/Tokyo', dayCutoffHour: 5, filters: { visibility: 'visible' } })
+  await fetchMonthlySummary()
   // keyを更新してカレンダーを再描画
   updateCalendar.value++
 })
@@ -44,6 +62,11 @@ const calendarDataNormalized = computed(() => {
 <template>
   <div class="container">
     <DomainPickerMoleculesMonthPicker />
+
+    <div class="notification is-light py-3 px-4">
+      <p>{{ t(LOCALE_SETTINGS_TIMEZONE) }}: {{ userSetting.timezone }}</p>
+      <p>{{ t(LOCALE_SETTINGS_SWITCHING_TIMING) }}: {{ userSetting.switching_timing }} {{ t(LOCALE_SETTINGS_OCLOCK) }}</p>
+    </div>
 
     <DomainMonthlyKpiCards />
 
