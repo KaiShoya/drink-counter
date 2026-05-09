@@ -15,6 +15,16 @@
 
 | ID | タイトル | 優先度 | 種別 | 担当バージョン |
 |----|----------|--------|------|--------------|
+| [T-0023](items/T-0023.md) | 集計条件の設定連動を月次・年次画面で統一 | High | enhancement | v1.21 |
+| [T-0024](items/T-0024.md) | データ画面の状態設計を統一（Loading/Empty/Error） | High | enhancement | v1.21 |
+| [T-0025](items/T-0025.md) | 認証画面文言の i18n 統一と確認画面導線改善 | Medium | enhancement | v1.21 |
+| [T-0026](items/T-0026.md) | 未保存変更の離脱確認を共通モーダル化 | Medium | refactoring | v1.21 |
+| [T-0027](items/T-0027.md) | About と規約ページの導線復旧 | Medium | enhancement | v1.21 |
+| [T-0028](items/T-0028.md) | 飲み物一覧のモバイル可読性改善とスタイル整理 | Low | refactoring | v1.21 |
+| [T-0029](items/T-0029.md) | トップ画面にクイック記録ウィジェット追加 | Medium | enhancement | v1.22 |
+| [T-0030](items/T-0030.md) | 加算/減算操作に Undo トーストを追加 | Medium | enhancement | v1.22 |
+| [T-0031](items/T-0031.md) | 月次レビュー自動サマリーの表示追加 | Low | enhancement | v1.22 |
+| [T-0032](items/T-0032.md) | 目標ペースガイド表示の追加 | Low | enhancement | v1.22 |
 
 
 
