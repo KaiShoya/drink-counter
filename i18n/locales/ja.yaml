@@ -103,12 +103,22 @@ settings:
     save: 保存する
 
 drinks:
+    edit_title: '「{name}」を編集'
+    new_title: '飲み物を追加'
+    actions_header: '操作'
+    random_color_title: 'ランダムな色を生成'
     select: 選択してください
     name_placeholder: 350ml
     name: 名前
     color: 色
     amount: 量(ml,合など)
     standard_amount: '基準量 :'
+    apply_standard_amount: '標準量 {amount} を量に反映しますか？'
+    apply_standard_amount_button: '反映する'
+    validation_name_required: '名前を入力してください'
+    validation_color_invalid: '有効なカラーコード（#RRGGBB または #RGB）を入力してください'
+    validation_amount_invalid: '1 以上の整数を入力してください'
+    validation_label_required: 'ラベルを選択してください'
     drink_label: ラベル
     delete_modal_title: 「{name}」を削除します。
     delete_modal_content: 「{name}」を削除すると、飲んだ杯数もすべて削除されます。それでも削除しますか？
@@ -117,6 +127,8 @@ drinks:
     cancel: 戻る
     sort_success: 並び順を保存しました。
     save_sort: 並び順を保存する
+    unsaved_sort_confirm: '並び順が保存されていません。このページを離れますか？'
+    unsaved_form_confirm: '変更内容が保存されていません。このページを離れますか？'
     delete_success: 「{name}」を削除しました。
     delete_failure: 「{name}」の削除に失敗しました。
     create_success: 「{name}」を追加しました。
@@ -129,8 +141,16 @@ drinks:
     copy_label_color: ラベルの色をコピーする
 
 labels:
+    edit_title: '「{name}」を編集'
+    new_title: 'ラベルを追加'
     name_placeholder: ビール
     standard_amount: 基準量(ml,合など)
+    drinks_section_title: このラベルの飲み物
+    drinks_empty: まだ飲み物がありません
+    drinks_add: このラベルに追加
+    save_sort: 並び順を保存する
+    sort_success: 並び順を保存しました。
+    unsaved_sort_confirm: '並び順が保存されていません。このページを離れますか？'
 
 data:
     total: 合計

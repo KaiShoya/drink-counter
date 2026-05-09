@@ -1,19 +1,57 @@
 <script setup lang="ts">
-const drinkNewStore = usePageDrinkNewStore()
-const { name, color, amount, drinkLabelId } = storeToRefs(drinkNewStore)
-const { initPage, create } = drinkNewStore
+import { LOCALE_LABELS_NEW_TITLE, LOCALE_DRINKS_UNSAVED_FORM_CONFIRM } from '~/utils/locales'
+
+const drinkLabelNewStore = usePageDrinkLabelNewStore()
+const { name, color, standardAmount, isSaving } = storeToRefs(drinkLabelNewStore)
+const { initPage, create } = drinkLabelNewStore
 
 initPage()
+
+const { t } = useI18n()
+useSeoMeta({
+  title: t(LOCALE_LABELS_NEW_TITLE),
+})
+
+type Snapshot = { name: string; color: string | null; standardAmount: number }
+const initial = ref<Snapshot | null>(null)
+
+onMounted(() => {
+  initial.value = { name: name.value, color: color.value, standardAmount: standardAmount.value }
+})
+
+const isDirty = computed(() =>
+  initial.value !== null && (
+    name.value !== initial.value.name ||
+    color.value !== initial.value.color ||
+    standardAmount.value !== initial.value.standardAmount
+  ),
+)
+
+const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  if (isDirty.value) { e.preventDefault() }
+}
+
+onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
+onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
+
+onBeforeRouteLeave(() => {
+  if (!isSaving.value && isDirty.value) {
+    return window.confirm(t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM))
+  }
+})
 </script>
 
 <template>
   <div>
-    <DomainDrinkAtomsEdit
+    <h2 class="title is-5">
+      {{ t(LOCALE_LABELS_NEW_TITLE) }}
+    </h2>
+    <DomainLabelAtomsEdit
       v-model:name="name"
       v-model:color="color"
-      v-model:amount="amount"
-      v-model:drink-label-id="drinkLabelId"
+      v-model:standard-amount="standardAmount"
       :save-function="create"
+      :is-saving="isSaving"
       save="drinks.add"
     />
   </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   clickFunction: () => void
+  disabled?: boolean
 }>()
 </script>
 
@@ -8,6 +9,7 @@ defineProps<{
   <BaseAtomsButton
     label="minus"
     :click-function="clickFunction"
+    :disabled="disabled"
   >
     <Icon
       name="mdi:minus"

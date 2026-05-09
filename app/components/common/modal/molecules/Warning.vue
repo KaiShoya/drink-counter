@@ -22,6 +22,7 @@ defineProps<{
         <button
           class="delete"
           aria-label="close"
+          @click="cancel()"
         />
       </header>
       <section class="modal-card-body">

@@ -2,7 +2,7 @@ import type { DrinkLabelWithDefaultColor as DrinkLabel } from '~/repositories/dr
 import { usePageDrinkLabelsState } from './state'
 
 export function usePageDrinkLabelsActions () {
-  const { deleteTarget, showDeleteModal } = usePageDrinkLabelsState()
+  const { deleteTarget, showDeleteModal, hasUnsavedSort } = usePageDrinkLabelsState()
   const { t } = useI18n()
 
   const { updateDrinkLabelVisible, deleteById, updateDrinkLabelsSort } = useDrinkLabelsStore()
@@ -39,6 +39,7 @@ export function usePageDrinkLabelsActions () {
 
   const saveSort = async () => {
     await updateDrinkLabelsSort()
+    hasUnsavedSort.value = false
     showSuccessToast(t(LOCALE_DRINKS_SORT_SUCCESS))
   }
 

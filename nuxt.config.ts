@@ -67,7 +67,9 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-03-16",
 
   eslint: {
-    checker: true,
+    checker: {
+      eslintPath: 'eslint',
+    },
     config: {
       stylistic: {
         indent: 2,

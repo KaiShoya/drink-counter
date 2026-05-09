@@ -97,6 +97,10 @@ export const LOCALE_SETTINGS_OCLOCK = `${LOCALE_SETTINGS}.oclock` as const;
 export const LOCALE_SETTINGS_SAVE = `${LOCALE_SETTINGS}.save` as const;
 
 const LOCALE_DRINKS = "drinks" as const;
+export const LOCALE_DRINKS_EDIT_TITLE = `${LOCALE_DRINKS}.edit_title` as const;
+export const LOCALE_DRINKS_NEW_TITLE = `${LOCALE_DRINKS}.new_title` as const;
+export const LOCALE_DRINKS_ACTIONS_HEADER = `${LOCALE_DRINKS}.actions_header` as const;
+export const LOCALE_DRINKS_RANDOM_COLOR_TITLE = `${LOCALE_DRINKS}.random_color_title` as const;
 export const LOCALE_DRINKS_SELECT = `${LOCALE_DRINKS}.select` as const;
 export const LOCALE_DRINKS_NAME_PLACEHOLDER =
   `${LOCALE_DRINKS}.name_placeholder` as const;
@@ -105,6 +109,18 @@ export const LOCALE_DRINKS_COLOR = `${LOCALE_DRINKS}.color` as const;
 export const LOCALE_DRINKS_AMOUNT = `${LOCALE_DRINKS}.amount` as const;
 export const LOCALE_DRINKS_STANDARD_AMOUNT =
   `${LOCALE_DRINKS}.standard_amount` as const;
+export const LOCALE_DRINKS_APPLY_STANDARD_AMOUNT =
+  `${LOCALE_DRINKS}.apply_standard_amount` as const;
+export const LOCALE_DRINKS_APPLY_STANDARD_AMOUNT_BUTTON =
+  `${LOCALE_DRINKS}.apply_standard_amount_button` as const;
+export const LOCALE_DRINKS_VALIDATION_NAME_REQUIRED =
+  `${LOCALE_DRINKS}.validation_name_required` as const;
+export const LOCALE_DRINKS_VALIDATION_COLOR_INVALID =
+  `${LOCALE_DRINKS}.validation_color_invalid` as const;
+export const LOCALE_DRINKS_VALIDATION_AMOUNT_INVALID =
+  `${LOCALE_DRINKS}.validation_amount_invalid` as const;
+export const LOCALE_DRINKS_VALIDATION_LABEL_REQUIRED =
+  `${LOCALE_DRINKS}.validation_label_required` as const;
 export const LOCALE_DRINKS_DRINK_LABEL =
   `${LOCALE_DRINKS}.drink_label` as const;
 export const LOCALE_DRINKS_DELETE_MODAL_TITLE =
@@ -117,6 +133,10 @@ export const LOCALE_DRINKS_CANCEL = `${LOCALE_DRINKS}.cancel` as const;
 export const LOCALE_DRINKS_SORT_SUCCESS =
   `${LOCALE_DRINKS}.sort_success` as const;
 export const LOCALE_DRINKS_SAVE_SORT = `${LOCALE_DRINKS}.save_sort` as const;
+export const LOCALE_DRINKS_UNSAVED_SORT_CONFIRM =
+  `${LOCALE_DRINKS}.unsaved_sort_confirm` as const;
+export const LOCALE_DRINKS_UNSAVED_FORM_CONFIRM =
+  `${LOCALE_DRINKS}.unsaved_form_confirm` as const;
 export const LOCALE_DRINKS_DELETE_SUCCESS =
   `${LOCALE_DRINKS}.delete_success` as const;
 export const LOCALE_DRINKS_DELETE_FAILURE =
@@ -137,10 +157,24 @@ export const LOCALE_DRINKS_COPY_LABEL_COLOR =
   `${LOCALE_DRINKS}.copy_label_color` as const;
 
 const LOCALE_LABELS = "labels" as const;
+export const LOCALE_LABELS_EDIT_TITLE = `${LOCALE_LABELS}.edit_title` as const;
+export const LOCALE_LABELS_NEW_TITLE = `${LOCALE_LABELS}.new_title` as const;
 export const LOCALE_LABELS_NAME_PLACEHOLDER =
   `${LOCALE_LABELS}.name_placeholder` as const;
 export const LOCALE_LABELS_STANDARD_AMOUNT =
   `${LOCALE_LABELS}.standard_amount` as const;
+export const LOCALE_LABELS_DRINKS_SECTION_TITLE =
+  `${LOCALE_LABELS}.drinks_section_title` as const;
+export const LOCALE_LABELS_DRINKS_EMPTY =
+  `${LOCALE_LABELS}.drinks_empty` as const;
+export const LOCALE_LABELS_DRINKS_ADD =
+  `${LOCALE_LABELS}.drinks_add` as const;
+export const LOCALE_LABELS_SAVE_SORT =
+  `${LOCALE_LABELS}.save_sort` as const;
+export const LOCALE_LABELS_SORT_SUCCESS =
+  `${LOCALE_LABELS}.sort_success` as const;
+export const LOCALE_LABELS_UNSAVED_SORT_CONFIRM =
+  `${LOCALE_LABELS}.unsaved_sort_confirm` as const;
 
 const LOCALE_DATA = "data" as const;
 export const LOCALE_DATA_TOTAL = `${LOCALE_DATA}.total` as const;

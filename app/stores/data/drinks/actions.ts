@@ -1,3 +1,4 @@
+import type { DrinkRow } from '~/repositories/drinksRepository'
 import { useDrinksState } from './state'
 import { useDrinksGetters } from './getters'
 
@@ -59,13 +60,17 @@ export function useDrinksActions () {
     drink.visible = visible
   }
 
-  const updateDrinksSort = async () => {
-    const payload = drinks.value.map((drink, i) => {
+  /**
+   * 指定した飲み物の並び順をまとめて保存する。
+   * sort のユニーク制約は (user_id, drink_label_id, sort) 単位のため、
+   * ラベルをまたいで sort 値が重複しても問題ない。
+   * 配列順に 0 から連番を割り当てる。
+   * @param targetDrinks 並び替え対象の DrinkRow 配列（全件 or ラベル絞り込み後のサブリスト）
+   */
+  const updateDrinksSort = async (targetDrinks: DrinkRow[]) => {
+    const payload = targetDrinks.map((drink, i) => {
       drink.sort = i
-      return {
-        id: drink.id,
-        sort: drink.sort,
-      }
+      return { id: drink.id, sort: i }
     })
     await $drinksRepository.updateSort(payload)
   }
@@ -75,6 +80,11 @@ export function useDrinksActions () {
     drinks.value.push(drink)
   }
 
+  /** 保存せずに離脱する際、並び順を sort 属性の値に基づいてリセットする */
+  const resetSort = () => {
+    drinks.value = [...drinks.value].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
+  }
+
   return {
     fetchDrinks,
     deleteDrinkById,
@@ -82,5 +92,6 @@ export function useDrinksActions () {
     updateDrinkVisible,
     updateDrinksSort,
     createDrink,
+    resetSort,
   }
 }

@@ -103,12 +103,22 @@ settings:
     save: Save
 
 drinks:
+    edit_title: 'Edit "{name}"'
+    new_title: 'Add Drink'
+    actions_header: 'Actions'
+    random_color_title: 'Generate random color'
     select: Please select
     name_placeholder: 350ml
     name: Name
     color: Color
     amount: Amount(ml, %, etc)
     standard_amount: 'Standard amount :'
+    apply_standard_amount: 'Apply standard amount {amount} to the quantity?'
+    apply_standard_amount_button: 'Apply'
+    validation_name_required: 'Name is required'
+    validation_color_invalid: 'Enter a valid color code (#RRGGBB or #RGB)'
+    validation_amount_invalid: 'Enter an integer of 1 or more'
+    validation_label_required: 'Please select a label'
     drink_label: Drink label
     delete_modal_title: Delete \"{name}\".
     delete_modal_content: If you delete \"{name}\", all the drink counts you drank will also be deleted. Do you want to delete it?
@@ -117,6 +127,8 @@ drinks:
     cancel: cancel
     sort_success: Update sort.
     save_sort: Save sort
+    unsaved_sort_confirm: 'The sort order has not been saved. Leave this page?'
+    unsaved_form_confirm: 'Your changes have not been saved. Leave this page?'
     delete_success: \"{name}\" was successfully deleted.
     delete_failure: Failed to delete \"{name}\".
     create_success: \"{name}\" was successfully added.
@@ -129,8 +141,16 @@ drinks:
     copy_label_color: Copy label color
 
 labels:
+    edit_title: 'Edit "{name}"'
+    new_title: 'Add Label'
     name_placeholder: Beer
     standard_amount: Standard amount(ml, %, etc)
+    drinks_section_title: Drinks in this label
+    drinks_empty: No drinks yet
+    drinks_add: Add to this label
+    save_sort: Save sort order
+    sort_success: Sort order saved.
+    unsaved_sort_confirm: 'The sort order has not been saved. Leave this page?'
 
 data:
   total: Total

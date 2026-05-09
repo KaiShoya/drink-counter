@@ -7,7 +7,6 @@ import {
   LOCALE_ROUTES_MONTHLY,
   LOCALE_ROUTES_ABOUT,
   LOCALE_ROUTES_DRINKS,
-  LOCALE_ROUTES_LABELS,
   LOCALE_ROUTES_SETTINGS,
   LOCALE_AUTH_GOOGLE,
   LOCALE_THEME_DARK,
@@ -126,7 +125,7 @@ useHead(() => ({
             <!-- navbar-burger-rightの切り替えが効かないため、ダミーのdivを追加した -->
           </div>
 
-          <div class="navbar-burger navbar-burger-right navbar-burger-left">
+          <div class="navbar-burger navbar-burger-right navbar-burger-left is-hidden-desktop">
             <DomainHeaderAtomsThemeButton
               :theme-preference="themePreference"
               :resolved-theme="resolvedTheme"
@@ -202,15 +201,6 @@ useHead(() => ({
               @click="active = false"
             >
               {{ t(LOCALE_ROUTES_DRINKS) }}
-            </NuxtLink>
-
-            <NuxtLink
-              class="navbar-item"
-              :to="localePath('/labels')"
-              exact-active-class="is-active"
-              @click="active = false"
-            >
-              {{ t(LOCALE_ROUTES_LABELS) }}
             </NuxtLink>
 
             <NuxtLink
