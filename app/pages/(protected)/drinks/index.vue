@@ -9,8 +9,8 @@ useSeoMeta({
 const localePath = useLocalePath()
 
 const pageDrinkLabelsStore = usePageDrinkLabelsStore()
-const { deleteTarget, showDeleteModal, hasUnsavedSort, searchQuery } = storeToRefs(pageDrinkLabelsStore)
-const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort, filteredDrinkLabels } = pageDrinkLabelsStore
+const { deleteTarget, showDeleteModal, hasUnsavedSort, searchQuery, filteredDrinkLabels } = storeToRefs(pageDrinkLabelsStore)
+const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort } = pageDrinkLabelsStore
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
 const { resetSort } = drinkLabelsStore
