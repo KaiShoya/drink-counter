@@ -26,17 +26,17 @@ const computedOptions = computed(() => {
   }
 })
 
-onMounted(() => {
-  const updateViewportWidth = () => {
-    viewportWidth.value = window.innerWidth
-  }
+const updateViewportWidth = () => {
+  viewportWidth.value = window.innerWidth
+}
 
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateViewportWidth)
+})
+
+onMounted(() => {
   updateViewportWidth()
   window.addEventListener('resize', updateViewportWidth)
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('resize', updateViewportWidth)
-  })
 })
 </script>
 
