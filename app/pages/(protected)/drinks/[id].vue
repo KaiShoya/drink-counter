@@ -110,50 +110,20 @@ const isDirty = computed(() =>
   ),
 )
 
-const showUnsavedModal = ref<boolean>(false)
-const pendingLeaveResolver = ref<((confirmed: boolean) => void) | null>(null)
-
 const unsavedModalContent = computed(() => {
   return hasUnsavedSort.value
     ? t(LOCALE_LABELS_UNSAVED_SORT_CONFIRM)
     : t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)
 })
 
-const requestLeaveConfirmation = () => {
-  showUnsavedModal.value = true
-  return new Promise<boolean>((resolve) => {
-    pendingLeaveResolver.value = resolve
-  })
-}
-
-const resolveLeaveConfirmation = (confirmed: boolean) => {
-  showUnsavedModal.value = false
-  pendingLeaveResolver.value?.(confirmed)
-  pendingLeaveResolver.value = null
-}
-
-const discardAndLeave = () => {
-  if (hasUnsavedSort.value) {
-    resetSort()
-  }
-  resolveLeaveConfirmation(true)
-}
-
-const cancelLeave = () => {
-  resolveLeaveConfirmation(false)
-}
-
-const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  if (isDirty.value || hasUnsavedSort.value) { e.preventDefault() }
-}
-
-onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
-onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
-
-onBeforeRouteLeave(async () => {
-  if (!isSaving.value && (isDirty.value || hasUnsavedSort.value)) {
-    return await requestLeaveConfirmation()
-  }
+const { showUnsavedModal, discardAndLeave, cancelLeave } = useUnsavedChangesGuard({
+  isDirty: () => isDirty.value || hasUnsavedSort.value,
+  canSkip: () => isSaving.value,
+  onDiscard: () => {
+    if (hasUnsavedSort.value) {
+      resetSort()
+    }
+  },
 })
 </script>
 

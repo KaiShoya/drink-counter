@@ -32,36 +32,9 @@ const isDirty = computed(() =>
   ),
 )
 
-const showUnsavedModal = ref<boolean>(false)
-const pendingLeaveResolver = ref<((confirmed: boolean) => void) | null>(null)
-
-const requestLeaveConfirmation = () => {
-  showUnsavedModal.value = true
-  return new Promise<boolean>((resolve) => {
-    pendingLeaveResolver.value = resolve
-  })
-}
-
-const resolveLeaveConfirmation = (confirmed: boolean) => {
-  showUnsavedModal.value = false
-  pendingLeaveResolver.value?.(confirmed)
-  pendingLeaveResolver.value = null
-}
-
-const discardAndLeave = () => resolveLeaveConfirmation(true)
-const cancelLeave = () => resolveLeaveConfirmation(false)
-
-const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  if (isDirty.value) { e.preventDefault() }
-}
-
-onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
-onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
-
-onBeforeRouteLeave(async () => {
-  if (!isSaving.value && isDirty.value) {
-    return await requestLeaveConfirmation()
-  }
+const { showUnsavedModal, discardAndLeave, cancelLeave } = useUnsavedChangesGuard({
+  isDirty,
+  canSkip: () => isSaving.value,
 })
 </script>
 
