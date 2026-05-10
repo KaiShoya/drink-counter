@@ -23,6 +23,7 @@ Supabase 認証の入口。Google OAuth を使用。
 
 <script setup lang="ts">
 import { useSupabaseStore } from '~/stores/supabase'
+import { LOCALE_AUTH_GOOGLE } from '~/utils/locales'
 
 const { t } = useI18n()
 const route = useRoute()

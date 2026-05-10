@@ -21,6 +21,13 @@ OAuth コールバック後の認証確認画面。
 </spec>
 
 <script setup lang="ts">
+import {
+  LOCALE_AUTH_CONFIRM_PROCESSING,
+  LOCALE_AUTH_CONFIRM_SUCCESS,
+  LOCALE_AUTH_CONFIRM_ERROR,
+  LOCALE_AUTH_CONFIRM_RETRY,
+} from '~/utils/locales'
+
 const localePath = useLocalePath()
 const user = useSupabaseUser()
 const { t } = useI18n()
