@@ -10,7 +10,6 @@ dist
 .eslintcache
 
 **/test.vue
-**/terms_of_service.vue
 supabase/functions/README.md
 _i18n.config.ts
 .prettierignore

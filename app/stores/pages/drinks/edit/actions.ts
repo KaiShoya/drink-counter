@@ -9,9 +9,9 @@ export function usePageDrinkEditActions () {
   const drinksStore = useDrinksStore()
   const { findDrink, updateDrink } = drinksStore
 
-  const initPage = async () => {
+  const initPage = async (targetDrinkId?: number) => {
     const route = useRoute()
-    drinkId.value = Number(route.params.id)
+    drinkId.value = targetDrinkId ?? Number(route.params.id)
 
     const drink = findDrink(drinkId.value)
     if (drink === undefined) {
@@ -25,12 +25,14 @@ export function usePageDrinkEditActions () {
     }
   }
 
-  const updateDrinkById = async () => {
+  const updateDrinkById = async (redirectPath: string | null = '/drinks') => {
     isSaving.value = true
     try {
       await updateDrink(drinkId.value, name.value, color.value, amount.value, drinkLabelId.value)
       showSuccessToast(t(LOCALE_DRINKS_UPDATE_SUCCESS, { name: name.value }))
-      navigateTo(localePath('/drinks'))
+      if (redirectPath) {
+        navigateTo(localePath(redirectPath))
+      }
     } finally {
       isSaving.value = false
     }

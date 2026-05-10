@@ -14,6 +14,15 @@ export const LOCALE_ROUTES_SETTINGS = `${LOCALE_ROUTES}.settings` as const;
 const LOCALE_AUTH = "auth" as const;
 export const LOCALE_AUTH_GOOGLE = `${LOCALE_AUTH}.google` as const;
 export const LOCALE_AUTH_LOGOUT = `${LOCALE_AUTH}.logout` as const;
+const LOCALE_AUTH_CONFIRM = `${LOCALE_AUTH}.confirm` as const;
+export const LOCALE_AUTH_CONFIRM_PROCESSING =
+  `${LOCALE_AUTH_CONFIRM}.processing` as const;
+export const LOCALE_AUTH_CONFIRM_SUCCESS =
+  `${LOCALE_AUTH_CONFIRM}.success` as const;
+export const LOCALE_AUTH_CONFIRM_ERROR =
+  `${LOCALE_AUTH_CONFIRM}.error` as const;
+export const LOCALE_AUTH_CONFIRM_RETRY =
+  `${LOCALE_AUTH_CONFIRM}.retry` as const;
 
 const LOCALE_CALENDAR = "calendar" as const;
 const LOCALE_CALENDAR_MONTH = `${LOCALE_CALENDAR}.month` as const;
@@ -178,6 +187,23 @@ export const LOCALE_LABELS_UNSAVED_SORT_CONFIRM =
 
 const LOCALE_DATA = "data" as const;
 export const LOCALE_DATA_TOTAL = `${LOCALE_DATA}.total` as const;
+const LOCALE_DATA_STATE = `${LOCALE_DATA}.state` as const;
+export const LOCALE_DATA_STATE_LOADING_TITLE =
+  `${LOCALE_DATA_STATE}.loading_title` as const;
+export const LOCALE_DATA_STATE_LOADING_DESCRIPTION =
+  `${LOCALE_DATA_STATE}.loading_description` as const;
+export const LOCALE_DATA_STATE_EMPTY_TITLE =
+  `${LOCALE_DATA_STATE}.empty_title` as const;
+export const LOCALE_DATA_STATE_EMPTY_DESCRIPTION =
+  `${LOCALE_DATA_STATE}.empty_description` as const;
+export const LOCALE_DATA_STATE_EMPTY_ACTION =
+  `${LOCALE_DATA_STATE}.empty_action` as const;
+export const LOCALE_DATA_STATE_ERROR_TITLE =
+  `${LOCALE_DATA_STATE}.error_title` as const;
+export const LOCALE_DATA_STATE_ERROR_DESCRIPTION =
+  `${LOCALE_DATA_STATE}.error_description` as const;
+export const LOCALE_DATA_STATE_RETRY =
+  `${LOCALE_DATA_STATE}.retry` as const;
 
 const LOCALE_AGGREGATION = "aggregation" as const;
 export const LOCALE_AGGREGATION_DOW = `${LOCALE_AGGREGATION}.dow` as const;
@@ -195,6 +221,10 @@ export const LOCALE_AGGREGATION_RECORD_COUNT =
 const LOCALE_MODAL = "modal" as const;
 export const LOCALE_MODAL_YES = `${LOCALE_MODAL}.yes` as const;
 export const LOCALE_MODAL_NO = `${LOCALE_MODAL}.no` as const;
+export const LOCALE_MODAL_UNSAVED_TITLE = `${LOCALE_MODAL}.unsaved_title` as const;
+export const LOCALE_MODAL_SAVE_AND_LEAVE = `${LOCALE_MODAL}.save_and_leave` as const;
+export const LOCALE_MODAL_DISCARD_AND_LEAVE = `${LOCALE_MODAL}.discard_and_leave` as const;
+export const LOCALE_MODAL_STAY = `${LOCALE_MODAL}.stay` as const;
 
 const LOCALE_GENERAL = "general" as const;
 export const LOCALE_GENERAL_UPDATE_SUCCESS =
@@ -242,3 +272,6 @@ export const LOCALE_ANNUAL_KPI_ACTIVE_DAYS = `${LOCALE_ANNUAL_KPI}.activeDays` a
 export const LOCALE_ANNUAL_KPI_AVG_PER_DAY = `${LOCALE_ANNUAL_KPI}.avgPerDay` as const;
 export const LOCALE_ANNUAL_KPI_AVG_PER_ACTIVE_DAY = `${LOCALE_ANNUAL_KPI}.avgPerActiveDay` as const;
 export const LOCALE_ANNUAL_KPI_YOY = `${LOCALE_ANNUAL_KPI}.yoy` as const;
+
+export const LOCALE_DRINKS_SEARCH_PLACEHOLDER = `${LOCALE_DRINKS}.search_placeholder` as const;
+export const LOCALE_DRINKS_SEARCH_NO_RESULTS = `${LOCALE_DRINKS}.search_no_results` as const;

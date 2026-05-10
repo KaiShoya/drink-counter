@@ -11,7 +11,7 @@ class MockTransport implements LogTransport {
 describe('logger utility', () => {
   it('routes log messages through provided transport', () => {
     const transport = new MockTransport()
-    const logger = createLogger({ transports: [transport] })
+    const logger = createLogger({ transports: [transport], level: 'info' })
 
     logger.info('hello world', { feature: 'logging' })
 

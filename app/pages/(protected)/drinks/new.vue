@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { LOCALE_LABELS_NEW_TITLE, LOCALE_DRINKS_UNSAVED_FORM_CONFIRM } from '~/utils/locales'
+import {
+  LOCALE_LABELS_NEW_TITLE,
+  LOCALE_DRINKS_UNSAVED_FORM_CONFIRM,
+  LOCALE_MODAL_UNSAVED_TITLE,
+} from '~/utils/locales'
 
 const drinkLabelNewStore = usePageDrinkLabelNewStore()
 const { name, color, standardAmount, isSaving } = storeToRefs(drinkLabelNewStore)
@@ -27,17 +31,9 @@ const isDirty = computed(() =>
   ),
 )
 
-const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  if (isDirty.value) { e.preventDefault() }
-}
-
-onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
-onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
-
-onBeforeRouteLeave(() => {
-  if (!isSaving.value && isDirty.value) {
-    return window.confirm(t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM))
-  }
+const { showUnsavedModal, discardAndLeave, cancelLeave } = useUnsavedChangesGuard({
+  isDirty,
+  canSkip: () => isSaving.value,
 })
 </script>
 
@@ -53,6 +49,14 @@ onBeforeRouteLeave(() => {
       :save-function="create"
       :is-saving="isSaving"
       save="drinks.add"
+    />
+
+    <CommonModalMoleculesUnsavedChanges
+      :title="t(LOCALE_MODAL_UNSAVED_TITLE)"
+      :content="t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)"
+      :discard="discardAndLeave"
+      :cancel="cancelLeave"
+      :class="{ 'is-active': showUnsavedModal }"
     />
   </div>
 </template>

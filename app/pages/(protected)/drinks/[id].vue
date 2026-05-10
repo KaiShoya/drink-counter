@@ -5,6 +5,8 @@ import {
   LOCALE_LABELS_DRINKS_SECTION_TITLE,
   LOCALE_LABELS_DRINKS_EMPTY,
   LOCALE_LABELS_DRINKS_ADD,
+  LOCALE_DRINKS_EDIT_TITLE,
+  LOCALE_DRINKS_NEW_TITLE,
   LOCALE_LABELS_SAVE_SORT,
   LOCALE_LABELS_UNSAVED_SORT_CONFIRM,
   LOCALE_DRINKS_NAME,
@@ -13,68 +15,126 @@ import {
   LOCALE_DRINKS_ACTIONS_HEADER,
   LOCALE_DRINKS_DELETE_MODAL_TITLE,
   LOCALE_DRINKS_DELETE_MODAL_CONTENT,
+  LOCALE_MODAL_UNSAVED_TITLE,
 } from '~/utils/locales'
+import type { DrinkRow } from '~/repositories/drinksRepository'
 
 const drinkLabelEditStore = usePageDrinkLabelEditStore()
 const {
-  name, color, standardAmount, isSaving,
+  drinkLabelId, name: labelName, color: labelColor, standardAmount, isSaving,
   hasUnsavedSort, deleteTarget, showDeleteModal, filteredDrinks,
 } = storeToRefs(drinkLabelEditStore)
-const { initPage, update, updateHidden, clickDeleteDrinkButton, deleteDrink, onDragEnd, saveSort, resetSort } = drinkLabelEditStore
+const { initPage, update, updateHidden, clickDeleteDrinkButton, deleteDrink, onDragEnd, saveSort } = drinkLabelEditStore
 
-const localePath = useLocalePath()
+const drinksStore = useDrinksStore()
+const { resetSort } = drinksStore
+
+const drinkEditStore = usePageDrinkEditStore()
+const {
+  name: editName,
+  color: editColor,
+  amount: editAmount,
+  drinkLabelId: editDrinkLabelId,
+  isSaving: isDrinkEditSaving,
+} = storeToRefs(drinkEditStore)
+const { initPage: initDrinkEditPage, updateDrinkById } = drinkEditStore
+
+const drinkNewStore = usePageDrinkNewStore()
+const {
+  name: newName,
+  color: newColor,
+  amount: newAmount,
+  drinkLabelId: newDrinkLabelId,
+  isSaving: isDrinkNewSaving,
+} = storeToRefs(drinkNewStore)
+const { initPage: initDrinkNewPage, create: createDrink } = drinkNewStore
+
+const drinkModalMode = ref<'edit' | 'new' | null>(null)
+const editTargetDrinkName = ref<string>('')
+const isDrinkModalActive = computed(() => drinkModalMode.value !== null)
+
+const closeDrinkModal = () => {
+  drinkModalMode.value = null
+  editTargetDrinkName.value = ''
+}
+
+const openDrinkEditModal = async (drink: DrinkRow) => {
+  await initDrinkEditPage(drink.id)
+  editTargetDrinkName.value = drink.name
+  drinkModalMode.value = 'edit'
+}
+
+const openDrinkNewModal = async () => {
+  await initDrinkNewPage()
+  newDrinkLabelId.value = drinkLabelId.value
+  drinkModalMode.value = 'new'
+}
+
+const saveDrinkEditInModal = async () => {
+  await updateDrinkById(null)
+  closeDrinkModal()
+}
+
+const saveDrinkNewInModal = async () => {
+  await createDrink(null)
+  closeDrinkModal()
+}
 
 initPage()
 
 const { t } = useI18n()
 useSeoMeta({
-  title: computed(() => t(LOCALE_LABELS_EDIT_TITLE, { name: name.value ?? '' })),
+  title: computed(() => t(LOCALE_LABELS_EDIT_TITLE, { name: labelName.value ?? '' })),
+})
+
+const drinkModalTitle = computed(() => {
+  if (drinkModalMode.value === 'edit') {
+    const resolvedName = editTargetDrinkName.value || editName.value
+    return t(LOCALE_DRINKS_EDIT_TITLE, { name: resolvedName ?? '' })
+  }
+  return t(LOCALE_DRINKS_NEW_TITLE)
 })
 
 type Snapshot = { name: string; color: string | null; standardAmount: number }
 const initial = ref<Snapshot | null>(null)
 
 onMounted(() => {
-  initial.value = { name: name.value, color: color.value, standardAmount: standardAmount.value }
+  initial.value = { name: labelName.value, color: labelColor.value, standardAmount: standardAmount.value }
 })
 
 const isDirty = computed(() =>
   initial.value !== null && (
-    name.value !== initial.value.name ||
-    color.value !== initial.value.color ||
+    labelName.value !== initial.value.name ||
+    labelColor.value !== initial.value.color ||
     standardAmount.value !== initial.value.standardAmount
   ),
 )
 
-const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  if (isDirty.value || hasUnsavedSort.value) { e.preventDefault() }
-}
+const unsavedModalContent = computed(() => {
+  return hasUnsavedSort.value
+    ? t(LOCALE_LABELS_UNSAVED_SORT_CONFIRM)
+    : t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)
+})
 
-onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
-onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
-
-onBeforeRouteLeave(() => {
-  if (!isSaving.value && (isDirty.value || hasUnsavedSort.value)) {
-    const msg = hasUnsavedSort.value
-      ? t(LOCALE_LABELS_UNSAVED_SORT_CONFIRM)
-      : t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)
-    const confirmed = window.confirm(msg)
-    if (confirmed && hasUnsavedSort.value) {
+const { showUnsavedModal, discardAndLeave, cancelLeave } = useUnsavedChangesGuard({
+  isDirty: () => isDirty.value || hasUnsavedSort.value,
+  canSkip: () => isSaving.value,
+  onDiscard: () => {
+    if (hasUnsavedSort.value) {
       resetSort()
     }
-    return confirmed
-  }
+  },
 })
 </script>
 
 <template>
   <div>
     <h2 class="title is-5">
-      {{ t(LOCALE_LABELS_EDIT_TITLE, { name }) }}
+      {{ t(LOCALE_LABELS_EDIT_TITLE, { name: labelName }) }}
     </h2>
     <DomainLabelAtomsEdit
-      v-model:name="name"
-      v-model:color="color"
+      v-model:name="labelName"
+      v-model:color="labelColor"
       v-model:standard-amount="standardAmount"
       :save-function="update"
       :is-saving="isSaving"
@@ -92,12 +152,12 @@ onBeforeRouteLeave(() => {
       class="has-text-grey my-4"
     >
       <p>{{ t(LOCALE_LABELS_DRINKS_EMPTY) }}</p>
-      <NuxtLink
-        :to="localePath(`/drinks/item/new`)"
+      <button
         class="button is-primary is-small mt-2"
+        @click="openDrinkNewModal"
       >
         {{ t(LOCALE_LABELS_DRINKS_ADD) }}
-      </NuxtLink>
+      </button>
     </div>
 
     <div
@@ -158,15 +218,15 @@ onBeforeRouteLeave(() => {
               {{ drink.amount }}
             </div>
             <div class="column is-flex is-align-items-center">
-              <NuxtLink
-                :to="localePath(`/drinks/item/${drink.id}`)"
+              <button
                 class="button is-ghost p-1 has-text-info"
+                @click="openDrinkEditModal(drink)"
               >
                 <Icon
                   name="mdi:text-box-edit-outline"
                   size="20"
                 />
-              </NuxtLink>
+              </button>
 
               <button
                 :class="['button', 'is-ghost', 'p-1', drink.visible ? 'has-text-primary' : 'has-text-dark']"
@@ -205,15 +265,63 @@ onBeforeRouteLeave(() => {
             >
               {{ t(LOCALE_LABELS_SAVE_SORT) }}
             </button>
-            <NuxtLink
-              :to="localePath(`/drinks/item/new`)"
+            <button
               class="button is-primary"
+              @click="openDrinkNewModal"
             >
               {{ t(LOCALE_LABELS_DRINKS_ADD) }}
-            </NuxtLink>
+            </button>
           </div>
         </template>
       </draggable>
+    </div>
+
+    <div
+      class="modal"
+      :class="{ 'is-active': isDrinkModalActive }"
+    >
+      <div
+        class="modal-background"
+        @click="closeDrinkModal"
+      />
+      <div class="modal-card drink-form-modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ drinkModalTitle }}
+          </p>
+          <button
+            class="delete"
+            aria-label="close"
+            @click="closeDrinkModal"
+          />
+        </header>
+
+        <section class="modal-card-body">
+          <DomainDrinkAtomsEdit
+            v-if="drinkModalMode === 'edit'"
+            v-model:name="editName"
+            v-model:color="editColor"
+            v-model:amount="editAmount"
+            v-model:drink-label-id="editDrinkLabelId"
+            :save-function="saveDrinkEditInModal"
+            :is-saving="isDrinkEditSaving"
+            :cancel-function="closeDrinkModal"
+            save="drinks.update"
+          />
+
+          <DomainDrinkAtomsEdit
+            v-else-if="drinkModalMode === 'new'"
+            v-model:name="newName"
+            v-model:color="newColor"
+            v-model:amount="newAmount"
+            v-model:drink-label-id="newDrinkLabelId"
+            :save-function="saveDrinkNewInModal"
+            :is-saving="isDrinkNewSaving"
+            :cancel-function="closeDrinkModal"
+            save="drinks.add"
+          />
+        </section>
+      </div>
     </div>
 
     <CommonModalMoleculesDanger
@@ -223,11 +331,23 @@ onBeforeRouteLeave(() => {
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"
     />
+
+    <CommonModalMoleculesUnsavedChanges
+      :title="t(LOCALE_MODAL_UNSAVED_TITLE)"
+      :content="unsavedModalContent"
+      :discard="discardAndLeave"
+      :cancel="cancelLeave"
+      :class="{ 'is-active': showUnsavedModal }"
+    />
   </div>
 </template>
 
 <style scoped>
 .border-line {
   border-bottom: solid 1px #aaaaaa;
+}
+
+.drink-form-modal-card {
+  width: min(840px, calc(100vw - 2rem));
 }
 </style>

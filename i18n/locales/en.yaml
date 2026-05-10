@@ -12,8 +12,13 @@ routes:
     settings: Settings
 
 auth:
-      google: Google Login
-      logout: Log out
+    google: Google Login
+    logout: Log out
+    confirm:
+        processing: Verifying your login...
+        success: Login successful. Redirecting...
+        error: Failed to verify login. Please try again.
+        retry: Back to login
 
 calendar:
     month:
@@ -138,6 +143,8 @@ drinks:
     visible: visible
     invisible: invisible
     update_visible_success: \"{name}\" was successfully updated to be {status}.
+    search_placeholder: Filter by label name
+    search_no_results: 'No labels matching "{query}".'
     copy_label_color: Copy label color
 
 labels:
@@ -153,7 +160,16 @@ labels:
     unsaved_sort_confirm: 'The sort order has not been saved. Leave this page?'
 
 data:
-  total: Total
+        total: Total
+        state:
+                loading_title: Loading data
+                loading_description: Fetching summary data. Please wait a moment.
+                empty_title: No data to display
+                empty_description: There are no records yet, or no data matches the current filters.
+                empty_action: Go to recording screen
+                error_title: Failed to load data
+                error_description: Check your connection and try again.
+                retry: Retry
 
 aggregation:
     dow: DOW
@@ -166,6 +182,10 @@ aggregation:
 modal:
     yes: Yes
     no: No
+    unsaved_title: You have unsaved changes
+    save_and_leave: Save and leave
+    discard_and_leave: Discard and leave
+    stay: Stay on this page
 
 general:
   update_success: Successfully updated.

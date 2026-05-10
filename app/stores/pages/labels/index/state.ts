@@ -6,11 +6,14 @@ const deleteTarget = ref<DrinkLabel | null>(null)
 const showDeleteModal = ref<boolean>(false)
 // ドラッグ並び替え後に未保存の状態を追跡する
 const hasUnsavedSort = ref<boolean>(false)
+// ラベル検索クエリ
+const searchQuery = ref<string>('')
 
 export function usePageDrinkLabelsState () {
   return {
     deleteTarget,
     showDeleteModal,
     hasUnsavedSort,
+    searchQuery,
   }
 }

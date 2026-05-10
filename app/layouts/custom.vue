@@ -8,6 +8,7 @@ import {
   LOCALE_ROUTES_ABOUT,
   LOCALE_ROUTES_DRINKS,
   LOCALE_ROUTES_SETTINGS,
+  LOCALE_TERMS_OF_SERVICE,
   LOCALE_AUTH_GOOGLE,
   LOCALE_THEME_DARK,
   LOCALE_THEME_LIGHT
@@ -267,6 +268,10 @@ useHead(() => ({
     <footer>
       <div class="content has-text-centered">
         <p :class="[{ 'has-text-text-10-invert has-background-text-00': !isLight }]">
+          <NuxtLink :to="localePath('/about/terms_of_service')">
+            {{ t(LOCALE_TERMS_OF_SERVICE) }}
+          </NuxtLink>
+          <span class="mx-1">|</span>
           <span>&copy; 2023 Kai Shoya.</span>
           <span>The source code is licensed MIT.</span>
           <span>The website content is licensed CC BY SA 4.0.</span>

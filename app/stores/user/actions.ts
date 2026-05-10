@@ -2,7 +2,6 @@ import { useUserState } from './state'
 
 export function useUserActions () {
   const { isLogin, userName, userAvatarUrl, userSetting } = useUserState()
-  const { $userSettingsRepository } = useNuxtApp()
 
   const fetchUserData = async () => {
     try {
@@ -20,10 +19,18 @@ export function useUserActions () {
           userAvatarUrl.value = null
           logger.error('Failed to get user data', { module: 'user/actions.ts' }, error)
         } else {
-          // ユーザー設定を取得
-          const userSettingRow = await $userSettingsRepository.fetchUserSettings()
-          if (userSettingRow) {
-            userSetting.value = userSettingRow
+          // テスト環境など Nuxt instance が無い場合は設定取得をスキップする
+          try {
+            const { $userSettingsRepository } = useNuxtApp()
+            const userSettingRow = await $userSettingsRepository.fetchUserSettings()
+            if (userSettingRow) {
+              userSetting.value = userSettingRow
+            } else {
+              userSetting.value = null
+            }
+          } catch (settingsError) {
+            userSetting.value = null
+            logger.warn('Skipped user settings fetch', { module: 'user/actions.ts' }, settingsError)
           }
 
           userName.value = (data.user?.user_metadata as any)?.name ?? null

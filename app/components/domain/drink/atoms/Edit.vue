@@ -14,6 +14,7 @@ defineProps<{
   saveFunction: () => void
   save: typeof LOCALE_DRINKS_UPDATE | typeof LOCALE_DRINKS_ADD
   isSaving?: boolean
+  cancelFunction?: () => void
 }>()
 const drinkLabelId = defineModel<number | null>('drinkLabelId')
 const name = defineModel<string | null>('name')
@@ -253,7 +254,16 @@ const hasError = computed(() => Object.values(errors.value).some(v => v !== null
         {{ t(save) }}
       </button>
 
+      <button
+        v-if="cancelFunction"
+        class="button"
+        @click="cancelFunction()"
+      >
+        {{ t(LOCALE_DRINKS_CANCEL) }}
+      </button>
+
       <NuxtLink
+        v-else
         :to="localePath('/drinks')"
         class="button"
       >

@@ -1,33 +1,65 @@
 <script setup lang="ts">
 import { GChart } from 'vue-google-charts'
 
-defineProps<{
+const props = defineProps<{
   title: Array<{ type: string, id: string }>
   data: Array<Array<Date | number>>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options?: any
 }>()
-// FIXME: 年を跨いだ時に2年目以降が表示されない（見切れる）
+
+const viewportWidth = ref<number>(1280)
+
+const calendarCellSize = computed(() => {
+  if (viewportWidth.value < 480) return 12
+  if (viewportWidth.value < 768) return 14
+  return 16
+})
+
+const computedOptions = computed(() => {
+  return {
+    height: viewportWidth.value < 768 ? 220 : 280,
+    calendar: {
+      cellSize: calendarCellSize.value,
+    },
+    ...(props.options ?? {}),
+  }
+})
+
+const updateViewportWidth = () => {
+  viewportWidth.value = window.innerWidth
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateViewportWidth)
+})
+
+onMounted(() => {
+  updateViewportWidth()
+  window.addEventListener('resize', updateViewportWidth)
+})
 </script>
 
 <template>
-  <div class="scroll-x">
+  <div class="calendar-wrapper">
     <GChart
       class="calendar"
       type="Calendar"
-      :data="[title, ...data]"
-      :options="options"
+      :data="[props.title, ...props.data]"
+      :options="computedOptions"
       :settings="{ packages: ['calendar'] }"
     />
   </div>
 </template>
 
 <style scoped>
-.scroll-x {
-  overflow-x: scroll;
+.calendar-wrapper {
+  overflow: hidden;
+  width: 100%;
 }
 
 .calendar {
-  width: 915px;
+  width: 100%;
+  max-width: 100%;
 }
 </style>

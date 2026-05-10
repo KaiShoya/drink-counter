@@ -18,12 +18,14 @@ Supabase 認証の入口。Google OAuth を使用。
 - 認証エラーの通知/ログは Store/プラグイン側で実施（画面は最小責務）
 
 ## i18n
-- ボタン文言は i18n キーへ移行予定（`utils/locales.ts` にキー追加）
+- ボタン文言は `auth.google` キーを使用
 </spec>
 
 <script setup lang="ts">
 import { useSupabaseStore } from '~/stores/supabase'
+import { LOCALE_AUTH_GOOGLE } from '~/utils/locales'
 
+const { t } = useI18n()
 const route = useRoute()
 const { signInWithGoogle } = useSupabaseStore()
 
@@ -49,7 +51,7 @@ watch(
       class="button"
       @click="signInWithGoogle()"
     >
-      Googleアカウントを利用する
+      {{ t(LOCALE_AUTH_GOOGLE) }}
     </button>
   </div>
 </template>
