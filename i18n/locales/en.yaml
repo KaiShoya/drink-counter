@@ -12,8 +12,13 @@ routes:
     settings: Settings
 
 auth:
-      google: Google Login
-      logout: Log out
+    google: Google Login
+    logout: Log out
+    confirm:
+        processing: Verifying your login...
+        success: Login successful. Redirecting...
+        error: Failed to verify login. Please try again.
+        retry: Back to login
 
 calendar:
     month:

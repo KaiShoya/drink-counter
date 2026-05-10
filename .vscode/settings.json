@@ -42,6 +42,10 @@
   "eslint.useFlatConfig": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "git add": true,
+    "git commit": true
   }
   // "eslint.codeActionsOnSave.rules": null
 }

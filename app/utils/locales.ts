@@ -14,6 +14,15 @@ export const LOCALE_ROUTES_SETTINGS = `${LOCALE_ROUTES}.settings` as const;
 const LOCALE_AUTH = "auth" as const;
 export const LOCALE_AUTH_GOOGLE = `${LOCALE_AUTH}.google` as const;
 export const LOCALE_AUTH_LOGOUT = `${LOCALE_AUTH}.logout` as const;
+const LOCALE_AUTH_CONFIRM = `${LOCALE_AUTH}.confirm` as const;
+export const LOCALE_AUTH_CONFIRM_PROCESSING =
+  `${LOCALE_AUTH_CONFIRM}.processing` as const;
+export const LOCALE_AUTH_CONFIRM_SUCCESS =
+  `${LOCALE_AUTH_CONFIRM}.success` as const;
+export const LOCALE_AUTH_CONFIRM_ERROR =
+  `${LOCALE_AUTH_CONFIRM}.error` as const;
+export const LOCALE_AUTH_CONFIRM_RETRY =
+  `${LOCALE_AUTH_CONFIRM}.retry` as const;
 
 const LOCALE_CALENDAR = "calendar" as const;
 const LOCALE_CALENDAR_MONTH = `${LOCALE_CALENDAR}.month` as const;
