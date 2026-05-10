@@ -180,6 +180,10 @@ aggregation:
 modal:
     yes: はい
     no: いいえ
+    unsaved_title: 未保存の変更があります
+    save_and_leave: 保存して移動
+    discard_and_leave: 破棄して移動
+    stay: このページに残る
 
 general:
     update_success: 更新しました。

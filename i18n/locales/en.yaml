@@ -180,6 +180,10 @@ aggregation:
 modal:
     yes: Yes
     no: No
+    unsaved_title: You have unsaved changes
+    save_and_leave: Save and leave
+    discard_and_leave: Discard and leave
+    stay: Stay on this page
 
 general:
   update_success: Successfully updated.

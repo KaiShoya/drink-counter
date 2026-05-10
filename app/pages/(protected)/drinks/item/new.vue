@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { LOCALE_DRINKS_NEW_TITLE, LOCALE_DRINKS_UNSAVED_FORM_CONFIRM } from '~/utils/locales'
+import {
+  LOCALE_DRINKS_NEW_TITLE,
+  LOCALE_DRINKS_UNSAVED_FORM_CONFIRM,
+  LOCALE_MODAL_UNSAVED_TITLE,
+} from '~/utils/locales'
 
 const drinkNewStore = usePageDrinkNewStore()
 const { name, color, amount, drinkLabelId, isSaving } = storeToRefs(drinkNewStore)
@@ -28,6 +32,25 @@ const isDirty = computed(() =>
   ),
 )
 
+const showUnsavedModal = ref<boolean>(false)
+const pendingLeaveResolver = ref<((confirmed: boolean) => void) | null>(null)
+
+const requestLeaveConfirmation = () => {
+  showUnsavedModal.value = true
+  return new Promise<boolean>((resolve) => {
+    pendingLeaveResolver.value = resolve
+  })
+}
+
+const resolveLeaveConfirmation = (confirmed: boolean) => {
+  showUnsavedModal.value = false
+  pendingLeaveResolver.value?.(confirmed)
+  pendingLeaveResolver.value = null
+}
+
+const discardAndLeave = () => resolveLeaveConfirmation(true)
+const cancelLeave = () => resolveLeaveConfirmation(false)
+
 const handleBeforeUnload = (e: BeforeUnloadEvent) => {
   if (isDirty.value) { e.preventDefault() }
 }
@@ -35,9 +58,9 @@ const handleBeforeUnload = (e: BeforeUnloadEvent) => {
 onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
 onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
 
-onBeforeRouteLeave(() => {
+onBeforeRouteLeave(async () => {
   if (!isSaving.value && isDirty.value) {
-    return window.confirm(t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM))
+    return await requestLeaveConfirmation()
   }
 })
 </script>
@@ -55,6 +78,14 @@ onBeforeRouteLeave(() => {
       :save-function="create"
       :is-saving="isSaving"
       save="drinks.add"
+    />
+
+    <CommonModalMoleculesUnsavedChanges
+      :title="t(LOCALE_MODAL_UNSAVED_TITLE)"
+      :content="t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)"
+      :discard="discardAndLeave"
+      :cancel="cancelLeave"
+      :class="{ 'is-active': showUnsavedModal }"
     />
   </div>
 </template>

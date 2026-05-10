@@ -15,6 +15,7 @@ import {
   LOCALE_DRINKS_ACTIONS_HEADER,
   LOCALE_DRINKS_DELETE_MODAL_TITLE,
   LOCALE_DRINKS_DELETE_MODAL_CONTENT,
+  LOCALE_MODAL_UNSAVED_TITLE,
 } from '~/utils/locales'
 import type { DrinkRow } from '~/repositories/drinksRepository'
 
@@ -109,6 +110,39 @@ const isDirty = computed(() =>
   ),
 )
 
+const showUnsavedModal = ref<boolean>(false)
+const pendingLeaveResolver = ref<((confirmed: boolean) => void) | null>(null)
+
+const unsavedModalContent = computed(() => {
+  return hasUnsavedSort.value
+    ? t(LOCALE_LABELS_UNSAVED_SORT_CONFIRM)
+    : t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)
+})
+
+const requestLeaveConfirmation = () => {
+  showUnsavedModal.value = true
+  return new Promise<boolean>((resolve) => {
+    pendingLeaveResolver.value = resolve
+  })
+}
+
+const resolveLeaveConfirmation = (confirmed: boolean) => {
+  showUnsavedModal.value = false
+  pendingLeaveResolver.value?.(confirmed)
+  pendingLeaveResolver.value = null
+}
+
+const discardAndLeave = () => {
+  if (hasUnsavedSort.value) {
+    resetSort()
+  }
+  resolveLeaveConfirmation(true)
+}
+
+const cancelLeave = () => {
+  resolveLeaveConfirmation(false)
+}
+
 const handleBeforeUnload = (e: BeforeUnloadEvent) => {
   if (isDirty.value || hasUnsavedSort.value) { e.preventDefault() }
 }
@@ -116,16 +150,9 @@ const handleBeforeUnload = (e: BeforeUnloadEvent) => {
 onMounted(() => window.addEventListener('beforeunload', handleBeforeUnload))
 onUnmounted(() => window.removeEventListener('beforeunload', handleBeforeUnload))
 
-onBeforeRouteLeave(() => {
+onBeforeRouteLeave(async () => {
   if (!isSaving.value && (isDirty.value || hasUnsavedSort.value)) {
-    const msg = hasUnsavedSort.value
-      ? t(LOCALE_LABELS_UNSAVED_SORT_CONFIRM)
-      : t(LOCALE_DRINKS_UNSAVED_FORM_CONFIRM)
-    const confirmed = window.confirm(msg)
-    if (confirmed && hasUnsavedSort.value) {
-      resetSort()
-    }
-    return confirmed
+    return await requestLeaveConfirmation()
   }
 })
 </script>
@@ -333,6 +360,14 @@ onBeforeRouteLeave(() => {
       :success="() => deleteDrink(deleteTarget?.id, deleteTarget?.name)"
       :cancel="() => showDeleteModal = false"
       :class="{ 'is-active': showDeleteModal }"
+    />
+
+    <CommonModalMoleculesUnsavedChanges
+      :title="t(LOCALE_MODAL_UNSAVED_TITLE)"
+      :content="unsavedModalContent"
+      :discard="discardAndLeave"
+      :cancel="cancelLeave"
+      :class="{ 'is-active': showUnsavedModal }"
     />
   </div>
 </template>

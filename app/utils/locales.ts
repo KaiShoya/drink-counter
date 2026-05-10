@@ -221,6 +221,10 @@ export const LOCALE_AGGREGATION_RECORD_COUNT =
 const LOCALE_MODAL = "modal" as const;
 export const LOCALE_MODAL_YES = `${LOCALE_MODAL}.yes` as const;
 export const LOCALE_MODAL_NO = `${LOCALE_MODAL}.no` as const;
+export const LOCALE_MODAL_UNSAVED_TITLE = `${LOCALE_MODAL}.unsaved_title` as const;
+export const LOCALE_MODAL_SAVE_AND_LEAVE = `${LOCALE_MODAL}.save_and_leave` as const;
+export const LOCALE_MODAL_DISCARD_AND_LEAVE = `${LOCALE_MODAL}.discard_and_leave` as const;
+export const LOCALE_MODAL_STAY = `${LOCALE_MODAL}.stay` as const;
 
 const LOCALE_GENERAL = "general" as const;
 export const LOCALE_GENERAL_UPDATE_SUCCESS =
