@@ -53,6 +53,8 @@ calendar:
 index:
     warning_title: Be careful not to drink too much.
     warning_content: You've had {drinkCountForDay} cups today, but do you still want to drink it?
+    quick_record_title: Quick record
+    quick_record_empty: No quick-record candidates yet.
 
 activity_log:
     title: History

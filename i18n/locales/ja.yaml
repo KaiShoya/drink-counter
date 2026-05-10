@@ -53,6 +53,8 @@ calendar:
 index:
     warning_title: 飲みすぎ注意
     warning_content: 今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？
+    quick_record_title: クイック記録
+    quick_record_empty: すぐに記録できる候補がありません。
 
 activity_log:
     title: 履歴

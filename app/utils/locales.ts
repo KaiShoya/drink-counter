@@ -65,6 +65,10 @@ export const LOCALE_INDEX_WARNING_TITLE =
   `${LOCALE_INDEX}.warning_title` as const;
 export const LOCALE_INDEX_WARNING_CONTENT =
   `${LOCALE_INDEX}.warning_content` as const;
+export const LOCALE_INDEX_QUICK_RECORD_TITLE =
+  `${LOCALE_INDEX}.quick_record_title` as const;
+export const LOCALE_INDEX_QUICK_RECORD_EMPTY =
+  `${LOCALE_INDEX}.quick_record_empty` as const;
 
 const LOCALE_ACTIVITY_LOG = "activity_log" as const;
 export const LOCALE_ACTIVITY_LOG_TITLE =
