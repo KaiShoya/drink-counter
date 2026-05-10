@@ -154,6 +154,15 @@ labels:
 
 data:
     total: 合計
+    state:
+        loading_title: データを読み込み中です
+        loading_description: 集計データを取得しています。しばらくお待ちください。
+        empty_title: 表示できるデータがありません
+        empty_description: まだ記録がないか、表示条件に一致するデータがありません。
+        empty_action: 記録画面へ移動する
+        error_title: データの取得に失敗しました
+        error_description: 通信状態を確認して、再試行してください。
+        retry: 再試行
 
 aggregation:
     dow: 曜日

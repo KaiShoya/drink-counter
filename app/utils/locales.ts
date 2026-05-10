@@ -178,6 +178,23 @@ export const LOCALE_LABELS_UNSAVED_SORT_CONFIRM =
 
 const LOCALE_DATA = "data" as const;
 export const LOCALE_DATA_TOTAL = `${LOCALE_DATA}.total` as const;
+const LOCALE_DATA_STATE = `${LOCALE_DATA}.state` as const;
+export const LOCALE_DATA_STATE_LOADING_TITLE =
+  `${LOCALE_DATA_STATE}.loading_title` as const;
+export const LOCALE_DATA_STATE_LOADING_DESCRIPTION =
+  `${LOCALE_DATA_STATE}.loading_description` as const;
+export const LOCALE_DATA_STATE_EMPTY_TITLE =
+  `${LOCALE_DATA_STATE}.empty_title` as const;
+export const LOCALE_DATA_STATE_EMPTY_DESCRIPTION =
+  `${LOCALE_DATA_STATE}.empty_description` as const;
+export const LOCALE_DATA_STATE_EMPTY_ACTION =
+  `${LOCALE_DATA_STATE}.empty_action` as const;
+export const LOCALE_DATA_STATE_ERROR_TITLE =
+  `${LOCALE_DATA_STATE}.error_title` as const;
+export const LOCALE_DATA_STATE_ERROR_DESCRIPTION =
+  `${LOCALE_DATA_STATE}.error_description` as const;
+export const LOCALE_DATA_STATE_RETRY =
+  `${LOCALE_DATA_STATE}.retry` as const;
 
 const LOCALE_AGGREGATION = "aggregation" as const;
 export const LOCALE_AGGREGATION_DOW = `${LOCALE_AGGREGATION}.dow` as const;

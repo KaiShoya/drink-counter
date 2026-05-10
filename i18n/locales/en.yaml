@@ -153,7 +153,16 @@ labels:
     unsaved_sort_confirm: 'The sort order has not been saved. Leave this page?'
 
 data:
-  total: Total
+        total: Total
+        state:
+                loading_title: Loading data
+                loading_description: Fetching summary data. Please wait a moment.
+                empty_title: No data to display
+                empty_description: There are no records yet, or no data matches the current filters.
+                empty_action: Go to recording screen
+                error_title: Failed to load data
+                error_description: Check your connection and try again.
+                retry: Retry
 
 aggregation:
     dow: DOW

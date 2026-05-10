@@ -301,6 +301,13 @@ drinkLabels: DrinkLabelRow[]
 **アクセス条件**: 認証ユーザーのみ  
 **認証ガード**: `auth` middleware
 
+**共通状態UI（v1.21）**:
+- 3サブページ（`/data/total`, `/data/monthly`, `/data/annual`）は `loading / empty / error / content` の4状態で表示を分岐する
+- `loading`: 取得中メッセージを表示し、チャート群は非表示
+- `empty`: 「表示できるデータがありません」を表示し、記録画面（`/`）へ戻る CTA を表示
+- `error`: 取得失敗メッセージと「再試行」ボタンを表示
+- UI は `DomainChartMoleculesDataState` を共通利用し、文言は `data.state.*` の i18n キーで管理する
+
 #### サブページ
 
 ##### 6a. 月次ビュー（`/data/monthly`）
@@ -349,6 +356,8 @@ aggregatedData: {
 - **月選択**: `setMonth(year, month)` → `fetchMonthlyData()` 呼び出し
 - **前月/翌月**: 日付ロジックで自動計算
 - **集計条件変更時の再取得**: `userSetting.timezone` または `userSetting.switching_timing` 変更時に月次集計を再取得
+- **再試行**: error state から同一条件で `refreshPageData()` を再実行
+- **空状態CTA**: empty state から `/` へ遷移
 
 **集計条件表示**:
 - 画面上に現在の `timezone` と `switching_timing` を表示し、集計取得引数と一致させる
@@ -389,6 +398,8 @@ aggregatedData: {
 **アクション**:
 - **年選択**: `setYear(year)` → `fetchAnnualData()` 呼び出し
 - **集計条件変更時の再取得**: `userSetting.timezone` または `userSetting.switching_timing` 変更時に年次集計を再取得
+- **再試行**: error state から同一条件で `refreshPageData()` を再実行
+- **空状態CTA**: empty state から `/` へ遷移
 
 **集計条件表示**:
 - 画面上に現在の `timezone` と `switching_timing` を表示し、集計取得引数と一致させる
@@ -425,6 +436,10 @@ aggregatedData: {
 
 **参照**:
 - **Store**: `store/pages/data/` - `fetchTotalData()`
+
+**アクション**:
+- **再試行**: error state から `refreshPageData()` を再実行
+- **空状態CTA**: empty state から `/` へ遷移
 
 ---
 
