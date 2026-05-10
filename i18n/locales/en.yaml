@@ -142,8 +142,10 @@ drinks:
     update_failure: Failed to update \"{name}\".
     visible: visible
     invisible: invisible
-    update_visible_success: \"{name}\" was successfully updated to be {status}.    search_placeholder: Filter by label name
-    search_no_results: 'No labels matching "{query}".'    copy_label_color: Copy label color
+    update_visible_success: \"{name}\" was successfully updated to be {status}.
+    search_placeholder: Filter by label name
+    search_no_results: 'No labels matching "{query}".'
+    copy_label_color: Copy label color
 
 labels:
     edit_title: 'Edit "{name}"'
