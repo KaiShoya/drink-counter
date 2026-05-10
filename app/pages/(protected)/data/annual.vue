@@ -30,7 +30,6 @@ useSeoMeta({
 })
 
 const annualStore = useAnnualStore()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { year, calendarTitle, computeCalendarData } = storeToRefs(annualStore)
 const { fetchDrinkCounters } = annualStore
 const { userSetting } = storeToRefs(useUserStore())
@@ -122,11 +121,10 @@ watch([
     <template v-else>
       <DomainAnnualKpiCards />
 
-      <!-- メモリリークするため一旦コメントアウト -->
-      <!-- <MoleculesGraphsCalendar
+      <DomainChartAtomsCalendar
         :title="calendarTitle"
         :data="computeCalendarData"
-      /> -->
+      />
 
       <DomainChartAtomsPieChart />
 

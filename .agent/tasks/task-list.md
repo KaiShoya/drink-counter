@@ -16,7 +16,6 @@
 
 | ID | タイトル | 優先度 | 種別 | 担当バージョン |
 |----|----------|--------|------|--------------|
-| [T-0025](items/T-0025.md) | 認証画面文言の i18n 統一と確認画面導線改善 | Medium | enhancement | v1.21 |
 | [T-0026](items/T-0026.md) | 未保存変更の離脱確認を共通モーダル化 | Medium | refactoring | v1.21 |
 | [T-0027](items/T-0027.md) | About と規約ページの導線復旧 | Medium | enhancement | v1.21 |
 | [T-0028](items/T-0028.md) | 飲み物一覧のモバイル可読性改善とスタイル整理 | Low | refactoring | v1.21 |
@@ -24,7 +23,6 @@
 | [T-0030](items/T-0030.md) | 加算/減算操作に Undo トーストを追加 | Medium | enhancement | v1.22 |
 | [T-0031](items/T-0031.md) | 月次レビュー自動サマリーの表示追加 | Low | enhancement | v1.22 |
 | [T-0032](items/T-0032.md) | 目標ペースガイド表示の追加 | Low | enhancement | v1.22 |
-| [T-0033](items/T-0033.md) | 年次カレンダーの表示切れを修正する | High | bug | v1.21 |
 | [T-0034](items/T-0034.md) | オフラインサポートのMVP方針を実装する | Medium | enhancement | v1.22 |
 | [T-0035](items/T-0035.md) | ラベル削除時の関連飲み物挙動を仕様化して実装する | Medium | enhancement | v1.21 |
 | [T-0036](items/T-0036.md) | ラベル検索・フィルタリング機能を追加する | Medium | enhancement | v1.21 |
@@ -38,6 +36,7 @@
 
 | ID | タイトル | 優先度 | 種別 |
 |----|----------|--------|------|
+| [T-0025](items/T-0025.md) | 認証画面文言の i18n 統一と確認画面導線改善 | Medium | enhancement |
 
 ---
 
@@ -45,6 +44,7 @@
 
 | ID | タイトル | 優先度 | 種別 |
 |----|----------|--------|------|
+| [T-0033](items/T-0033.md) | 年次カレンダーの表示切れを修正する | High | bug |
 
 
 ---
