@@ -19,6 +19,17 @@
 </spec>
 
 <script setup lang="ts">
+import {
+  LOCALE_DATA_STATE_ERROR_TITLE,
+  LOCALE_DATA_STATE_ERROR_DESCRIPTION,
+  LOCALE_DATA_STATE_EMPTY_TITLE,
+  LOCALE_DATA_STATE_EMPTY_DESCRIPTION,
+  LOCALE_DATA_STATE_LOADING_TITLE,
+  LOCALE_DATA_STATE_LOADING_DESCRIPTION,
+  LOCALE_DATA_STATE_RETRY,
+  LOCALE_DATA_STATE_EMPTY_ACTION,
+} from '~/utils/locales'
+
 const props = withDefaults(defineProps<{
   mode: 'loading' | 'empty' | 'error'
   showAction?: boolean
