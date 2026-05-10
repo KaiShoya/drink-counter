@@ -1,7 +1,14 @@
 <script setup lang="ts">
-import { LOCALE_ROUTES_ABOUT, LOCALE_SOURCE, LOCALE_LICENSE, LOCALE_VERSION } from '~/utils/locales'
+import {
+  LOCALE_ROUTES_ABOUT,
+  LOCALE_SOURCE,
+  LOCALE_TERMS_OF_SERVICE,
+  LOCALE_LICENSE,
+  LOCALE_VERSION,
+} from '~/utils/locales'
 
 const { t } = useI18n()
+const localePath = useLocalePath()
 useSeoMeta({
   title: t(LOCALE_ROUTES_ABOUT),
 })
@@ -20,16 +27,16 @@ useSeoMeta({
           </NuxtLink>
         </th>
       </tr>
-      <!-- <tr>
+      <tr>
         <th colspan="2">
           <NuxtLink
-            to="/about/terms_of_service"
+            :to="localePath('/about/terms_of_service')"
             class="display is-block"
           >
             {{ t(LOCALE_TERMS_OF_SERVICE) }}
           </NuxtLink>
         </th>
-      </tr> -->
+      </tr>
       <tr>
         <th>{{ t(LOCALE_LICENSE) }}</th>
         <td>
