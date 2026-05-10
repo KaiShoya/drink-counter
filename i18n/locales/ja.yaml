@@ -143,6 +143,8 @@ drinks:
     visible: 表示
     invisible: 非表示
     update_visible_success: 「{name}」を{status}に変更しました。
+    search_placeholder: ラベル名で満ろす
+    search_no_results: '「{query}」に一致するラベルがありません。'
     copy_label_color: ラベルの色をコピーする
 
 labels:

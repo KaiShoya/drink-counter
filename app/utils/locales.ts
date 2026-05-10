@@ -272,3 +272,6 @@ export const LOCALE_ANNUAL_KPI_ACTIVE_DAYS = `${LOCALE_ANNUAL_KPI}.activeDays` a
 export const LOCALE_ANNUAL_KPI_AVG_PER_DAY = `${LOCALE_ANNUAL_KPI}.avgPerDay` as const;
 export const LOCALE_ANNUAL_KPI_AVG_PER_ACTIVE_DAY = `${LOCALE_ANNUAL_KPI}.avgPerActiveDay` as const;
 export const LOCALE_ANNUAL_KPI_YOY = `${LOCALE_ANNUAL_KPI}.yoy` as const;
+
+export const LOCALE_DRINKS_SEARCH_PLACEHOLDER = `${LOCALE_DRINKS}.search_placeholder` as const;
+export const LOCALE_DRINKS_SEARCH_NO_RESULTS = `${LOCALE_DRINKS}.search_no_results` as const;

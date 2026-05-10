@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LOCALE_ROUTES_DRINKS, LOCALE_DRINKS_ACTIONS_HEADER, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT } from '~/utils/locales'
+import { LOCALE_ROUTES_DRINKS, LOCALE_DRINKS_ACTIONS_HEADER, LOCALE_DRINKS_NAME, LOCALE_DRINKS_COLOR, LOCALE_LABELS_STANDARD_AMOUNT, LOCALE_DRINKS_SAVE_SORT, LOCALE_DRINKS_UNSAVED_SORT_CONFIRM, LOCALE_DRINKS_ADD, LOCALE_DRINKS_DELETE_MODAL_TITLE, LOCALE_DRINKS_DELETE_MODAL_CONTENT, LOCALE_DRINKS_SEARCH_PLACEHOLDER, LOCALE_DRINKS_SEARCH_NO_RESULTS } from '~/utils/locales'
 
 const { t } = useI18n()
 useSeoMeta({
@@ -9,8 +9,8 @@ useSeoMeta({
 const localePath = useLocalePath()
 
 const pageDrinkLabelsStore = usePageDrinkLabelsStore()
-const { deleteTarget, showDeleteModal, hasUnsavedSort } = storeToRefs(pageDrinkLabelsStore)
-const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort } = pageDrinkLabelsStore
+const { deleteTarget, showDeleteModal, hasUnsavedSort, searchQuery } = storeToRefs(pageDrinkLabelsStore)
+const { updateHidden, deleteDrinkLabel, clickDeleteDrinkButton, saveSort, filteredDrinkLabels } = pageDrinkLabelsStore
 const drinkLabelsStore = useDrinkLabelsStore()
 const { drinkLabels } = storeToRefs(drinkLabelsStore)
 const { resetSort } = drinkLabelsStore
@@ -39,8 +39,30 @@ onBeforeRouteLeave(() => {
 
 <template>
   <div class="mx-2">
+    <div class="field mb-3">
+      <div class="control has-icons-left">
+        <input
+          v-model="searchQuery"
+          class="input"
+          type="search"
+          :placeholder="t(LOCALE_DRINKS_SEARCH_PLACEHOLDER)"
+        >
+        <span class="icon is-left">
+          <Icon name="mdi:magnify" size="18" />
+        </span>
+      </div>
+    </div>
+
+    <p
+      v-if="searchQuery && filteredDrinkLabels.length === 0"
+      class="has-text-grey py-4 has-text-centered"
+    >
+      {{ t(LOCALE_DRINKS_SEARCH_NO_RESULTS, { query: searchQuery }) }}
+    </p>
+
     <draggable
       v-model="drinkLabels"
+      :disabled="!!searchQuery"
       :delay="100"
       :delay-on-touch-only="true"
       :touch-start-threshold="35"
@@ -67,7 +89,10 @@ onBeforeRouteLeave(() => {
       </template>
 
       <template #item="{ element: drinkLabel }">
-        <div class="columns is-mobile border-line is-vcentered">
+        <div
+          v-if="filteredDrinkLabels.some(l => l.id === drinkLabel.id)"
+          class="columns is-mobile border-line is-vcentered"
+        >
           <div class="column is-4 is-flex is-align-items-center">
             <div class="handle mr-2">
               <Icon
