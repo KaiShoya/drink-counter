@@ -68,10 +68,7 @@ onBeforeRouteLeave(() => {
 
       <template #item="{ element: drinkLabel }">
         <div class="columns is-mobile border-line is-vcentered">
-          <div
-            class="column is-4"
-            style="display: flex;"
-          >
+          <div class="column is-4 is-flex is-align-items-center">
             <div class="handle mr-2">
               <Icon
                 name="mdi:drag-horizontal-variant"
@@ -81,21 +78,15 @@ onBeforeRouteLeave(() => {
             {{ drinkLabel.name }}
           </div>
 
-          <div
-            class="column is-1 is-vcentered is-mobile"
-            style="display: flex;"
-          >
+          <div class="column is-1 is-flex is-align-items-center">
             <div
-              class="mx-1 tag"
-              :style="{ padding: '10px', backgroundColor: drinkLabel.color }"
+              class="mx-1 tag color-swatch"
+              :style="{ backgroundColor: drinkLabel.color }"
             />
             <!-- {{ drink.color }} -->
           </div>
 
-          <div
-            class="column is-4 is-vcentered is-mobile"
-            style="display: flex;"
-          >
+          <div class="column is-4 is-flex is-align-items-center">
             {{ drinkLabel.standard_amount }}
           </div>
 
@@ -165,8 +156,10 @@ onBeforeRouteLeave(() => {
   border-bottom: solid 1px #aaaaaa;
 }
 
-.color-column {
-  flex: 'none';
-  margin-bottom: -0.75rem;
+.color-swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  flex-shrink: 0;
 }
 </style>
