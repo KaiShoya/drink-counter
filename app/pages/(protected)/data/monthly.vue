@@ -42,6 +42,8 @@ const { userSetting } = storeToRefs(useUserStore())
 const isFetching = ref<boolean>(false)
 const isFetched = ref<boolean>(false)
 const fetchError = ref<string | null>(null)
+const isRefreshInFlight = ref<boolean>(false)
+const shouldRerunAfterFinish = ref<boolean>(false)
 
 const monthlySummaryConditions = computed(() => ({
   timezone: userSetting.value.timezone,
@@ -69,6 +71,13 @@ const fetchMonthlySummary = async () => {
 }
 
 const refreshPageData = async () => {
+  if (isRefreshInFlight.value) {
+    shouldRerunAfterFinish.value = true
+    return
+  }
+
+  isRefreshInFlight.value = true
+  shouldRerunAfterFinish.value = false
   isFetching.value = true
   fetchError.value = null
   try {
@@ -84,6 +93,12 @@ const refreshPageData = async () => {
     isFetching.value = false
     isFetched.value = true
     updateCalendar.value++
+    isRefreshInFlight.value = false
+
+    if (shouldRerunAfterFinish.value) {
+      shouldRerunAfterFinish.value = false
+      void refreshPageData()
+    }
   }
 }
 
