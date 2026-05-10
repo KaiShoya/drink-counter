@@ -25,8 +25,11 @@ export function useUserActions () {
             const userSettingRow = await $userSettingsRepository.fetchUserSettings()
             if (userSettingRow) {
               userSetting.value = userSettingRow
+            } else {
+              userSetting.value = null
             }
           } catch (settingsError) {
+            userSetting.value = null
             logger.warn('Skipped user settings fetch', { module: 'user/actions.ts' }, settingsError)
           }
 
