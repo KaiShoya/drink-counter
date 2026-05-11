@@ -55,6 +55,9 @@ index:
     warning_content: You've had {drinkCountForDay} cups today, but do you still want to drink it?
     quick_record_title: Quick record
     quick_record_empty: No quick-record candidates yet.
+    undo_action: Undo
+    undo_plus_message: 'Added "{name}".'
+    undo_minus_message: 'Removed "{name}".'
 
 activity_log:
     title: History

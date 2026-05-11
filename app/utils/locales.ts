@@ -69,6 +69,12 @@ export const LOCALE_INDEX_QUICK_RECORD_TITLE =
   `${LOCALE_INDEX}.quick_record_title` as const;
 export const LOCALE_INDEX_QUICK_RECORD_EMPTY =
   `${LOCALE_INDEX}.quick_record_empty` as const;
+export const LOCALE_INDEX_UNDO_ACTION =
+  `${LOCALE_INDEX}.undo_action` as const;
+export const LOCALE_INDEX_UNDO_PLUS_MESSAGE =
+  `${LOCALE_INDEX}.undo_plus_message` as const;
+export const LOCALE_INDEX_UNDO_MINUS_MESSAGE =
+  `${LOCALE_INDEX}.undo_minus_message` as const;
 
 const LOCALE_ACTIVITY_LOG = "activity_log" as const;
 export const LOCALE_ACTIVITY_LOG_TITLE =

@@ -39,6 +39,9 @@ import {
   LOCALE_INDEX_WARNING_CONTENT,
   LOCALE_INDEX_QUICK_RECORD_TITLE,
   LOCALE_INDEX_QUICK_RECORD_EMPTY,
+  LOCALE_INDEX_UNDO_ACTION,
+  LOCALE_INDEX_UNDO_PLUS_MESSAGE,
+  LOCALE_INDEX_UNDO_MINUS_MESSAGE,
 } from '~/utils/locales'
 import { useUserStore } from '~/stores/user'
 import { useAppStore } from '~/stores/app'
@@ -70,6 +73,73 @@ try {
 
 const thisDrinkId = ref<number>(0)
 const thisCounterId = ref<number>(0)
+const undoToken = ref<number>(0)
+const UNDO_TIMEOUT_MS = 5000
+
+const findDrinkById = (drinkId: number) => {
+  return labelsWithDrinks.value.flatMap(label => label.drinks).find(drink => drink.id === drinkId)
+}
+
+const scheduleUndo = (
+  operation: 'plus' | 'minus',
+  drinkId: number,
+  drinkCounterId: number,
+  drinkName: string,
+) => {
+  const token = Date.now()
+  undoToken.value = token
+
+  const undo = async () => {
+    if (undoToken.value !== token) return
+    undoToken.value = 0
+    if (operation === 'plus') {
+      await minus(drinkId, drinkCounterId)
+    } else {
+      await plus(drinkId, drinkCounterId)
+    }
+  }
+
+  const message = operation === 'plus'
+    ? t(LOCALE_INDEX_UNDO_PLUS_MESSAGE, { name: drinkName })
+    : t(LOCALE_INDEX_UNDO_MINUS_MESSAGE, { name: drinkName })
+
+  showUndoToast(
+    message,
+    t(LOCALE_INDEX_UNDO_ACTION),
+    () => { void undo() },
+    UNDO_TIMEOUT_MS,
+  )
+
+  setTimeout(() => {
+    if (undoToken.value === token) {
+      undoToken.value = 0
+    }
+  }, UNDO_TIMEOUT_MS)
+}
+
+const plusWithUndo = async (drinkId: number, drinkCounterId: number) => {
+  await plus(drinkId, drinkCounterId)
+  const drink = findDrinkById(drinkId)
+  if (!drink) return
+  scheduleUndo('plus', drink.id, drink.drinkCounterId, drink.name)
+}
+
+const minusWithUndo = async (drinkId: number, drinkCounterId: number) => {
+  const before = findDrinkById(drinkId)
+  if (!before || before.count === 0 || drinkCounterId === -1) {
+    await minus(drinkId, drinkCounterId)
+    return
+  }
+
+  await minus(drinkId, drinkCounterId)
+  const drink = findDrinkById(drinkId)
+  if (!drink || drink.count === before.count) return
+  scheduleUndo('minus', drink.id, drink.drinkCounterId, drink.name)
+}
+
+const decrementWithUndo = (drinkId: number, drinkCounterId: number) => {
+  void minusWithUndo(drinkId, drinkCounterId)
+}
 
 const quickRecordCandidates = computed(() => {
   const flattened = labelsWithDrinks.value.flatMap(label => label.drinks)
@@ -93,7 +163,7 @@ const plusCheck = (drinkId: number, counterId: number) => {
   if (userSetting.value.threshold_for_detecting_overdrinking <= drinkCountForDay.value) {
     modalIsActive.value = true
   } else {
-    plus(drinkId, counterId)
+    void plusWithUndo(drinkId, counterId)
   }
 }
 
@@ -147,7 +217,7 @@ watch(date, async () => {
           :label="label"
           :update-default-drink
           :increment="plusCheck"
-          :decrement="minus"
+          :decrement="decrementWithUndo"
         />
       </template>
     </div>
@@ -157,7 +227,7 @@ watch(date, async () => {
     <CommonModalMoleculesWarning
       :title="t(LOCALE_INDEX_WARNING_TITLE)"
       :content="t(LOCALE_INDEX_WARNING_CONTENT, { drinkCountForDay })"
-      :success="() => { modalIsActive = false; plus(thisDrinkId, thisCounterId) }"
+      :success="() => { modalIsActive = false; void plusWithUndo(thisDrinkId, thisCounterId) }"
       :cancel="() => modalIsActive = false"
       :class="modalIsActive ? 'is-active' : ''"
     />

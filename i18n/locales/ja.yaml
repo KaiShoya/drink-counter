@@ -55,6 +55,9 @@ index:
     warning_content: 今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？
     quick_record_title: クイック記録
     quick_record_empty: すぐに記録できる候補がありません。
+    undo_action: 元に戻す
+    undo_plus_message: '「{name}」を加算しました。'
+    undo_minus_message: '「{name}」を減算しました。'
 
 activity_log:
     title: 履歴
