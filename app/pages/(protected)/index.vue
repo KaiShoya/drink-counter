@@ -6,11 +6,10 @@
 ## Data
 - page store: `indexStore` → `date`, `labelsWithDrinks`, `drinkCountForDay`
 - user settings: `userSetting.threshold_for_detecting_overdrinking`
-- local computed: `quickRecordCandidates`（当日上位3件のクイック候補）
+- local computed: `thresholdCupCount`, `remainingCupCount`, `exceededCupCount`
 
 ## Interactions
 - DatePicker で `date` が変わると `fetchNumberOfDrinks()` を再実行
-- クイック記録ボタン押下で `plusCheck(drinkId, counterId)` を呼ぶ
 - `DomainCounterMoleculesRow` の increment から `plusCheck(drinkId, counterId)`
   - 閾値超過なら警告モーダル表示
   - 未超過なら `plus(drinkId, counterId)`
@@ -18,7 +17,7 @@
 
 ## Features
 - 日付選択（カレンダー）
-- 上位3件クイック記録ウィジェット（候補0件時はフォールバック文言表示）
+- 現在杯数・閾値・残り/超過杯数を1行で表示する進捗サマリー
 - ラベル/飲み物行のカウント増減
 - 過飲検知（閾値超過時の警告モーダル）
 
@@ -26,7 +25,7 @@
 - 例外処理・toast・logging は Page Store 側で責務分離（画面は直接処理しない）
 
 ## i18n
-- SEO title / 警告文言 / クイック記録文言は `utils/locales.ts` のキーを使用
+- SEO title / 警告文言 / 進捗サマリー文言は `utils/locales.ts` のキーを使用
 
 ## Notes
 - #254 飲み物切り替え手順の改善の対象。UIフロー変更時に更新。
@@ -37,17 +36,13 @@ import {
   LOCALE_ROUTES_TOP,
   LOCALE_INDEX_WARNING_TITLE,
   LOCALE_INDEX_WARNING_CONTENT,
-  LOCALE_INDEX_QUICK_RECORD_TITLE,
-  LOCALE_INDEX_QUICK_RECORD_EMPTY,
   LOCALE_INDEX_UNDO_ACTION,
   LOCALE_INDEX_UNDO_PLUS_MESSAGE,
   LOCALE_INDEX_UNDO_MINUS_MESSAGE,
-  LOCALE_INDEX_PACE_GUIDE_TITLE,
-  LOCALE_INDEX_PACE_GUIDE_TARGET,
-  LOCALE_INDEX_PACE_GUIDE_CURRENT,
-  LOCALE_INDEX_PACE_GUIDE_STATUS_OVER,
-  LOCALE_INDEX_PACE_GUIDE_STATUS_REMAINING,
-  LOCALE_INDEX_PACE_GUIDE_STATUS_ON_TRACK,
+  LOCALE_INDEX_PROGRESS_CURRENT,
+  LOCALE_INDEX_PROGRESS_THRESHOLD,
+  LOCALE_INDEX_PROGRESS_REMAINING,
+  LOCALE_INDEX_PROGRESS_OVER,
 } from '~/utils/locales'
 import { useUserStore } from '~/stores/user'
 import { useAppStore } from '~/stores/app'
@@ -180,42 +175,16 @@ const decrementWithUndo = (drinkId: number, drinkCounterId: number) => {
   void minusWithUndo(drinkId, drinkCounterId)
 }
 
-const quickRecordCandidates = computed(() => {
-  const flattened = labelsWithDrinks.value.flatMap(label => label.drinks)
-  if (flattened.length === 0) return []
+const thresholdCupCount = computed(() => Math.max(1, userSetting.value.threshold_for_detecting_overdrinking ?? 1))
+const currentCupCount = computed(() => drinkCountForDay.value)
+const remainingCupCount = computed(() => Math.max(0, thresholdCupCount.value - currentCupCount.value))
+const exceededCupCount = computed(() => Math.max(0, currentCupCount.value - thresholdCupCount.value))
 
-  const withCount = flattened.filter(drink => (drink.count ?? 0) > 0)
-  if (withCount.length > 0) {
-    return [...withCount]
-      .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
-      .slice(0, 3)
+const thresholdStatusText = computed(() => {
+  if (exceededCupCount.value > 0) {
+    return t(LOCALE_INDEX_PROGRESS_OVER, { count: exceededCupCount.value })
   }
-
-  return flattened.slice(0, 3)
-})
-
-const paceTarget = computed(() => Math.max(1, userSetting.value.threshold_for_detecting_overdrinking ?? 1))
-const paceCurrent = computed(() => drinkCountForDay.value)
-
-const dayElapsedRate = computed(() => {
-  const switchingHour = userSetting.value.switching_timing ?? 0
-  const now = new Date()
-  const hoursSinceSwitch = ((now.getHours() - switchingHour + 24) % 24) + now.getMinutes() / 60
-  return Math.min(1, Math.max(0, hoursSinceSwitch / 24))
-})
-
-const expectedByNow = computed(() => paceTarget.value * dayElapsedRate.value)
-const paceDelta = computed(() => paceCurrent.value - expectedByNow.value)
-
-const paceStatusText = computed(() => {
-  const roundedAbsDelta = Math.abs(paceDelta.value).toFixed(1)
-  if (paceDelta.value > 0.25) {
-    return t(LOCALE_INDEX_PACE_GUIDE_STATUS_OVER, { diff: roundedAbsDelta })
-  }
-  if (paceDelta.value < -0.25) {
-    return t(LOCALE_INDEX_PACE_GUIDE_STATUS_REMAINING, { diff: roundedAbsDelta })
-  }
-  return t(LOCALE_INDEX_PACE_GUIDE_STATUS_ON_TRACK)
+  return t(LOCALE_INDEX_PROGRESS_REMAINING, { count: remainingCupCount.value })
 })
 
 // 杯数加算時の閾値チェック
@@ -244,49 +213,21 @@ watch(date, async () => {
   <div>
     <DomainPickerMoleculesDatePicker />
 
-    <section class="box quick-record-widget">
-      <h3 class="title is-6 mb-3">
-        {{ t(LOCALE_INDEX_QUICK_RECORD_TITLE) }}
-      </h3>
-      <div
-        v-if="quickRecordCandidates.length > 0"
-        class="buttons"
-      >
-        <button
-          v-for="drink in quickRecordCandidates"
-          :key="drink.id"
-          type="button"
-          class="button is-light quick-record-button"
-          @click="plusCheck(drink.id, drink.drinkCounterId)"
-        >
-          <span class="tag mr-2 quick-record-color" :style="{ backgroundColor: drink.color }" />
-          <span>{{ drink.name }}</span>
-        </button>
-      </div>
-      <p
-        v-else
-        class="has-text-grey"
-      >
-        {{ t(LOCALE_INDEX_QUICK_RECORD_EMPTY) }}
-      </p>
-    </section>
-
     <section
       v-if="showPaceGuide"
-      class="box pace-guide-widget"
+      class="box pace-summary-widget"
     >
-      <h3 class="title is-6 mb-3">
-        {{ t(LOCALE_INDEX_PACE_GUIDE_TITLE) }}
-      </h3>
-      <p class="mb-1">
-        {{ t(LOCALE_INDEX_PACE_GUIDE_TARGET, { count: paceTarget }) }}
-      </p>
-      <p class="mb-1">
-        {{ t(LOCALE_INDEX_PACE_GUIDE_CURRENT, { count: paceCurrent }) }}
-      </p>
-      <p class="has-text-weight-semibold" :class="paceDelta > 0.25 ? 'has-text-danger' : 'has-text-success'">
-        {{ paceStatusText }}
-      </p>
+      <div class="pace-summary-line">
+        <p class="pace-summary-main">
+          {{ t(LOCALE_INDEX_PROGRESS_CURRENT, { count: currentCupCount }) }}
+        </p>
+        <p class="pace-summary-sub">
+          {{ t(LOCALE_INDEX_PROGRESS_THRESHOLD, { count: thresholdCupCount }) }}
+        </p>
+        <p class="pace-summary-status" :class="exceededCupCount > 0 ? 'has-text-danger' : 'has-text-success'">
+          {{ thresholdStatusText }}
+        </p>
+      </div>
     </section>
 
     <div>
@@ -316,22 +257,31 @@ watch(date, async () => {
 </template>
 
 <style scoped>
-.quick-record-widget {
+.pace-summary-widget {
   margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
 }
 
-.pace-guide-widget {
-  margin-bottom: 1rem;
+.pace-summary-line {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.quick-record-button {
-  min-width: 9rem;
-  justify-content: flex-start;
+.pace-summary-main {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
-.quick-record-color {
-  width: 0.9rem;
-  height: 0.9rem;
-  padding: 0;
+.pace-summary-sub,
+.pace-summary-status {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.pace-summary-status {
+  font-weight: 600;
 }
 </style>
