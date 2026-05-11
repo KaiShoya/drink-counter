@@ -58,6 +58,10 @@ index:
     undo_action: Undo
     undo_plus_message: 'Added "{name}".'
     undo_minus_message: 'Removed "{name}".'
+    progress_current_label: Current
+    progress_threshold_label: Threshold
+    progress_remaining_label: Remaining
+    progress_over_label: Over
     progress_current: 'Current: {count} cups'
     progress_threshold: 'Threshold: {count} cups'
     progress_remaining: '{count} cups left'

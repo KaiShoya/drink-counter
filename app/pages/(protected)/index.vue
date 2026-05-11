@@ -39,10 +39,11 @@ import {
   LOCALE_INDEX_UNDO_ACTION,
   LOCALE_INDEX_UNDO_PLUS_MESSAGE,
   LOCALE_INDEX_UNDO_MINUS_MESSAGE,
-  LOCALE_INDEX_PROGRESS_CURRENT,
-  LOCALE_INDEX_PROGRESS_THRESHOLD,
-  LOCALE_INDEX_PROGRESS_REMAINING,
-  LOCALE_INDEX_PROGRESS_OVER,
+  LOCALE_INDEX_PROGRESS_CURRENT_LABEL,
+  LOCALE_INDEX_PROGRESS_THRESHOLD_LABEL,
+  LOCALE_INDEX_PROGRESS_REMAINING_LABEL,
+  LOCALE_INDEX_PROGRESS_OVER_LABEL,
+  LOCALE_SETTINGS_CUPS,
 } from '~/utils/locales'
 import { useUserStore } from '~/stores/user'
 import { useAppStore } from '~/stores/app'
@@ -182,9 +183,17 @@ const exceededCupCount = computed(() => Math.max(0, currentCupCount.value - thre
 
 const thresholdStatusText = computed(() => {
   if (exceededCupCount.value > 0) {
-    return t(LOCALE_INDEX_PROGRESS_OVER, { count: exceededCupCount.value })
+    return {
+      label: t(LOCALE_INDEX_PROGRESS_OVER_LABEL),
+      count: exceededCupCount.value,
+      danger: true,
+    }
   }
-  return t(LOCALE_INDEX_PROGRESS_REMAINING, { count: remainingCupCount.value })
+  return {
+    label: t(LOCALE_INDEX_PROGRESS_REMAINING_LABEL),
+    count: remainingCupCount.value,
+    danger: false,
+  }
 })
 
 // 杯数加算時の閾値チェック
@@ -215,18 +224,27 @@ watch(date, async () => {
 
     <section
       v-if="showPaceGuide"
-      class="box pace-summary-widget"
+      class="pace-summary-widget"
     >
-      <div class="pace-summary-line">
-        <p class="pace-summary-main">
-          {{ t(LOCALE_INDEX_PROGRESS_CURRENT, { count: currentCupCount }) }}
-        </p>
-        <p class="pace-summary-sub">
-          {{ t(LOCALE_INDEX_PROGRESS_THRESHOLD, { count: thresholdCupCount }) }}
-        </p>
-        <p class="pace-summary-status" :class="exceededCupCount > 0 ? 'has-text-danger' : 'has-text-success'">
-          {{ thresholdStatusText }}
-        </p>
+      <div class="columns is-mobile is-gapless pace-kpi-columns">
+        <div class="column pace-kpi-col">
+          <div class="pace-kpi-box has-text-centered">
+            <p class="pace-kpi-label">{{ t(LOCALE_INDEX_PROGRESS_CURRENT_LABEL) }}</p>
+            <p class="pace-kpi-value">{{ currentCupCount }}<span class="pace-kpi-unit">{{ t(LOCALE_SETTINGS_CUPS) }}</span></p>
+          </div>
+        </div>
+        <div class="column pace-kpi-col">
+          <div class="pace-kpi-box has-text-centered">
+            <p class="pace-kpi-label">{{ t(LOCALE_INDEX_PROGRESS_THRESHOLD_LABEL) }}</p>
+            <p class="pace-kpi-value">{{ thresholdCupCount }}<span class="pace-kpi-unit">{{ t(LOCALE_SETTINGS_CUPS) }}</span></p>
+          </div>
+        </div>
+        <div class="column pace-kpi-col">
+          <div class="pace-kpi-box has-text-centered">
+            <p class="pace-kpi-label" :class="thresholdStatusText.danger ? 'has-text-danger' : ''">{{ thresholdStatusText.label }}</p>
+            <p class="pace-kpi-value" :class="thresholdStatusText.danger ? 'has-text-danger' : ''">{{ thresholdStatusText.count }}<span class="pace-kpi-unit">{{ t(LOCALE_SETTINGS_CUPS) }}</span></p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -259,29 +277,49 @@ watch(date, async () => {
 <style scoped>
 .pace-summary-widget {
   margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
 }
 
-.pace-summary-line {
+.pace-kpi-columns {
+  border: 1px solid var(--bulma-border, #dbdbdb);
+  border-radius: 8px;
+  background: var(--bulma-body-background-color, #fff);
+  overflow: hidden;
+}
+
+.pace-kpi-col {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  flex-wrap: wrap;
+  border-right: 1px solid var(--bulma-border, #dbdbdb);
 }
 
-.pace-summary-main {
+.pace-kpi-col:last-child {
+  border-right: none;
+}
+
+.pace-kpi-box {
+  width: 100%;
+  padding: 0.65rem 0.5rem;
+}
+
+.pace-kpi-label {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: clamp(0.66rem, 2.2vw, 0.82rem);
+  color: var(--bulma-text, #4a4a4a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pace-kpi-value {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.05rem, 4.2vw, 1.45rem);
   font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
-.pace-summary-sub,
-.pace-summary-status {
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.pace-summary-status {
+.pace-kpi-unit {
+  margin-left: 0.2rem;
+  font-size: 0.72em;
   font-weight: 600;
 }
 </style>

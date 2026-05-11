@@ -75,6 +75,14 @@ export const LOCALE_INDEX_UNDO_PLUS_MESSAGE =
   `${LOCALE_INDEX}.undo_plus_message` as const;
 export const LOCALE_INDEX_UNDO_MINUS_MESSAGE =
   `${LOCALE_INDEX}.undo_minus_message` as const;
+export const LOCALE_INDEX_PROGRESS_CURRENT_LABEL =
+  `${LOCALE_INDEX}.progress_current_label` as const;
+export const LOCALE_INDEX_PROGRESS_THRESHOLD_LABEL =
+  `${LOCALE_INDEX}.progress_threshold_label` as const;
+export const LOCALE_INDEX_PROGRESS_REMAINING_LABEL =
+  `${LOCALE_INDEX}.progress_remaining_label` as const;
+export const LOCALE_INDEX_PROGRESS_OVER_LABEL =
+  `${LOCALE_INDEX}.progress_over_label` as const;
 export const LOCALE_INDEX_PROGRESS_CURRENT =
   `${LOCALE_INDEX}.progress_current` as const;
 export const LOCALE_INDEX_PROGRESS_THRESHOLD =
