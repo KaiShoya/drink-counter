@@ -265,6 +265,16 @@ export const LOCALE_MONTHLY_KPI_AVG_PER_DAY = `${LOCALE_MONTHLY_KPI}.avgPerDay` 
 export const LOCALE_MONTHLY_KPI_AVG_PER_ACTIVE_DAY = `${LOCALE_MONTHLY_KPI}.avgPerActiveDay` as const;
 export const LOCALE_MONTHLY_KPI_MOM = `${LOCALE_MONTHLY_KPI}.mom` as const;
 
+const LOCALE_MONTHLY_REVIEW = `${LOCALE_MONTHLY}.review` as const;
+export const LOCALE_MONTHLY_REVIEW_TITLE = `${LOCALE_MONTHLY_REVIEW}.title` as const;
+export const LOCALE_MONTHLY_REVIEW_TOP_LABEL = `${LOCALE_MONTHLY_REVIEW}.top_label` as const;
+export const LOCALE_MONTHLY_REVIEW_WEEKDAY_TREND = `${LOCALE_MONTHLY_REVIEW}.weekday_trend` as const;
+export const LOCALE_MONTHLY_REVIEW_MOM_UP = `${LOCALE_MONTHLY_REVIEW}.mom_up` as const;
+export const LOCALE_MONTHLY_REVIEW_MOM_DOWN = `${LOCALE_MONTHLY_REVIEW}.mom_down` as const;
+export const LOCALE_MONTHLY_REVIEW_MOM_FLAT = `${LOCALE_MONTHLY_REVIEW}.mom_flat` as const;
+export const LOCALE_MONTHLY_REVIEW_UNKNOWN_LABEL = `${LOCALE_MONTHLY_REVIEW}.unknown_label` as const;
+export const LOCALE_MONTHLY_REVIEW_NO_DATA = `${LOCALE_MONTHLY_REVIEW}.no_data` as const;
+
 const LOCALE_MONTHLY_CHART = `${LOCALE_MONTHLY}.chart` as const;
 export const LOCALE_MONTHLY_CHART_DAILY_SERIES = `${LOCALE_MONTHLY_CHART}.dailySeries` as const;
 export const LOCALE_MONTHLY_CHART_LABEL_DONUT = `${LOCALE_MONTHLY_CHART}.labelDonut` as const;

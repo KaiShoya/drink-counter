@@ -88,6 +88,15 @@ monthly:
         avgPerDay: 1日平均（全日）
         avgPerActiveDay: 1日平均（飲んだ日）
         mom: 前月比
+    review:
+        title: 月次レビュー
+        top_label: '最多カテゴリ: {label}（構成比 {share}%）'
+        weekday_trend: '曜日傾向: {weekday} が高め（平均 {avg}杯）'
+        mom_up: '先月比: +{pct}%'
+        mom_down: '先月比: {pct}%'
+        mom_flat: '先月比: 変化なし'
+        unknown_label: 不明カテゴリ
+        no_data: この月はレビューに十分なデータがありません。
     chart:
         dailySeries: 日次推移
         labelDonut: ラベル構成比

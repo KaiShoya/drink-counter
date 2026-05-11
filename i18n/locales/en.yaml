@@ -101,6 +101,15 @@ annual:
         totalVolume: Total volume
         activeDays: Active days
         avgPerDay: Daily average (all days)
+    review:
+        title: Monthly review
+        top_label: 'Top category: {label} ({share}% share)'
+        weekday_trend: 'Weekday trend: {weekday} is highest (avg {avg} drinks)'
+        mom_up: 'MoM: +{pct}%'
+        mom_down: 'MoM: {pct}%'
+        mom_flat: 'MoM: no change'
+        unknown_label: Unknown label
+        no_data: Not enough data to generate a review for this month.
         avgPerActiveDay: Daily average (drinking days)
         yoy: YoY
 
