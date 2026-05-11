@@ -14,6 +14,7 @@
 ## Features
 - 数値入力（過飲閾値 / 日付切替時刻）
 - タイムゾーン選択（`TIMEZONE` から選択）
+- トップ画面の目標ペースガイド表示の ON/OFF 切り替え
 
 ## Error Handling
 - 保存失敗時の toast / logging は Page Store が担当（画面では直接処理しない）
@@ -31,7 +32,16 @@
 </spec>
 
 <script setup lang="ts">
-import { LOCALE_ROUTES_SETTINGS, LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING, LOCALE_SETTINGS_CUPS, LOCALE_SETTINGS_TIMEZONE, LOCALE_SETTINGS_SWITCHING_TIMING, LOCALE_SETTINGS_OCLOCK, LOCALE_SETTINGS_SAVE } from '~/utils/locales'
+import {
+  LOCALE_ROUTES_SETTINGS,
+  LOCALE_SETTINGS_THRESHOLD_FOR_DETECTING_OVERDRINKING,
+  LOCALE_SETTINGS_CUPS,
+  LOCALE_SETTINGS_TIMEZONE,
+  LOCALE_SETTINGS_SWITCHING_TIMING,
+  LOCALE_SETTINGS_OCLOCK,
+  LOCALE_SETTINGS_SAVE,
+  LOCALE_SETTINGS_SHOW_PACE_GUIDE,
+} from '~/utils/locales'
 import { TIMEZONE } from '~/utils/constant'
 
 const { t } = useI18n()
@@ -40,7 +50,7 @@ useSeoMeta({
 })
 
 const settingsStore = useSettingsStore()
-const { thresholdForDetectingOverdrinking, timezone, switchingTiming } = storeToRefs(settingsStore)
+const { thresholdForDetectingOverdrinking, timezone, switchingTiming, showPaceGuide } = storeToRefs(settingsStore)
 const { fetchSettings, updateSettings } = settingsStore
 
 fetchSettings()
@@ -114,6 +124,24 @@ fetchSettings()
           </div>
           <div class="control">
             <span class="button is-static">{{ t(LOCALE_SETTINGS_OCLOCK) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label" />
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox" for="show-pace-guide">
+              <input
+                id="show-pace-guide"
+                v-model="showPaceGuide"
+                type="checkbox"
+              >
+              {{ t(LOCALE_SETTINGS_SHOW_PACE_GUIDE) }}
+            </label>
           </div>
         </div>
       </div>

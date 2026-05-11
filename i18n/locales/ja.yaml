@@ -58,6 +58,12 @@ index:
     undo_action: 元に戻す
     undo_plus_message: '「{name}」を加算しました。'
     undo_minus_message: '「{name}」を減算しました。'
+    pace_guide_title: 今日の目標ペース
+    pace_guide_target: '目標: {count}杯/日'
+    pace_guide_current: '現在: {count}杯'
+    pace_guide_status_over: '目標ペースより {diff} 杯多めです。'
+    pace_guide_status_remaining: '目標ペースより {diff} 杯少なめです。'
+    pace_guide_status_on_track: 目標ペースどおりです。
 
 activity_log:
     title: 履歴
@@ -119,6 +125,7 @@ settings:
     timezone: タイムゾーン
     switching_timing: 日付切り替え時刻
     oclock: 時
+    show_pace_guide: トップ画面で目標ペースガイドを表示する
     save: 保存する
 
 drinks:

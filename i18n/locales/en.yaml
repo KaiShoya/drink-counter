@@ -58,6 +58,12 @@ index:
     undo_action: Undo
     undo_plus_message: 'Added "{name}".'
     undo_minus_message: 'Removed "{name}".'
+    pace_guide_title: Today's pace guide
+    pace_guide_target: 'Target: {count} cups/day'
+    pace_guide_current: 'Current: {count} cups'
+    pace_guide_status_over: '{diff} cups above target pace.'
+    pace_guide_status_remaining: '{diff} cups below target pace.'
+    pace_guide_status_on_track: You are on target pace.
 
 activity_log:
     title: History
@@ -119,6 +125,7 @@ settings:
     timezone: Timezone
     switching_timing: Date switching timing
     oclock: o'clock
+    show_pace_guide: Show target pace guide on the top page
     save: Save
 
 drinks:

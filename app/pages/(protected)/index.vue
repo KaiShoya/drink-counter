@@ -42,6 +42,12 @@ import {
   LOCALE_INDEX_UNDO_ACTION,
   LOCALE_INDEX_UNDO_PLUS_MESSAGE,
   LOCALE_INDEX_UNDO_MINUS_MESSAGE,
+  LOCALE_INDEX_PACE_GUIDE_TITLE,
+  LOCALE_INDEX_PACE_GUIDE_TARGET,
+  LOCALE_INDEX_PACE_GUIDE_CURRENT,
+  LOCALE_INDEX_PACE_GUIDE_STATUS_OVER,
+  LOCALE_INDEX_PACE_GUIDE_STATUS_REMAINING,
+  LOCALE_INDEX_PACE_GUIDE_STATUS_ON_TRACK,
 } from '~/utils/locales'
 import { useUserStore } from '~/stores/user'
 import { useAppStore } from '~/stores/app'
@@ -53,6 +59,7 @@ useSeoMeta({
 })
 
 const { userSetting } = storeToRefs(useUserStore())
+const { showPaceGuide } = storeToRefs(useSettingsStore())
 
 const { showLoading, hideLoading } = useAppStore()
 const indexStore = useIndexStore()
@@ -155,6 +162,30 @@ const quickRecordCandidates = computed(() => {
   return flattened.slice(0, 3)
 })
 
+const paceTarget = computed(() => Math.max(1, userSetting.value.threshold_for_detecting_overdrinking ?? 1))
+const paceCurrent = computed(() => drinkCountForDay.value)
+
+const dayElapsedRate = computed(() => {
+  const switchingHour = userSetting.value.switching_timing ?? 0
+  const now = new Date()
+  const hoursSinceSwitch = ((now.getHours() - switchingHour + 24) % 24) + now.getMinutes() / 60
+  return Math.min(1, Math.max(0, hoursSinceSwitch / 24))
+})
+
+const expectedByNow = computed(() => paceTarget.value * dayElapsedRate.value)
+const paceDelta = computed(() => paceCurrent.value - expectedByNow.value)
+
+const paceStatusText = computed(() => {
+  const roundedAbsDelta = Math.abs(paceDelta.value).toFixed(1)
+  if (paceDelta.value > 0.25) {
+    return t(LOCALE_INDEX_PACE_GUIDE_STATUS_OVER, { diff: roundedAbsDelta })
+  }
+  if (paceDelta.value < -0.25) {
+    return t(LOCALE_INDEX_PACE_GUIDE_STATUS_REMAINING, { diff: roundedAbsDelta })
+  }
+  return t(LOCALE_INDEX_PACE_GUIDE_STATUS_ON_TRACK)
+})
+
 // 杯数加算時の閾値チェック
 const plusCheck = (drinkId: number, counterId: number) => {
   thisDrinkId.value = drinkId
@@ -208,6 +239,24 @@ watch(date, async () => {
       </p>
     </section>
 
+    <section
+      v-if="showPaceGuide"
+      class="box pace-guide-widget"
+    >
+      <h3 class="title is-6 mb-3">
+        {{ t(LOCALE_INDEX_PACE_GUIDE_TITLE) }}
+      </h3>
+      <p class="mb-1">
+        {{ t(LOCALE_INDEX_PACE_GUIDE_TARGET, { count: paceTarget }) }}
+      </p>
+      <p class="mb-1">
+        {{ t(LOCALE_INDEX_PACE_GUIDE_CURRENT, { count: paceCurrent }) }}
+      </p>
+      <p class="has-text-weight-semibold" :class="paceDelta > 0.25 ? 'has-text-danger' : 'has-text-success'">
+        {{ paceStatusText }}
+      </p>
+    </section>
+
     <div>
       <template
         v-for="(label, i) in labelsWithDrinks"
@@ -236,6 +285,10 @@ watch(date, async () => {
 
 <style scoped>
 .quick-record-widget {
+  margin-bottom: 1rem;
+}
+
+.pace-guide-widget {
   margin-bottom: 1rem;
 }
 
