@@ -81,18 +81,6 @@ export const LOCALE_INDEX_PROGRESS_REMAINING_LABEL =
   `${LOCALE_INDEX}.progress_remaining_label` as const;
 export const LOCALE_INDEX_PROGRESS_OVER_LABEL =
   `${LOCALE_INDEX}.progress_over_label` as const;
-export const LOCALE_INDEX_PACE_GUIDE_TITLE =
-  `${LOCALE_INDEX}.pace_guide_title` as const;
-export const LOCALE_INDEX_PACE_GUIDE_TARGET =
-  `${LOCALE_INDEX}.pace_guide_target` as const;
-export const LOCALE_INDEX_PACE_GUIDE_CURRENT =
-  `${LOCALE_INDEX}.pace_guide_current` as const;
-export const LOCALE_INDEX_PACE_GUIDE_STATUS_OVER =
-  `${LOCALE_INDEX}.pace_guide_status_over` as const;
-export const LOCALE_INDEX_PACE_GUIDE_STATUS_REMAINING =
-  `${LOCALE_INDEX}.pace_guide_status_remaining` as const;
-export const LOCALE_INDEX_PACE_GUIDE_STATUS_ON_TRACK =
-  `${LOCALE_INDEX}.pace_guide_status_on_track` as const;
 
 const LOCALE_ACTIVITY_LOG = "activity_log" as const;
 export const LOCALE_ACTIVITY_LOG_TITLE =

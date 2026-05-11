@@ -61,12 +61,6 @@ index:
     progress_current_label: 現在の杯数
     progress_remaining_label: アラートまであと
     progress_over_label: 超過
-    pace_guide_title: 今日の目標ペース
-    pace_guide_target: '目標: {count}杯/日'
-    pace_guide_current: '現在: {count}杯'
-    pace_guide_status_over: '目標ペースより {diff} 杯多めです。'
-    pace_guide_status_remaining: '目標ペースより {diff} 杯少なめです。'
-    pace_guide_status_on_track: 目標ペースどおりです。
 
 activity_log:
     title: 履歴

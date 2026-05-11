@@ -61,12 +61,6 @@ index:
     progress_current_label: Current
     progress_remaining_label: Remaining
     progress_over_label: Over
-    pace_guide_title: Today's pace guide
-    pace_guide_target: 'Target: {count} cups/day'
-    pace_guide_current: 'Current: {count} cups'
-    pace_guide_status_over: '{diff} cups above target pace.'
-    pace_guide_status_remaining: '{diff} cups below target pace.'
-    pace_guide_status_on_track: You are on target pace.
 
 activity_log:
     title: History
