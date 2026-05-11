@@ -367,6 +367,7 @@ aggregatedData: {
 
 **集計条件表示**:
 - 画面上に現在の `timezone` と `switching_timing` を表示し、集計取得引数と一致させる
+- 年次カレンダーはスマホ幅では横スクロール可能にし、表示切れを避ける
 
 **参照**:
 - **Store**: `store/pages/data/` - `fetchMonthlyData()`
