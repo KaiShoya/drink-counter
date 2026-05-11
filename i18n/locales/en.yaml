@@ -59,13 +59,8 @@ index:
     undo_plus_message: 'Added "{name}".'
     undo_minus_message: 'Removed "{name}".'
     progress_current_label: Current
-    progress_threshold_label: Threshold
     progress_remaining_label: Remaining
     progress_over_label: Over
-    progress_current: 'Current: {count} cups'
-    progress_threshold: 'Threshold: {count} cups'
-    progress_remaining: '{count} cups left'
-    progress_over: '{count} cups over'
     pace_guide_title: Today's pace guide
     pace_guide_target: 'Target: {count} cups/day'
     pace_guide_current: 'Current: {count} cups'

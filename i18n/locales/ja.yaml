@@ -58,14 +58,9 @@ index:
     undo_action: 元に戻す
     undo_plus_message: '「{name}」を1杯追加しました。'
     undo_minus_message: '「{name}」を1杯削除しました。'
-    progress_current_label: 現在杯数
-    progress_threshold_label: 閾値
-    progress_remaining_label: あと
+    progress_current_label: 現在の杯数
+    progress_remaining_label: アラートまであと
     progress_over_label: 超過
-    progress_current: '現在: {count}杯'
-    progress_threshold: '閾値: {count}杯'
-    progress_remaining: 'あと {count}杯'
-    progress_over: '{count}杯オーバー'
     pace_guide_title: 今日の目標ペース
     pace_guide_target: '目標: {count}杯/日'
     pace_guide_current: '現在: {count}杯'

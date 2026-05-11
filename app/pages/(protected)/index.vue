@@ -17,7 +17,7 @@
 
 ## Features
 - 日付選択（カレンダー）
-- 現在杯数・閾値・残り/超過杯数を1行で表示する進捗サマリー
+- 現在杯数とアラートまでの残り/超過杯数を2枚のカードで表示する進捗サマリー
 - ラベル/飲み物行のカウント増減
 - 過飲検知（閾値超過時の警告モーダル）
 
@@ -40,7 +40,6 @@ import {
   LOCALE_INDEX_UNDO_PLUS_MESSAGE,
   LOCALE_INDEX_UNDO_MINUS_MESSAGE,
   LOCALE_INDEX_PROGRESS_CURRENT_LABEL,
-  LOCALE_INDEX_PROGRESS_THRESHOLD_LABEL,
   LOCALE_INDEX_PROGRESS_REMAINING_LABEL,
   LOCALE_INDEX_PROGRESS_OVER_LABEL,
   LOCALE_SETTINGS_CUPS,
@@ -231,12 +230,6 @@ watch(date, async () => {
           <div class="pace-kpi-box has-text-centered">
             <p class="pace-kpi-label">{{ t(LOCALE_INDEX_PROGRESS_CURRENT_LABEL) }}</p>
             <p class="pace-kpi-value">{{ currentCupCount }}<span class="pace-kpi-unit">{{ t(LOCALE_SETTINGS_CUPS) }}</span></p>
-          </div>
-        </div>
-        <div class="column pace-kpi-col">
-          <div class="pace-kpi-box has-text-centered">
-            <p class="pace-kpi-label">{{ t(LOCALE_INDEX_PROGRESS_THRESHOLD_LABEL) }}</p>
-            <p class="pace-kpi-value">{{ thresholdCupCount }}<span class="pace-kpi-unit">{{ t(LOCALE_SETTINGS_CUPS) }}</span></p>
           </div>
         </div>
         <div class="column pace-kpi-col">
