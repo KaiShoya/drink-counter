@@ -41,12 +41,14 @@ export const showUndoToast = (
   container.className = "is-flex is-align-items-center";
 
   const text = document.createElement("span");
-  text.textContent = useProcessString.replaceLooseLineBreaks(message);
+  // Keep message as plain text to avoid rendering literal HTML tags in the undo toast.
+  text.style.whiteSpace = "pre-line";
+  text.textContent = message;
 
   const button = document.createElement("button");
   button.type = "button";
   button.className = "button is-small is-light ml-3";
-  button.textContent = useProcessString.replaceLooseLineBreaks(actionLabel);
+  button.textContent = actionLabel;
   button.addEventListener("click", () => {
     button.disabled = true;
     onUndo();
@@ -57,8 +59,8 @@ export const showUndoToast = (
   bulmaToast.toast({
     message: container,
     duration,
-    type: "is-warning",
-    dismissible: true,
+    type: "is-primary",
+    dismissible: false,
     pauseOnHover: true,
     closeOnClick: false,
     animate: { in: "fadeIn", out: "fadeOut" },

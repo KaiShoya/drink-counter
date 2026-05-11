@@ -56,8 +56,8 @@ index:
     quick_record_title: クイック記録
     quick_record_empty: すぐに記録できる候補がありません。
     undo_action: 元に戻す
-    undo_plus_message: '「{name}」を加算しました。'
-    undo_minus_message: '「{name}」を減算しました。'
+    undo_plus_message: '「{name}」を1杯追加しました。'
+    undo_minus_message: '「{name}」を1杯削除しました。'
     pace_guide_title: 今日の目標ペース
     pace_guide_target: '目標: {count}杯/日'
     pace_guide_current: '現在: {count}杯'

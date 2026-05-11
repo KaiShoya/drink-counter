@@ -87,6 +87,26 @@ const findDrinkById = (drinkId: number) => {
   return labelsWithDrinks.value.flatMap(label => label.drinks).find(drink => drink.id === drinkId)
 }
 
+const findDrinkContextById = (drinkId: number) => {
+  for (const label of labelsWithDrinks.value) {
+    const drink = label.drinks.find(item => item.id === drinkId)
+    if (drink) {
+      return {
+        drink,
+        labelName: label.name,
+      }
+    }
+  }
+  return undefined
+}
+
+const formatUndoTargetName = (labelName: string | undefined, drinkName: string) => {
+  if (!labelName) {
+    return drinkName
+  }
+  return `${labelName}：${drinkName}`
+}
+
 const scheduleUndo = (
   operation: 'plus' | 'minus',
   drinkId: number,
@@ -126,22 +146,34 @@ const scheduleUndo = (
 
 const plusWithUndo = async (drinkId: number, drinkCounterId: number) => {
   await plus(drinkId, drinkCounterId)
-  const drink = findDrinkById(drinkId)
-  if (!drink) return
-  scheduleUndo('plus', drink.id, drink.drinkCounterId, drink.name)
+  const context = findDrinkContextById(drinkId)
+  if (!context) return
+  scheduleUndo(
+    'plus',
+    context.drink.id,
+    context.drink.drinkCounterId,
+    formatUndoTargetName(context.labelName, context.drink.name),
+  )
 }
 
 const minusWithUndo = async (drinkId: number, drinkCounterId: number) => {
-  const before = findDrinkById(drinkId)
-  if (!before || before.count === 0 || drinkCounterId === -1) {
+  const before = findDrinkContextById(drinkId)
+  if (!before || before.drink.count === 0 || drinkCounterId === -1) {
     await minus(drinkId, drinkCounterId)
     return
   }
 
+  const beforeCount = before.drink.count
+
   await minus(drinkId, drinkCounterId)
-  const drink = findDrinkById(drinkId)
-  if (!drink || drink.count === before.count) return
-  scheduleUndo('minus', drink.id, drink.drinkCounterId, drink.name)
+  const context = findDrinkContextById(drinkId)
+  if (!context || context.drink.count === beforeCount) return
+  scheduleUndo(
+    'minus',
+    context.drink.id,
+    context.drink.drinkCounterId,
+    formatUndoTargetName(context.labelName, context.drink.name),
+  )
 }
 
 const decrementWithUndo = (drinkId: number, drinkCounterId: number) => {
