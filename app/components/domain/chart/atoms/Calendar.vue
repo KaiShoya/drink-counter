@@ -54,12 +54,20 @@ onMounted(() => {
 
 <style scoped>
 .calendar-wrapper {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   width: 100%;
 }
 
 .calendar {
   width: 100%;
   max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .calendar {
+    min-width: 720px;
+  }
 }
 </style>

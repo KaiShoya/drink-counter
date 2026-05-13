@@ -65,6 +65,22 @@ export const LOCALE_INDEX_WARNING_TITLE =
   `${LOCALE_INDEX}.warning_title` as const;
 export const LOCALE_INDEX_WARNING_CONTENT =
   `${LOCALE_INDEX}.warning_content` as const;
+export const LOCALE_INDEX_QUICK_RECORD_TITLE =
+  `${LOCALE_INDEX}.quick_record_title` as const;
+export const LOCALE_INDEX_QUICK_RECORD_EMPTY =
+  `${LOCALE_INDEX}.quick_record_empty` as const;
+export const LOCALE_INDEX_UNDO_ACTION =
+  `${LOCALE_INDEX}.undo_action` as const;
+export const LOCALE_INDEX_UNDO_PLUS_MESSAGE =
+  `${LOCALE_INDEX}.undo_plus_message` as const;
+export const LOCALE_INDEX_UNDO_MINUS_MESSAGE =
+  `${LOCALE_INDEX}.undo_minus_message` as const;
+export const LOCALE_INDEX_PROGRESS_CURRENT_LABEL =
+  `${LOCALE_INDEX}.progress_current_label` as const;
+export const LOCALE_INDEX_PROGRESS_REMAINING_LABEL =
+  `${LOCALE_INDEX}.progress_remaining_label` as const;
+export const LOCALE_INDEX_PROGRESS_OVER_LABEL =
+  `${LOCALE_INDEX}.progress_over_label` as const;
 
 const LOCALE_ACTIVITY_LOG = "activity_log" as const;
 export const LOCALE_ACTIVITY_LOG_TITLE =
@@ -104,6 +120,7 @@ export const LOCALE_SETTINGS_SWITCHING_TIMING =
   `${LOCALE_SETTINGS}.switching_timing` as const;
 export const LOCALE_SETTINGS_OCLOCK = `${LOCALE_SETTINGS}.oclock` as const;
 export const LOCALE_SETTINGS_SAVE = `${LOCALE_SETTINGS}.save` as const;
+export const LOCALE_SETTINGS_SHOW_PACE_GUIDE = `${LOCALE_SETTINGS}.show_pace_guide` as const;
 
 const LOCALE_DRINKS = "drinks" as const;
 export const LOCALE_DRINKS_EDIT_TITLE = `${LOCALE_DRINKS}.edit_title` as const;
@@ -254,6 +271,16 @@ export const LOCALE_MONTHLY_KPI_ACTIVE_DAYS = `${LOCALE_MONTHLY_KPI}.activeDays`
 export const LOCALE_MONTHLY_KPI_AVG_PER_DAY = `${LOCALE_MONTHLY_KPI}.avgPerDay` as const;
 export const LOCALE_MONTHLY_KPI_AVG_PER_ACTIVE_DAY = `${LOCALE_MONTHLY_KPI}.avgPerActiveDay` as const;
 export const LOCALE_MONTHLY_KPI_MOM = `${LOCALE_MONTHLY_KPI}.mom` as const;
+
+const LOCALE_MONTHLY_REVIEW = `${LOCALE_MONTHLY}.review` as const;
+export const LOCALE_MONTHLY_REVIEW_TITLE = `${LOCALE_MONTHLY_REVIEW}.title` as const;
+export const LOCALE_MONTHLY_REVIEW_TOP_LABEL = `${LOCALE_MONTHLY_REVIEW}.top_label` as const;
+export const LOCALE_MONTHLY_REVIEW_WEEKDAY_TREND = `${LOCALE_MONTHLY_REVIEW}.weekday_trend` as const;
+export const LOCALE_MONTHLY_REVIEW_MOM_UP = `${LOCALE_MONTHLY_REVIEW}.mom_up` as const;
+export const LOCALE_MONTHLY_REVIEW_MOM_DOWN = `${LOCALE_MONTHLY_REVIEW}.mom_down` as const;
+export const LOCALE_MONTHLY_REVIEW_MOM_FLAT = `${LOCALE_MONTHLY_REVIEW}.mom_flat` as const;
+export const LOCALE_MONTHLY_REVIEW_UNKNOWN_LABEL = `${LOCALE_MONTHLY_REVIEW}.unknown_label` as const;
+export const LOCALE_MONTHLY_REVIEW_NO_DATA = `${LOCALE_MONTHLY_REVIEW}.no_data` as const;
 
 const LOCALE_MONTHLY_CHART = `${LOCALE_MONTHLY}.chart` as const;
 export const LOCALE_MONTHLY_CHART_DAILY_SERIES = `${LOCALE_MONTHLY_CHART}.dailySeries` as const;

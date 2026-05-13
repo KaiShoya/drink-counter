@@ -53,6 +53,14 @@ calendar:
 index:
     warning_title: 飲みすぎ注意
     warning_content: 今日{drinkCountForDay}杯飲んでるけど、まだそれでもまだ飲みますか？
+    quick_record_title: クイック記録
+    quick_record_empty: すぐに記録できる候補がありません。
+    undo_action: 元に戻す
+    undo_plus_message: '「{name}」を1杯追加しました。'
+    undo_minus_message: '「{name}」を1杯削除しました。'
+    progress_current_label: 現在の杯数
+    progress_remaining_label: アラートまであと
+    progress_over_label: 超過
 
 activity_log:
     title: 履歴
@@ -83,6 +91,15 @@ monthly:
         avgPerDay: 1日平均（全日）
         avgPerActiveDay: 1日平均（飲んだ日）
         mom: 前月比
+    review:
+        title: 月次レビュー
+        top_label: '最多カテゴリ: {label}（構成比 {share}%）'
+        weekday_trend: '曜日傾向: {weekday} が高め（平均 {avg}杯）'
+        mom_up: '先月比: +{pct}%'
+        mom_down: '先月比: {pct}%'
+        mom_flat: '先月比: 変化なし'
+        unknown_label: 不明カテゴリ
+        no_data: この月はレビューに十分なデータがありません。
     chart:
         dailySeries: 日次推移
         labelDonut: ラベル構成比
@@ -105,6 +122,7 @@ settings:
     timezone: タイムゾーン
     switching_timing: 日付切り替え時刻
     oclock: 時
+    show_pace_guide: トップ画面で目標ペースガイドを表示する
     save: 保存する
 
 drinks:

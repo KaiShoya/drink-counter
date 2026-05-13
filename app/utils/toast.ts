@@ -25,3 +25,44 @@ export const showWarningToast = (message: string) => {
 export const showDangerToast = (message: string) => {
   showToast(message, "is-danger", 10000);
 };
+
+export const showUndoToast = (
+  message: string,
+  actionLabel: string,
+  onUndo: () => void,
+  duration: number = 5000,
+) => {
+  if (typeof document === "undefined") {
+    showWarningToast(message);
+    return;
+  }
+
+  const container = document.createElement("div");
+  container.className = "is-flex is-align-items-center";
+
+  const text = document.createElement("span");
+  // Keep message as plain text to avoid rendering literal HTML tags in the undo toast.
+  text.style.whiteSpace = "pre-line";
+  text.textContent = message;
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "button is-small is-light ml-3";
+  button.textContent = actionLabel;
+  button.addEventListener("click", () => {
+    button.disabled = true;
+    onUndo();
+  });
+
+  container.append(text, button);
+
+  bulmaToast.toast({
+    message: container,
+    duration,
+    type: "is-primary",
+    dismissible: false,
+    pauseOnHover: true,
+    closeOnClick: false,
+    animate: { in: "fadeIn", out: "fadeOut" },
+  });
+};

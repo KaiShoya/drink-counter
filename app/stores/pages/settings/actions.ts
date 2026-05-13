@@ -1,9 +1,9 @@
-import { useSettingsState } from './state'
+import { persistPaceGuideVisibility, useSettingsState } from './state'
 
 export function useSettingsActions () {
   const { t } = useI18n()
   const { $userSettingsRepository } = useNuxtApp()
-  const { thresholdForDetectingOverdrinking, timezone, switchingTiming } = useSettingsState()
+  const { thresholdForDetectingOverdrinking, timezone, switchingTiming, showPaceGuide } = useSettingsState()
   const { userSetting } = storeToRefs(useUserStore())
 
   const fetchSettings = () => {
@@ -24,6 +24,7 @@ export function useSettingsActions () {
       timezone: timezone.value,
       switching_timing: switchingTiming.value,
     }
+    persistPaceGuideVisibility()
     showSuccessToast(t(LOCALE_GENERAL_UPDATE_SUCCESS))
   }
 

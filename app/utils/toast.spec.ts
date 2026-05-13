@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest'
 
 vi.mock('bulma-toast', () => ({ toast: vi.fn() }))
 
-import { showSuccessToast, showWarningToast, showDangerToast } from './toast'
+import { showSuccessToast, showWarningToast, showDangerToast, showUndoToast } from './toast'
 import * as bulmaToast from 'bulma-toast'
 
 describe('toast utils', () => {
@@ -17,6 +17,10 @@ describe('toast utils', () => {
   })
   it('showDangerToast calls bulma-toast', () => {
     showDangerToast('danger')
+    expect((bulmaToast as any).toast).toHaveBeenCalled()
+  })
+  it('showUndoToast calls bulma-toast', () => {
+    showUndoToast('message', 'undo', vi.fn())
     expect((bulmaToast as any).toast).toHaveBeenCalled()
   })
 })
