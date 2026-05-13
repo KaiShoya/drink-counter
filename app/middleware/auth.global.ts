@@ -12,8 +12,14 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // ログイン画面へのアクセスをチェック
   if (to.path === localePath('/login') || to.path === '/login') {
-    // ログイン済みならホームページにリダイレクト
+    // ログイン済みなら指定された遷移先を優先し、なければホームへ
     if (isLogin.value) {
+      const fullpathQuery = Array.isArray(to.query.fullpath)
+        ? to.query.fullpath[0]
+        : to.query.fullpath;
+      if (typeof fullpathQuery === 'string' && fullpathQuery.startsWith('/') && !fullpathQuery.startsWith('//')) {
+        return navigateTo(fullpathQuery);
+      }
       return navigateTo(localePath('/'));
     }
     // ログインしていなければ、ログイン画面へのアクセスは許可
