@@ -1,4 +1,4 @@
-import { useUserState } from './state'
+import { createDefaultUserSetting, useUserState } from './state'
 
 export function useUserActions () {
   const { isLogin, userName, userAvatarUrl, userSetting, isInitialized } = useUserState()
@@ -26,10 +26,10 @@ export function useUserActions () {
             if (userSettingRow) {
               userSetting.value = userSettingRow
             } else {
-              userSetting.value = null
+              userSetting.value = createDefaultUserSetting()
             }
           } catch (settingsError) {
-            userSetting.value = null
+            userSetting.value = createDefaultUserSetting()
             logger.warn('Skipped user settings fetch', { module: 'user/actions.ts' }, settingsError)
           }
 

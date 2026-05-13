@@ -53,6 +53,14 @@ calendar:
 index:
     warning_title: Be careful not to drink too much.
     warning_content: You've had {drinkCountForDay} cups today, but do you still want to drink it?
+    quick_record_title: Quick record
+    quick_record_empty: No quick-record candidates yet.
+    undo_action: Undo
+    undo_plus_message: 'Added "{name}".'
+    undo_minus_message: 'Removed "{name}".'
+    progress_current_label: Current
+    progress_remaining_label: Remaining
+    progress_over_label: Over
 
 activity_log:
     title: History
@@ -96,6 +104,15 @@ annual:
         totalVolume: Total volume
         activeDays: Active days
         avgPerDay: Daily average (all days)
+    review:
+        title: Monthly review
+        top_label: 'Top category: {label} ({share}% share)'
+        weekday_trend: 'Weekday trend: {weekday} is highest (avg {avg} drinks)'
+        mom_up: 'MoM: +{pct}%'
+        mom_down: 'MoM: {pct}%'
+        mom_flat: 'MoM: no change'
+        unknown_label: Unknown label
+        no_data: Not enough data to generate a review for this month.
         avgPerActiveDay: Daily average (drinking days)
         yoy: YoY
 
@@ -105,6 +122,7 @@ settings:
     timezone: Timezone
     switching_timing: Date switching timing
     oclock: o'clock
+    show_pace_guide: Show target pace guide on the top page
     save: Save
 
 drinks:
