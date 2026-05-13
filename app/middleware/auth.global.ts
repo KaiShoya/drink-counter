@@ -11,10 +11,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   }
 
   // ログイン画面へのアクセスをチェック
-  if (to.path === localePath("/login") || to.path === "/login") {
+  if (to.path === localePath('/login') || to.path === '/login') {
     // ログイン済みならホームページにリダイレクト
     if (isLogin.value) {
-      return navigateTo(localePath("/"));
+      return navigateTo(localePath('/'));
     }
     // ログインしていなければ、ログイン画面へのアクセスは許可
     return;
@@ -24,7 +24,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (to.meta.groups?.includes('protected')) {
     if (!isLogin.value) {
       const fullPath = from?.fullPath || '/';
-      return navigateTo(localePath("/login?fullpath=" + fullPath));
+      return navigateTo(localePath('/login?fullpath=' + fullPath));
     }
   }
 });
