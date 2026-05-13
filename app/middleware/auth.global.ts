@@ -1,6 +1,6 @@
 import { useUserStore } from '~/stores/user'
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const localePath = useLocalePath();
   const { fetchUserData } = useUserStore();
   const { isLogin, isInitialized } = storeToRefs(useUserStore());
@@ -23,8 +23,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // protected グループのルートには認証が必要
   if (to.meta.groups?.includes('protected')) {
     if (!isLogin.value) {
-      const fullPath = from?.fullPath || '/';
-      return navigateTo(localePath('/login?fullpath=' + fullPath));
+      return navigateTo(localePath({
+        path: '/login',
+        query: { fullpath: to.fullPath || '/' },
+      }));
     }
   }
 });
