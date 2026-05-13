@@ -46,7 +46,15 @@ watch(
     // ログイン済みならリダイレクト
     if (userData) {
       const fullpath = route.query.fullpath?.toString() ?? localePath('/')
-      return navigateTo(fullpath)
+      const safeFullpath = (
+        fullpath.startsWith('/') &&
+        !fullpath.startsWith('//') &&
+        !fullpath.includes('://')
+      )
+        ? fullpath
+        : localePath('/')
+
+      return navigateTo(safeFullpath)
     }
   },
   {
