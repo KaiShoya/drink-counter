@@ -5,14 +5,17 @@ Supabase 認証の入口。Google OAuth を使用。
 
 ## Data
 - `user`: Supabase ユーザー（auto-import composable）
+- `isInitialized`: ユーザーストアの認証チェック完了フラグ
 - `route.query.fullpath`: ログイン前の遷移先
 
 ## Interactions
 - ボタンクリックで `signInWithGoogle()` を実行して OAuth フロー開始
 
 ## Features
-- `user` を watch（`immediate: true`）し、ログイン済みなら自動リダイレクト
+- `isInitialized` と `user` を watch（`immediate: true`）
+- 認証チェック完了後にログイン済みなら自動リダイレクト
 - リダイレクト先は `fullpath` があればそれを優先、なければトップ
+- 認証チェック中は何も表示しない（`v-if="isInitialized"`）
 
 ## Error Handling
 - 認証エラーの通知/ログは Store/プラグイン側で実施（画面は最小責務）
@@ -28,13 +31,20 @@ import { LOCALE_AUTH_GOOGLE } from '~/utils/locales'
 const { t } = useI18n()
 const route = useRoute()
 const { signInWithGoogle } = useSupabaseStore()
+const { isInitialized } = storeToRefs(useUserStore())
 
 const localePath = useLocalePath()
 const user = useSupabaseUser()
+
+// 認証チェック完了後に、ログイン状態に基づいてリダイレクト
 watch(
-  user,
-  () => {
-    if (user.value) {
+  [user, isInitialized],
+  ([userData, initialized]) => {
+    // 認証チェックが完了していない場合は何もしない
+    if (!initialized) return
+
+    // ログイン済みならリダイレクト
+    if (userData) {
       const fullpath = route.query.fullpath?.toString() ?? localePath('/')
       return navigateTo(fullpath)
     }
@@ -46,7 +56,7 @@ watch(
 </script>
 
 <template>
-  <div>
+  <div v-if="isInitialized">
     <button
       class="button"
       @click="signInWithGoogle()"
