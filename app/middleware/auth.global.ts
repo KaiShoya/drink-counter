@@ -1,19 +1,39 @@
 import { useUserStore } from '~/stores/user'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  if (!to.meta.groups?.includes('protected')) {
-    return
+  const localePath = useLocalePath();
+  const { fetchUserData } = useUserStore();
+  const { isLogin, isInitialized } = storeToRefs(useUserStore());
+
+  // 認証状態がまだ確認されていなければ、確認を実行
+  if (!isInitialized.value) {
+    await fetchUserData();
   }
 
-  const localePath = useLocalePath();
+  // ログイン画面へのアクセスをチェック
+  if (to.path === localePath('/login') || to.path === '/login') {
+    // ログイン済みなら指定された遷移先を優先し、なければホームへ
+    if (isLogin.value) {
+      const fullpathQuery = Array.isArray(to.query.fullpath)
+        ? to.query.fullpath[0]
+        : to.query.fullpath;
+      if (typeof fullpathQuery === 'string' && fullpathQuery.startsWith('/') && !fullpathQuery.startsWith('//')) {
+        return navigateTo(fullpathQuery);
+      }
+      return navigateTo(localePath('/'));
+    }
+    // ログインしていなければ、ログイン画面へのアクセスは許可
+    return;
+  }
 
-  const { fetchUserData } = useUserStore();
-  const { isLogin } = storeToRefs(useUserStore());
-
-  await fetchUserData();
-
-  if (!isLogin.value) {
-    const fullPath = from?.fullPath || '/';
-    return navigateTo(localePath("/login?fullpath=" + fullPath));
+  // protected グループのルートには認証が必要
+  if (to.meta.groups?.includes('protected')) {
+    if (!isLogin.value) {
+      const fullPath = from?.fullPath || '/'
+      return navigateTo(localePath({
+        path: '/login',
+        query: { fullpath: fullPath },
+      }));
+    }
   }
 });

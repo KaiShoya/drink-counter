@@ -1,7 +1,7 @@
 import { createDefaultUserSetting, useUserState } from './state'
 
 export function useUserActions () {
-  const { isLogin, userName, userAvatarUrl, userSetting } = useUserState()
+  const { isLogin, userName, userAvatarUrl, userSetting, isInitialized } = useUserState()
 
   const fetchUserData = async () => {
     try {
@@ -44,6 +44,9 @@ export function useUserActions () {
       isLogin.value = false
       userName.value = null
       userAvatarUrl.value = null
+    } finally {
+      // 認証チェック完了を記録
+      isInitialized.value = true
     }
   }
 
