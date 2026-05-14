@@ -20,7 +20,11 @@ describe('toast utils', () => {
     expect((bulmaToast as any).toast).toHaveBeenCalled()
   })
   it('showUndoToast calls bulma-toast', () => {
-    showUndoToast('message', 'undo', vi.fn())
-    expect((bulmaToast as any).toast).toHaveBeenCalled()
+    showUndoToast('message', 'undo', vi.fn(), 5000, { closeAriaLabel: 'close' })
+    const latestCall = (bulmaToast as any).toast.mock.calls.at(-1)?.[0]
+    expect(latestCall).toEqual(expect.objectContaining({
+      type: 'is-warning',
+      duration: 2000,
+    }))
   })
 })

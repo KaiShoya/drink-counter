@@ -56,6 +56,7 @@ index:
     quick_record_title: Quick record
     quick_record_empty: No quick-record candidates yet.
     undo_action: Undo
+    undo_close: Close notification
     undo_plus_message: 'Added "{name}".'
     undo_minus_message: 'Removed "{name}".'
     progress_current_label: Current

@@ -19,6 +19,7 @@
 - 日付選択（カレンダー）
 - 現在杯数とアラートまでの残り/超過杯数を2枚のカードで表示する進捗サマリー
 - ラベル/飲み物行のカウント増減
+- 加算/減算後の Undo 通知（Undo ボタン、閉じるボタン、スワイプで dismiss）
 - 過飲検知（閾値超過時の警告モーダル）
 
 ## Error Handling
@@ -37,6 +38,7 @@ import {
   LOCALE_INDEX_WARNING_TITLE,
   LOCALE_INDEX_WARNING_CONTENT,
   LOCALE_INDEX_UNDO_ACTION,
+  LOCALE_INDEX_UNDO_CLOSE,
   LOCALE_INDEX_UNDO_PLUS_MESSAGE,
   LOCALE_INDEX_UNDO_MINUS_MESSAGE,
   LOCALE_INDEX_PROGRESS_CURRENT_LABEL,
@@ -130,6 +132,7 @@ const scheduleUndo = (
     t(LOCALE_INDEX_UNDO_ACTION),
     () => { void undo() },
     UNDO_TIMEOUT_MS,
+    { closeAriaLabel: t(LOCALE_INDEX_UNDO_CLOSE) },
   )
 
   setTimeout(() => {
