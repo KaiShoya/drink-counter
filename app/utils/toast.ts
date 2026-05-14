@@ -4,7 +4,7 @@ const SWIPE_DISMISS_THRESHOLD_PX = 60;
 
 const dismissToastElement = (baseElement: HTMLElement) => {
   const notification = baseElement.closest(
-    ".notification.toast, .notification",
+    ".notification.toast",
   ) as HTMLElement | null;
   notification?.remove();
 };
@@ -58,6 +58,20 @@ const setupSwipeToDismiss = (
     startX = null;
     currentDeltaX = 0;
   });
+
+  toastElement.addEventListener("touchcancel", () => {
+    if (startX === null) return;
+
+    if (Math.abs(currentDeltaX) >= thresholdPx) {
+      dismiss();
+      return;
+    }
+
+    toastElement.style.transform = "";
+    toastElement.style.opacity = "";
+    startX = null;
+    currentDeltaX = 0;
+  });
 };
 
 const setupSwipeToDismissForLatestToast = (
@@ -68,7 +82,7 @@ const setupSwipeToDismissForLatestToast = (
 
   requestAnimationFrame(() => {
     const toastElements = document.querySelectorAll<HTMLElement>(
-      ".notification.toast, .notification",
+      ".notification.toast",
     );
     const latestToast = toastElements.item(toastElements.length - 1);
     if (!latestToast) return;
