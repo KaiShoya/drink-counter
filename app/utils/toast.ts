@@ -1,5 +1,8 @@
 import * as bulmaToast from "bulma-toast";
 
+const UNDO_TOAST_CLASS = "undo-toast";
+const UNDO_TOAST_SWIPE_THRESHOLD = 56;
+
 export const showToast = (
   message: string,
   type: bulmaToast.ToastType,
@@ -60,9 +63,55 @@ export const showUndoToast = (
     message: container,
     duration,
     type: "is-primary",
-    dismissible: false,
+    dismissible: true,
     pauseOnHover: true,
     closeOnClick: false,
+    extraClasses: UNDO_TOAST_CLASS,
     animate: { in: "fadeIn", out: "fadeOut" },
   });
+
+  const undoToasts = document.querySelectorAll<HTMLElement>(`.${UNDO_TOAST_CLASS}`);
+  const toastElement = undoToasts[undoToasts.length - 1];
+  if (!toastElement) return;
+
+  let swipeStartX: number | undefined;
+  let swipeStartY: number | undefined;
+  const closeButton = toastElement.querySelector<HTMLButtonElement>("button.delete");
+  const cleanup = () => {
+    toastElement.removeEventListener("touchstart", handleTouchStart);
+    toastElement.removeEventListener("touchend", handleTouchEnd);
+    closeButton?.removeEventListener("click", cleanup);
+  };
+  const dismissToast = () => {
+    closeButton?.click();
+  };
+  const handleSwipeEnd = (endX: number, endY: number) => {
+    if (swipeStartX === undefined || swipeStartY === undefined) return;
+
+    const deltaX = Math.abs(endX - swipeStartX);
+    const deltaY = Math.abs(endY - swipeStartY);
+    swipeStartX = undefined;
+    swipeStartY = undefined;
+
+    if (deltaX >= UNDO_TOAST_SWIPE_THRESHOLD && deltaX > deltaY) {
+      dismissToast();
+    }
+  };
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+    swipeStartX = touch.clientX;
+    swipeStartY = touch.clientY;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+    handleSwipeEnd(touch.clientX, touch.clientY);
+  };
+
+  toastElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+  toastElement.addEventListener("touchend", handleTouchEnd, { passive: true });
+  closeButton?.addEventListener("click", cleanup, { once: true });
 };
