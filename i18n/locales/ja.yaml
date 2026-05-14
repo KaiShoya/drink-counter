@@ -56,6 +56,7 @@ index:
     quick_record_title: クイック記録
     quick_record_empty: すぐに記録できる候補がありません。
     undo_action: 元に戻す
+    undo_close: 通知を閉じる
     undo_plus_message: '「{name}」を1杯追加しました。'
     undo_minus_message: '「{name}」を1杯削除しました。'
     progress_current_label: 現在の杯数

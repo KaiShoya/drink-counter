@@ -246,6 +246,7 @@ useHead(() => ({
                 style="width: 30px;"
               />
             </div>
+            <SignInAdmin :is-login />
             <a
               v-if="!isLogin"
               class="navbar-item"
