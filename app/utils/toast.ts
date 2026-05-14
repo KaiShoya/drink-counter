@@ -1,5 +1,8 @@
 import * as bulmaToast from "bulma-toast";
 
+const UNDO_TOAST_CLASS = "undo-toast";
+const UNDO_TOAST_SWIPE_THRESHOLD = 56;
+
 export const showToast = (
   message: string,
   type: bulmaToast.ToastType,
@@ -60,9 +63,45 @@ export const showUndoToast = (
     message: container,
     duration,
     type: "is-primary",
-    dismissible: false,
+    dismissible: true,
     pauseOnHover: true,
     closeOnClick: false,
+    extraClasses: UNDO_TOAST_CLASS,
     animate: { in: "fadeIn", out: "fadeOut" },
   });
+
+  const toastElement = document.querySelector<HTMLElement>(`.${UNDO_TOAST_CLASS}:last-child`);
+  if (!toastElement) return;
+
+  let dragStartX: number | undefined;
+  let dragStartY: number | undefined;
+  const dismissToast = () => {
+    const closeButton = toastElement.querySelector<HTMLButtonElement>("button.delete");
+    closeButton?.click();
+  };
+  const handleSwipeEnd = (endX: number, endY: number) => {
+    if (dragStartX === undefined || dragStartY === undefined) return;
+
+    const deltaX = Math.abs(endX - dragStartX);
+    const deltaY = Math.abs(endY - dragStartY);
+    dragStartX = undefined;
+    dragStartY = undefined;
+
+    if (deltaX >= UNDO_TOAST_SWIPE_THRESHOLD && deltaX > deltaY) {
+      dismissToast();
+    }
+  };
+
+  toastElement.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+    dragStartX = touch.clientX;
+    dragStartY = touch.clientY;
+  }, { passive: true });
+
+  toastElement.addEventListener("touchend", (event) => {
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+    handleSwipeEnd(touch.clientX, touch.clientY);
+  }, { passive: true });
 };
