@@ -70,38 +70,48 @@ export const showUndoToast = (
     animate: { in: "fadeIn", out: "fadeOut" },
   });
 
-  const toastElement = document.querySelector<HTMLElement>(`.${UNDO_TOAST_CLASS}:last-child`);
+  const undoToasts = document.querySelectorAll<HTMLElement>(`.${UNDO_TOAST_CLASS}`);
+  const toastElement = undoToasts[undoToasts.length - 1];
   if (!toastElement) return;
 
-  let dragStartX: number | undefined;
-  let dragStartY: number | undefined;
+  let swipeStartX: number | undefined;
+  let swipeStartY: number | undefined;
+  const closeButton = toastElement.querySelector<HTMLButtonElement>("button.delete");
+  const cleanup = () => {
+    toastElement.removeEventListener("touchstart", handleTouchStart);
+    toastElement.removeEventListener("touchend", handleTouchEnd);
+    closeButton?.removeEventListener("click", cleanup);
+  };
   const dismissToast = () => {
-    const closeButton = toastElement.querySelector<HTMLButtonElement>("button.delete");
     closeButton?.click();
   };
   const handleSwipeEnd = (endX: number, endY: number) => {
-    if (dragStartX === undefined || dragStartY === undefined) return;
+    if (swipeStartX === undefined || swipeStartY === undefined) return;
 
-    const deltaX = Math.abs(endX - dragStartX);
-    const deltaY = Math.abs(endY - dragStartY);
-    dragStartX = undefined;
-    dragStartY = undefined;
+    const deltaX = Math.abs(endX - swipeStartX);
+    const deltaY = Math.abs(endY - swipeStartY);
+    swipeStartX = undefined;
+    swipeStartY = undefined;
 
     if (deltaX >= UNDO_TOAST_SWIPE_THRESHOLD && deltaX > deltaY) {
       dismissToast();
     }
   };
 
-  toastElement.addEventListener("touchstart", (event) => {
+  const handleTouchStart = (event: TouchEvent) => {
     const touch = event.changedTouches[0];
     if (!touch) return;
-    dragStartX = touch.clientX;
-    dragStartY = touch.clientY;
-  }, { passive: true });
+    swipeStartX = touch.clientX;
+    swipeStartY = touch.clientY;
+  };
 
-  toastElement.addEventListener("touchend", (event) => {
+  const handleTouchEnd = (event: TouchEvent) => {
     const touch = event.changedTouches[0];
     if (!touch) return;
     handleSwipeEnd(touch.clientX, touch.clientY);
-  }, { passive: true });
+  };
+
+  toastElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+  toastElement.addEventListener("touchend", handleTouchEnd, { passive: true });
+  closeButton?.addEventListener("click", cleanup, { once: true });
 };

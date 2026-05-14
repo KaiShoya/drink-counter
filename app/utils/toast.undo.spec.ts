@@ -25,10 +25,17 @@ vi.mock("bulma-toast", () => ({ toast: toastMock }));
 import { showUndoToast } from "./toast";
 
 const dispatchTouchEvent = (target: HTMLElement, eventName: "touchstart" | "touchend", x: number, y: number) => {
-  const event = new Event(eventName) as TouchEvent;
-  Object.defineProperty(event, "changedTouches", {
-    value: [{ clientX: x, clientY: y }],
-  });
+  let event: Event;
+  try {
+    event = new TouchEvent(eventName, {
+      changedTouches: [{ clientX: x, clientY: y }] as unknown as TouchList,
+    });
+  } catch {
+    event = new Event(eventName);
+    Object.defineProperty(event, "changedTouches", {
+      value: [{ clientX: x, clientY: y }],
+    });
+  }
   target.dispatchEvent(event);
 };
 
