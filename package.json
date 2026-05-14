@@ -41,7 +41,7 @@
     "eslint": "^10.3.0",
     "eslint-plugin-vue": "^10.9.1",
     "happy-dom": "^20.9.0",
-    "nuxt": "4.4.4",
+    "nuxt": "4.4.5",
     "nuxt-gtag": "^4.1.0",
     "playwright-core": "^1.59.1",
     "sass": "^1.99.0",
