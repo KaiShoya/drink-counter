@@ -4,11 +4,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const localePath = useLocalePath();
   const { fetchUserData } = useUserStore();
   const { isLogin, isInitialized } = storeToRefs(useUserStore());
-  const user = useSupabaseUser();
+  const supabaseUser = useSupabaseUser();
 
   // 認証状態がまだ確認されていなければ、確認を実行
   // OAuth 復帰直後など、Store が未ログインのまま stale な場合も再同期する
-  if (!isInitialized.value || (!isLogin.value && !!user.value)) {
+  if (!isInitialized.value || (!isLogin.value && !!supabaseUser.value)) {
     await fetchUserData();
   }
 

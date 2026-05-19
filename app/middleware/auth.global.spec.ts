@@ -71,7 +71,7 @@ describe('auth.global middleware', () => {
       isLogin: isLoginRef,
       isInitialized: isInitializedRef,
     })
-    mockUseSupabaseUser.mockReturnValue({ value: { id: 'user-id' } })
+    mockUseSupabaseUser.mockReturnValue({ value: { id: 'user-id', email: 'test@example.com' } })
     mockFetchUserData.mockImplementationOnce(async () => {
       isLoginRef.value = true
     })
