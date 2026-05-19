@@ -29,7 +29,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // protected グループのルートには認証が必要
   if (to.meta.groups?.includes('protected')) {
     if (!isLogin.value) {
-      const fullPath = from?.fullPath || '/'
+      const fullPath = to.fullPath || '/'
       return navigateTo(localePath({
         path: '/login',
         query: { fullpath: fullPath },
