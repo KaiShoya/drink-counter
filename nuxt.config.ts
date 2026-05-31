@@ -103,9 +103,6 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    optimizeDeps: {
-      include: [],
-    },
     plugins: [
       {
         name: "vue-spec-plugin",
