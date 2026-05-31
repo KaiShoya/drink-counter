@@ -100,6 +100,7 @@ export const showToast = (
     message: useProcessString.replaceLooseLineBreaks(message),
     duration,
     type,
+    extraClasses: "toast",
     dismissible: true,
     animate: { in: "fadeIn", out: "fadeOut" },
   });
@@ -169,6 +170,7 @@ export const showUndoToast = (
     message: container,
     duration,
     type: "is-primary",
+    extraClasses: "toast",
     dismissible: false,
     pauseOnHover: true,
     closeOnClick: false,
