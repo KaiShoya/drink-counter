@@ -19,3 +19,15 @@
 - 仕様を決めたら `04_decisions/` に背景・決定・理由・却下案を残し、`02_requirements/` または `03_spec/` に結果を反映する。
 - 実装に着手する内容は受け入れ条件とともに `06_execution/` に記録する。QA結果やリリース手順も同じ場所で管理する。
 - `99_archive/2026-09-legacy-agent-workspace/` は `.agent/`、`.gemini/`、`.github/` の旧エージェント資料と旧 `docs` submodule 設定を移した履歴です。
+
+## 主要資料
+
+- [プロダクト概要](01_product/overview.md)
+- [中核要件: 飲酒量の記録と飲み過ぎの予防](02_requirements/core-requirements.md)
+- [機能・画面一覧](02_requirements/feature-inventory.md)
+- [アーキテクチャ](03_spec/architecture.md)
+- [データモデルと変更運用](03_spec/data-model.md)
+- [データアクセスとエラー処理](03_spec/data-access.md)
+- [ドキュメント運用の決定記録](04_decisions/2026-09-documentation-operations.md)
+- [未解決事項](05_discussions/open-questions.md)
+- [実行バックログ](06_execution/backlog.md)
