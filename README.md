@@ -10,6 +10,8 @@
 
 アルコールを飲んだ杯数を日付別に記録するアプリ。
 
+現行の企画・要件・仕様・運用資料は [docs/README.md](docs/README.md) を参照してください。
+
 ## Setup
 
 Set up a git commit template.
